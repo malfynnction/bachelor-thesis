@@ -1,6 +1,6 @@
 const xlsx = require('xlsx')
 
-const filePath = '../texts/my-data.xlsx'
+const filePath = '../data.xlsx'
 const sheetName = 'paragraphs'
 const paragraphColumn = 'B'
 
