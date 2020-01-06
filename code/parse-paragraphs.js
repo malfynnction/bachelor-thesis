@@ -1,3 +1,13 @@
+/*
+
+NOTE:
+
+These are all intended as one-time-scripts. If you're running them more than once, make sure you know what you're doing.
+(Who needs idempotency anyways 🤷‍♂️)
+
+*/
+
+
 const getColumn = require('./get-column.js')
 const xlsx = require('xlsx')
 
