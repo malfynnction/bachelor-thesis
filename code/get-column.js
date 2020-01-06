@@ -1,18 +1,14 @@
 const xlsx = require('xlsx')
 
-const filePath = '../data.xlsx'
-const sheetName = 'paragraphs'
-const paragraphColumn = 'B'
-
-module.exports = () => {
+module.exports = (filePath, sheetName, paragraphColumn) => {
   const workbook = xlsx.readFile(filePath)
   const cells = workbook.Sheets[sheetName]
 
-  // get the values of all cells in the specified "paragraph" column
+  // get the values of all cells in the specified column
   const paragraphs = Object.keys(cells).filter(cell => cell.startsWith(paragraphColumn)).map(cell => {
     return {
       cell: cell,
-      paragraph: cells[cell].v
+      value: cells[cell].v
     }
   })
 
