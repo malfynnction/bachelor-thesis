@@ -41,13 +41,17 @@ const removeFootnoteReferences = () => {
 
 const countNaderiSentences = () => {
   const countColumn = 'I'
-  const naderiSentences = getColumn('../Full-Dataset-Naderi19.xlsx', 'Sentences', 'C').map(({cell, value}) => value)
+  const naderiSentences = getColumn('../Full-Dataset-Naderi19.xlsx', 'Sentences', 'C')
 
   const count = {}
+  const toCheckManually = []
 
   naderiSentences.forEach(sentence => {
-    const includingParagraph = paragraphs.find(({cell, value}) => value.includes(sentence))
-    if (typeof includingParagraph !== 'undefined') {
+    const includingParagraph = paragraphs.find(({cell, value}) => value.includes(sentence.value))
+    if (typeof includingParagraph === 'undefined') {
+      // check this sentence manually, maybe there was just a typo fixed etc.
+      toCheckManually.push(sentence.cell)
+    } else {
       const { cell } = includingParagraph
       count[cell] = (count[cell] || 0) + 1
     }
@@ -63,6 +67,8 @@ const countNaderiSentences = () => {
   })
 
   xlsx.writeFile(workbook, filePath)
+  console.log('You will need to check the following sentences manually:')
+  console.log(JSON.stringify(toCheckManually))
 }
 
 countNaderiSentences()
