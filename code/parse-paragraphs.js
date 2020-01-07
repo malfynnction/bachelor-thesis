@@ -1,10 +1,15 @@
-const getColumn = require('./get-column.js')
+const getColumn = require('./lib/get-column.js')
+const columnToObject = require('./lib/column-to-object.js')
 const xlsx = require('xlsx')
 
 const filePath = '../data.xlsx'
 const sheetName = 'paragraphs'
+
 const paragraphColumn = 'B'
+const sentenceCountColumn = 'G'
 const naderiCountColumn = 'H'
+const WPSColumn = 'I' // words per sentence
+const charPWColumn = 'J' // characters per word
 
 const paragraphs = getColumn(filePath, sheetName, paragraphColumn)
 const workbook = xlsx.readFile(filePath)
@@ -13,7 +18,6 @@ const sheet = workbook.Sheets[sheetName]
 const footnoteReference = /\[\d+\]/g
 
 const removeFootnoteReferences = () => {
-
   const newParagraphs = paragraphs.map(({cell, value}) => {
     return {
       cell: cell, 
@@ -58,4 +62,33 @@ const countNaderiSentences = () => {
   xlsx.writeFile(workbook, filePath)
 }
 
-countNaderiSentences()
+const countWords = () => {
+  const sentenceCountsColumn = getColumn(filePath, sheetName, sentenceCountColumn)
+  const sentenceCounts = columnToObject(sentenceCountsColumn)
+
+  paragraphs.forEach(paragraph => {
+    const row = paragraph.cell.slice(1)
+    const words = paragraph.value.split(' ')
+
+    const sentenceCount = sentenceCounts[row]
+    const wordCount = words.length
+    const charCount = words.reduce((sum, word) => sum + word.length, 0)
+
+    const wordsPerSentence = wordCount / sentenceCount
+    const charPerWord = charCount / wordCount
+
+    sheet[WPSColumn + row] = {
+      t: 'n', // type: number
+      v: wordsPerSentence
+    }
+
+    sheet[charPWColumn + row] = {
+      t: 'n', // type: number
+      v: charPerWord
+    }
+  })
+
+  xlsx.writeFile(workbook, filePath)
+}
+
+countWords()
