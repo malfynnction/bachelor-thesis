@@ -4,6 +4,7 @@ const xlsx = require('xlsx')
 const filePath = '../data.xlsx'
 const sheetName = 'paragraphs'
 const paragraphColumn = 'B'
+const naderiCountColumn = 'H'
 
 const paragraphs = getColumn(filePath, sheetName, paragraphColumn)
 const workbook = xlsx.readFile(filePath)
@@ -31,7 +32,6 @@ const removeFootnoteReferences = () => {
 }
 
 const countNaderiSentences = () => {
-  const countColumn = 'I'
   const naderiSentences = getColumn('../Full-Dataset-Naderi19.xlsx', 'Sentences', 'C')
 
   const count = {}
@@ -48,7 +48,7 @@ const countNaderiSentences = () => {
 
   const cells = paragraphs.map(({cell, value}) => cell)
   cells.forEach(cell => {
-    const countCell = cell.replace(paragraphColumn, countColumn)
+    const countCell = cell.replace(paragraphColumn, naderiCountColumn)
     sheet[countCell] = {
       t: 'n', // type: number
       v: count[cell] || 0
