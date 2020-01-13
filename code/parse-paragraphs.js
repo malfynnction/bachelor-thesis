@@ -10,6 +10,7 @@ const sentenceCountColumn = 'G'
 const naderiCountColumn = 'H'
 const WPSColumn = 'I' // words per sentence
 const charPWColumn = 'J' // characters per word
+const syllPWColumn = 'K' // syllables per word
 
 let paragraphs = getColumn(filePath, sheetName, paragraphColumn)
 const workbook = xlsx.readFile(filePath)
@@ -68,10 +69,16 @@ const countWords = () => {
 
     const sentenceCount = sentenceCounts[row]
     const wordCount = words.length
+
     const charCount = words.reduce((sum, word) => sum + word.length, 0)
+    const syllableCount = words.reduce((sum, word) => {
+      const syllables = 0 // TODO
+      return sum + syllables
+    }, 0)
 
     const wordsPerSentence = wordCount / sentenceCount
     const charPerWord = charCount / wordCount
+    const syllablesPerWord = syllableCount / wordCount
 
     sheet[WPSColumn + row] = {
       t: 'n', // type: number
@@ -81,6 +88,11 @@ const countWords = () => {
     sheet[charPWColumn + row] = {
       t: 'n', // type: number
       v: charPerWord
+    }
+
+    sheet[syllPWColumn + row] = {
+      t: 'n',
+      v: syllablesPerWord
     }
   })
 }
