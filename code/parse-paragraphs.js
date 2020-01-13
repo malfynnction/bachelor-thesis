@@ -11,28 +11,26 @@ const naderiCountColumn = 'H'
 const WPSColumn = 'I' // words per sentence
 const charPWColumn = 'J' // characters per word
 
-const paragraphs = getColumn(filePath, sheetName, paragraphColumn)
+let paragraphs = getColumn(filePath, sheetName, paragraphColumn)
 const workbook = xlsx.readFile(filePath)
 const sheet = workbook.Sheets[sheetName]
 
 const footnoteReference = /\[\d+\]/g
 
 const removeFootnoteReferences = () => {
-  const newParagraphs = paragraphs.map(({cell, value}) => {
+  paragraphs = paragraphs.map(({cell, value}) => {
     return {
       cell: cell, 
       value: value.replace(footnoteReference, '')
     }
   })
 
-  newParagraphs.forEach(({cell, value}) => {
+  paragraphs.forEach(({cell, value}) => {
     sheet[cell] = {
       t: 's', // type: string
       v: value
     }
   })
-
-  xlsx.writeFile(workbook, filePath)
 }
 
 const countNaderiSentences = () => {
@@ -58,8 +56,6 @@ const countNaderiSentences = () => {
       v: count[cell] || 0
     }
   })
-
-  xlsx.writeFile(workbook, filePath)
 }
 
 const countWords = () => {
@@ -87,8 +83,10 @@ const countWords = () => {
       v: charPerWord
     }
   })
-
-  xlsx.writeFile(workbook, filePath)
 }
 
+removeFootnoteReferences()
+countNaderiSentences()
 countWords()
+
+xlsx.writeFile(workbook, filePath)
