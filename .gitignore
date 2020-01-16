@@ -1,7 +1,9 @@
 .DS_Store
 Ausschreibung.pdf
-exposé/*
-texts/*
+exposé/
+texts/
 Full-Dataset-Naderi19.xlsx
-code/node_modules/*
+code/node_modules/
 ~$*.xlsx
+ThesisTemplate/
+examples/
