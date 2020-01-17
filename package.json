@@ -1,0 +1,53 @@
+{
+  "name": "bachelor-thesis",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "cd ui && npm run start",
+    "build": "cd ui && npm run build",
+    "test": "cd ui && npm run test",
+    "eject": "cd ui && npm run eject",
+    "lint": "eslint '{ui,code}/**/*.js'",
+    "prettier": "prettier --write '**/*.js'"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "react-router-dom": "^5.1.2",
+    "xlsx": "^0.15.4"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-react-app": "^5.1.0",
+    "eslint-plugin-import": "2.18.2",
+    "eslint-plugin-react": "^7.18.0",
+    "eslint-config-prettier": "^6.9.0",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-promise": "^4.2.1",
+    "husky": "^4.0.10",
+    "lint-staged": "^9.5.0",
+    "prettier": "^1.19.1"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead"
+  ],
+  "engines": {
+    "node": ">=12.13.0 <13"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ]
+  }
+}

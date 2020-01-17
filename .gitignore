@@ -3,7 +3,11 @@ Ausschreibung.pdf
 exposé/
 texts/
 Full-Dataset-Naderi19.xlsx
-code/node_modules/
+node_modules/
 ~$*.xlsx
 ThesisTemplate/
 examples/
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

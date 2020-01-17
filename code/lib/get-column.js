@@ -5,12 +5,14 @@ module.exports = (filePath, sheetName, paragraphColumn) => {
   const cells = workbook.Sheets[sheetName]
 
   // get the values of all cells in the specified column
-  const paragraphs = Object.keys(cells).filter(cell => cell.startsWith(paragraphColumn)).map(cell => {
-    return {
-      cell: cell,
-      value: cells[cell].v
-    }
-  })
+  const paragraphs = Object.keys(cells)
+    .filter(cell => cell.startsWith(paragraphColumn))
+    .map(cell => {
+      return {
+        cell: cell,
+        value: cells[cell].v,
+      }
+    })
 
   // remove header cell
   return paragraphs.slice(1)

@@ -9,13 +9,11 @@ module.exports = {
     'eslint:recommended',
     'plugin:prettier/recommended',
     'plugin:node/recommended',
+    'plugin:react/recommended',
   ],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
-  },
-  parserOptions: {
-    ecmaVersion: 2018,
   },
   plugins: ['react', 'prettier', 'promise'],
   rules: {
@@ -27,5 +25,9 @@ module.exports = {
   },
   parserOptions: {
     sourceType: 'module',
+    ecmaVersion: 2018,
+    ecmaFeatures: {
+      jsx: true,
+    },
   },
 }

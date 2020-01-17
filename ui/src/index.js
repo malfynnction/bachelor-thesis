@@ -32,7 +32,7 @@ const App = () => {
             <Session />
           </Route>
           <Route path="/">
-            <div>Oops, that doesn't seem to exist</div>
+            <div>Oops, that doesnt seem to exist</div>
           </Route>
         </Switch>
       </div>
