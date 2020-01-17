@@ -57,7 +57,9 @@ class Item extends React.Component {
             onTimeUpdate={time => this.setState({ readingTime: time })}
           />
 
-          <Questions />
+          <Questions
+            onChange={(key, value) => this.setState({ [key]: value })}
+          />
           <Tasks />
         </StepWizard>
       </form>
