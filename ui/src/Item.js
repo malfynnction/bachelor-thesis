@@ -4,6 +4,15 @@ import { Read, Questions, Tasks } from './Steps'
 
 const Nav = props => {
   const isLastStep = props.currentStep === props.totalSteps
+  const isLastItem = props.isLastItem
+  let buttonText = 'Next step'
+  if (isLastStep) {
+    buttonText = 'Next item'
+    if (isLastItem) {
+      buttonText = 'Finish'
+    }
+  }
+
   return (
     <Fragment>
       <button
@@ -16,7 +25,7 @@ const Nav = props => {
           }
         }}
       >
-        {isLastStep ? 'Next item' : 'Next step'}
+        {buttonText}
       </button>
     </Fragment>
   )
@@ -31,19 +40,27 @@ class Item extends React.Component {
   }
 
   render() {
-    const { item, index } = this.props
+    const { item, index, isLastItem } = this.props
     return (
-      <Fragment>
+      <form onSubmit={e => e.preventDefault()}>
         <h3>Item {index}</h3>
-        <StepWizard nav={<Nav onNextItem={() => this.props.onNextItem()} />}>
+        <StepWizard
+          nav={
+            <Nav
+              onNextItem={() => this.props.onNextItem(this.state)}
+              isLastItem={isLastItem}
+            />
+          }
+        >
           <Read
             item={item}
             onTimeUpdate={time => this.setState({ readingTime: time })}
           />
+
           <Questions />
           <Tasks />
         </StepWizard>
-      </Fragment>
+      </form>
     )
   }
 }
