@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom'
 import './index.css'
 import * as serviceWorker from './serviceWorker'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
-import Instructions from './Instructions'
-import Session from './Session'
-import Start from './Start'
+import Instructions from './components/Instructions'
+import Session from './components/Session'
+import Start from './components/Start'
 
 const App = () => {
   return (

@@ -28,7 +28,6 @@ class Session extends React.Component {
         item={this.state.items[this.state.index]}
         isLastItem={isLastItem}
         onNextItem={result => {
-          console.log(result)
           if (isLastItem) {
             window.location.href = 'http://localhost:3000'
           } else {

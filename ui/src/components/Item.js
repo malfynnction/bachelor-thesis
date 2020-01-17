@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react'
 import StepWizard from 'react-step-wizard'
-import { Read, Questions, Tasks } from './Steps'
+import Read from './Read'
+import Questions from './Questions'
+import Tasks from './Tasks'
 
 const Nav = props => {
   const isLastStep = props.currentStep === props.totalSteps
@@ -31,11 +33,17 @@ const Nav = props => {
   )
 }
 
+const initialState = {
+  readingTime: 0, // in milliseconds
+  questions: {},
+  tasks: {},
+}
+
 class Item extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      readingTime: 0, // in milliseconds
+      ...initialState,
     }
   }
 
@@ -47,7 +55,10 @@ class Item extends React.Component {
         <StepWizard
           nav={
             <Nav
-              onNextItem={() => this.props.onNextItem(this.state)}
+              onNextItem={() => {
+                this.props.onNextItem(this.state)
+                this.setState({ ...initialState })
+              }}
               isLastItem={isLastItem}
             />
           }
@@ -58,7 +69,12 @@ class Item extends React.Component {
           />
 
           <Questions
-            onChange={(key, value) => this.setState({ [key]: value })}
+            onChange={(key, value) =>
+              this.setState({
+                questions: { ...this.state.questions, [key]: value },
+              })
+            }
+            answers={this.state.questions}
           />
           <Tasks />
         </StepWizard>
