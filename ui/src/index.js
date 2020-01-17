@@ -5,6 +5,7 @@ import * as serviceWorker from './serviceWorker'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import Instructions from './Instructions'
 import Session from './Session'
+import Start from './Start'
 
 const App = () => {
   return (
@@ -16,10 +17,10 @@ const App = () => {
               <Link to="/">Start</Link>
             </li>
             <li>
-              <Link to="/about">About</Link>
+              <Link to="/instructions">Instructions</Link>
             </li>
             <li>
-              <Link to="/users">Users</Link>
+              <Link to="/session">Session</Link>
             </li>
           </ul>
         </nav>
@@ -32,7 +33,7 @@ const App = () => {
             <Session />
           </Route>
           <Route path="/">
-            <div>Oops, that doesnt seem to exist</div>
+            <Start />
           </Route>
         </Switch>
       </div>
