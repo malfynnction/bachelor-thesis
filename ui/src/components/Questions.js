@@ -1,22 +1,21 @@
 import React, { Fragment } from 'react'
 
 const Question = props => {
-  const questionKey = `question-${props.index}`
   return (
     <Fragment>
       <div>{props.question.label}</div>
       {props.answers.map(({ label, value }, i) => {
         return (
-          <div key={`${questionKey}-answer-${i}`}>
+          <div key={`${props.question.key}-${value}`}>
             <input
               onChange={() => props.onChange(value)}
               type="radio"
-              name={questionKey}
-              id={`${questionKey}-answer-${i}`}
+              name={props.question.key}
+              id={`${props.question.key}-${value}`}
               value={value}
               checked={value === props.checkedAnswer}
             />
-            <label htmlFor={`${questionKey}-answer-${i}`}>{label}</label>
+            <label htmlFor={`${props.question.key}-${value}`}>{label}</label>
           </div>
         )
       })}

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment, useState } from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 import * as serviceWorker from './serviceWorker'
@@ -6,28 +6,35 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import Instructions from './components/Instructions'
 import Session from './components/Session'
 import Start from './components/Start'
+import Demographics from './components/Demographics'
+import participantId from './lib/participant-id'
 
 const App = () => {
+  const id = participantId.get()
+  const [showId, setShowId] = useState(Boolean(id))
   return (
     <Router>
       <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Start</Link>
-            </li>
-            <li>
-              <Link to="/instructions">Instructions</Link>
-            </li>
-            <li>
-              <Link to="/session">Session</Link>
-            </li>
-          </ul>
-        </nav>
+        {showId ? (
+          <Fragment>
+            <div>Participant ID: {id}</div>
+            <button
+              onClick={() => {
+                participantId.clear()
+                setShowId(false)
+              }}
+            >
+              <a href="http://localhost:3000">Log out</a>
+            </button>
+          </Fragment>
+        ) : null}
 
         <Switch>
           <Route path="/instructions">
             <Instructions />
+          </Route>
+          <Route path="/demographics">
+            <Demographics />
           </Route>
           <Route path="/session">
             <Session />
