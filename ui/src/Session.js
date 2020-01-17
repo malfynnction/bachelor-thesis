@@ -1,7 +1,6 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import shuffle from 'lodash.shuffle'
-import StepWizard from 'react-step-wizard'
-import { Read, Questions, Tasks } from './Steps'
+import Item from './Item'
 
 const getItemsToRate = () => {
   return [
@@ -12,54 +11,28 @@ const getItemsToRate = () => {
   ]
 }
 
-const Nav = props => {
-  const isLastStep = props.currentStep === props.totalSteps
-  return (
-    <Fragment>
-      <button
-        onClick={() => {
-          if (isLastStep) {
-            props.onNextItem()
-            props.firstStep()
-          } else {
-            props.nextStep()
-          }
-        }}
-      >
-        {isLastStep ? 'Next item' : 'Next step'}
-      </button>
-    </Fragment>
-  )
-}
-
 class Session extends React.Component {
   constructor(props) {
     super(props)
     const items = getItemsToRate()
-    this.state = { index: 0, items: shuffle(items) }
+    this.state = {
+      index: 0,
+      items: shuffle(items),
+    }
   }
   render() {
     return (
-      <Fragment>
-        <h3>Item {this.state.index}</h3>
-        <StepWizard
-          nav={
-            <Nav
-              onNextItem={() => {
-                if (this.state.index + 1 < this.state.items.length) {
-                  this.setState({ index: this.state.index + 1 })
-                } else {
-                  window.location.href = 'http://localhost:3000'
-                }
-              }}
-            />
+      <Item
+        index={this.state.index}
+        item={this.state.items[this.state.index]}
+        onNextItem={() => {
+          if (this.state.index + 1 < this.state.items.length) {
+            this.setState({ index: this.state.index + 1 })
+          } else {
+            window.location.href = 'http://localhost:3000'
           }
-        >
-          <Read item={this.state.items[this.state.index]} />
-          <Questions />
-          <Tasks />
-        </StepWizard>
-      </Fragment>
+        }}
+      />
     )
   }
 }
