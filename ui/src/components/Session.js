@@ -23,18 +23,20 @@ class Session extends React.Component {
   render() {
     const isLastItem = this.state.index + 1 === this.state.items.length
     return (
-      <Item
-        index={this.state.index}
-        item={this.state.items[this.state.index]}
-        isLastItem={isLastItem}
-        onNextItem={result => {
-          if (isLastItem) {
-            window.location.href = 'http://localhost:3000'
-          } else {
-            this.setState({ index: this.state.index + 1 })
-          }
-        }}
-      />
+      <div className="tu-border center-box">
+        <Item
+          index={this.state.index}
+          item={this.state.items[this.state.index]}
+          isLastItem={isLastItem}
+          onNextItem={result => {
+            if (isLastItem) {
+              window.location.href = 'http://localhost:3000'
+            } else {
+              this.setState({ index: this.state.index + 1 })
+            }
+          }}
+        />
+      </div>
     )
   }
 }

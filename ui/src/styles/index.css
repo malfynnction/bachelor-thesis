@@ -26,7 +26,12 @@ code {
   border-radius: 15px;
 }
 
+.tu-border > * {
+  padding: 0 20px;
+}
+
 .layout {
+  min-height: 80vh;
   display: flex;
   align-items: center; /*vertical alignment*/
   justify-content: center; /*horizontal alignment*/
@@ -35,4 +40,8 @@ code {
 .center-box {
   width: 50vw;
   min-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /*horizontal alignment*/
+  justify-content: center; /*vertical alignment*/
 }

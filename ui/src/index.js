@@ -16,7 +16,11 @@ const App = () => {
   return (
     <Router>
       <header>
-        <img src="logo.png" id="header-img" />
+        <img
+          src="logo.png"
+          id="header-img"
+          alt="logo of the Technische Universität Berlin"
+        />
         <div id="participant-id">
           {showId ? (
             <Fragment>
