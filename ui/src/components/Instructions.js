@@ -3,7 +3,7 @@ import participantId from '../lib/participant-id'
 import { Link } from 'react-router-dom'
 
 const Instructions = () => (
-  <div className="tu-border center-box">
+  <div className="tu-border center-box background-pink">
     <h2>Instructions</h2>
     <p>
       Hello! This study is part of my Bachelor's thesis, in which I'm composing

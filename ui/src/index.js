@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react'
 import ReactDOM from 'react-dom'
-import './styles/index.css'
 import './bootstrap/bootstrap.css'
+import './styles/index.css'
 import * as serviceWorker from './serviceWorker'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import Instructions from './components/Instructions'
@@ -16,11 +16,13 @@ const App = () => {
   return (
     <Router>
       <header>
-        <img
-          src="logo.png"
-          id="header-img"
-          alt="logo of the Technische Universität Berlin"
-        />
+        <Link to="/">
+          <img
+            src="logo.png"
+            id="header-img"
+            alt="logo of the Technische Universität Berlin"
+          />
+        </Link>
         <div id="participant-id">
           {showId ? (
             <Fragment>

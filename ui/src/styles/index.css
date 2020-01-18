@@ -12,6 +12,15 @@ code {
     monospace;
 }
 
+header {
+  border-bottom: 1px solid #cccccc;
+}
+
+a,
+a:hover {
+  color: #c50e1f;
+}
+
 #root {
   height: 100vh;
 }
@@ -24,10 +33,7 @@ code {
 .tu-border {
   border: 2px solid #c50e1f;
   border-radius: 15px;
-}
-
-.tu-border > * {
-  padding: 0 20px;
+  padding: 20px;
 }
 
 .layout {
@@ -44,4 +50,8 @@ code {
   flex-direction: column;
   align-items: center; /*horizontal alignment*/
   justify-content: center; /*vertical alignment*/
+}
+
+.background-pink {
+  background-color: #e7eef2;
 }
