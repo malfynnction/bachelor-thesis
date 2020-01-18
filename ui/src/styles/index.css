@@ -11,3 +11,28 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+#root {
+  height: 100vh;
+}
+
+#header-img {
+  padding: 10px 1em;
+  height: 75px;
+}
+
+.tu-border {
+  border: 2px solid #c50e1f;
+  border-radius: 15px;
+}
+
+.layout {
+  display: flex;
+  align-items: center; /*vertical alignment*/
+  justify-content: center; /*horizontal alignment*/
+}
+
+.center-box {
+  width: 50vw;
+  min-height: 50vh;
+}

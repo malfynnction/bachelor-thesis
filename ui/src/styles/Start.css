@@ -1,0 +1,5 @@
+#welcome-box {
+  display: flex;
+  align-items: center; /*vertical alignment*/
+  justify-content: center; /*horizontal alignment*/
+}

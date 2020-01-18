@@ -1,9 +1,9 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import participantId from '../lib/participant-id'
 import { Link } from 'react-router-dom'
 
 const Instructions = () => (
-  <Fragment>
+  <div className="tu-border center-box">
     <h2>Instructions</h2>
     <p>
       Hello! This study is part of my Bachelor's thesis, in which I'm composing
@@ -44,7 +44,7 @@ const Instructions = () => (
     </form>
     <p>If you don't have an ID yet, please click here:</p>
     <Link to="/demographics">Start</Link>
-  </Fragment>
+  </div>
 )
 
 export default Instructions

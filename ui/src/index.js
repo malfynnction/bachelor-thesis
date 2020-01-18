@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react'
 import ReactDOM from 'react-dom'
-import './index.css'
+import './styles/index.css'
 import './bootstrap/bootstrap.css'
 import * as serviceWorker from './serviceWorker'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
@@ -15,22 +15,26 @@ const App = () => {
   const [showId, setShowId] = useState(Boolean(id))
   return (
     <Router>
-      <div>
-        {showId ? (
-          <Fragment>
-            <div>Participant ID: {id}</div>
-            <Link
-              to="/"
-              onClick={() => {
-                participantId.clear()
-                setShowId(false)
-              }}
-            >
-              Log out
-            </Link>
-          </Fragment>
-        ) : null}
-
+      <header>
+        <img src="logo.png" id="header-img" />
+        <div id="participant-id">
+          {showId ? (
+            <Fragment>
+              Participant ID: {id}
+              <Link
+                to="/"
+                onClick={() => {
+                  participantId.clear()
+                  setShowId(false)
+                }}
+              >
+                Log out
+              </Link>
+            </Fragment>
+          ) : null}
+        </div>
+      </header>
+      <div className="layout">
         <Switch>
           <Route path="/instructions">
             <Instructions />
