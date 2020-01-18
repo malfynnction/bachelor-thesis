@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
 import participantId from '../lib/participant-id'
+import { Link } from 'react-router-dom'
 
 const Instructions = () => (
   <Fragment>
@@ -42,7 +43,7 @@ const Instructions = () => (
       <button>Start</button>
     </form>
     <p>If you don't have an ID yet, please click here:</p>
-    <a href="http://localhost:3000/demographics">Start</a>
+    <Link to="/demographics">Start</Link>
   </Fragment>
 )
 

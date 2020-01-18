@@ -19,14 +19,15 @@ const App = () => {
         {showId ? (
           <Fragment>
             <div>Participant ID: {id}</div>
-            <button
+            <Link
+              to="/"
               onClick={() => {
                 participantId.clear()
                 setShowId(false)
               }}
             >
-              <a href="http://localhost:3000">Log out</a>
-            </button>
+              Log out
+            </Link>
           </Fragment>
         ) : null}
 
@@ -35,7 +36,12 @@ const App = () => {
             <Instructions />
           </Route>
           <Route path="/demographics">
-            <Demographics />
+            <Demographics
+              createId={() => {
+                participantId.create()
+                setShowId(true)
+              }}
+            />
           </Route>
           <Route path="/session">
             <Session />

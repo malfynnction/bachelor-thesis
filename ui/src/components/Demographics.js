@@ -1,16 +1,17 @@
 import React, { Fragment } from 'react'
-import participantId from '../lib/participant-id'
+import { Link } from 'react-router-dom'
 
-const Demographics = () => (
+const Demographics = props => (
   <Fragment>
     <div>Here be demographic questions</div>
-    <button
+    <Link
       onClick={() => {
-        participantId.create()
+        props.createId()
       }}
+      to="/session"
     >
-      <a href="http://localhost:3000/session">Start</a>
-    </button>
+      Start
+    </Link>
   </Fragment>
 )
 
