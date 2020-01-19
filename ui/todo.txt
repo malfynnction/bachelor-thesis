@@ -1,6 +1,5 @@
 - Buttons vs. Links
 - ID & logout placement
-- bug when toggling item in Read
 - texts
-- accessibility (z. B. Instructions form,...)
+- accessibility (z. B. Instructions form, hold button to read,...)
 - wizard styling
