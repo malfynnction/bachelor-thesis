@@ -3,6 +3,7 @@ import StepWizard from 'react-step-wizard'
 import Read from './Read'
 import Questions from './Questions'
 import Tasks from './Tasks'
+import '../styles/Item.css'
 
 const Nav = props => {
   const isLastStep = props.currentStep === props.totalSteps
@@ -15,8 +16,14 @@ const Nav = props => {
     }
   }
 
+  const steps = new Array(props.totalSteps).fill()
   return (
     <Fragment>
+      <div>
+        {steps.map((_, i) => {
+          return props.currentStep - 1 === i ? 'x' : 'o'
+        })}
+      </div>
       <button
         onClick={() => {
           if (isLastStep) {
@@ -62,6 +69,7 @@ class Item extends React.Component {
               isLastItem={isLastItem}
             />
           }
+          className="wizard"
         >
           <Read
             item={item}

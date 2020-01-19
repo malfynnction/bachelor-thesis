@@ -2,3 +2,5 @@
 - texts
 - accessibility (z. B. Instructions form, hold button to read,...)
 - wizard styling
+- remove bootstrap js
+- tasks
