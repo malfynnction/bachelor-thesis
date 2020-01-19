@@ -56,7 +56,7 @@ class Demographics extends React.Component {
 
   render() {
     return (
-      <div className="tu-border center-box centered-content">
+      <div className="tu-border tu-glow center-box centered-content">
         <h3>Demographic Questions</h3>
         <div>Please fill out the questions below for statistical reasons:</div>
         <form

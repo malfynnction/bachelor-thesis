@@ -8,7 +8,7 @@ const Instructions = () => {
   const loggedInId = participantId.get()
   return (
     <Fragment>
-      <div className="tu-border center-box ">
+      <div className="tu-border tu-glow center-box ">
         <div className="centered-content">
           <h2>Instructions</h2>
         </div>
@@ -88,10 +88,10 @@ const Instructions = () => {
         >
           Start
         </Link>
+        {error.length > 0 ? (
+          <div className="tu-border error-box background-pink">{error}</div>
+        ) : null}
       </div>
-      {error.length > 0 ? (
-        <div className="tu-border error-box background-pink">{error}</div>
-      ) : null}
     </Fragment>
   )
 }

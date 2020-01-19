@@ -64,6 +64,9 @@ select:focus {
   border-radius: 15px;
   padding: 20px;
   background-color: white;
+}
+
+.tu-glow {
   box-shadow: 0 0 10px #c50e1f66;
 }
 
@@ -85,5 +88,5 @@ select:focus {
 }
 
 .background-pink {
-  background-color: #e7eef2;
+  background-color: #fde7e9;
 }
