@@ -9,7 +9,9 @@ const Instructions = () => {
   return (
     <Fragment>
       <div className="tu-border center-box ">
-        <h2>Instructions</h2>
+        <div className="centered-content">
+          <h2>Instructions</h2>
+        </div>
         <p>
           Hello! This study is part of my Bachelor's thesis, in which I'm
           composing a data set of German sentences and paragraphs and a rating
@@ -29,10 +31,23 @@ const Instructions = () => {
         <h5>1. Reading</h5>
         <p>
           In the first step, you can read the sentence/paragraph that you will
-          be evaluating. <br />
-          <em>Include Screenshots</em>
+          be evaluating.
         </p>
-        <h5>And then some more stuff</h5>
+        <h5>2. Questions</h5>
+        <p>
+          After that, you will be asked questions about the text, e.g. how well
+          you understood it.
+        </p>
+        <h5>3. Tasks</h5>
+        <p>
+          In the last step, you will perform a (several???) small tasks
+          involving the sentence, like filling in missing words.
+        </p>
+        <h5>And then repeat</h5>
+        <p>
+          After that, your responses will be saved and you can go on to the next
+          text.
+        </p>
         <p>
           If you have already done a session in the past, please enter your
           participant ID and click "Start"
