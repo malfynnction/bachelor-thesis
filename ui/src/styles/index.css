@@ -5,6 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height: 100vh;
+  background-color: #f9f7f7;
 }
 
 code {
@@ -58,11 +60,6 @@ select:focus {
   box-shadow: 0 0 5px #9fb6c4;
 }
 
-#root {
-  height: 100vh;
-  background-color: #f9f7f7;
-}
-
 .tu-border {
   border: 2px solid #c50e1f;
   border-radius: 15px;
@@ -85,6 +82,7 @@ select:focus {
 .center-box {
   width: 50vw;
   min-height: 50vh;
+  margin: 15px 0px;
 }
 
 .background-pink {

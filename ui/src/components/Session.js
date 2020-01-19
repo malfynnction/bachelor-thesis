@@ -4,10 +4,8 @@ import Item from './Item'
 
 const getItemsToRate = () => {
   return [
-    'First Sentence',
-    'Second Sentence',
-    "Now here's a paragraph",
-    'And another paragraph',
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt enim ac turpis laoreet sagittis. Mauris et placerat enim, sit amet mollis mi. In rhoncus sit amet dui vel vulputate. Nunc pellentesque, augue et semper eleifend, mi augue fermentum lectus, sit amet fringilla est odio sit amet leo. Phasellus efficitur tortor sit amet purus luctus dignissim. Sed quis felis id est finibus ultrices. In dolor sapien, efficitur at pretium id, vestibulum ut elit. Sed dui lectus, commodo ac ipsum euismod, tincidunt vehicula eros. Suspendisse tristique posuere semper. Integer eu nibh pulvinar, commodo nisl pellentesque, tincidunt nibh. Donec elementum nisi in turpis finibus tincidunt vitae vel ligula. Ut tempor tellus ut dolor sollicitudin, non fermentum dui ullamcorper. Donec volutpat erat ex, eget sollicitudin nunc gravida ut. Curabitur placerat dignissim placerat. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
   ]
 }
 

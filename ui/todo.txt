@@ -3,3 +3,5 @@
 - accessibility (z. B. Instructions form, hold button to read,...)
 - wizard styling
 - tasks
+- make it safe to reload
+- scroll up after each wizard step

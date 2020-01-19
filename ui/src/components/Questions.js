@@ -1,9 +1,12 @@
 import React, { Fragment } from 'react'
+import '../styles/Questions.css'
 
 const Question = props => {
   return (
-    <Fragment>
-      <div>{props.question.label}</div>
+    <div className="question-box">
+      <div>
+        <strong>{props.question.label}</strong>
+      </div>
       {props.answers.map(({ label, value }, i) => {
         return (
           <div key={`${props.question.key}-${value}`}>
@@ -19,7 +22,7 @@ const Question = props => {
           </div>
         )
       })}
-    </Fragment>
+    </div>
   )
 }
 
@@ -38,6 +41,52 @@ const Questions = props => {
         checkedAnswer={props.answers['q0']}
         onChange={value => {
           props.onChange('q0', value)
+        }}
+      />
+      <Question
+        question={{
+          label: 'Do you know what happens when I add more questions?',
+          key: 'q1',
+        }}
+        answers={[
+          { label: 'yes', value: 'y' },
+          { label: 'no', value: 'n' },
+          { label: "I don't even care", value: 'idc' },
+        ]}
+        checkedAnswer={props.answers['q1']}
+        onChange={value => {
+          props.onChange('q1', value)
+        }}
+      />
+      <Question
+        question={{
+          label: 'Question?',
+          key: 'q2',
+        }}
+        answers={[
+          { label: 'answer 1', value: 1 },
+          { label: 'answer 2', value: 2 },
+          { label: 'answer 3', value: 3 },
+          { label: 'answer 4', value: 4 },
+          { label: 'answer 5', value: 5 },
+          { label: 'answer 6', value: 6 },
+        ]}
+        checkedAnswer={props.answers['q2']}
+        onChange={value => {
+          props.onChange('q2', value)
+        }}
+      />
+      <Question
+        question={{ label: 'Did you have to scroll to see this?', key: 'q3' }}
+        answers={[
+          { label: 'Yes', value: 'y' },
+          { label: "I can't see this", value: 'what' },
+          { label: 'No, your site is broken', value: 'damn' },
+          { label: 'No, I have a big screen', value: 'big' },
+        ]}
+        checkedAnswer={props.answers['q3']}
+        onChange={value => {
+          props.onChange('q3', value)
         }}
       />
     </Fragment>

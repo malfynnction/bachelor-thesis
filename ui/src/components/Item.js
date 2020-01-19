@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import StepWizard from 'react-step-wizard'
 import Read from './Read'
 import Questions from './Questions'
@@ -18,13 +18,13 @@ const Nav = props => {
 
   const steps = new Array(props.totalSteps).fill()
   return (
-    <Fragment>
+    <div className="centered-content">
       <div>
         {steps.map((_, i) => {
           const active = props.currentStep - 1 === i
           const red = '#c50e1f'
           return (
-            <svg height="14" width="14">
+            <svg height="14" width="14" key={`nav-circle-${i}`}>
               <circle
                 cx="7"
                 cy="7"
@@ -48,7 +48,7 @@ const Nav = props => {
       >
         {buttonText}
       </button>
-    </Fragment>
+    </div>
   )
 }
 
