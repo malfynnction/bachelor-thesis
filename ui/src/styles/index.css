@@ -17,6 +17,21 @@ header {
   background-color: white;
 }
 
+#header-img {
+  padding: 10px 1em;
+  height: 5rem;
+}
+
+#participant-id {
+  position: absolute;
+  top: 2rem;
+  right: 20px;
+}
+
+#participant-id-label {
+  padding-right: 20px;
+}
+
 a,
 a:hover {
   color: #c50e1f;
@@ -46,11 +61,6 @@ select:focus {
 #root {
   height: 100vh;
   background-color: #f9f7f7;
-}
-
-#header-img {
-  padding: 10px 1em;
-  height: 75px;
 }
 
 .tu-border {

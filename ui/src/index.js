@@ -24,13 +24,13 @@ const App = () => {
           <img
             src="logo.png"
             id="header-img"
-            alt="logo of the Technische Universität Berlin"
+            alt="Logo of the Technische Universität Berlin"
           />
         </Link>
         <div id="participant-id">
           {showId ? (
             <Fragment>
-              Participant ID: {id}
+              <span id="participant-id-label">Participant ID: {id}</span>
               <Link
                 to="/"
                 onClick={() => {

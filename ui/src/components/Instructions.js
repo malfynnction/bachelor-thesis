@@ -51,7 +51,11 @@ const Instructions = () => {
             }
           }}
         >
-          <input type="text" name="participantId" />
+          <input
+            type="text"
+            name="participantId"
+            placeholder="Participant ID"
+          />
           <button>Start</button>
         </form>
         <p>If you don't have an ID yet, please click here:</p>

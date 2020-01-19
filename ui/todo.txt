@@ -1,5 +1,4 @@
 - Buttons vs. Links
-- ID & logout placement
 - texts
 - accessibility (z. B. Instructions form, hold button to read,...)
 - wizard styling
