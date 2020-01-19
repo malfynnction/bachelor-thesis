@@ -25,6 +25,7 @@ class Demographics extends React.Component {
               this.setState({ [key]: e.target.value })
             }}
             value={this.state[key]}
+            required
           >
             <option value={''} disabled>
               Please Select
@@ -46,6 +47,7 @@ class Demographics extends React.Component {
             name={key}
             type={type}
             value={this.state[key]}
+            required
           />
         )}
       </div>
@@ -56,15 +58,9 @@ class Demographics extends React.Component {
     return (
       <div className="tu-border center-box centered-content">
         <h3>Demographic Questions</h3>
+        <div>Please fill out the questions below for statistical reasons:</div>
         <form
-          onSubmit={e => {
-            const missingFields = Object.keys(this.state).filter(
-              key => this.state[key] === defaultState[key]
-            )
-            if (missingFields.length > 0) {
-              e.preventDefault()
-              return
-            }
+          onSubmit={() => {
             this.props.createUser(this.state)
           }}
           action="/session"
