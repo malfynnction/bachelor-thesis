@@ -21,7 +21,19 @@ const Nav = props => {
     <Fragment>
       <div>
         {steps.map((_, i) => {
-          return props.currentStep - 1 === i ? 'x' : 'o'
+          const active = props.currentStep - 1 === i
+          const red = '#c50e1f'
+          return (
+            <svg height="14" width="14">
+              <circle
+                cx="7"
+                cy="7"
+                r="6"
+                fill={active ? red : 'none'}
+                stroke={red}
+              />
+            </svg>
+          )
         })}
       </div>
       <button
