@@ -1,20 +1,23 @@
-import React, { Fragment } from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react'
 
 class Demographics extends React.Component {
   render() {
     return (
-      <Fragment>
-        <div>Here be demographic questions</div>
-        <Link
-          onClick={() => {
+      <div className="tu-border center-box">
+        <h3>Demographic Questions</h3>
+        <form
+          onSubmit={() => {
             this.props.createUser({ foo: 'bar', test: true })
           }}
-          to="/session"
+          action="/session"
         >
-          Start
-        </Link>
-      </Fragment>
+          <div>
+            <label htmlFor={'id'}>Question?</label>
+            <input onChange={() => {}} type="text" />
+          </div>
+          <button type="submit">Start</button>
+        </form>
+      </div>
     )
   }
 }

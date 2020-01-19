@@ -44,7 +44,7 @@ const App = () => {
           ) : null}
         </div>
       </header>
-      <div className="layout">
+      <div className="layout centered-content">
         <Switch>
           <Route path="/instructions">
             <Instructions />

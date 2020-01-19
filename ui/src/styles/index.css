@@ -41,21 +41,18 @@ a:hover {
 
 .layout {
   min-height: 80vh;
+}
+
+.centered-content {
   display: flex;
   flex-direction: column;
-  align-items: center; /*vertical alignment*/
-  justify-content: center; /*horizontal alignment*/
+  align-items: center; /*horizontal alignment*/
+  justify-content: center; /*vertical alignment*/
 }
 
 .center-box {
   width: 50vw;
   min-height: 50vh;
-
-  /* TODO: this is what causes the toggle problems in Read */
-  display: flex;
-  flex-direction: column;
-  align-items: center; /*horizontal alignment*/
-  justify-content: center; /*vertical alignment*/
 }
 
 .background-pink {
