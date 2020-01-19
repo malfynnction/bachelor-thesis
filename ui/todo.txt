@@ -2,6 +2,6 @@
 - ID & logout placement
 - bug when toggling item in Read
 - texts
-- accessibility
+- accessibility (z. B. Instructions form,...)
 - wizard styling
 - demographic questions

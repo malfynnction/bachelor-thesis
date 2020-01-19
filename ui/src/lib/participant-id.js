@@ -10,6 +10,7 @@ module.exports = {
   },
   create: () => {
     const id = 42 // TODO: random or get # participants
-    return sessionStorage.setItem('participantId', id)
+    sessionStorage.setItem('participantId', id)
+    return id
   },
 }
