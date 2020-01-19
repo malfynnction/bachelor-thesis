@@ -4,4 +4,3 @@
 - texts
 - accessibility (z. B. Instructions form,...)
 - wizard styling
-- demographic questions

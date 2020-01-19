@@ -22,8 +22,25 @@ a:hover {
   color: #c50e1f;
 }
 
+label.block {
+  display: block;
+  margin-bottom: 0px;
+}
+
 label {
   padding: 5px;
+}
+
+input,
+select {
+  margin-bottom: 15px;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border: 2px solid #9fb6c4;
+  box-shadow: 0 0 5px #9fb6c4;
 }
 
 #root {
@@ -41,6 +58,7 @@ label {
   border-radius: 15px;
   padding: 20px;
   background-color: white;
+  box-shadow: 0 0 10px #c50e1f66;
 }
 
 .layout {
@@ -51,7 +69,7 @@ label {
   display: flex;
   flex-direction: column;
   align-items: center; /*horizontal alignment*/
-  justify-content: center; /*vertical alignment*/
+  justify-content: space-evenly; /*vertical alignment*/
 }
 
 .center-box {

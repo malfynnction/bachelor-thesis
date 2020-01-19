@@ -16,7 +16,9 @@ class Demographics extends React.Component {
   renderQuestion(label, key, type) {
     return (
       <div>
-        <label htmlFor={key}>{label}</label>
+        <label htmlFor={key} className="block">
+          {label}
+        </label>
         {type === 'dropdown' ? (
           <select
             onChange={e => {
@@ -52,11 +54,10 @@ class Demographics extends React.Component {
 
   render() {
     return (
-      <div className="tu-border center-box">
+      <div className="tu-border center-box centered-content">
         <h3>Demographic Questions</h3>
         <form
           onSubmit={e => {
-            console.log(this.state)
             const missingFields = Object.keys(this.state).filter(
               key => this.state[key] === defaultState[key]
             )
