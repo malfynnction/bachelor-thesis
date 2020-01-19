@@ -1,0 +1,8 @@
+.error-box {
+  width: 50vw;
+  position: relative;
+  top: 15px;
+  display: flex;
+  align-items: center; /*horizontal alignment*/
+  justify-content: center; /*vertical alignment*/
+}

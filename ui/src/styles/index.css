@@ -14,6 +14,7 @@ code {
 
 header {
   border-bottom: 1px solid #cccccc;
+  background-color: white;
 }
 
 a,
@@ -23,6 +24,7 @@ a:hover {
 
 #root {
   height: 100vh;
+  background-color: #f9f7f7;
 }
 
 #header-img {
@@ -34,11 +36,13 @@ a:hover {
   border: 2px solid #c50e1f;
   border-radius: 15px;
   padding: 20px;
+  background-color: white;
 }
 
 .layout {
   min-height: 80vh;
   display: flex;
+  flex-direction: column;
   align-items: center; /*vertical alignment*/
   justify-content: center; /*horizontal alignment*/
 }
@@ -46,6 +50,8 @@ a:hover {
 .center-box {
   width: 50vw;
   min-height: 50vh;
+
+  /* TODO: this is what causes the toggle problems in Read */
   display: flex;
   flex-direction: column;
   align-items: center; /*horizontal alignment*/
