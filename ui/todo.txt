@@ -1,0 +1,7 @@
+- Buttons vs. Links
+- ID & logout placement
+- bug when toggling item in Read
+- texts
+- accessibility
+- wizard styling
+- demographic questions
