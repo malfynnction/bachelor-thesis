@@ -22,7 +22,7 @@ class Read extends React.Component {
   render() {
     return (
       <Fragment>
-        <div>Here is a sentence/paragraph that you should read: </div>
+        <div>Here is a {this.props.item.type} that you should read: </div>
         <Timer startImmediately={false} timeToUpdate={100}>
           {timerControl => (
             <Fragment>
@@ -31,7 +31,7 @@ class Read extends React.Component {
                   this.state.showItem ? 'display' : 'hidden'
                 }`}
               >
-                <p>{this.props.item}</p>
+                <p>{this.props.item.text}</p>
               </div>
               <button
                 onTouchStart={() => this.revealItem(timerControl)}

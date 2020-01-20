@@ -32,7 +32,7 @@ class Tasks extends React.Component {
       <Fragment>
         <div>Please fill in the gaps:</div>
         <p id="cloze">
-          {this.props.item.split(' ').map((word, i) => {
+          {this.props.item.text.split(' ').map((word, i) => {
             return (
               <span key={`word-${i}`}>
                 {(i + 1) % 5 === 0 ? this.deleteWord(word, i) : word + ' '}
