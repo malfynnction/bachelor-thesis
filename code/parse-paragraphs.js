@@ -109,8 +109,39 @@ const countWords = () => {
   })
 }
 
-removeFootnoteReferences()
-countNaderiSentences()
-countWords()
+const removeShortParagraphs = minLength => {
+  const sentenceCountsColumn = getColumn(
+    filePath,
+    sheetName,
+    sentenceCountColumn
+  )
+  const sentenceCounts = columnToObject(sentenceCountsColumn)
+  const toRemove = []
+
+  paragraphs = paragraphs.filter(({ cell, value }) => {
+    const row = cell.slice(1)
+    const tooShort = sentenceCounts[row] < minLength
+    if (tooShort) {
+      toRemove.push(cell)
+    }
+    return !tooShort
+  })
+
+  toRemove.forEach(cell => {
+    sheet[cell] = {
+      t: 's',
+      v: '',
+    }
+  })
+  console.log(
+    'You need to manually delete the following rows: ',
+    JSON.stringify(toRemove)
+  )
+}
+
+// removeFootnoteReferences()
+// countNaderiSentences()
+// countWords()
+// removeShortParagraphs(3)
 
 xlsx.writeFile(workbook, filePath)
