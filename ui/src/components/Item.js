@@ -55,7 +55,7 @@ const Nav = props => {
 const initialState = {
   readingTime: 0, // in milliseconds
   questions: {},
-  tasks: {},
+  cloze: {},
 }
 
 class Item extends React.Component {
@@ -69,7 +69,7 @@ class Item extends React.Component {
   render() {
     const { item, index, isLastItem } = this.props
     return (
-      <form onSubmit={e => e.preventDefault()}>
+      <form onSubmit={e => e.preventDefault()} autocomplete="off">
         <h3>Item {index}</h3>
         <StepWizard
           nav={
@@ -97,7 +97,13 @@ class Item extends React.Component {
             }
             answers={this.state.questions}
           />
-          <Tasks />
+          <Tasks
+            item={item}
+            onChange={(key, value) => {
+              this.setState({ cloze: { ...this.state.cloze, [key]: value } })
+            }}
+            enteredData={this.state.cloze}
+          />
         </StepWizard>
       </form>
     )

@@ -21,7 +21,7 @@ class Session extends React.Component {
   render() {
     const isLastItem = this.state.index + 1 === this.state.items.length
     return (
-      <div className="tu-border center-box">
+      <div className="tu-border tu-glow center-box">
         <Item
           index={this.state.index}
           item={this.state.items[this.state.index]}
