@@ -81,6 +81,7 @@ class Item extends React.Component {
               isLastItem={isLastItem}
             />
           }
+          transitions={{}}
           className="wizard"
         >
           <Read
