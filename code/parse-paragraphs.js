@@ -1,5 +1,6 @@
 const getColumn = require('./lib/get-column.js')
 const columnToObject = require('./lib/column-to-object.js')
+const getSyllableCount = require('./lib/get-syllable-count')
 const xlsx = require('xlsx')
 
 const filePath = '../data.xlsx'
@@ -84,7 +85,7 @@ const countWords = () => {
 
     const charCount = words.reduce((sum, word) => sum + word.length, 0)
     const syllableCount = words.reduce((sum, word) => {
-      const syllables = 0 // TODO
+      const syllables = getSyllableCount(word)
       return sum + syllables
     }, 0)
 
