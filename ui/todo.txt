@@ -6,4 +6,3 @@
 - make it safe to reload
 - scroll up after each wizard step
 - screenshots and GIFs in instructions
-- Impressum & Datenschutz?

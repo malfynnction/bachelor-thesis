@@ -5,7 +5,7 @@ const Start = () => {
   return (
     <div className="tu-border tu-glow center-box centered-content">
       <h2>Welcome!</h2>
-      <div>Thank you for participating.</div>
+      <div>Thank you for helping us.</div>
       <Link to="/Instructions">Start</Link>
     </div>
   )
