@@ -68,7 +68,7 @@ const countNaderiSentences = () => {
   })
 }
 
-const countWords = () => {
+const countWords = async () => {
   const sentenceCountsColumn = getColumn(
     filePath,
     sheetName,
@@ -76,7 +76,11 @@ const countWords = () => {
   )
   const sentenceCounts = columnToObject(sentenceCountsColumn)
 
-  paragraphs.forEach(paragraph => {
+  let i = 0
+  for (const paragraph of paragraphs.slice(25)) {
+    // start in row 27 (paragraph 26) - all before has already been done
+    console.log(`paragraph ${i++}/${paragraphs.length}`)
+
     const row = paragraph.cell.slice(1)
     const words = paragraph.value.split(' ')
 
@@ -84,10 +88,11 @@ const countWords = () => {
     const wordCount = words.length
 
     const charCount = words.reduce((sum, word) => sum + word.length, 0)
-    const syllableCount = words.reduce((sum, word) => {
-      const syllables = getSyllableCount(word)
-      return sum + syllables
-    }, 0)
+
+    let syllableCount = 0
+    for (const word of words) {
+      syllableCount += parseInt(await getSyllableCount(word))
+    }
 
     const wordsPerSentence = wordCount / sentenceCount
     const charPerWord = charCount / wordCount
@@ -107,7 +112,11 @@ const countWords = () => {
       t: 'n',
       v: syllablesPerWord,
     }
-  })
+    console.log(
+      `${syllableCount} syllables, ${wordCount} words => ${syllablesPerWord} syllabes per word`
+    )
+    xlsx.writeFile(workbook, filePath)
+  }
 }
 
 const removeShortParagraphs = minLength => {
@@ -140,9 +149,13 @@ const removeShortParagraphs = minLength => {
   )
 }
 
-// removeFootnoteReferences()
-// countNaderiSentences()
-// countWords()
-// removeShortParagraphs(3)
+const main = async () => {
+  // removeFootnoteReferences()
+  // countNaderiSentences()
+  await countWords()
+  // removeShortParagraphs(3)
 
-xlsx.writeFile(workbook, filePath)
+  xlsx.writeFile(workbook, filePath)
+}
+
+main()
