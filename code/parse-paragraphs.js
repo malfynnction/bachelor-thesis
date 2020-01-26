@@ -13,6 +13,7 @@ const naderiCountColumn = 'H'
 const WPSColumn = 'I' // words per sentence
 const charPWColumn = 'J' // characters per word
 const syllPWColumn = 'K' // syllables per word
+const fleschKincaidColumn = 'L' // score on Flesch-Kincaid Reading Ease scale
 
 let paragraphs = getColumn(filePath, sheetName, paragraphColumn)
 const workbook = xlsx.readFile(filePath)
@@ -81,7 +82,7 @@ const countWords = async () => {
   const sentenceCounts = columnToObject(sentenceCountsColumn)
 
   let i = 0
-  for (const paragraph of paragraphs.slice(25)) {
+  for (const paragraph of paragraphs) {
     console.log(`paragraph ${i++}/${paragraphs.length}`)
 
     const row = paragraph.cell.slice(1)
@@ -101,7 +102,7 @@ const countWords = async () => {
         typeof syllableCounts[parsedWord] === 'undefined' ||
         syllableCounts[parsedWord] === ''
       ) {
-        throw parsedWord
+        throw `unknown word ${word} (${parsedWord})`
       }
       return sum + parseInt(syllableCounts[parsedWord])
     }, 0)
@@ -158,9 +159,32 @@ const removeShortParagraphs = minLength => {
   )
 }
 
+const calculateFleschKincaidScore = () => {
+  const wordsPerSentence = columnToObject(
+    getColumn(filePath, sheetName, WPSColumn)
+  )
+  const syllablesPerWord = columnToObject(
+    getColumn(filePath, sheetName, syllPWColumn)
+  )
+
+  paragraphs.forEach(({ cell, value }) => {
+    const row = cell.slice(1)
+    const score =
+      0.39 * wordsPerSentence[row] + 11.8 * syllablesPerWord[row] - 15.59
+
+    console.log(score)
+
+    sheet[fleschKincaidColumn + row] = {
+      t: 'n',
+      v: score,
+    }
+  })
+}
+
+// removeShortParagraphs(3)
 // removeFootnoteReferences()
 // countNaderiSentences()
-countWords()
-// removeShortParagraphs(3)
+// countWords()
+calculateFleschKincaidScore()
 
 xlsx.writeFile(workbook, filePath)
