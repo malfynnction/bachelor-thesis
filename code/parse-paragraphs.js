@@ -2,6 +2,7 @@ const getColumn = require('./lib/get-column.js')
 const columnToObject = require('./lib/column-to-object.js')
 const getSyllableCount = require('./lib/get-syllable-count')
 const xlsx = require('xlsx')
+const fs = require('fs')
 
 const filePath = '../data.xlsx'
 const sheetName = 'paragraphs'
@@ -18,6 +19,9 @@ const workbook = xlsx.readFile(filePath)
 const sheet = workbook.Sheets[sheetName]
 
 const footnoteReference = /\[\d+\]/g
+const punctuation = /\.|!|,|-|\(|\)|\/|"|;|:|…|„|“/g
+
+const syllableCounts = JSON.parse(fs.readFileSync('./lib/syllable-counts.json'))
 
 const removeFootnoteReferences = () => {
   paragraphs = paragraphs.map(({ cell, value }) => {
@@ -78,7 +82,6 @@ const countWords = async () => {
 
   let i = 0
   for (const paragraph of paragraphs.slice(25)) {
-    // start in row 27 (paragraph 26) - all before has already been done
     console.log(`paragraph ${i++}/${paragraphs.length}`)
 
     const row = paragraph.cell.slice(1)
@@ -86,13 +89,23 @@ const countWords = async () => {
 
     const sentenceCount = sentenceCounts[row]
     const wordCount = words.length
-
+    const syllableCount = words.reduce((sum, word) => {
+      const parsedWord = word
+        .replace('ö', 'oe')
+        .replace('ä', 'ae')
+        .replace('ü', 'ue')
+        .replace('ß', 'sz')
+        .replace(punctuation, '')
+        .toLowerCase()
+      if (
+        typeof syllableCounts[parsedWord] === 'undefined' ||
+        syllableCounts[parsedWord] === ''
+      ) {
+        throw parsedWord
+      }
+      return sum + parseInt(syllableCounts[parsedWord])
+    }, 0)
     const charCount = words.reduce((sum, word) => sum + word.length, 0)
-
-    let syllableCount = 0
-    for (const word of words) {
-      syllableCount += parseInt(await getSyllableCount(word))
-    }
 
     const wordsPerSentence = wordCount / sentenceCount
     const charPerWord = charCount / wordCount
@@ -112,10 +125,6 @@ const countWords = async () => {
       t: 'n',
       v: syllablesPerWord,
     }
-    console.log(
-      `${syllableCount} syllables, ${wordCount} words => ${syllablesPerWord} syllabes per word`
-    )
-    xlsx.writeFile(workbook, filePath)
   }
 }
 
@@ -149,13 +158,9 @@ const removeShortParagraphs = minLength => {
   )
 }
 
-const main = async () => {
-  // removeFootnoteReferences()
-  // countNaderiSentences()
-  await countWords()
-  // removeShortParagraphs(3)
+// removeFootnoteReferences()
+// countNaderiSentences()
+countWords()
+// removeShortParagraphs(3)
 
-  xlsx.writeFile(workbook, filePath)
-}
-
-main()
+xlsx.writeFile(workbook, filePath)
