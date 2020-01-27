@@ -55,7 +55,7 @@ const Nav = props => {
 const initialState = {
   readingTime: 0, // in milliseconds
   questions: {},
-  cloze: {},
+  cloze: [],
 }
 
 class Item extends React.Component {
@@ -99,8 +99,10 @@ class Item extends React.Component {
           />
           <Tasks
             item={item}
-            onChange={(key, value) => {
-              this.setState({ cloze: { ...this.state.cloze, [key]: value } })
+            onChange={(index, value) => {
+              const newState = [...this.state.cloze]
+              newState[index] = value
+              this.setState({ cloze: newState })
             }}
             enteredData={this.state.cloze}
           />

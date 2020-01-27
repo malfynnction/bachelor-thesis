@@ -9,19 +9,24 @@ const allowMinorDifferences = word => {
 }
 
 class Tasks extends React.Component {
-  deleteWord(original, i) {
+  deleteWord(original, wordIndex) {
+    const deletionIndex = (wordIndex - 4) / 5
     return (
       <Fragment>
         <input
           type="text"
-          name={`deletion-${i}`}
-          id={`deletion-${i}`}
+          name={`deletion-${deletionIndex}`}
+          id={`deletion-${deletionIndex}`}
           onChange={e => {
             const entered = allowMinorDifferences(e.target.value)
             const isCorrect = entered === allowMinorDifferences(original)
-            this.props.onChange(i, { entered: e.target.value, isCorrect })
+            this.props.onChange(deletionIndex, {
+              entered: e.target.value,
+              original,
+              isCorrect,
+            })
           }}
-          value={get(this.props, ['enteredData', i, 'entered'], '')}
+          value={get(this.props, ['enteredData', deletionIndex, 'entered'], '')}
         />{' '}
       </Fragment>
     )
