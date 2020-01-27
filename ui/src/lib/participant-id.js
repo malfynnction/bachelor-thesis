@@ -8,9 +8,12 @@ module.exports = {
   clear: () => {
     return sessionStorage.removeItem('participantId')
   },
-  create: () => {
-    const id = 42 // TODO: random or get # participants
-    sessionStorage.setItem('participantId', id)
-    return id
+  create: db => {
+    return db.allDocs().then(docs => {
+      const usedIds = docs.rows.map(participant => participant.id)
+      const newId = Math.max(...usedIds, 0) + 1
+      sessionStorage.setItem('participantId', newId)
+      return newId
+    })
   },
 }

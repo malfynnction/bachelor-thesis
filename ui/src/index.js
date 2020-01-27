@@ -60,10 +60,10 @@ const App = () => {
           </Route>
           <Route path="/demographics">
             <Demographics
-              createUser={data => {
-                const id = participantId.create()
+              createUser={async data => {
+                const id = await participantId.create(pouchParticipants)
                 setShowId(true)
-                pouchParticipants.post({ ...data, id: id })
+                pouchParticipants.put({ ...data, _id: id.toString() })
               }}
             />
           </Route>
