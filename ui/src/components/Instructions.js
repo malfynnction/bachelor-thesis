@@ -1,10 +1,8 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment } from 'react'
 import participantId from '../lib/participant-id'
 import { Link } from 'react-router-dom'
-import '../styles/Instructions.css'
 
 const Instructions = () => {
-  const [error, setError] = useState('')
   const loggedInId = participantId.get()
   return (
     <Fragment>
@@ -48,49 +46,32 @@ const Instructions = () => {
           After that, your responses will be saved and you can go on to the next
           text.
         </p>
-        <p>
-          If you have already done a session in the past, please enter your
-          participant ID and click "Start"
-        </p>
-        <form
-          action="http://localhost:3000/session"
-          onSubmit={e => {
-            const id = e.target.participantId.value
-            if (loggedInId !== null && loggedInId !== id) {
-              e.preventDefault()
-              setError(`You are currently logged in as participant ${loggedInId}. Please make
-            sure you typed the correct ID. If you are logged in as the wrong
-            participant, please log out and back in using your correct ID.`)
-            } else {
-              participantId.set(id)
-            }
-          }}
-        >
-          <input
-            type="text"
-            name="participantId"
-            placeholder="Participant ID"
-          />
-          <button>Start</button>
-        </form>
-        <p>If you don't have an ID yet, please click here:</p>
-        <Link
-          to="/demographics"
-          onClick={e => {
-            if (loggedInId !== null) {
-              e.preventDefault()
-              setError(
-                `You are currently logged in as participant ${loggedInId}. If that is
-              not you, please log out and come back here to generate a new ID.`
-              )
-            }
-          }}
-        >
-          Start
-        </Link>
-        {error.length > 0 ? (
-          <div className="tu-border error-box background-pink">{error}</div>
-        ) : null}
+        {loggedInId !== null ? (
+          <Link to="/session">Start</Link>
+        ) : (
+          <Fragment>
+            <p>
+              If you have already done a session in the past, please enter your
+              participant ID and click "Start"
+            </p>
+            <form
+              action="http://localhost:3000/session"
+              onSubmit={e => {
+                const id = e.target.participantId.value
+                participantId.set(id)
+              }}
+            >
+              <input
+                type="text"
+                name="participantId"
+                placeholder="Participant ID"
+              />
+              <button>Start</button>
+            </form>
+            <p>If you don't have an ID yet, please click here:</p>
+            <Link to="/demographics">Start</Link>
+          </Fragment>
+        )}
       </div>
     </Fragment>
   )
