@@ -2,7 +2,10 @@ import React from 'react'
 import shuffle from 'lodash.shuffle'
 import Item from './Item'
 import PouchDB from 'pouchdb'
-import participantId from '../lib/participant-id'
+import createStore from '../lib/create-store'
+
+const participantId = createStore('participantId')
+const sessionStore = createStore('session')
 
 const pouchRatings = new PouchDB('ratings')
 pouchRatings.sync('http://localhost:5984/ratings', {
@@ -10,8 +13,8 @@ pouchRatings.sync('http://localhost:5984/ratings', {
   retry: true,
 })
 
-const getItemsToRate = () => {
-  return [
+const createNewSession = () => {
+  const items = [
     {
       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
       type: 'sentence',
@@ -24,17 +27,22 @@ const getItemsToRate = () => {
       id: 2,
     },
   ]
+  return { items: shuffle(items), index: 0 }
 }
 
 class Session extends React.Component {
   constructor(props) {
     super(props)
-    const items = getItemsToRate()
-    this.state = {
-      index: 0,
-      items: shuffle(items),
+    const session = sessionStore.get() || createNewSession()
+    this.state = { ...session }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.index !== prevState.index) {
+      sessionStore.set(this.state)
     }
   }
+
   render() {
     const isLastItem = this.state.index + 1 === this.state.items.length
     const item = this.state.items[this.state.index]

@@ -14,8 +14,10 @@ import Instructions from './components/Instructions'
 import Session from './components/Session'
 import Start from './components/Start'
 import Demographics from './components/Demographics'
-import participantId from './lib/participant-id'
+import createStore from './lib/create-store'
 import PouchDB from 'pouchdb'
+
+const participantId = createStore('participantId')
 
 const pouchParticipants = new PouchDB('participants')
 pouchParticipants.sync('http://localhost:5984/participants', {
@@ -61,9 +63,13 @@ const App = () => {
           <Route path="/demographics">
             <Demographics
               createUser={async data => {
-                const id = await participantId.create(pouchParticipants)
-                setShowId(true)
-                pouchParticipants.put({ ...data, _id: id.toString() })
+                pouchParticipants.allDocs().then(docs => {
+                  const usedIds = docs.rows.map(participant => participant.id)
+                  const newId = Math.max(...usedIds, 0) + 1
+                  participantId.set(newId)
+                  setShowId(true)
+                  pouchParticipants.put({ ...data, _id: newId.toString() })
+                })
               }}
             />
           </Route>

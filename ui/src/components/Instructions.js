@@ -1,7 +1,9 @@
 import React, { Fragment, useState } from 'react'
-import participantId from '../lib/participant-id'
+import createStore from '../lib/create-store'
 import { Link } from 'react-router-dom'
 import '../styles/Instructions.css'
+
+const participantId = createStore('participantId')
 
 const Instructions = props => {
   const { participants } = props
