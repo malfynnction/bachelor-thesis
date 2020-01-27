@@ -7,3 +7,5 @@
 - scroll up after each wizard step
 - screenshots and GIFs in instructions
 - Impressum & Datenschutz?
+- what happens after completed session?
+- navigate to session after log in (TODO in Instructions.js)
