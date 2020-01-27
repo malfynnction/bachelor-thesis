@@ -69,7 +69,7 @@ class Item extends React.Component {
   render() {
     const { item, index, isLastItem } = this.props
     return (
-      <form onSubmit={e => e.preventDefault()} autocomplete="off">
+      <form onSubmit={e => e.preventDefault()} autoComplete="off">
         <h3>Item {index}</h3>
         <StepWizard
           nav={
