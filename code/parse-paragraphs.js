@@ -172,8 +172,6 @@ const calculateFleschKincaidScore = () => {
     const score =
       0.39 * wordsPerSentence[row] + 11.8 * syllablesPerWord[row] - 15.59
 
-    console.log(score)
-
     sheet[fleschKincaidColumn + row] = {
       t: 'n',
       v: score,
