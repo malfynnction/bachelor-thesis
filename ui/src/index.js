@@ -56,7 +56,7 @@ const App = () => {
       <div className="layout centered-content">
         <Switch>
           <Route path="/instructions">
-            <Instructions />
+            <Instructions participants={pouchParticipants} />
           </Route>
           <Route path="/demographics">
             <Demographics

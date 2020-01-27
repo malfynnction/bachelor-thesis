@@ -1,8 +1,11 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import participantId from '../lib/participant-id'
 import { Link } from 'react-router-dom'
+import '../styles/Instructions.css'
 
-const Instructions = () => {
+const Instructions = props => {
+  const { participants } = props
+  const [error, setError] = useState('')
   const loggedInId = participantId.get()
   return (
     <Fragment>
@@ -55,10 +58,26 @@ const Instructions = () => {
               participant ID and click "Start"
             </p>
             <form
-              action="http://localhost:3000/session"
               onSubmit={e => {
+                e.preventDefault()
                 const id = e.target.participantId.value
-                participantId.set(id)
+                // check if ID exists
+                participants
+                  .get(id)
+                  .then(() => {
+                    participantId.set(id)
+
+                    /*TODO: navigate to /session */
+                  })
+                  .catch(err => {
+                    if (err.status === 404) {
+                      setError(
+                        'This ID does not exist. Please make sure you entered the correct ID.'
+                      )
+                    } else {
+                      setError('An unknown error occurred. Please try again.')
+                    }
+                  })
               }}
             >
               <input
@@ -70,6 +89,9 @@ const Instructions = () => {
             </form>
             <p>If you don't have an ID yet, please click here:</p>
             <Link to="/demographics">Start</Link>
+            {error.length > 0 ? (
+              <div className="tu-border error-box background-pink">{error}</div>
+            ) : null}
           </Fragment>
         )}
       </div>
