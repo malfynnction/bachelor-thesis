@@ -17,8 +17,11 @@ import Demographics from './components/Demographics'
 import participantId from './lib/participant-id'
 import PouchDB from 'pouchdb'
 
-const userDb = new PouchDB('users')
-userDb.sync('http://localhost:5984/users', { live: true, retry: true })
+const pouchParticipants = new PouchDB('participants')
+pouchParticipants.sync('http://localhost:5984/participants', {
+  live: true,
+  retry: true,
+})
 
 const App = () => {
   const id = participantId.get()
@@ -60,7 +63,7 @@ const App = () => {
               createUser={data => {
                 const id = participantId.create()
                 setShowId(true)
-                userDb.post({ ...data, id: id })
+                pouchParticipants.post({ ...data, id: id })
               }}
             />
           </Route>
