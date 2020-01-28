@@ -4,17 +4,17 @@ import newPouchDB from '../lib/new-pouch-db'
 import createStore from '../lib/create-store'
 import getNewSession from '../lib/get-new-session'
 
-const participantId = createStore('participantId')
+const participantStore = createStore('participantId')
 const sessionStore = createStore('session')
 
 const pouchRatings = newPouchDB('ratings')
+const pouchParticipants = newPouchDB('participants')
 
 class Session extends React.Component {
   constructor(props) {
     super(props)
-    // const session = sessionStore.get()
-    // this.state = { ...session }
-    this.state = {}
+    const session = sessionStore.get()
+    this.state = { ...session }
   }
 
   async componentDidMount() {
@@ -32,6 +32,7 @@ class Session extends React.Component {
   }
 
   render() {
+    const participantId = participantStore.get().toString()
     const items = this.state.items || []
     const index = this.state.index || 0
 
@@ -45,13 +46,23 @@ class Session extends React.Component {
             index={index}
             item={item}
             isLastItem={isLastItem}
-            onNextItem={result => {
+            onNextItem={async result => {
               pouchRatings.post({
                 ...result,
-                participantId: participantId.get(),
+                participantId: participantId,
                 itemId: item._id,
               })
               if (isLastItem) {
+                const sessionId = this.state.id
+                const participant = await pouchParticipants.get(participantId)
+                const completedSessions = [
+                  ...participant.completedSessions,
+                  sessionId,
+                ]
+                pouchParticipants.put({
+                  ...participant,
+                  completedSessions: completedSessions,
+                })
                 window.location.href = 'http://localhost:3000'
               } else {
                 this.setState({ index: index + 1 })

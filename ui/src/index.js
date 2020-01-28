@@ -64,7 +64,11 @@ const App = () => {
                   const newId = Math.max(...usedIds, 0) + 1
                   participantId.set(newId)
                   setShowId(true)
-                  pouchParticipants.put({ ...data, _id: newId.toString() })
+                  pouchParticipants.put({
+                    ...data,
+                    _id: newId.toString(),
+                    completedSessions: [],
+                  })
                 })
               }}
             />

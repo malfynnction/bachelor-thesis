@@ -55,5 +55,9 @@ const getItems = async session => {
 module.exports = async () => {
   const newSessionId = await chooseNewSession()
   const newSession = await pouchSessions.get(newSessionId)
-  return { items: shuffle(await getItems(newSession)), index: 0 }
+  return {
+    items: shuffle(await getItems(newSession)),
+    index: 0,
+    id: newSessionId,
+  }
 }

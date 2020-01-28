@@ -11,4 +11,7 @@
 - navigate to session after log in (TODO in Instructions.js)
 - what if no input in cloze?
 - clear all session storages on logout
-- save completedSessions in participant db
+- don't create new pouches, pass them in props
+- style loading in Session.js?
+- what happens if all sessions are completed?
+- existiert participant 1, lösche participant 2, create new participant, neue ID: 3 (expected: 2)
