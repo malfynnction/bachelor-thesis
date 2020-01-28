@@ -25,6 +25,10 @@ const chooseNewSession = async (
       session => !completedSessions.includes(session._id)
     )
 
+    if (possibleSessions.length === 0) {
+      return -1
+    }
+
     const completedCounts = {}
     possibleSessions.forEach(session => (completedCounts[session._id] = 0))
 
@@ -62,6 +66,11 @@ module.exports = async (pouchParticipants, pouchSessions, pouchItems) => {
     pouchSessions,
     pouchItems
   )
+
+  if (newSessionId === -1) {
+    return { finishedAllSessions: true }
+  }
+
   const newSession = await pouchSessions.get(newSessionId)
   return {
     items: shuffle(await getItems(newSession, pouchItems)),

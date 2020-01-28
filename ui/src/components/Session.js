@@ -42,8 +42,18 @@ class Session extends React.Component {
     const item = items[index]
 
     return (
-      <div className="tu-border tu-glow center-box">
-        {item ? (
+      <div
+        className={`tu-border tu-glow center-box ${
+          this.state.finishedAllSessions ? 'centered-content' : ''
+        }`}
+      >
+        {this.state.finishedAllSessions ? (
+          <div className="centered-content">
+            You have rated all available items in the data set.
+            <br />
+            <strong> Thank you for your participation.</strong>
+          </div>
+        ) : item ? (
           <Item
             index={index}
             item={item}
