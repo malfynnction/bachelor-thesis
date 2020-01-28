@@ -18,6 +18,7 @@ import createStore from './lib/create-store'
 import newPouchDB from './lib/new-pouch-db'
 
 const participantId = createStore('participantId')
+const sessionStore = createStore('session')
 
 const pouchParticipants = newPouchDB('participants')
 
@@ -42,6 +43,7 @@ const App = () => {
                 to="/"
                 onClick={() => {
                   participantId.clear()
+                  sessionStore.clear()
                   setShowId(false)
                 }}
               >
