@@ -43,7 +43,7 @@ const chooseNewSession = async (
       })
     }
 
-    const minCompleted = Math.min(...Object.values(completedCounts), 0)
+    const minCompleted = Math.min(...Object.values(completedCounts)) || 0
     const minCompletedSessions = Object.keys(completedCounts).filter(
       id => completedCounts[id] === minCompleted
     )
