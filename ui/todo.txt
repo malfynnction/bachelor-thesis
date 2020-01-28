@@ -9,3 +9,4 @@
 - what happens after completed session?
 - navigate to session after log in (TODO in Instructions.js)
 - what if no input in cloze?
+- clear all session storages on logout

@@ -13,28 +13,32 @@ pouchRatings.sync('http://localhost:5984/ratings', {
   retry: true,
 })
 
-const createNewSession = () => {
-  const items = [
-    {
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      type: 'sentence',
-      id: 1,
-    },
-    {
-      text:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt enim ac turpis laoreet sagittis. Mauris et placerat enim, sit amet mollis mi. In rhoncus sit amet dui vel vulputate. Nunc pellentesque, augue et semper eleifend, mi augue fermentum lectus, sit amet fringilla est odio sit amet leo. Phasellus efficitur tortor sit amet purus luctus dignissim. Sed quis felis id est finibus ultrices. In dolor sapien, efficitur at pretium id, vestibulum ut elit. Sed dui lectus, commodo ac ipsum euismod, tincidunt vehicula eros. Suspendisse tristique posuere semper. Integer eu nibh pulvinar, commodo nisl pellentesque, tincidunt nibh. Donec elementum nisi in turpis finibus tincidunt vitae vel ligula. Ut tempor tellus ut dolor sollicitudin, non fermentum dui ullamcorper. Donec volutpat erat ex, eget sollicitudin nunc gravida ut. Curabitur placerat dignissim placerat. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      type: 'paragraph',
-      id: 2,
-    },
-  ]
-  return { items: shuffle(items), index: 0 }
+const pouchItems = new PouchDB('items')
+pouchItems.sync('http://localhost:5984/items', {
+  live: true,
+  retry: true,
+})
+
+const getNewSession = async () => {
+  const allItems = await pouchItems.allDocs({ include_docs: true })
+  const items = allItems.rows.map(row => row.doc)
+  const session = { items: shuffle(items), index: 0 }
+  sessionStore.set(session)
+  return session
 }
 
 class Session extends React.Component {
   constructor(props) {
     super(props)
-    const session = sessionStore.get() || createNewSession()
+    const session = sessionStore.get()
     this.state = { ...session }
+  }
+
+  async componentDidMount() {
+    if (typeof this.state.items === 'undefined') {
+      const newSession = await getNewSession()
+      this.setState({ ...newSession })
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -44,27 +48,35 @@ class Session extends React.Component {
   }
 
   render() {
-    const isLastItem = this.state.index + 1 === this.state.items.length
-    const item = this.state.items[this.state.index]
+    const items = this.state.items || []
+    const index = this.state.index || 0
+
+    const isLastItem = index + 1 === items.length
+    const item = items[index]
+
     return (
       <div className="tu-border tu-glow center-box">
-        <Item
-          index={this.state.index}
-          item={item}
-          isLastItem={isLastItem}
-          onNextItem={result => {
-            pouchRatings.post({
-              ...result,
-              participantId: participantId.get(),
-              itemId: item.id,
-            })
-            if (isLastItem) {
-              window.location.href = 'http://localhost:3000'
-            } else {
-              this.setState({ index: this.state.index + 1 })
-            }
-          }}
-        />
+        {item ? (
+          <Item
+            index={index}
+            item={item}
+            isLastItem={isLastItem}
+            onNextItem={result => {
+              pouchRatings.post({
+                ...result,
+                participantId: participantId.get(),
+                itemId: item._id,
+              })
+              if (isLastItem) {
+                window.location.href = 'http://localhost:3000'
+              } else {
+                this.setState({ index: index + 1 })
+              }
+            }}
+          />
+        ) : (
+          <div>Loading...</div>
+        )}
       </div>
     )
   }
