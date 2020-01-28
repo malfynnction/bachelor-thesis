@@ -1,23 +1,24 @@
 const shuffle = require('lodash.shuffle')
-const newPouchDB = require('./new-pouch-db')
 const createStore = require('./create-store')
 
-const pouchSessions = newPouchDB('sessions')
-const pouchParticipants = newPouchDB('participants')
-const pouchItems = newPouchDB('items')
-
-const participantId = createStore('participantId').get()
+const participantId = createStore('participantId')
+  .get()
+  .toString()
 
 const getAll = async db => {
   const data = await db.allDocs({ include_docs: true })
   return data.rows.map(row => row.doc)
 }
 
-const chooseNewSession = async () => {
+const chooseNewSession = async (
+  pouchParticipants,
+  pouchSessions,
+  pouchItems
+) => {
   return Promise.all([
     getAll(pouchSessions),
     getAll(pouchParticipants),
-    pouchParticipants.get(participantId.toString()),
+    pouchParticipants.get(participantId),
   ]).then(([allSessions, allParticipants, loggedInParticipant]) => {
     const completedSessions = loggedInParticipant.completedSessions || []
     const possibleSessions = allSessions.filter(
@@ -25,6 +26,8 @@ const chooseNewSession = async () => {
     )
 
     const completedCounts = {}
+    possibleSessions.forEach(session => (completedCounts[session._id] = 0))
+
     for (const participant of allParticipants) {
       participant.completedSessions.forEach(completed => {
         const isPossible = possibleSessions.some(session => {
@@ -36,27 +39,32 @@ const chooseNewSession = async () => {
       })
     }
 
-    const minCompleted = Math.min(...Object.values(completedCounts))
+    const minCompleted = Math.min(...Object.values(completedCounts), 0)
     const minCompletedSessions = Object.keys(completedCounts).filter(
       id => completedCounts[id] === minCompleted
     )
 
     const randomIndex = Math.floor(Math.random() * minCompletedSessions.length)
+
     return minCompletedSessions[randomIndex]
   })
 }
 
-const getItems = async session => {
+const getItems = async (session, pouchItems) => {
   const itemIds = session.items
   const items = await Promise.all(itemIds.map(id => pouchItems.get(id)))
   return items
 }
 
-module.exports = async () => {
-  const newSessionId = await chooseNewSession()
+module.exports = async (pouchParticipants, pouchSessions, pouchItems) => {
+  const newSessionId = await chooseNewSession(
+    pouchParticipants,
+    pouchSessions,
+    pouchItems
+  )
   const newSession = await pouchSessions.get(newSessionId)
   return {
-    items: shuffle(await getItems(newSession)),
+    items: shuffle(await getItems(newSession, pouchItems)),
     index: 0,
     id: newSessionId,
   }

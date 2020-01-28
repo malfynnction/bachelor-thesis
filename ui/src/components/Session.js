@@ -1,14 +1,10 @@
 import React from 'react'
 import Item from './Item'
-import newPouchDB from '../lib/new-pouch-db'
 import createStore from '../lib/create-store'
 import getNewSession from '../lib/get-new-session'
 
 const participantStore = createStore('participantId')
 const sessionStore = createStore('session')
-
-const pouchRatings = newPouchDB('ratings')
-const pouchParticipants = newPouchDB('participants')
 
 class Session extends React.Component {
   constructor(props) {
@@ -19,7 +15,11 @@ class Session extends React.Component {
 
   async componentDidMount() {
     if (typeof this.state.items === 'undefined') {
-      const newSession = await getNewSession()
+      const newSession = await getNewSession(
+        this.props.pouchParticipants,
+        this.props.pouchSessions,
+        this.props.pouchItems
+      )
       sessionStore.set(newSession)
       this.setState({ ...newSession })
     }
@@ -32,6 +32,8 @@ class Session extends React.Component {
   }
 
   render() {
+    const { pouchParticipants, pouchRatings } = this.props
+
     const participantId = participantStore.get().toString()
     const items = this.state.items || []
     const index = this.state.index || 0

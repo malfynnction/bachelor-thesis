@@ -21,6 +21,9 @@ const participantId = createStore('participantId')
 const sessionStore = createStore('session')
 
 const pouchParticipants = newPouchDB('participants')
+const pouchRatings = newPouchDB('ratings')
+const pouchSessions = newPouchDB('sessions')
+const pouchItems = newPouchDB('items')
 
 const App = () => {
   const id = participantId.get()
@@ -56,7 +59,7 @@ const App = () => {
       <div className="layout centered-content">
         <Switch>
           <Route path="/instructions">
-            <Instructions participants={pouchParticipants} />
+            <Instructions pouchParticipants={pouchParticipants} />
           </Route>
           <Route path="/demographics">
             <Demographics
@@ -76,7 +79,16 @@ const App = () => {
             />
           </Route>
           <Route path="/session">
-            {showId ? <Session /> : <Redirect to="/" />}
+            {showId ? (
+              <Session
+                pouchRatings={pouchRatings}
+                pouchParticipants={pouchParticipants}
+                pouchSessions={pouchSessions}
+                pouchItems={pouchItems}
+              />
+            ) : (
+              <Redirect to="/" />
+            )}
           </Route>
           <Route path="/">
             <Start />

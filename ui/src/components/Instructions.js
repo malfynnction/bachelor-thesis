@@ -6,7 +6,7 @@ import '../styles/Instructions.css'
 const participantId = createStore('participantId')
 
 const Instructions = props => {
-  const { participants } = props
+  const { pouchParticipants } = props
   const [error, setError] = useState('')
   const loggedInId = participantId.get()
   return (
@@ -64,7 +64,7 @@ const Instructions = props => {
                 e.preventDefault()
                 const id = e.target.participantId.value
                 // check if ID exists
-                participants
+                pouchParticipants
                   .get(id)
                   .then(() => {
                     participantId.set(id)
