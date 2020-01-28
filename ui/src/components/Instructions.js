@@ -68,8 +68,7 @@ const Instructions = props => {
                   .get(id)
                   .then(() => {
                     participantId.set(id)
-
-                    /*TODO: navigate to /session */
+                    window.location.href = 'http://localhost:3000/Session'
                   })
                   .catch(err => {
                     if (err.status === 404) {
