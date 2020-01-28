@@ -11,3 +11,5 @@
 - what if no input in cloze?
 - clear all session storages on logout
 - save completed items (sessions) in participant db
+- save count how often session is rated
+- logic to choose new session (src/lib/get-new-session.js)

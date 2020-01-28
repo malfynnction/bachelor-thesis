@@ -12,8 +12,9 @@ const pouchRatings = newPouchDB('ratings')
 class Session extends React.Component {
   constructor(props) {
     super(props)
-    const session = sessionStore.get()
-    this.state = { ...session }
+    // const session = sessionStore.get()
+    // this.state = { ...session }
+    this.state = {}
   }
 
   async componentDidMount() {
