@@ -15,15 +15,11 @@ import Session from './components/Session'
 import Start from './components/Start'
 import Demographics from './components/Demographics'
 import createStore from './lib/create-store'
-import PouchDB from 'pouchdb'
+import newPouchDB from './lib/new-pouch-db'
 
 const participantId = createStore('participantId')
 
-const pouchParticipants = new PouchDB('participants')
-pouchParticipants.sync('http://localhost:5984/participants', {
-  live: true,
-  retry: true,
-})
+const pouchParticipants = newPouchDB('participants')
 
 const App = () => {
   const id = participantId.get()

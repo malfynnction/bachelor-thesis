@@ -10,3 +10,4 @@
 - navigate to session after log in (TODO in Instructions.js)
 - what if no input in cloze?
 - clear all session storages on logout
+- save completed items (sessions) in participant db

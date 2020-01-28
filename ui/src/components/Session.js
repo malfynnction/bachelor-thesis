@@ -1,31 +1,13 @@
 import React from 'react'
-import shuffle from 'lodash.shuffle'
 import Item from './Item'
-import PouchDB from 'pouchdb'
+import newPouchDB from '../lib/new-pouch-db'
 import createStore from '../lib/create-store'
+import getNewSession from '../lib/get-new-session'
 
 const participantId = createStore('participantId')
 const sessionStore = createStore('session')
 
-const pouchRatings = new PouchDB('ratings')
-pouchRatings.sync('http://localhost:5984/ratings', {
-  live: true,
-  retry: true,
-})
-
-const pouchItems = new PouchDB('items')
-pouchItems.sync('http://localhost:5984/items', {
-  live: true,
-  retry: true,
-})
-
-const getNewSession = async () => {
-  const allItems = await pouchItems.allDocs({ include_docs: true })
-  const items = allItems.rows.map(row => row.doc)
-  const session = { items: shuffle(items), index: 0 }
-  sessionStore.set(session)
-  return session
-}
+const pouchRatings = newPouchDB('ratings')
 
 class Session extends React.Component {
   constructor(props) {
@@ -37,6 +19,7 @@ class Session extends React.Component {
   async componentDidMount() {
     if (typeof this.state.items === 'undefined') {
       const newSession = await getNewSession()
+      sessionStore.set(newSession)
       this.setState({ ...newSession })
     }
   }
