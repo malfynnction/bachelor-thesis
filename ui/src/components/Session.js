@@ -34,7 +34,7 @@ class Session extends React.Component {
   render() {
     const { pouchParticipants, pouchRatings } = this.props
 
-    const participantId = participantStore.get().toString()
+    const participantId = (participantStore.get() || '').toString()
     const items = this.state.items || []
     const index = this.state.index || 0
 

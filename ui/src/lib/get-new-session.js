@@ -1,9 +1,7 @@
 const shuffle = require('lodash.shuffle')
 const createStore = require('./create-store')
 
-const participantId = createStore('participantId')
-  .get()
-  .toString()
+const participantId = (createStore('participantId').get() || '').toString()
 
 const getAll = async db => {
   const data = await db.allDocs({ include_docs: true })
