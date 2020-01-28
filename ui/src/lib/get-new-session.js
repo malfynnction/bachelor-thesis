@@ -8,8 +8,42 @@ const pouchItems = newPouchDB('items')
 
 const participantId = createStore('participantId').get()
 
-const chooseNewSession = () => {
-  return '1' // TODO
+const getAll = async db => {
+  const data = await db.allDocs({ include_docs: true })
+  return data.rows.map(row => row.doc)
+}
+
+const chooseNewSession = async () => {
+  return Promise.all([
+    getAll(pouchSessions),
+    getAll(pouchParticipants),
+    pouchParticipants.get(participantId.toString()),
+  ]).then(([allSessions, allParticipants, loggedInParticipant]) => {
+    const completedSessions = loggedInParticipant.completedSessions || []
+    const possibleSessions = allSessions.filter(
+      session => !completedSessions.includes(session._id)
+    )
+
+    const completedCounts = {}
+    for (const participant of allParticipants) {
+      participant.completedSessions.forEach(completed => {
+        const isPossible = possibleSessions.some(session => {
+          return session._id === completed
+        })
+        if (isPossible) {
+          completedCounts[completed] = (completedCounts[completed] || 0) + 1
+        }
+      })
+    }
+
+    const minCompleted = Math.min(...Object.values(completedCounts))
+    const minCompletedSessions = Object.keys(completedCounts).filter(
+      id => completedCounts[id] === minCompleted
+    )
+
+    const randomIndex = Math.floor(Math.random() * minCompletedSessions.length)
+    return minCompletedSessions[randomIndex]
+  })
 }
 
 const getItems = async session => {
@@ -19,9 +53,7 @@ const getItems = async session => {
 }
 
 module.exports = async () => {
-  const data = await pouchSessions.allDocs({ include_docs: true })
-  const sessions = data.rows.map(row => row.doc)
-  const newSessionId = chooseNewSession(sessions)
+  const newSessionId = await chooseNewSession()
   const newSession = await pouchSessions.get(newSessionId)
   return { items: shuffle(await getItems(newSession)), index: 0 }
 }
