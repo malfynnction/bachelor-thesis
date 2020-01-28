@@ -63,6 +63,7 @@ class Session extends React.Component {
                   ...participant,
                   completedSessions: completedSessions,
                 })
+                sessionStore.clear()
                 window.location.href = 'http://localhost:3000'
               } else {
                 this.setState({ index: index + 1 })

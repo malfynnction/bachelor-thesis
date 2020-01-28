@@ -7,7 +7,6 @@
 - screenshots and GIFs in instructions
 - Impressum & Datenschutz?
 - what happens after completed session?
-  - delete session from sessionStorage
 - navigate to session after log in (TODO in Instructions.js)
 - what if no input in cloze?
 - clear all session storages on logout
