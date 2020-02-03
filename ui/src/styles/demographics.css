@@ -5,3 +5,8 @@
 .start-label {
   padding-top: 10px;
 }
+
+input,
+select {
+  margin-bottom: 15px;
+}

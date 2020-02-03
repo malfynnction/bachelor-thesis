@@ -3,3 +3,13 @@
   padding: 10px;
   margin: 15px 0px;
 }
+
+.horizontal-answer-box {
+  min-width: 25%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.horizontal-answer {
+  text-align: center;
+}

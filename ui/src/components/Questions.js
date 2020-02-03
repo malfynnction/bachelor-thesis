@@ -7,21 +7,27 @@ const Question = props => {
       <div>
         <strong>{props.question.label}</strong>
       </div>
-      {props.answers.map(({ label, value }, i) => {
-        return (
-          <div key={`${props.question.key}-${value}`}>
-            <input
-              onChange={() => props.onChange(value)}
-              type="radio"
-              name={props.question.key}
-              id={`${props.question.key}-${value}`}
-              value={value}
-              checked={value === props.checkedAnswer}
-            />
-            <label htmlFor={`${props.question.key}-${value}`}>{label}</label>
-          </div>
-        )
-      })}
+      <div className={`${props.horizontal ? 'horizontal-answer-box' : ''}`}>
+        {props.answers.map(({ label, value }, i) => {
+          return (
+            <div
+              key={`${props.question.key}-${value}`}
+              className={`${props.horizontal ? 'horizontal-answer' : ''}`}
+            >
+              <input
+                onChange={() => props.onChange(value)}
+                type="radio"
+                name={props.question.key}
+                id={`${props.question.key}-${value}`}
+                value={value}
+                checked={value === props.checkedAnswer}
+              />
+              {props.horizontal ? <br /> : null}
+              <label htmlFor={`${props.question.key}-${value}`}>{label}</label>
+            </div>
+          )
+        })}
+      </div>
     </div>
   )
 }
@@ -54,9 +60,7 @@ const Questions = props => {
           { label: "I don't even care", value: 'idc' },
         ]}
         checkedAnswer={props.answers['q1']}
-        onChange={value => {
-          props.onChange('q1', value)
-        }}
+        onChange={value => props.onChange('q1', value)}
       />
       <Question
         question={{
@@ -72,22 +76,34 @@ const Questions = props => {
           { label: 'answer 6', value: 6 },
         ]}
         checkedAnswer={props.answers['q2']}
-        onChange={value => {
-          props.onChange('q2', value)
-        }}
+        onChange={value => props.onChange('q2', value)}
       />
       <Question
         question={{ label: 'Did you have to scroll to see this?', key: 'q3' }}
         answers={[
           { label: 'Yes', value: 'y' },
-          { label: "I can't see this", value: 'what' },
           { label: 'No, your site is broken', value: 'damn' },
           { label: 'No, I have a big screen', value: 'big' },
+          { label: "I can't see this", value: 'what' },
         ]}
         checkedAnswer={props.answers['q3']}
-        onChange={value => {
-          props.onChange('q3', value)
+        onChange={value => props.onChange('q3', value)}
+      />
+      <Question
+        question={{
+          label: 'Did you know I can also arrange the answers differently?',
+          key: 'q4',
         }}
+        answers={[
+          { label: 'Yes', value: 'y' },
+          { label: '', value: 'y-idk' },
+          { label: "I don't know", value: 'idk' },
+          { label: '', value: 'idk-n' },
+          { label: 'No', value: 'n' },
+        ]}
+        checkedAnswer={props.answers['q4']}
+        onChange={value => props.onChange('q4', value)}
+        horizontal={true}
       />
     </Fragment>
   )

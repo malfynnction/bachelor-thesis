@@ -78,9 +78,9 @@ class Demographics extends React.Component {
           )}
           <button type="submit">Start</button>
           <div className="start-label">
-            By clicking on "Start", you will be assigned a participant ID.
-            Please remember it so you can skip this step if you do another
-            session in the future.
+            By clicking on "Start" you will be assigned a participant ID. Please
+            remember it so you can skip this step if you do another session in
+            the future.
           </div>
         </form>
       </div>
