@@ -7,5 +7,5 @@
 - Impressum & Datenschutz?
 - what happens after completed session?
 - what if no input in cloze?
-- existiert participant 1, lösche participant 2, create new participant, neue ID: 3 (expected: 2)
 - replace all the "localhost" with the actual url
+- TODO comments, "??"-comments

@@ -1,4 +1,5 @@
 import React from 'react'
+import '../styles/demographics.css'
 
 const defaultState = {
   age: '',
@@ -64,6 +65,7 @@ class Demographics extends React.Component {
             this.props.createUser(this.state)
           }}
           action="/session"
+          className="centered-content demographics-form"
         >
           {this.renderQuestion('Age: ', 'age', 'number')}
           {this.renderQuestion('Gender: ', 'gender', 'text')}
@@ -74,8 +76,12 @@ class Demographics extends React.Component {
             'dropdown',
             []
           )}
-
           <button type="submit">Start</button>
+          <div className="start-label">
+            By clicking on "Start", you will be assigned a participant ID.
+            Please remember it so you can skip this step if you do another
+            session in the future.
+          </div>
         </form>
       </div>
     )
