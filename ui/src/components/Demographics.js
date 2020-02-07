@@ -5,6 +5,7 @@ const defaultState = {
   yearOfBirth: '',
   nativeLang: '',
   gender: '',
+  genderText: '',
   gerLevel: '',
 }
 
@@ -18,7 +19,7 @@ class Demographics extends React.Component {
     return (
       <div>
         <label htmlFor={key} className="block">
-          {label}
+          <strong>{label}</strong>
         </label>
         {type === 'dropdown' ? (
           <select
@@ -62,7 +63,11 @@ class Demographics extends React.Component {
         <div>Please fill out the questions below for statistical reasons:</div>
         <form
           onSubmit={() => {
-            this.props.createUser(this.state)
+            const data = { ...this.state }
+            if (data.gender === 'text') {
+              data.gender = data.genderText
+            }
+            this.props.createUser(data)
           }}
           action="/session"
           className="centered-content demographics-form"
@@ -78,7 +83,60 @@ class Demographics extends React.Component {
             '1990-2000',
             '2000-2010',
           ])}
-          {this.renderQuestion('Gender: ', 'gender', 'text')}
+          <strong>Gender:</strong>
+          <div>
+            {[
+              { key: 'female', label: 'Female' },
+              { key: 'male', label: 'Male' },
+              { key: 'nonbinary', label: 'Non-Binary' },
+            ].map(({ key, label }) => (
+              <div key={`gender-${key}`}>
+                <input
+                  type="radio"
+                  name="gender"
+                  id={`gender-${key}`}
+                  value={key}
+                  checked={this.state.gender === key}
+                  onChange={e => this.setState({ gender: key })}
+                />
+                <label htmlFor={`gender-${key}`}>{label}</label>
+              </div>
+            ))}
+            <div>
+              <input
+                type="radio"
+                name="gender"
+                id="gender-other"
+                value="other"
+                checked={this.state.gender === 'text'}
+                onChange={e => this.setState({ gender: 'text' })}
+              />
+              <label htmlFor="gender-other" className="screenreader-only">
+                Other (please write your answer in the text field)
+              </label>
+              <input
+                type="text"
+                name="gender-text"
+                id="gender-text"
+                value={this.state.genderText}
+                placeholder="Other"
+                onChange={e =>
+                  this.setState({ gender: 'text', genderText: e.target.value })
+                }
+              />
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="gender"
+                id="gender-notDisclosed"
+                value="notDisclosed"
+                checked={this.state.gender === 'notDisclosed'}
+                onChange={e => this.setState({ gender: 'notDisclosed' })}
+              />
+              <label htmlFor="gendernotDisclosed">Prefer not to say</label>
+            </div>
+          </div>
           {this.renderQuestion('Native Language: ', 'nativeLang', 'text')}
           {this.renderQuestion(
             'German Language Level: ',

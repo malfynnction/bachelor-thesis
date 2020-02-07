@@ -17,10 +17,13 @@
 - participantId in url params (für crowdsourcing) => auf /instructions dann nur noch ein simpler button "start"
 - Anderes wording für "create new user" auf /instructions (statt "start")
 - "start" (o.ä., s.o.) Buttons präsenter machen auf /instructions
-- better age ranges?
-- gender
-    - also radio with the top 3 + "Keine Angabe"
-- Kurze Datenschutz / Consent Floskel bei /demographics
+- Demographics
+    - better age ranges?
+    - Kurze Datenschutz / Consent Floskel
+    - Warum ist yob centered, aber german level nicht
+    - Warum required?
+        - Überall Option "Keine Angabe"
+    - multiple native languages
 - Tutorial Runde
 - dangerously set inner html for items
 - Schritt 2
