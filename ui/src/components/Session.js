@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import Item from './Item'
 import createStore from '../lib/create-store'
 import getNewSession from '../lib/get-new-session'
+import Progress from './Progress'
 
 const participantStore = createStore('participantId')
 const sessionStore = createStore('session')
@@ -38,54 +39,61 @@ class Session extends React.Component {
     const items = this.state.items || []
     const index = this.state.index || 0
 
-    const isLastItem = index + 1 === items.length
+    const progress = (index + 1) / items.length
+    const isLastItem = progress === 1
+
     const item = items[index]
 
     return (
-      <div
-        className={`tu-border tu-glow center-box ${
-          this.state.finishedAllSessions ? 'centered-content' : ''
-        }`}
-      >
-        {this.state.finishedAllSessions ? (
-          <div className="centered-content">
-            You have rated all available items in the data set.
-            <br />
-            <strong> Thank you for your participation.</strong>
-          </div>
-        ) : item ? (
-          <Item
-            index={index}
-            item={item}
-            isLastItem={isLastItem}
-            onNextItem={async result => {
-              pouchRatings.post({
-                ...result,
-                participantId: participantId,
-                itemId: item._id,
-              })
-              if (isLastItem) {
-                const sessionId = this.state.id
-                const participant = await pouchParticipants.get(participantId)
-                const completedSessions = [
-                  ...participant.completedSessions,
-                  sessionId,
-                ]
-                pouchParticipants.put({
-                  ...participant,
-                  completedSessions: completedSessions,
-                })
-                sessionStore.clear()
-                window.location.href = 'http://localhost:3000'
-              } else {
-                this.setState({ index: index + 1 })
-              }
-            }}
-          />
-        ) : (
-          <div>Loading...</div>
+      <Fragment>
+        {this.state.finishedAllSessions ? null : (
+          <Progress progress={progress} />
         )}
-      </div>
+        <div
+          className={`tu-border tu-glow center-box ${
+            this.state.finishedAllSessions ? 'centered-content' : ''
+          }`}
+        >
+          {this.state.finishedAllSessions ? (
+            <div className="centered-content">
+              You have rated all available items in the data set.
+              <br />
+              <strong> Thank you for your participation.</strong>
+            </div>
+          ) : item ? (
+            <Item
+              index={index}
+              item={item}
+              isLastItem={isLastItem}
+              onNextItem={async result => {
+                pouchRatings.post({
+                  ...result,
+                  participantId: participantId,
+                  itemId: item._id,
+                })
+                if (isLastItem) {
+                  const sessionId = this.state.id
+                  const participant = await pouchParticipants.get(participantId)
+                  const completedSessions = [
+                    ...participant.completedSessions,
+                    sessionId,
+                  ]
+                  pouchParticipants.put({
+                    ...participant,
+                    completedSessions: completedSessions,
+                  })
+                  sessionStore.clear()
+                  window.location.href = 'http://localhost:3000'
+                } else {
+                  this.setState({ index: index + 1 })
+                }
+              }}
+            />
+          ) : (
+            <div>Loading...</div>
+          )}
+        </div>
+      </Fragment>
     )
   }
 }

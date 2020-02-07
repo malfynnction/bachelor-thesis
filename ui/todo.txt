@@ -8,6 +8,7 @@
 - what if no input in cloze?
 - replace all the "localhost" with the actual url
 - TODO comments, "??"-comments
+- css Dateien naming/capitalization einheitlich
 
 - mobile
 - save ratings only after complete session
@@ -30,7 +31,6 @@
     - vertical, not horizontal
     - "most difficult sentence/word": auf extra Seite, erste Frage, Multiple Choice
 - Don't allow to go back
-- progress bar for session
 - show how many sessions done
 - token for crowdsourcing (for payment later)
     - after each session
