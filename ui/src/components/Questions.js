@@ -11,7 +11,6 @@ const allQuestions = [
       { label: 'why do you need three possible answers?', value: 'why' },
       { label: "fuck the binary, that's why", value: 'nb' },
     ],
-    horizontalAnswers: false,
   },
   {
     key: 'q1',
@@ -21,7 +20,6 @@ const allQuestions = [
       { label: 'no', value: 'n' },
       { label: "I don't even care", value: 'idc' },
     ],
-    horizontalAnswers: false,
   },
   {
     key: 'q2',
@@ -34,7 +32,6 @@ const allQuestions = [
       { label: 'answer 5', value: 5 },
       { label: 'answer 6', value: 6 },
     ],
-    horizontalAnswers: false,
   },
   {
     key: 'q3',
@@ -45,19 +42,6 @@ const allQuestions = [
       { label: 'No, I have a big screen', value: 'big' },
       { label: "I can't see this", value: 'what' },
     ],
-    horizontalAnswers: false,
-  },
-  {
-    key: 'q4',
-    label: 'Did you know I can also arrange the answers differently?',
-    answers: [
-      { label: 'Yes', value: 'y' },
-      { label: '', value: 'y-idk' },
-      { label: "I don't know", value: 'idk' },
-      { label: '', value: 'idk-n' },
-      { label: 'No', value: 'n' },
-    ],
-    horizontalAnswers: true,
   },
 ]
 
@@ -65,37 +49,27 @@ const Questions = props => {
   return (
     <Fragment>
       <div>Now answer some questions about what you just read</div>
-      {allQuestions.map(({ key, label, answers, horizontalAnswers }) => (
+      {allQuestions.map(({ key, label, answers }) => (
         <Fragment key={`question-${key}`}>
           <div className="question-box">
             <div>
               <strong>{label}</strong>
             </div>
-            <div
-              className={`${horizontalAnswers ? 'horizontal-answer-box' : ''}`}
-            >
-              {answers.map(({ label, value }, i) => {
-                return (
-                  <div
-                    key={`${key}-${value}`}
-                    className={`${
-                      horizontalAnswers ? 'horizontal-answer' : ''
-                    }`}
-                  >
-                    <input
-                      onChange={() => props.onChange(key, value)}
-                      type="radio"
-                      name={key}
-                      id={`${key}-${value}`}
-                      value={value}
-                      checked={value === props.answers[key]}
-                    />
-                    {horizontalAnswers ? <br /> : null}
-                    <label htmlFor={`${key}-${value}`}>{label}</label>
-                  </div>
-                )
-              })}
-            </div>
+            {answers.map(({ label, value }, i) => {
+              return (
+                <div key={`${key}-${value}`}>
+                  <input
+                    onChange={() => props.onChange(key, value)}
+                    type="radio"
+                    name={key}
+                    id={`${key}-${value}`}
+                    value={value}
+                    checked={value === props.answers[key]}
+                  />
+                  <label htmlFor={`${key}-${value}`}>{label}</label>
+                </div>
+              )
+            })}
           </div>
         </Fragment>
       ))}

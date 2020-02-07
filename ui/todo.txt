@@ -31,7 +31,6 @@
 - Tutorial Runde
 - Schritt 2
     - Für Antworten sowohl Label als auch Nr zeigen (siehe seine Mail)
-    - vertical, not horizontal
     - "most difficult sentence/word": auf extra Seite, erste Frage, Multiple Choice
 - Don't allow to go back
 - show how many sessions done
