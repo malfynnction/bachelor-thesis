@@ -2,7 +2,7 @@ import React from 'react'
 import '../styles/demographics.css'
 
 const defaultState = {
-  age: '',
+  yearOfBirth: '',
   nativeLang: '',
   gender: '',
   gerLevel: '',
@@ -14,7 +14,7 @@ class Demographics extends React.Component {
     this.state = { ...defaultState }
   }
 
-  renderQuestion(label, key, type) {
+  renderQuestion(label, key, type, options = []) {
     return (
       <div>
         <label htmlFor={key} className="block">
@@ -31,7 +31,7 @@ class Demographics extends React.Component {
             <option value={''} disabled>
               Please Select
             </option>
-            {['A1', 'A2', 'B1', 'B2', 'C1', 'C2'].map(level => {
+            {options.map(level => {
               return (
                 <option value={level} key={level}>
                   {level}
@@ -67,14 +67,24 @@ class Demographics extends React.Component {
           action="/session"
           className="centered-content demographics-form"
         >
-          {this.renderQuestion('Age: ', 'age', 'number')}
+          {this.renderQuestion('Year of birth: ', 'yearOfBirth', 'dropdown', [
+            '1920-1930',
+            '1930-1940',
+            '1940-1950',
+            '1950-1960',
+            '1960-1970',
+            '1970-1980',
+            '1980-1990',
+            '1990-2000',
+            '2000-2010',
+          ])}
           {this.renderQuestion('Gender: ', 'gender', 'text')}
           {this.renderQuestion('Native Language: ', 'nativeLang', 'text')}
           {this.renderQuestion(
             'German Language Level: ',
             'gerLevel',
             'dropdown',
-            []
+            ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
           )}
           <button type="submit">Start</button>
           <div className="start-label">

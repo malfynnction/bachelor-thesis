@@ -8,6 +8,7 @@
 - what if no input in cloze?
 - replace all the "localhost" with the actual url
 - TODO comments, "??"-comments
+- div cannot appear as descendant of p (-> /instructions)
 
 - mobile
 - save ratings only after complete session
@@ -16,9 +17,7 @@
 - participantId in url params (für crowdsourcing) => auf /instructions dann nur noch ein simpler button "start"
 - Anderes wording für "create new user" auf /instructions (statt "start")
 - "start" (o.ä., s.o.) Buttons präsenter machen auf /instructions
-- age
-    - ask for year born (absolute value) instead of age (relative value)
-    - ask for ranges instead of exact year
+- better age ranges?
 - gender
     - also radio with the top 3 + "Keine Angabe"
 - Kurze Datenschutz / Consent Floskel bei /demographics
