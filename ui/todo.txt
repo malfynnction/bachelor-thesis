@@ -24,6 +24,8 @@
     - Warum required?
         - Überall Option "Keine Angabe"
     - multiple native languages
+    - multiple genders
+    - if you don't know your language lvl, pls guess
 - Tutorial Runde
 - dangerously set inner html for items
 - Schritt 2

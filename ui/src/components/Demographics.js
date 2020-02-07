@@ -89,6 +89,7 @@ class Demographics extends React.Component {
               { key: 'female', label: 'Female' },
               { key: 'male', label: 'Male' },
               { key: 'nonbinary', label: 'Non-Binary' },
+              { key: 'notDisclosed', label: 'Prefer not to say' },
             ].map(({ key, label }) => (
               <div key={`gender-${key}`}>
                 <input
@@ -119,22 +120,10 @@ class Demographics extends React.Component {
                 name="gender-text"
                 id="gender-text"
                 value={this.state.genderText}
-                placeholder="Other"
                 onChange={e =>
                   this.setState({ gender: 'text', genderText: e.target.value })
                 }
               />
-            </div>
-            <div>
-              <input
-                type="radio"
-                name="gender"
-                id="gender-notDisclosed"
-                value="notDisclosed"
-                checked={this.state.gender === 'notDisclosed'}
-                onChange={e => this.setState({ gender: 'notDisclosed' })}
-              />
-              <label htmlFor="gendernotDisclosed">Prefer not to say</label>
             </div>
           </div>
           {this.renderQuestion('Native Language: ', 'nativeLang', 'text')}

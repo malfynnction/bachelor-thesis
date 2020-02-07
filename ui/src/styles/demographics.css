@@ -6,7 +6,10 @@
   padding-top: 10px;
 }
 
-input,
 select {
   margin-bottom: 15px;
+}
+
+input[type='radio'] {
+  margin-right: 5px;
 }
