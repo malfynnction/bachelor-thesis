@@ -31,7 +31,7 @@ class Read extends React.Component {
                   this.state.showItem ? 'display' : 'hidden'
                 }`}
               >
-                <p>{this.props.item.text}</p>
+                <p dangerouslySetInnerHTML={{ __html: this.props.item.text }} />
               </div>
               <button
                 onTouchStart={() => this.revealItem(timerControl)}
