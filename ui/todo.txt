@@ -14,7 +14,6 @@
 - save ratings only after complete session
 - maybe all questions first, then all tasks
     - dafür cloze = multiple choice
-- participantId in url params (für crowdsourcing) => auf /instructions dann nur noch ein simpler button "start"
 - Anderes wording für "create new user" auf /instructions (statt "start")
 - "start" (o.ä., s.o.) Buttons präsenter machen auf /instructions
 - Demographics

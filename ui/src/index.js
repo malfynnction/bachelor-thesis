@@ -58,9 +58,12 @@ const App = () => {
       </header>
       <div className="layout centered-content">
         <Switch>
-          <Route path="/instructions">
-            <Instructions pouchParticipants={pouchParticipants} />
-          </Route>
+          <Route
+            path="/instructions"
+            render={props => (
+              <Instructions pouchParticipants={pouchParticipants} {...props} />
+            )}
+          />
           <Route path="/demographics">
             <Demographics
               createUser={async data => {
