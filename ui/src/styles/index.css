@@ -88,6 +88,7 @@ select:focus {
 }
 
 .screenreader-only {
+  /* suggested by https://cloudfour.com/thinks/see-no-evil-hidden-content-and-accessibility/ */
   border: 0;
   clip: rect(0 0 0 0);
   clip-path: polygon(0px 0px, 0px 0px, 0px 0px);
@@ -99,4 +100,10 @@ select:focus {
   position: absolute;
   width: 1px;
   white-space: nowrap;
+}
+
+a.btn,
+button.btn {
+  border: 2px solid #c50e1f;
+  background-color: #fde7e9;
 }

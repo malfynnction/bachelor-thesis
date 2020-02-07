@@ -75,6 +75,13 @@ const Instructions = props => {
         ) : (
           <Fragment>
             <p>
+              If this is your first time participating in this study and you
+              don't have an ID yet, please click here:
+            </p>
+            <Link className="btn" to="/demographics">
+              New Participant
+            </Link>
+            <p>
               If you have already done a session in the past, please enter your
               participant ID and click "Start"
             </p>
@@ -105,10 +112,8 @@ const Instructions = props => {
                 name="participantId"
                 placeholder="Participant ID"
               />
-              <button>Start</button>
+              <button className="btn">Start</button>
             </form>
-            <p>If you don't have an ID yet, please click here:</p>
-            <Link to="/demographics">Start</Link>
             {error.length > 0 ? (
               <div className="tu-border error-box background-pink">{error}</div>
             ) : null}
