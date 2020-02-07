@@ -8,7 +8,6 @@
 - what if no input in cloze?
 - replace all the "localhost" with the actual url
 - TODO comments, "??"-comments
-- div cannot appear as descendant of p (-> /instructions)
 
 - mobile
 - save ratings only after complete session

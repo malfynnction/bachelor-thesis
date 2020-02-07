@@ -44,13 +44,13 @@ const Instructions = props => {
           In the first step, you can read the sentence or paragraph that you
           will be evaluating. We will measure how long it takes to read the
           text, so it will be hidden unless you hold a button below the text:
-          <div className="img-wrap">
+          <span className="img-wrap">
             <img
               src="instructions-read.gif"
               alt="GIF of the page where you can read the text. The heading says 'TODO' but the text is hidden by a light blue block. A cursor appears, presses a button labeled 'TODO' and the block disappears, making the text readable as long as the button is held, the the block appears again."
               className="instruction-img"
             />
-          </div>
+          </span>
         </p>
         <h5>2. Questions</h5>
         <p>
