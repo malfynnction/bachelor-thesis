@@ -11,50 +11,62 @@ class Session extends React.Component {
   constructor(props) {
     super(props)
     const session = sessionStore.get()
-    this.state = { ...session }
+    this.state = { session: { ...session } }
   }
 
   async componentDidMount() {
-    if (typeof this.state.items === 'undefined') {
+    if (typeof this.state.session.item === 'undefined') {
       const newSession = await getNewSession(
         this.props.pouchParticipants,
         this.props.pouchSessions,
         this.props.pouchItems
       )
       sessionStore.set(newSession)
-      this.setState({ ...newSession })
+      this.setState({ session: { ...newSession } })
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.index !== prevState.index) {
-      sessionStore.set(this.state)
+    if (this.state.session.index !== prevState.index) {
+      sessionStore.set(this.state.session)
     }
   }
 
   render() {
     const { pouchParticipants, pouchRatings } = this.props
 
+    const { session } = this.state || {}
+
     const participantId = (participantStore.get() || '').toString()
-    const items = this.state.items || []
-    const index = this.state.index || 0
+    const items = session.items || []
+    const index = session.index || 0
 
     const progress = (index + 1) / items.length
     const isLastItem = progress === 1
 
     const item = items[index]
 
+    pouchParticipants.get(participantId).then(participant => {
+      const completedSessionCount = participant.completedSessions.length
+      if (this.state.completedSessionCount !== completedSessionCount) {
+        this.setState({ completedSessionCount })
+      }
+    })
+
     return (
       <Fragment>
-        {this.state.finishedAllSessions ? null : (
-          <Progress progress={progress} />
+        {session.finishedAllSessions ? null : (
+          <Progress
+            progress={progress}
+            sessionCount={this.state.completedSessionCount}
+          />
         )}
         <div
           className={`tu-border tu-glow center-box ${
-            this.state.finishedAllSessions ? 'centered-content' : ''
+            session.finishedAllSessions ? 'centered-content' : ''
           }`}
         >
-          {this.state.finishedAllSessions ? (
+          {session.finishedAllSessions ? (
             <div className="centered-content">
               You have rated all available items in the data set.
               <br />
@@ -72,7 +84,7 @@ class Session extends React.Component {
                   itemId: item._id,
                 })
                 if (isLastItem) {
-                  const sessionId = this.state.id
+                  const sessionId = session.id
                   const participant = await pouchParticipants.get(participantId)
                   const completedSessions = [
                     ...participant.completedSessions,
@@ -85,7 +97,9 @@ class Session extends React.Component {
                   sessionStore.clear()
                   window.location.href = 'http://localhost:3000'
                 } else {
-                  this.setState({ index: index + 1 })
+                  this.setState({
+                    session: { ...this.state.session, index: index + 1 },
+                  })
                 }
               }}
             />

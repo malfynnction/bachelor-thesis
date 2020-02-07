@@ -5,3 +5,9 @@
   top: 5rem;
   height: 0.5rem;
 }
+
+.session-count {
+  position: absolute;
+  top: 6rem;
+  right: 2rem;
+}
