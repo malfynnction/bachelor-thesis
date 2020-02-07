@@ -66,7 +66,7 @@ const Questions = props => {
     <Fragment>
       <div>Now answer some questions about what you just read</div>
       {allQuestions.map(({ key, label, answers, horizontalAnswers }) => (
-        <Fragment>
+        <Fragment key={`question-${key}`}>
           <div className="question-box">
             <div>
               <strong>{label}</strong>
