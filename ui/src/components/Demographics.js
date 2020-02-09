@@ -18,7 +18,7 @@ class Demographics extends React.Component {
   renderQuestion(label, key, type, options = []) {
     return (
       <div className="centered-content">
-        <label htmlFor={key} className="block">
+        <label htmlFor={key} className="block question-label">
           <strong>{label}</strong>
         </label>
         {type === 'dropdown' ? (
@@ -32,10 +32,10 @@ class Demographics extends React.Component {
             <option value={''} disabled>
               Please Select
             </option>
-            {options.map(level => {
+            {options.map(option => {
               return (
-                <option value={level} key={level}>
-                  {level}
+                <option value={option} key={option}>
+                  {option}
                 </option>
               )
             })}
@@ -82,6 +82,7 @@ class Demographics extends React.Component {
             '1980-1990',
             '1990-2000',
             '2000-2010',
+            'Prefer not to say',
           ])}
           <strong>Gender:</strong>
           <div>
@@ -131,9 +132,11 @@ class Demographics extends React.Component {
             'German Language Level: ',
             'gerLevel',
             'dropdown',
-            ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
+            ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', "I don't know"]
           )}
-          <button type="submit">Start</button>
+          <button className="btn" type="submit">
+            Start
+          </button>
           <div className="start-label">
             By clicking on "Start" you will be assigned a participant ID. Please
             remember it so you can skip this step if you do another session in

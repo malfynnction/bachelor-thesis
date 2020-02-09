@@ -52,6 +52,7 @@ class Read extends React.Component {
                 </span>
               </p>
               <button
+                className="btn button-secondary"
                 onTouchStart={() => this.revealItem(timerControl)}
                 onTouchEnd={() => this.hideItem(timerControl, Timer)}
                 onMouseDown={() => this.revealItem(timerControl)}

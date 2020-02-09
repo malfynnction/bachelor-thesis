@@ -37,6 +37,7 @@ const Nav = props => {
         })}
       </div>
       <button
+        className="btn"
         onClick={() => {
           if (isLastStep) {
             props.onNextItem()
