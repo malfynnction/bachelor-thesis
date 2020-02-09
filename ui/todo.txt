@@ -11,6 +11,7 @@
 - TODO comments, "??"-comments
 - completedSessions in participantDB doesn't get updated after the first session, only after the second or not even then
 - What is this "Item 0" heading in Item??
+- Manchmal: new participant -> doesn't get created -> 404 for first session
 
 - mobile
 - save ratings only after complete session
@@ -30,6 +31,7 @@
     - Für Antworten sowohl Label als auch Nr zeigen (siehe seine Mail)
     - "most difficult sentence/word": auf extra Seite, erste Frage, Multiple Choice
 - Erwähne: "Wenn Browsernavigation während Session -> Session neu starten!"
+- Explanation for sentences: ignore enclosing paragraph
 - token for crowdsourcing (for payment later)
     - after each session
     - from seed in url params

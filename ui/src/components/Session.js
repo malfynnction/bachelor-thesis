@@ -62,7 +62,7 @@ class Session extends React.Component {
           />
         )}
         <div
-          className={`tu-border tu-glow center-box ${
+          className={`tu-border tu-glow center-box flexbox ${
             session.finishedAllSessions ? 'centered-content' : ''
           }`}
         >

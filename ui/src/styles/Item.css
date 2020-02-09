@@ -1,4 +1,10 @@
 .wizard {
   display: flex;
   flex-direction: column-reverse;
+  justify-content: space-between;
+  min-height: 90%;
+}
+
+.item-form {
+  width: 100%;
 }

@@ -105,5 +105,15 @@ select:focus {
 a.btn,
 button.btn {
   border: 2px solid #c50e1f;
-  background-color: #fde7e9;
+  color: #c50e1f;
+}
+
+a.button-secondary,
+button.button-secondary {
+  border: 2px solid #5b4b4b;
+  color: #5b4b4b;
+}
+
+.flexbox {
+  display: flex;
 }
