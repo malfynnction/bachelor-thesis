@@ -20,7 +20,6 @@
 - Demographics
     - better age ranges?
     - Kurze Datenschutz / Consent Floskel
-    - Warum ist yob centered, aber german level nicht
     - Warum required?
         - Überall Option "Keine Angabe"
     - multiple native languages

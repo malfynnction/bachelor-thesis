@@ -17,7 +17,7 @@ class Demographics extends React.Component {
 
   renderQuestion(label, key, type, options = []) {
     return (
-      <div>
+      <div className="centered-content">
         <label htmlFor={key} className="block">
           <strong>{label}</strong>
         </label>
