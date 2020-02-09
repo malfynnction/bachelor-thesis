@@ -2,7 +2,7 @@
 - accessibility (z. B. Instructions form, hold button to read,...)
     - button could be triggered by space key?
 - tasks
-- scroll up after each wizard step
+- scroll up after each item (within item already done)
 - screenshots and GIFs in instructions
 - Impressum & Datenschutz?
 - what happens after completed session?
@@ -23,7 +23,6 @@
     - Kurze Datenschutz / Consent Floskel
     - multiple native languages
     - multiple genders
-    - if you don't know your language lvl, pls guess
 - Tutorial Runde
 - Schritt 2
     - Für Antworten sowohl Label als auch Nr zeigen (siehe seine Mail)

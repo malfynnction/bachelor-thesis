@@ -12,6 +12,7 @@ class Session extends React.Component {
     super(props)
     const session = sessionStore.get()
     this.state = { session: { ...session } }
+    this.topRef = React.createRef()
   }
 
   async componentDidMount() {
@@ -30,6 +31,10 @@ class Session extends React.Component {
     if (this.state.session.index !== prevState.index) {
       sessionStore.set(this.state.session)
     }
+  }
+
+  scrollToTop() {
+    window.scrollTo(0, this.topRef.current.offsetTop)
   }
 
   render() {
@@ -65,6 +70,7 @@ class Session extends React.Component {
           className={`tu-border tu-glow center-box flexbox ${
             session.finishedAllSessions ? 'centered-content' : ''
           }`}
+          ref={this.topRef}
         >
           {session.finishedAllSessions ? (
             <div className="centered-content">
@@ -77,6 +83,9 @@ class Session extends React.Component {
               index={index}
               item={item}
               isLastItem={isLastItem}
+              onScrollToTop={() => {
+                this.scrollToTop()
+              }}
               onNextItem={async result => {
                 pouchRatings.post({
                   ...result,

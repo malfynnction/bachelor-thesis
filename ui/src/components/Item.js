@@ -45,6 +45,7 @@ const Nav = props => {
           } else {
             props.nextStep()
           }
+          props.onScrollToTop()
         }}
       >
         {buttonText}
@@ -80,10 +81,12 @@ class Item extends React.Component {
           nav={
             <Nav
               onNextItem={() => {
+                this.props.onScrollToTop()
                 this.props.onNextItem(this.state)
                 this.setState({ ...initialState })
               }}
               isLastItem={isLastItem}
+              onScrollToTop={() => this.props.onScrollToTop()}
             />
           }
           transitions={{}}
