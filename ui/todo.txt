@@ -9,7 +9,6 @@
 - what if no input in cloze?
 - replace all the "localhost" with the actual url
 - TODO comments, "??"-comments
-- css Dateien naming/capitalization einheitlich
 - completedSessions in participantDB doesn't get updated after the first session, only after the second or not even then
 - What is this "Item 0" heading in Item??
 

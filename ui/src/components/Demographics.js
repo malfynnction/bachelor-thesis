@@ -1,5 +1,5 @@
 import React from 'react'
-import '../styles/demographics.css'
+import '../styles/Demographics.css'
 
 const defaultState = {
   yearOfBirth: '',
