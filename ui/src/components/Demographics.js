@@ -34,8 +34,8 @@ class Demographics extends React.Component {
             </option>
             {options.map(option => {
               return (
-                <option value={option} key={option}>
-                  {option}
+                <option value={option.value || option} key={option}>
+                  {option.label || option}
                 </option>
               )
             })}
@@ -49,7 +49,6 @@ class Demographics extends React.Component {
             name={key}
             type={type}
             value={this.state[key]}
-            required
           />
         )}
       </div>
@@ -82,7 +81,7 @@ class Demographics extends React.Component {
             '1980-1990',
             '1990-2000',
             '2000-2010',
-            'Prefer not to say',
+            { label: 'Prefer not to say', value: 'notDisclosed' },
           ])}
           <strong>Gender:</strong>
           <div>
@@ -132,7 +131,15 @@ class Demographics extends React.Component {
             'German Language Level: ',
             'gerLevel',
             'dropdown',
-            ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', "I don't know"]
+            [
+              'A1',
+              'A2',
+              'B1',
+              'B2',
+              'C1',
+              'C2',
+              { label: "I don't know", value: 'notDisclosed' },
+            ]
           )}
           <button className="btn" type="submit">
             Start

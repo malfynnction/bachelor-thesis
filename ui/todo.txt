@@ -21,8 +21,6 @@
 - Demographics
     - better age ranges?
     - Kurze Datenschutz / Consent Floskel
-    - Warum required?
-        - Überall Option "Keine Angabe"
     - multiple native languages
     - multiple genders
     - if you don't know your language lvl, pls guess
