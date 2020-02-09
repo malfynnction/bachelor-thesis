@@ -71,7 +71,9 @@ const Instructions = props => {
           grouped logic)*/}
         </p>
         {loggedInId !== null ? (
-          <Link to="/session">Start</Link>
+          <Link className="btn" to="/session">
+            Start
+          </Link>
         ) : (
           <Fragment>
             <p>
