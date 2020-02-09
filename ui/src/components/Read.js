@@ -19,20 +19,38 @@ class Read extends React.Component {
     this.props.onTimeUpdate(timerControl.getTime())
   }
 
+  splitParagraphOnSentence(paragraph, sentence) {
+    return paragraph.split(sentence)
+  }
+
   render() {
+    const { item } = this.props
+    const isSentence = item.type === 'sentence'
+    const text =
+      isSentence &&
+      this.splitParagraphOnSentence(item.enclosingParagraph, item.text)
     return (
       <Fragment>
-        <div>Here is a {this.props.item.type} that you should read: </div>
+        <div>Here is a {item.type} that you should read: </div>
         <Timer startImmediately={false} timeToUpdate={100}>
           {timerControl => (
             <Fragment>
-              <div
-                className={`item-text centered-content ${
-                  this.state.showItem ? 'display' : 'hidden'
-                }`}
-              >
-                <p dangerouslySetInnerHTML={{ __html: this.props.item.text }} />
-              </div>
+              <p className={`item-text centered-content text-box`}>
+                <span>
+                  {isSentence ? text[0] : null}
+                  <span
+                    className={`hidden-wrapper ${
+                      this.state.showItem ? '' : 'hidden'
+                    }`}
+                  >
+                    <span
+                      className="hidden-content"
+                      dangerouslySetInnerHTML={{ __html: item.text }}
+                    ></span>
+                  </span>
+                  {isSentence ? text[1] : null}
+                </span>
+              </p>
               <button
                 onTouchStart={() => this.revealItem(timerControl)}
                 onTouchEnd={() => this.hideItem(timerControl, Timer)}

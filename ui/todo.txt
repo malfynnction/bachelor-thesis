@@ -17,7 +17,6 @@
 - save ratings only after complete session
 - maybe all questions first, then all tasks
     - dafür cloze = multiple choice
-- Anderes wording für "create new user" auf /instructions (statt "start")
 - "start" (o.ä., s.o.) Buttons präsenter machen auf /instructions
 - Demographics
     - better age ranges?
@@ -33,7 +32,6 @@
     - Für Antworten sowohl Label als auch Nr zeigen (siehe seine Mail)
     - "most difficult sentence/word": auf extra Seite, erste Frage, Multiple Choice
 - Erwähne: "Wenn Browsernavigation während Session -> Session neu starten!"
-- show how many sessions done
 - token for crowdsourcing (for payment later)
     - after each session
     - from seed in url params
@@ -43,4 +41,3 @@
     - every 5th word is too much
         - make this available as setting
         - 1 per sentence maybe
-- show enclosing paragraph for sentences

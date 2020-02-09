@@ -1,19 +1,21 @@
 .hidden {
   background-color: #9fb6c4;
+  border-radius: 4px;
 }
-.hidden > p {
+.hidden > .hidden-content {
   visibility: hidden;
 }
 
 .item-text {
   margin: 10px;
   border-radius: 5px;
+  background-color: #eaeaea;
 }
 
-.item-text > p {
+.item-text > span {
   margin: 20px;
 }
 
-.display {
-  background-color: #eaeaea;
+.hidden-wrapper {
+  margin: 5px;
 }
