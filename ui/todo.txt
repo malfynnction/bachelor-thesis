@@ -32,7 +32,7 @@
 - Schritt 2
     - Für Antworten sowohl Label als auch Nr zeigen (siehe seine Mail)
     - "most difficult sentence/word": auf extra Seite, erste Frage, Multiple Choice
-- Don't allow to go back
+- Erwähne: "Wenn Browsernavigation während Session -> Session neu starten!"
 - show how many sessions done
 - token for crowdsourcing (for payment later)
     - after each session

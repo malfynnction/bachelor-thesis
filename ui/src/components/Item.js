@@ -83,7 +83,6 @@ class Item extends React.Component {
           }
           transitions={{}}
           className="wizard"
-          isHashEnabled={true}
         >
           <Read
             item={item}
