@@ -8,12 +8,14 @@ const allowMinorDifferences = word => {
   return word.toLowerCase().replace(punctuation, '')
 }
 
+const deletionSetting = { frequency: 5 }
+
 class Tasks extends React.Component {
   componentDidMount() {
     const words = this.props.item.text.split(' ')
     const allDeletions = []
     words.forEach((word, i) => {
-      if ((i + 1) % 5 === 0) {
+      if ((i + 1) % deletionSetting.frequency === 0) {
         allDeletions.push(word)
       }
     })
@@ -21,7 +23,9 @@ class Tasks extends React.Component {
   }
 
   deleteWord(original, wordIndex) {
-    const deletionIndex = (wordIndex - 4) / 5
+    const firstDeletionIndex = deletionSetting.frequency - 1
+    const deletionIndex =
+      (wordIndex - firstDeletionIndex) / deletionSetting.frequency
     return (
       <Fragment>
         <input
@@ -52,7 +56,9 @@ class Tasks extends React.Component {
           {words.map((word, i) => {
             return (
               <span key={`word-${i}`}>
-                {(i + 1) % 5 === 0 ? this.deleteWord(word, i) : word + ' '}
+                {(i + 1) % deletionSetting.frequency === 0
+                  ? this.deleteWord(word, i)
+                  : word + ' '}
               </span>
             )
           })}
