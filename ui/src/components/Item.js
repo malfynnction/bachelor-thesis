@@ -107,6 +107,12 @@ class Item extends React.Component {
           />
           <Tasks
             item={item}
+            initializeCloze={allDeletions => {
+              const initialCloze = allDeletions.map(word => {
+                return { original: word, entered: '', isCorrect: false }
+              })
+              this.setState({ cloze: initialCloze })
+            }}
             onChange={(index, value) => {
               const newState = [...this.state.cloze]
               newState[index] = value

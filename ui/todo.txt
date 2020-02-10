@@ -6,7 +6,6 @@
 - screenshots and GIFs in instructions
 - Impressum & Datenschutz?
 - what happens after completed session?
-- what if no input in cloze?
 - replace all the "localhost" with the actual url
 - TODO comments, "??"-comments
 - completedSessions in participantDB doesn't get updated after the first session, only after the second or not even then
@@ -38,3 +37,4 @@
     - every 5th word is too much
         - make this available as setting
         - 1 per sentence maybe
+- show enclosing paragraph for sentences in cloze test

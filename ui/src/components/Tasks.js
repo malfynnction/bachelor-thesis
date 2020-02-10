@@ -9,6 +9,17 @@ const allowMinorDifferences = word => {
 }
 
 class Tasks extends React.Component {
+  componentDidMount() {
+    const words = this.props.item.text.split(' ')
+    const allDeletions = []
+    words.forEach((word, i) => {
+      if ((i + 1) % 5 === 0) {
+        allDeletions.push(word)
+      }
+    })
+    this.props.initializeCloze(allDeletions)
+  }
+
   deleteWord(original, wordIndex) {
     const deletionIndex = (wordIndex - 4) / 5
     return (
@@ -33,11 +44,12 @@ class Tasks extends React.Component {
   }
 
   render() {
+    const words = this.props.item.text.split(' ')
     return (
       <Fragment>
         <div>Please fill in the gaps:</div>
         <p id="cloze">
-          {this.props.item.text.split(' ').map((word, i) => {
+          {words.map((word, i) => {
             return (
               <span key={`word-${i}`}>
                 {(i + 1) % 5 === 0 ? this.deleteWord(word, i) : word + ' '}
