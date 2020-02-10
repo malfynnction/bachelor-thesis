@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cldr-segmentation": "^2.0.0",
     "lodash.get": "^4.4.2",
     "lodash.shuffle": "^4.2.0",
     "node-html-parser": "^1.1.18",
@@ -22,6 +23,7 @@
     "react-step-wizard": "^5.3.0",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.8",
+    "utfstring": "^2.0.1",
     "xlsx": "^0.15.4"
   },
   "devDependencies": {
