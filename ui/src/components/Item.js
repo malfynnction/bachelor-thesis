@@ -104,6 +104,7 @@ class Item extends React.Component {
               })
             }
             answers={this.state.questions}
+            item={item}
           />
           <Tasks
             item={item}

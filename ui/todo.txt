@@ -14,27 +14,55 @@
 
 - mobile
 - save ratings only after complete session
-- maybe all questions first, then all tasks
-    - dafür cloze = multiple choice
 - "start" (o.ä., s.o.) Buttons präsenter machen auf /instructions
 - Demographics
     - better age ranges?
     - Kurze Datenschutz / Consent Floskel
     - multiple native languages
     - multiple genders
-- Tutorial Runde
+- Schritt 1 (sentences)
+    - show whole paragraph on top, repeat sentence below   
+        - plus good explanation!
+    - don't measure reading time per sentence
 - Schritt 2
-    - Für Antworten sowohl Label als auch Nr zeigen (siehe seine Mail)
-    - "most difficult sentence/word": auf extra Seite, erste Frage, Multiple Choice
-- Erwähne: "Wenn Browsernavigation während Session -> Session neu starten!"
-- Explanation for sentences: ignore enclosing paragraph
-- token for crowdsourcing (for payment later)
-    - after each session
-    - from seed in url params
-    - z. B. seed -> md5 -> first 5 chars
-- cloze
-    - don't remove articles, just nouns & verbs & adjectives
+    - do the scales (siehe seine Mail)
+        - Für Antworten sowohl Label als auch Nr zeigen
+        - vertikal vs. horizontal
+        - kontinuierlich vs. diskret: diskret, for accessibility reasons
+        - open vs closed end: entfällt, weil diskret
+- Schritt 3
+    - content questions?
     - every 5th word is too much
         - make this available as setting
         - 1 per sentence maybe
+- Erwähne: "Wenn Browsernavigation während Session -> Session neu starten!"
+    - or, better yet - fix that??
+- token for crowdsourcing (for payment later)
+    - after each session
+    - from seed in url params
+    - z. B. seed -> md5 -> first 5 chars+
 - show enclosing paragraph for sentences in cloze test
+
+pre-processing: 
+• tokenizer (separate sentences)
+• POS tagger (identify nouns)
+• pre-process server-side, store results in db
+
+step 2:
+• in test study more questions, can probably remove afterwards
+
+step 3:
+• 5 blanks per paragraph
+• sentence: remove all nouns (up to 5)
+• only remove nouns, maybe adjectives
+• dropdown with other suggestions
+
+"training" session with lots of explanation
+
+"automatization":
+• input -> pre-processing -> return data in DB format (aka JSON?)
+• upload to DB manually
+
+1 session ≈ 10 minutes
+
+Dockerize everything
