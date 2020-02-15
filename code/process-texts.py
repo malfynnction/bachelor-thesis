@@ -21,17 +21,18 @@ nlp.add_pipe(customSentenceBoundaries, before="parser")
 # TODO: make this easier editable
 DATA_PATH = 'data.xlsx'
 SHEET_NAME = 'paragraphs'
-OUTPUT_PATH = 'items.json'
+TEXT_COLUMN = 'B'
+OUTPUT_PATH_ITEMS = 'items.json'
 INCLUDE_ALL_SENTENCES = True
 CLOZES_PER_TEXT = 5
+ALTERNATIVE_SUGGESTIONS_PER_CLOZE = 4
 
 workbook = load_workbook(DATA_PATH)
 sheet = workbook[SHEET_NAME]
 
-paragraphColumn = 'B'
 
 def getParsedTexts():
-  column = sheet[paragraphColumn]
+  column = sheet[TEXT_COLUMN]
   texts = []
   for cell in column[:2]:
     texts.append(nlp(cell.value))
@@ -49,15 +50,20 @@ def separateSentences(text):
     sentences.append(sentence.text)
   return sentences
 
-def getClozeIndices(partsOfSpeech):
+def getClozes(partsOfSpeech):
   nounIndices = [i for i,token in enumerate(partsOfSpeech) if token['type'] == 'NOUN']
   clozeIndices = random.sample(nounIndices, CLOZES_PER_TEXT)
-  return clozeIndices
+  clozes = [{
+    'wordIndex': i,
+    'original': partsOfSpeech[i]['word'],
+    'alternativeSuggestions': [partsOfSpeech[altIndex]['word'] for altIndex in random.sample(nounIndices, ALTERNATIVE_SUGGESTIONS_PER_CLOZE)]
+  } for i in clozeIndices]
+  return clozes
 
 def main():
   texts = getParsedTexts()
   itemDocuments = []
-  # TODO: sessionDocuments (or is that static?)
+  # TODO: sessionDocuments
 
   for index, text in enumerate(texts[:1]):
     sentences = separateSentences(text)
@@ -68,20 +74,20 @@ def main():
       "text": text.text,
       "sentences": sentences,
       "partsOfSpeech": partsOfSpeech,
-      "clozeIndices": getClozeIndices(partsOfSpeech)
+      "clozes": getClozes(partsOfSpeech)
       # TODO:
       # "enclosingParagraph" (only for sentences)
     }
 
-    # TODO: add an itemDoc for all sentences in $text if INCLUDE_ALL_SENTENCES
+    # TODO: add an itemDoc for every sentence in $text if INCLUDE_ALL_SENTENCES
     itemDocuments.append(document)
 
-  with open(OUTPUT_PATH, 'w', encoding='utf-8') as f:
+  with open(OUTPUT_PATH_ITEMS, 'w', encoding='utf-8') as f:
     json.dump({'docs': itemDocuments}, f, ensure_ascii=False, indent=2)
 
   print('Your items have been processed and are ready to be uploaded to your database. Run \n \
     curl -X POST YOUR-COUCH-URL-HERE/items/_bulk_docs -H \'Content-Type: application/json\' -d @{}\n \
-    to automatically upload them.'.format(OUTPUT_PATH))
+    to automatically upload them.'.format(OUTPUT_PATH_ITEMS))
   # TODO: this does not work if /items does not exist!
 
 main()

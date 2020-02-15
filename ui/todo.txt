@@ -46,6 +46,7 @@ pre-processing:
 • "automatization": input texts, output data in DB format (to be uploaded manually)
     - make input data format more general / easier to replicate
     - figure out how to make this available for other people (npm script? -> add to /ui?)
+    - alternativeSuggestions kann das gleiche Wort mehrmals enthalten, wenn es mehrmals im Originaltext vorkommt
 
 "training" session with lots of explanation
 
