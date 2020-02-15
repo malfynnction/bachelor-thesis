@@ -45,6 +45,7 @@ pre-processing:
 • pre-process server-side, store results in db
 • "automatization": input texts, output data in DB format (to be uploaded manually)
     - make input data format more general / easier to replicate
+    - figure out how to make this available for other people (npm script? -> add to /ui?)
 
 "training" session with lots of explanation
 
