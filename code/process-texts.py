@@ -1,5 +1,6 @@
 import spacy
 from openpyxl import load_workbook
+import random
 
 nlp = spacy.load('de')
 
@@ -20,6 +21,7 @@ nlp.add_pipe(customSentenceBoundaries, before="parser")
 DATA_PATH = 'data.xlsx'
 SHEET_NAME = 'paragraphs'
 INCLUDE_ALL_SENTENCES = True
+CLOZES_PER_TEXT = 5
 
 workbook = load_workbook(DATA_PATH)
 sheet = workbook[SHEET_NAME]
@@ -45,6 +47,11 @@ def separateSentences(text):
     sentences.append(sentence)
   return sentences
 
+def getClozeIndices(partsOfSpeech):
+  nounIndices = [i for i,token in enumerate(partsOfSpeech) if token['type'] == 'NOUN']
+  clozeIndices = random.sample(nounIndices, CLOZES_PER_TEXT)
+  return clozeIndices
+
 def main():
   texts = getParsedTexts()
   itemDocuments = []
@@ -52,15 +59,16 @@ def main():
 
   for index, text in enumerate(texts):
     sentences = separateSentences(text)
+    partsOfSpeech = tagPartsOfSpeech(text)
 
     document = {
       "_id": 'par_{}'.format(index),
       "text": text,
       "sentences": sentences,
-      "partsOfSpeech": tagPartsOfSpeech(text)
+      "partsOfSpeech": partsOfSpeech,
+      "clozeIndices": getClozeIndices(partsOfSpeech)
       # TODO:
       # "enclosingParagraph" (only for sentences)
-      # "clozeIndices"
     }
 
     # TODO: add an itemDoc for all sentences in $text if INCLUDE_ALL_SENTENCES
