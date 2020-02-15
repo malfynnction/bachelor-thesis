@@ -16,11 +16,13 @@ def customSentenceBoundaries(doc):
 
 nlp.add_pipe(customSentenceBoundaries, before="parser")
 
-dataPath = 'data.xlsx' # TODO: make this easier editable
-sheetName = 'paragraphs' # TODO: make this easier editable
+# TODO: make this easier editable
+DATA_PATH = 'data.xlsx'
+SHEET_NAME = 'paragraphs'
+INCLUDE_ALL_SENTENCES = True
 
-workbook = load_workbook(dataPath)
-sheet = workbook[sheetName]
+workbook = load_workbook(DATA_PATH)
+sheet = workbook[SHEET_NAME]
 
 paragraphColumn = 'B'
 
@@ -28,7 +30,7 @@ def getParsedTexts():
   column = sheet[paragraphColumn]
   texts = []
   for cell in column:
-    texts.append(npl(cell.value))
+    texts.append(nlp(cell.value))
   return texts[1:] # texts[0] is the column header
 
 def tagPartsOfSpeech(text):
@@ -42,3 +44,27 @@ def separateSentences(text):
   for sentence in text.sents:
     sentences.append(sentence)
   return sentences
+
+def main():
+  texts = getParsedTexts()
+  itemDocuments = []
+  # TODO: sessionDocuments (or is that static?)
+
+  for index, text in enumerate(texts):
+    sentences = separateSentences(text)
+
+    document = {
+      "_id": 'par_{}'.format(index),
+      "text": text,
+      "sentences": sentences,
+      "partsOfSpeech": tagPartsOfSpeech(text)
+      # TODO:
+      # "enclosingParagraph" (only for sentences)
+      # "clozeIndices"
+    }
+
+    # TODO: add an itemDoc for all sentences in $text if INCLUDE_ALL_SENTENCES
+
+    itemDocuments.append(document)
+
+main()

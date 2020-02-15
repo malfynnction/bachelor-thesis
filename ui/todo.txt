@@ -13,6 +13,7 @@
 - how did that participant ID in url query thing work?
 - mobile
 - save ratings only after complete session
+- item.type gibt es nicht mehr, das ist in der ID kodiert (par_ oder sent_)
 - Demographics
     - better age ranges?
     - Kurze Datenschutz / Consent Floskel
