@@ -1,14 +1,9 @@
 import React, { Fragment } from 'react'
-import get from 'lodash.get'
+import { get, shuffle } from 'lodash'
 import '../styles/Tasks.css'
 
+const deletionSetting = { frequency: 5, alternativeSuggestions: 4 }
 const punctuation = /\.|,|-|\(|\)|\/|"|;|:|…/g
-
-const allowMinorDifferences = word => {
-  return word.toLowerCase().replace(punctuation, '')
-}
-
-const deletionSetting = { frequency: 5 }
 
 class Tasks extends React.Component {
   componentDidMount() {
@@ -22,27 +17,44 @@ class Tasks extends React.Component {
     this.props.initializeCloze(allDeletions)
   }
 
+  getSuggestions(original) {
+    const suggestions = [original.replace(punctuation, '')]
+    for (let i = 0; i < deletionSetting.alternativeSuggestions; i++) {
+      suggestions.push(`wrong alternative ${i}`.replace(punctuation, ''))
+    }
+    return shuffle(suggestions)
+  }
+
   deleteWord(original, wordIndex) {
     const firstDeletionIndex = deletionSetting.frequency - 1
     const deletionIndex =
       (wordIndex - firstDeletionIndex) / deletionSetting.frequency
     return (
       <Fragment>
-        <input
-          type="text"
-          name={`deletion-${deletionIndex}`}
-          id={`deletion-${deletionIndex}`}
+        <select
           onChange={e => {
-            const entered = allowMinorDifferences(e.target.value)
-            const isCorrect = entered === allowMinorDifferences(original)
-            this.props.onChange(deletionIndex, {
-              entered: e.target.value,
-              original,
-              isCorrect,
-            })
+            const entered = e.target.value
+            const isCorrect = entered === original
+            this.props.onChange(deletionIndex, { entered, original, isCorrect })
           }}
           value={get(this.props, ['enteredData', deletionIndex, 'entered'], '')}
-        />{' '}
+          name={`deletion-${deletionIndex}`}
+          id={`deletion-${deletionIndex}`}
+        >
+          <option value={''} disabled>
+            Please Select
+          </option>
+          {this.getSuggestions(original).map(word => {
+            return (
+              <option
+                value={word}
+                key={`deletion-${deletionIndex}-suggestion-${word}`}
+              >
+                {word}
+              </option>
+            )
+          })}
+        </select>{' '}
       </Fragment>
     )
   }

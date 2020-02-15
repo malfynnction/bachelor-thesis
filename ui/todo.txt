@@ -25,11 +25,7 @@
         - plus good explanation!
     - don't measure reading time per sentence
 - Schritt 2
-    - do the scales (siehe seine Mail)
-        - Für Antworten sowohl Label als auch Nr zeigen
-        - vertikal vs. horizontal
-        - kontinuierlich vs. diskret: diskret, for accessibility reasons
-        - open vs closed end: entfällt, weil diskret
+    - better scales
 - Schritt 3
     - content questions?
     - every 5th word is too much
@@ -55,7 +51,6 @@ step 3:
 • 5 blanks per paragraph
 • sentence: remove all nouns (up to 5)
 • only remove nouns, maybe adjectives
-• dropdown with other suggestions
 
 "training" session with lots of explanation
 
