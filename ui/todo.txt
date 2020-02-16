@@ -16,8 +16,6 @@
 - Demographics
     - better age ranges?
     - Kurze Datenschutz / Consent Floskel
-    - multiple native languages
-    - multiple genders
 - Schritt 2
     - better scales
     • in test study more questions, can probably remove afterwards

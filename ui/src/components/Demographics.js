@@ -83,7 +83,7 @@ class Demographics extends React.Component {
             '2000-2010',
             { label: 'Prefer not to say', value: 'notDisclosed' },
           ])}
-          <strong>Gender:</strong>
+          <strong>Gender(s):</strong>
           <div>
             {[
               { key: 'female', label: 'Female' },
@@ -126,7 +126,7 @@ class Demographics extends React.Component {
               />
             </div>
           </div>
-          {this.renderQuestion('Native Language: ', 'nativeLang', 'text')}
+          {this.renderQuestion('Native Language(s): ', 'nativeLang', 'text')}
           {this.renderQuestion(
             'German Language Level: ',
             'gerLevel',
