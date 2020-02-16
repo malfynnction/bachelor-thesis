@@ -13,6 +13,8 @@
 - how did that participant ID in url query thing work?
 - mobile
 - save ratings only after complete session
+- set texts as inner html everywhere
+    - oder auch nicht, weil nlp nicht damit klar kommt
 - Demographics
     - better age ranges?
     - Kurze Datenschutz / Consent Floskel
@@ -25,10 +27,12 @@
 - Schritt 2
     - better scales
     • in test study more questions, can probably remove afterwards
+    - style für "Which sentence was the most complex" ist noch kaputt
+    - put the "what was the hardest sentence" ganz ans Ende
+    - Bug: Antworten von previous Item werden beim nächsten angezeigt
 - Schritt 3
     - content questions?
     - auch hier: show enclosing paragraph for sentences 
-    • sentence: remove all nouns (up to 5)
 - Erwähne: "Wenn Browsernavigation während Session -> Session neu starten!"
     - or, better yet - fix that??
 - token for crowdsourcing (for payment later)
@@ -37,8 +41,7 @@
     - z. B. seed -> md5 -> first 5 chars
 
 pre-processing:
-• pre-process server-side, store results in db
-• "automatization": input texts, output data in DB format (to be uploaded manually)
+    - create session docs
     - make input data format more general / easier to replicate
     - figure out how to make this available for other people (npm script? -> add to /ui?)
     - alternativeSuggestions kann das gleiche Wort mehrmals enthalten, wenn es mehrmals im Originaltext vorkommt

@@ -63,9 +63,26 @@ const initialState = {
 class Item extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      ...initialState,
+    this.state = { ...initialState }
+  }
+
+  componentDidMount() {
+    this.initializeState()
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.index !== this.props.index) {
+      this.initializeState()
     }
+  }
+
+  initializeState() {
+    const initialCloze = this.props.item.clozes.map(cloze => {
+      return { original: cloze.original, entered: '', isCorrect: false }
+    })
+    this.setState({
+      cloze: initialCloze,
+    })
   }
 
   render() {
@@ -83,7 +100,6 @@ class Item extends React.Component {
               onNextItem={() => {
                 this.props.onScrollToTop()
                 this.props.onNextItem(this.state)
-                this.setState({ ...initialState })
               }}
               isLastItem={isLastItem}
               onScrollToTop={() => this.props.onScrollToTop()}
@@ -108,13 +124,6 @@ class Item extends React.Component {
           />
           <Tasks
             item={item}
-            initializeCloze={allDeletions => {
-              // TODO: all cloze information is already stored in item.clozes
-              const initialCloze = allDeletions.map(word => {
-                return { original: word, entered: '', isCorrect: false }
-              })
-              this.setState({ cloze: initialCloze })
-            }}
             onChange={(index, value) => {
               const newState = [...this.state.cloze]
               newState[index] = value

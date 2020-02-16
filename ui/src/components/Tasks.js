@@ -2,37 +2,24 @@ import React, { Fragment } from 'react'
 import { get, shuffle } from 'lodash'
 import '../styles/Tasks.css'
 
-const deletionSetting = { frequency: 5, alternativeSuggestions: 4 }
 const punctuation = /\.|,|-|\(|\)|\/|"|;|:|…/g
 
 class Tasks extends React.Component {
-  componentDidMount() {
-    const words = this.props.item.text.split(' ')
-    const allDeletions = []
-    words.forEach((word, i) => {
-      if ((i + 1) % deletionSetting.frequency === 0) {
-        allDeletions.push(word)
-      }
-    })
-    // TODO: this can be done in parent
-    this.props.initializeCloze(allDeletions)
-  }
-
   getSuggestions(original, alternatives) {
     const suggestions = [...alternatives, original]
     return shuffle(suggestions.map(word => word.replace(punctuation, '')))
   }
 
-  deleteWord({ original, wordIndex, alternativeSuggestions }) {
+  deleteWord({ original, wordIndex, alternativeSuggestions }, clozeIndex) {
     return (
       <Fragment>
         <select
           onChange={e => {
             const entered = e.target.value
             const isCorrect = entered === original
-            this.props.onChange(wordIndex, { entered, original, isCorrect })
+            this.props.onChange(clozeIndex, { entered, original, isCorrect })
           }}
-          value={get(this.props, ['enteredData', wordIndex, 'entered'], '')}
+          value={get(this.props, ['enteredData', clozeIndex, 'entered'], '')}
           name={`deletion-${wordIndex}`}
           id={`deletion-${wordIndex}`}
         >
@@ -60,8 +47,8 @@ class Tasks extends React.Component {
   render() {
     const words = this.props.item.text.split(' ')
     const clozes = this.props.item.clozes
-    clozes.forEach(cloze => {
-      words[cloze.wordIndex] = this.deleteWord(cloze)
+    clozes.forEach((cloze, i) => {
+      words[cloze.wordIndex] = this.deleteWord(cloze, i)
     })
 
     return (
