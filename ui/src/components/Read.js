@@ -19,10 +19,6 @@ class Read extends React.Component {
     this.props.onTimeUpdate(timerControl.getTime())
   }
 
-  splitParagraphOnSentence(paragraph, sentence) {
-    return
-  }
-
   renderParagraph({ text }) {
     return (
       <Timer startImmediately={false} timeToUpdate={100}>
@@ -59,6 +55,17 @@ class Read extends React.Component {
     return (
       <Fragment>
         <div className="item-text centered-content">{text}</div>
+        <div className="enclosing-paragraph">
+          If you need more context, here is the paragraph the sentence was taken
+          from: <br />
+          (You don't have to read this, but it can help you understand the
+          sentence above.)
+          <div className="item-text">
+            {splitText[0]}
+            <strong>{text}</strong>
+            {splitText[1]}
+          </div>
+        </div>
       </Fragment>
     )
   }
@@ -69,7 +76,7 @@ class Read extends React.Component {
 
     return (
       <Fragment>
-        <div>Here is a {item.type} that you should read: </div>
+        <div>This is the {item.type} you will be rating: </div>
         {isSentence ? this.renderSentence(item) : this.renderParagraph(item)}
       </Fragment>
     )

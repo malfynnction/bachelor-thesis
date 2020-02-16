@@ -17,3 +17,7 @@
 .item-text > span {
   margin: 20px;
 }
+
+.enclosing-paragraph {
+  margin-top: 5vh;
+}

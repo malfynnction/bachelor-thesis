@@ -20,10 +20,6 @@
     - Kurze Datenschutz / Consent Floskel
     - multiple native languages
     - multiple genders
-- Schritt 1 (sentences)
-    - show whole paragraph on top, repeat sentence below   
-        - plus good explanation!
-    - don't measure reading time per sentence
 - Schritt 2
     - better scales
     • in test study more questions, can probably remove afterwards
