@@ -2,3 +2,7 @@
   padding: 15px;
   background-color: #eaeaea;
 }
+
+.actual-sentence {
+  font-weight: bold;
+}

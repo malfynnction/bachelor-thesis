@@ -26,7 +26,6 @@ class Tasks extends React.Component {
           <option value={''} disabled>
             Please Select
           </option>
-          {/* TODO: keep punctuation before and after word*/}
           {this.getSuggestions(original, alternativeSuggestions).map(
             (word, i) => {
               return (
@@ -45,19 +44,38 @@ class Tasks extends React.Component {
   }
 
   render() {
-    const words = this.props.item.text.split(' ')
-    const clozes = this.props.item.clozes
+    const { text, clozes, type, enclosingParagraph } = this.props.item
+    const words = text.split(' ')
     clozes.forEach((cloze, i) => {
       words[cloze.wordIndex] = this.deleteWord(cloze, i)
     })
+    const isSentence = type === 'sentence'
+    const splitText = isSentence && enclosingParagraph.split(text)
 
     return (
       <Fragment>
-        <div>Please fill in the gaps:</div>
+        <div>
+          Please fill in the gaps:
+          {isSentence ? (
+            <Fragment>
+              <br /> (The enclosing paragraph is shown for more context
+              information)
+            </Fragment>
+          ) : null}
+        </div>
         <p id="cloze">
+          {isSentence ? splitText[0] : null}
           {words.map((word, i) => {
-            return <span key={`word-${i}`}>{word} </span>
+            return (
+              <span
+                key={`word-${i}`}
+                className={isSentence ? 'actual-sentence' : null}
+              >
+                {word}{' '}
+              </span>
+            )
           })}
+          {isSentence ? splitText[1] : null})
         </p>
       </Fragment>
     )

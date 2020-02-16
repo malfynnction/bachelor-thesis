@@ -26,7 +26,7 @@
     - Bug: Antworten von previous Item werden beim nächsten angezeigt
 - Schritt 3
     - content questions?
-    - auch hier: show enclosing paragraph for sentences 
+    - keep punctuation before and after cloze
 - Erwähne: "Wenn Browsernavigation während Session -> Session neu starten!"
     - or, better yet - fix that??
 - token for crowdsourcing (for payment later)
