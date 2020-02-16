@@ -39,6 +39,7 @@ class Tasks extends React.Component {
           <option value={''} disabled>
             Please Select
           </option>
+          {/* TODO: keep punctuation before and after word*/}
           {this.getSuggestions(original, alternativeSuggestions).map(
             (word, i) => {
               return (
@@ -60,9 +61,6 @@ class Tasks extends React.Component {
     const words = this.props.item.text.split(' ')
     const clozes = this.props.item.clozes
     clozes.forEach(cloze => {
-      console.log(cloze.wordIndex)
-      console.log(words[cloze.wordIndex])
-      console.log(cloze.original)
       words[cloze.wordIndex] = this.deleteWord(cloze)
     })
 

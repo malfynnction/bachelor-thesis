@@ -44,6 +44,9 @@ def tagPartsOfSpeech(text):
 def separateSentences(text):
   return [sentence.text for sentence in text.sents]
 
+def removePunctuation(partsOfSpeech):
+  return [token for token in partsOfSpeech if token['type'] != 'PUNCT']
+
 def getClozes(partsOfSpeech, alternativePool=None, amount=CLOZES_PER_TEXT):
   if alternativePool == None:
     alternativePool = partsOfSpeech
@@ -76,7 +79,7 @@ def main():
       "text": text.text,
       "sentences": sentences,
       "partsOfSpeech": partsOfSpeech,
-      "clozes": getClozes(partsOfSpeech)
+      "clozes": getClozes(removePunctuation(partsOfSpeech))
     }
 
     itemDocuments.append(document)
@@ -84,15 +87,15 @@ def main():
     if INCLUDE_ALL_SENTENCES:
       # add an itemDoc for each sentence
       for sentenceIndex, sentence in enumerate(sentences):
-
         sentencePartsOfSpeech = tagPartsOfSpeech(nlp(sentence))
+
         document = {
           "_id": "sent_{}-{}".format(index + 1, sentenceIndex + 1),
           "type": "sentence",
           "text": sentence,
           "enclosingParagraph": text.text,
           "partsOfSpeech": sentencePartsOfSpeech,
-          "clozes": getClozes(sentencePartsOfSpeech, alternativePool=partsOfSpeech, amount=1)
+          "clozes": getClozes(removePunctuation(sentencePartsOfSpeech), alternativePool=partsOfSpeech, amount=1)
         }
         itemDocuments.append(document)
 
