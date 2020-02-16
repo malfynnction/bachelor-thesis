@@ -72,6 +72,7 @@ def main():
 
     document = {
       "_id": 'par_{}'.format(index+1),
+      "type": "paragraph",
       "text": text.text,
       "sentences": sentences,
       "partsOfSpeech": partsOfSpeech,
@@ -87,6 +88,7 @@ def main():
         sentencePartsOfSpeech = tagPartsOfSpeech(nlp(sentence))
         document = {
           "_id": "sent_{}-{}".format(index + 1, sentenceIndex + 1),
+          "type": "sentence",
           "text": sentence,
           "enclosingParagraph": text.text,
           "partsOfSpeech": sentencePartsOfSpeech,
@@ -100,6 +102,6 @@ def main():
   print('Your items have been processed and are ready to be uploaded to your database. Run \n \
     curl -X POST YOUR-COUCH-URL-HERE/items/_bulk_docs -H \'Content-Type: application/json\' -d @{}\n \
     to automatically upload them.'.format(OUTPUT_PATH_ITEMS))
-  # TODO: this does not work if /items does not exist!
+  # TODO: this does not work if /items does not exist! Or if the documents with the specific IDs already exist
 
 main()
