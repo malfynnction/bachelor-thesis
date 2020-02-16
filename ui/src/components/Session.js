@@ -103,7 +103,7 @@ class Session extends React.Component {
                     ...participant.completedSessions,
                     sessionId,
                   ]
-                  pouchParticipants.put({
+                  await pouchParticipants.put({
                     ...participant,
                     completedSessions: completedSessions,
                   })

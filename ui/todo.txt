@@ -10,8 +10,6 @@
 - what happens after completed session?
 - replace all the "localhost" with the actual url
 - TODO comments, "??"-comments
-- completedSessions in participantDB doesn't get updated after the first session, only after the second or not even then
-- Manchmal: new participant -> doesn't get created -> 404 for first session
 - What is this "Item 0" heading in Item??
 - how did that participant ID in url query thing work?
 - mobile

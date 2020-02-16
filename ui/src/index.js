@@ -67,12 +67,12 @@ const App = () => {
           <Route path="/demographics">
             <Demographics
               createUser={async data => {
-                pouchParticipants.allDocs().then(docs => {
+                pouchParticipants.allDocs().then(async docs => {
                   const usedIds = docs.rows.map(participant => participant.id)
                   const newId = Math.max(...usedIds, 0) + 1
                   participantId.set(newId)
                   setShowId(true)
-                  pouchParticipants.put({
+                  await pouchParticipants.put({
                     ...data,
                     _id: newId.toString(),
                     completedSessions: [],
