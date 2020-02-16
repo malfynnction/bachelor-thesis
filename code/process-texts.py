@@ -54,14 +54,19 @@ def getClozes(partsOfSpeech, alternativePool=None):
   nounIndices = [i for i,token in enumerate(partsOfSpeech) if token['type'] == 'NOUN']
   clozeIndices = random.sample(nounIndices, min(len(nounIndices), CLOZES_PER_TEXT))
 
-  alternativeNounIndices = [i for i,token in enumerate(alternativePool) if token['type'] == 'NOUN']
-  alternativeIndices = random.sample(alternativeNounIndices, min(len(alternativeNounIndices), ALTERNATIVE_SUGGESTIONS_PER_CLOZE))
+  clozes = []
 
-  clozes = [{
-    'wordIndex': i,
-    'original': partsOfSpeech[i]['word'],
-    'alternativeSuggestions': [alternativePool[altIndex]['word'] for altIndex in alternativeIndices]
-  } for i in clozeIndices]
+  for i in clozeIndices:
+    original = partsOfSpeech[i]['word']
+    alternativeIndices = [index for index,token in enumerate(alternativePool) if token['type'] == 'NOUN' and token['word'] != original]
+    suggestionAmount = min(len(alternativeIndices), ALTERNATIVE_SUGGESTIONS_PER_CLOZE)
+    suggestionIndices = random.sample(alternativeIndices, suggestionAmount)
+    clozes.append({
+      'wordIndex': i,
+      'original': original,
+      'alternativeSuggestions': [alternativePool[altIndex]['word'] for altIndex in suggestionIndices]
+    })
+
   return clozes
 
 def main():
