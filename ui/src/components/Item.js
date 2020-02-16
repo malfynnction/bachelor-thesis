@@ -109,6 +109,7 @@ class Item extends React.Component {
           <Tasks
             item={item}
             initializeCloze={allDeletions => {
+              // TODO: all cloze information is already stored in item.clozes
               const initialCloze = allDeletions.map(word => {
                 return { original: word, entered: '', isCorrect: false }
               })
