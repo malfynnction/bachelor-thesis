@@ -11,7 +11,7 @@ class Session extends React.Component {
   constructor(props) {
     super(props)
     const session = sessionStore.get()
-    this.state = { session: { ...session } }
+    this.state = { session: { ...session }, ratings: [] }
     this.topRef = React.createRef()
   }
 
@@ -87,12 +87,16 @@ class Session extends React.Component {
                 this.scrollToTop()
               }}
               onNextItem={async result => {
-                pouchRatings.post({
-                  ...result,
-                  participantId: participantId,
-                  itemId: item._id,
-                })
+                const ratings = [
+                  ...this.state.ratings,
+                  { ...result, itemId: item._id, participantId },
+                ]
+                this.setState({ ratings })
                 if (isLastItem) {
+                  // post ratings to DB
+                  await pouchRatings.bulkDocs(ratings)
+
+                  // store completed session ID
                   const sessionId = session.id
                   const participant = await pouchParticipants.get(participantId)
                   const completedSessions = [
@@ -103,6 +107,7 @@ class Session extends React.Component {
                     ...participant,
                     completedSessions: completedSessions,
                   })
+
                   sessionStore.clear()
                   window.location.href = 'http://localhost:3000'
                 } else {

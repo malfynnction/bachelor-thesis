@@ -2,7 +2,10 @@
 - accessibility (z. B. Instructions form, hold button to read,...)
     - button could be triggered by space key?
 - scroll up after each item (within item partially done, but scrolling too low)
-- screenshots and GIFs in instructions
+- instructions
+    - screenshots & GIFs
+    - good explanations of everthing
+    - "training session"
 - Impressum & Datenschutz?
 - what happens after completed session?
 - replace all the "localhost" with the actual url
@@ -12,7 +15,6 @@
 - What is this "Item 0" heading in Item??
 - how did that participant ID in url query thing work?
 - mobile
-- save ratings only after complete session
 - Demographics
     - better age ranges?
     - Kurze Datenschutz / Consent Floskel
@@ -33,15 +35,9 @@
     - after each session
     - from seed in url params
     - z. B. seed -> md5 -> first 5 chars
-
-pre-processing:
+- pre-processing:
     - create session docs
     - make input data format more general / easier to replicate
     - figure out how to make this available for other people (npm script? -> add to /ui?)
     - alternativeSuggestions kann das gleiche Wort mehrmals enthalten, wenn es mehrmals im Originaltext vorkommt
-
-"training" session with lots of explanation
-
-1 session ≈ 10 minutes
-
-Dockerize everything
+- Dockerize everything
