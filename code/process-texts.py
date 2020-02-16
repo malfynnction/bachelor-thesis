@@ -33,22 +33,16 @@ sheet = workbook[SHEET_NAME]
 
 def getParsedTexts():
   column = sheet[TEXT_COLUMN]
-  texts = []
-  for cell in column[:2]:
-    texts.append(nlp(cell.value))
-  return texts[1:] # texts[0] is the column header
+  return [nlp(cell.value) for cell in column[1:]] # column[0] is the column header
 
 def tagPartsOfSpeech(text):
-  words = []
-  for t in text:
-    words.append({'word': t.orth_, 'type': t.pos_})
-  return words
+  return [{
+    "word": word.orth_,
+    "type": word.pos_
+  } for word in text]
 
 def separateSentences(text):
-  sentences = []
-  for sentence in text.sents:
-    sentences.append(sentence.text)
-  return sentences
+  return [sentence.text for sentence in text.sents]
 
 def getClozes(partsOfSpeech):
   nounIndices = [i for i,token in enumerate(partsOfSpeech) if token['type'] == 'NOUN']
