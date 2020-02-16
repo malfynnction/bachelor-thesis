@@ -6,15 +6,7 @@ import '../styles/Instructions.css'
 const participantId = createStore('participantId')
 
 const Instructions = props => {
-  const { pouchParticipants, location } = props
-
-  const params = location.search.slice(1).split('&')
-  const idParam = params.find(param => param.startsWith('participantId'))
-  const idFromParams = idParam && idParam.split('=')[1]
-
-  if (idFromParams) {
-    participantId.set(idFromParams)
-  }
+  const { pouchParticipants } = props
 
   const [error, setError] = useState('')
   const loggedInId = participantId.get()

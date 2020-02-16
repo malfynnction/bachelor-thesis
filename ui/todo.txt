@@ -11,7 +11,6 @@
 - replace all the "localhost" with the actual url
 - TODO comments, "??"-comments
 - What is this "Item 0" heading in Item??
-- how did that participant ID in url query thing work?
 - mobile
 - Demographics
     - better age ranges?
@@ -37,3 +36,4 @@
     - figure out how to make this available for other people (npm script? -> add to /ui?)
     - alternativeSuggestions kann das gleiche Wort mehrmals enthalten, wenn es mehrmals im Originaltext vorkommt
 - Dockerize everything
+- either always or never useState

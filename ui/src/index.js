@@ -25,79 +25,101 @@ const pouchRatings = newPouchDB('ratings')
 const pouchSessions = newPouchDB('sessions')
 const pouchItems = newPouchDB('items')
 
+const getIdFromParams = ({ location }) => {
+  const params = location.search.slice(1).split('&')
+  const idParam = params.find(param => param.startsWith('participant-id'))
+  return idParam && idParam.split('=')[1]
+}
+
 const App = () => {
   const id = participantId.get()
   const [showId, setShowId] = useState(Boolean(id))
   return (
     <Router>
-      <header>
-        <Link to="/">
-          <img
-            src="logo.png"
-            id="header-img"
-            alt="Logo of the Technische Universität Berlin"
-          />
-        </Link>
-        <div id="participant-id">
-          {showId ? (
+      {/* Wrap everything in an additional "fake" Route to have access to location props*/}
+      <Route
+        render={props => {
+          const idFromParams = getIdFromParams(props)
+          if (idFromParams) {
+            participantId.set(idFromParams)
+            setShowId(true)
+          }
+          return (
             <Fragment>
-              <span id="participant-id-label">Participant ID: {id}</span>
-              <Link
-                to="/"
-                onClick={() => {
-                  participantId.clear()
-                  sessionStore.clear()
-                  setShowId(false)
-                }}
-              >
-                Log out
-              </Link>
+              <header>
+                <Link to="/">
+                  <img
+                    src="logo.png"
+                    id="header-img"
+                    alt="Logo of the Technische Universität Berlin"
+                  />
+                </Link>
+                <div id="participant-id">
+                  {showId ? (
+                    <Fragment>
+                      <span id="participant-id-label">
+                        Participant ID: {id}
+                      </span>
+                      <Link
+                        to="/"
+                        onClick={() => {
+                          participantId.clear()
+                          sessionStore.clear()
+                          setShowId(false)
+                        }}
+                      >
+                        Log out
+                      </Link>
+                    </Fragment>
+                  ) : null}
+                </div>
+              </header>
+              <div className="layout centered-content">
+                <Switch>
+                  <Route path="/instructions">
+                    <Instructions pouchParticipants={pouchParticipants} />{' '}
+                  </Route>
+
+                  <Route path="/demographics">
+                    <Demographics
+                      createUser={async data => {
+                        pouchParticipants.allDocs().then(async docs => {
+                          const usedIds = docs.rows.map(
+                            participant => participant.id
+                          )
+                          const newId = Math.max(...usedIds, 0) + 1
+                          participantId.set(newId)
+                          setShowId(true)
+                          await pouchParticipants.put({
+                            ...data,
+                            _id: newId.toString(),
+                            completedSessions: [],
+                          })
+                        })
+                      }}
+                    />
+                  </Route>
+                  <Route path="/session">
+                    {showId ? (
+                      <Session
+                        pouchRatings={pouchRatings}
+                        pouchParticipants={pouchParticipants}
+                        pouchSessions={pouchSessions}
+                        pouchItems={pouchItems}
+                      />
+                    ) : (
+                      <Redirect to="/" />
+                    )}
+                  </Route>
+                  <Route path="/">
+                    <Start />
+                  </Route>
+                </Switch>
+              </div>
             </Fragment>
-          ) : null}
-        </div>
-      </header>
-      <div className="layout centered-content">
-        <Switch>
-          <Route
-            path="/instructions"
-            render={props => (
-              <Instructions pouchParticipants={pouchParticipants} {...props} />
-            )}
-          />
-          <Route path="/demographics">
-            <Demographics
-              createUser={async data => {
-                pouchParticipants.allDocs().then(async docs => {
-                  const usedIds = docs.rows.map(participant => participant.id)
-                  const newId = Math.max(...usedIds, 0) + 1
-                  participantId.set(newId)
-                  setShowId(true)
-                  await pouchParticipants.put({
-                    ...data,
-                    _id: newId.toString(),
-                    completedSessions: [],
-                  })
-                })
-              }}
-            />
-          </Route>
-          <Route path="/session">
-            {showId ? (
-              <Session
-                pouchRatings={pouchRatings}
-                pouchParticipants={pouchParticipants}
-                pouchSessions={pouchSessions}
-                pouchItems={pouchItems}
-              />
-            ) : (
-              <Redirect to="/" />
-            )}
-          </Route>
-          <Route path="/">
-            <Start />
-          </Route>
-        </Switch>
-      </div>
+          )
+        }}
+      ></Route>
     </Router>
   )
 }
