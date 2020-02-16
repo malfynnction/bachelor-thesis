@@ -44,13 +44,20 @@ def tagPartsOfSpeech(text):
 def separateSentences(text):
   return [sentence.text for sentence in text.sents]
 
-def getClozes(partsOfSpeech):
+def getClozes(partsOfSpeech, alternativePool=None, amount=CLOZES_PER_TEXT):
+  if alternativePool == None:
+    alternativePool = partsOfSpeech
+
   nounIndices = [i for i,token in enumerate(partsOfSpeech) if token['type'] == 'NOUN']
-  clozeIndices = random.sample(nounIndices, CLOZES_PER_TEXT)
+  clozeIndices = random.sample(nounIndices, min(len(nounIndices), amount))
+
+  alternativeNounIndices = [i for i,token in enumerate(alternativePool) if token['type'] == 'NOUN']
+  alternativeIndices = random.sample(alternativeNounIndices, min(len(alternativeNounIndices), ALTERNATIVE_SUGGESTIONS_PER_CLOZE))
+
   clozes = [{
     'wordIndex': i,
     'original': partsOfSpeech[i]['word'],
-    'alternativeSuggestions': [partsOfSpeech[altIndex]['word'] for altIndex in random.sample(nounIndices, ALTERNATIVE_SUGGESTIONS_PER_CLOZE)]
+    'alternativeSuggestions': [alternativePool[altIndex]['word'] for altIndex in alternativeIndices]
   } for i in clozeIndices]
   return clozes
 
@@ -59,7 +66,7 @@ def main():
   itemDocuments = []
   # TODO: sessionDocuments
 
-  for index, text in enumerate(texts[:1]):
+  for index, text in enumerate(texts):
     sentences = separateSentences(text)
     partsOfSpeech = tagPartsOfSpeech(text)
 
@@ -69,12 +76,23 @@ def main():
       "sentences": sentences,
       "partsOfSpeech": partsOfSpeech,
       "clozes": getClozes(partsOfSpeech)
-      # TODO:
-      # "enclosingParagraph" (only for sentences)
     }
 
-    # TODO: add an itemDoc for every sentence in $text if INCLUDE_ALL_SENTENCES
     itemDocuments.append(document)
+
+    if INCLUDE_ALL_SENTENCES:
+      # add an itemDoc for each sentence
+      for sentenceIndex, sentence in enumerate(sentences):
+
+        sentencePartsOfSpeech = tagPartsOfSpeech(nlp(sentence))
+        document = {
+          "_id": "sent_{}-{}".format(index + 1, sentenceIndex + 1),
+          "text": sentence,
+          "enclosingParagraph": text.text,
+          "partsOfSpeech": sentencePartsOfSpeech,
+          "clozes": getClozes(sentencePartsOfSpeech, alternativePool=partsOfSpeech, amount=1)
+        }
+        itemDocuments.append(document)
 
   with open(OUTPUT_PATH_ITEMS, 'w', encoding='utf-8') as f:
     json.dump({'docs': itemDocuments}, f, ensure_ascii=False, indent=2)
