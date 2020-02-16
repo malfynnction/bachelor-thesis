@@ -2,6 +2,7 @@ import spacy
 from openpyxl import load_workbook
 import random
 import json
+import numpy
 
 nlp = spacy.load('de')
 
@@ -23,9 +24,11 @@ DATA_PATH = 'data.xlsx'
 SHEET_NAME = 'paragraphs'
 TEXT_COLUMN = 'B'
 OUTPUT_PATH_ITEMS = 'items.json'
+OUTPUT_PATH_SESSIONS = 'sessions.json'
 INCLUDE_ALL_SENTENCES = True
 CLOZES_PER_TEXT = 5
 ALTERNATIVE_SUGGESTIONS_PER_CLOZE = 4
+ITEMS_PER_SESSION = 3
 
 workbook = load_workbook(DATA_PATH)
 sheet = workbook[SHEET_NAME]
@@ -69,17 +72,25 @@ def getClozes(partsOfSpeech, alternativePool=None):
 
   return clozes
 
+def getSessions(itemIds):
+  chunks = numpy.split(numpy.array(itemIds), ITEMS_PER_SESSION)
+  return [{
+    "_id": i+1,
+    "items": chunk.tolist()
+  } for i,chunk in enumerate(chunks)]
+
 def main():
   texts = getParsedTexts()
   itemDocuments = []
-  # TODO: sessionDocuments
+  allIds = []
 
   for index, text in enumerate(texts):
     sentences = separateSentences(text)
     partsOfSpeech = tagPartsOfSpeech(text)
+    paragraphId = 'par_{}'.format(index+1)
 
-    document = {
-      "_id": 'par_{}'.format(index+1),
+    paragraphDocument = {
+      "_id": paragraphId,
       "type": "paragraph",
       "text": text.text,
       "sentences": sentences,
@@ -87,29 +98,38 @@ def main():
       "clozes": getClozes(removePunctuation(partsOfSpeech))
     }
 
-    itemDocuments.append(document)
+    itemDocuments.append(paragraphDocument)
+    allIds.append(paragraphId)
 
     if INCLUDE_ALL_SENTENCES:
       # add an itemDoc for each sentence
       for sentenceIndex, sentence in enumerate(sentences):
         sentencePartsOfSpeech = tagPartsOfSpeech(nlp(sentence))
+        sentenceId = "sent_{}-{}".format(index + 1, sentenceIndex + 1)
 
-        document = {
-          "_id": "sent_{}-{}".format(index + 1, sentenceIndex + 1),
+        sentenceDocument = {
+          "_id": sentenceId,
           "type": "sentence",
           "text": sentence,
           "enclosingParagraph": text.text,
           "partsOfSpeech": sentencePartsOfSpeech,
           "clozes": getClozes(removePunctuation(sentencePartsOfSpeech), alternativePool=partsOfSpeech)
         }
-        itemDocuments.append(document)
+        itemDocuments.append(sentenceDocument)
+        allIds.append(sentenceId)
+
+  sessionDocuments = getSessions(allIds)
 
   with open(OUTPUT_PATH_ITEMS, 'w', encoding='utf-8') as f:
     json.dump({'docs': itemDocuments}, f, ensure_ascii=False, indent=2)
+
+  with open(OUTPUT_PATH_SESSIONS, 'w', encoding='utf-8') as f:
+    json.dump({'docs': sessionDocuments}, f, ensure_ascii=False, indent=2)
 
   print('Your items have been processed and are ready to be uploaded to your database. Run \n \
     curl -X POST YOUR-COUCH-URL-HERE/items/_bulk_docs -H \'Content-Type: application/json\' -d @{}\n \
     to automatically upload them.'.format(OUTPUT_PATH_ITEMS))
   # TODO: this does not work if /items does not exist! Or if the documents with the specific IDs already exist
+  # TODO: upload session docs
 
 main()
