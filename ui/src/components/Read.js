@@ -27,10 +27,7 @@ class Read extends React.Component {
             <p className={`item-text centered-content`}>
               <span>
                 <span className={`${this.state.showItem ? '' : 'hidden'}`}>
-                  <span
-                    className="hidden-content"
-                    dangerouslySetInnerHTML={{ __html: text }}
-                  ></span>
+                  <span className="hidden-content">{text}</span>
                 </span>
               </span>
             </p>

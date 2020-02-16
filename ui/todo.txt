@@ -13,8 +13,6 @@
 - how did that participant ID in url query thing work?
 - mobile
 - save ratings only after complete session
-- set texts as inner html everywhere
-    - oder auch nicht, weil nlp nicht damit klar kommt
 - Demographics
     - better age ranges?
     - Kurze Datenschutz / Consent Floskel
