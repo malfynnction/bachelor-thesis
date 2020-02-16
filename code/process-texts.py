@@ -47,12 +47,12 @@ def separateSentences(text):
 def removePunctuation(partsOfSpeech):
   return [token for token in partsOfSpeech if token['type'] != 'PUNCT']
 
-def getClozes(partsOfSpeech, alternativePool=None, amount=CLOZES_PER_TEXT):
+def getClozes(partsOfSpeech, alternativePool=None):
   if alternativePool == None:
     alternativePool = partsOfSpeech
 
   nounIndices = [i for i,token in enumerate(partsOfSpeech) if token['type'] == 'NOUN']
-  clozeIndices = random.sample(nounIndices, min(len(nounIndices), amount))
+  clozeIndices = random.sample(nounIndices, min(len(nounIndices), CLOZES_PER_TEXT))
 
   alternativeNounIndices = [i for i,token in enumerate(alternativePool) if token['type'] == 'NOUN']
   alternativeIndices = random.sample(alternativeNounIndices, min(len(alternativeNounIndices), ALTERNATIVE_SUGGESTIONS_PER_CLOZE))
@@ -95,7 +95,7 @@ def main():
           "text": sentence,
           "enclosingParagraph": text.text,
           "partsOfSpeech": sentencePartsOfSpeech,
-          "clozes": getClozes(removePunctuation(sentencePartsOfSpeech), alternativePool=partsOfSpeech, amount=1)
+          "clozes": getClozes(removePunctuation(sentencePartsOfSpeech), alternativePool=partsOfSpeech)
         }
         itemDocuments.append(document)
 

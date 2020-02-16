@@ -28,11 +28,7 @@
 - Schritt 3
     - content questions?
     - auch hier: show enclosing paragraph for sentences 
-    - every 5th word is too much
-        - make this available as setting
-        • 5 blanks per paragraph
-        • sentence: remove all nouns (up to 5)
-    • only remove nouns, maybe adjectives
+    • sentence: remove all nouns (up to 5)
 - Erwähne: "Wenn Browsernavigation während Session -> Session neu starten!"
     - or, better yet - fix that??
 - token for crowdsourcing (for payment later)
