@@ -20,50 +20,57 @@ class Read extends React.Component {
   }
 
   splitParagraphOnSentence(paragraph, sentence) {
-    return paragraph.split(sentence)
+    return
+  }
+
+  renderParagraph({ text }) {
+    return (
+      <Timer startImmediately={false} timeToUpdate={100}>
+        {timerControl => (
+          <Fragment>
+            <p className={`item-text centered-content`}>
+              <span>
+                <span className={`${this.state.showItem ? '' : 'hidden'}`}>
+                  <span
+                    className="hidden-content"
+                    dangerouslySetInnerHTML={{ __html: text }}
+                  ></span>
+                </span>
+              </span>
+            </p>
+            <button
+              className="btn button-secondary"
+              onTouchStart={() => this.revealItem(timerControl)}
+              onTouchEnd={() => this.hideItem(timerControl, Timer)}
+              onMouseDown={() => this.revealItem(timerControl)}
+              onMouseUp={() => this.hideItem(timerControl, Timer)}
+              onMouseLeave={() => this.hideItem(timerControl, Timer)}
+            >
+              Show Paragraph
+            </button>
+          </Fragment>
+        )}
+      </Timer>
+    )
+  }
+
+  renderSentence({ text, enclosingParagraph }) {
+    const splitText = enclosingParagraph.split(text)
+    return (
+      <Fragment>
+        <div className="item-text centered-content">{text}</div>
+      </Fragment>
+    )
   }
 
   render() {
     const { item } = this.props
     const isSentence = item.type === 'sentence'
-    const text =
-      isSentence &&
-      this.splitParagraphOnSentence(item.enclosingParagraph, item.text)
+
     return (
       <Fragment>
         <div>Here is a {item.type} that you should read: </div>
-        <Timer startImmediately={false} timeToUpdate={100}>
-          {timerControl => (
-            <Fragment>
-              <p className={`item-text centered-content text-box`}>
-                <span>
-                  {isSentence ? text[0] : null}
-                  <span
-                    className={`hidden-wrapper ${
-                      this.state.showItem ? '' : 'hidden'
-                    }`}
-                  >
-                    <span
-                      className="hidden-content"
-                      dangerouslySetInnerHTML={{ __html: item.text }}
-                    ></span>
-                  </span>
-                  {isSentence ? text[1] : null}
-                </span>
-              </p>
-              <button
-                className="btn button-secondary"
-                onTouchStart={() => this.revealItem(timerControl)}
-                onTouchEnd={() => this.hideItem(timerControl, Timer)}
-                onMouseDown={() => this.revealItem(timerControl)}
-                onMouseUp={() => this.hideItem(timerControl, Timer)}
-                onMouseLeave={() => this.hideItem(timerControl, Timer)}
-              >
-                Show me
-              </button>
-            </Fragment>
-          )}
-        </Timer>
+        {isSentence ? this.renderSentence(item) : this.renderParagraph(item)}
       </Fragment>
     )
   }
