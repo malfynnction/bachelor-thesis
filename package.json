@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "docker:build": "docker build -t sample:dev .",
+    "docker:run": "docker run -v ${PWD}:/app -v /app/node_modules -p 3001:3000 --rm sample:dev",
     "start": "cd ui && npm run start",
     "build": "cd ui && npm run build",
     "test": "cd ui && npm run test",
