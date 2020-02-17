@@ -8,7 +8,8 @@
     "test": "cd ui && npm run test",
     "eject": "cd ui && npm run eject",
     "lint": "eslint '{ui,code}/**/*.js'",
-    "prettier": "prettier --write '**/*.{js,json}'"
+    "prettier": "prettier --write '**/*.{js,json}'",
+    "process-texts": "source venv/bin/activate && python code/process_texts.py"
   },
   "author": "",
   "license": "ISC",
