@@ -7,8 +7,9 @@ node_modules/
 ~$*.xlsx
 ThesisTemplate/
 examples/
-
 venv/
+processed-data/*
+!processed-data/.keep
 
 npm-debug.log*
 yarn-debug.log*
