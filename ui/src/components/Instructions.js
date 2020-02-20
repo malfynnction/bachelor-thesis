@@ -33,9 +33,17 @@ const Instructions = props => {
         </p>
         <h5>1. Reading</h5>
         <p>
-          In the first step, you can read the sentence or paragraph that you
-          will be evaluating. We will measure how long it takes to read the
-          text, so it will be hidden unless you hold a button below the text:
+          In the first step you can read the text that you will be rating. This
+          page will look slightly different, depending on whether the text is an
+          entire paragraph or a single sentence. For sentences, you will see the
+          sentence at the top of the page, in a grey box. Please read it
+          carefully to make sure you understand it as well as possible.
+          Underneath the sentence you will find the paragraph which the sentence
+          was taken from. You don't have to read it, but it can help you
+          understand the sentence.
+          <br />
+          For paragraphs, we will measure how long it takes to read them, so the
+          text will be hidden unless you hold a button below the text.
           <span className="img-wrap">
             <img
               src="instructions-read.gif"
