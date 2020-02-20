@@ -20,6 +20,7 @@ import newPouchDB from './lib/new-pouch-db'
 
 const participantId = createStore('participantId')
 const sessionStore = createStore('session')
+const trainingStore = createStore('trainingState')
 
 const pouchParticipants = newPouchDB('participants')
 const pouchRatings = newPouchDB('ratings')
@@ -35,7 +36,9 @@ const getIdFromParams = ({ location }) => {
 const App = () => {
   const id = participantId.get()
   const [showId, setShowId] = useState(Boolean(id))
-  const [isTraining, setIsTraining] = useState(false)
+  const [trainingState, setTrainingState] = useState(
+    trainingStore.get() || 'not started'
+  )
 
   return (
     <Router>
@@ -103,17 +106,31 @@ const App = () => {
                     />
                   </Route>
                   <Route path="/start-session">
-                    <StartSession onStartTraining={() => setIsTraining(true)} />
+                    <StartSession
+                      onStartTraining={() => {
+                        trainingStore.set('in progress')
+                        setTrainingState('in progress')
+                      }}
+                      pouchParticipants={pouchParticipants}
+                    />
                   </Route>
                   <Route path="/session">
                     {showId ? (
-                      <Session
-                        pouchRatings={pouchRatings}
-                        pouchParticipants={pouchParticipants}
-                        pouchSessions={pouchSessions}
-                        pouchItems={pouchItems}
-                        isTraining={isTraining}
-                      />
+                      trainingState === 'not started' ? (
+                        <Redirect to="/start-session" />
+                      ) : (
+                        <Session
+                          pouchRatings={pouchRatings}
+                          pouchParticipants={pouchParticipants}
+                          pouchSessions={pouchSessions}
+                          pouchItems={pouchItems}
+                          isTraining={trainingState === 'in progress'}
+                          onEndTraining={() => {
+                            trainingStore.set('completed')
+                            setTrainingState('completed')
+                          }}
+                        />
+                      )
                     ) : (
                       <Redirect to="/" />
                     )}

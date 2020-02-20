@@ -94,23 +94,31 @@ class Session extends React.Component {
                 ]
                 this.setState({ ratings })
                 if (isLastItem) {
-                  // post ratings to DB
-                  await pouchRatings.bulkDocs(ratings)
-
-                  // store completed session ID
-                  const sessionId = session.id
                   const participant = await pouchParticipants.get(participantId)
-                  const completedSessions = [
-                    ...participant.completedSessions,
-                    sessionId,
-                  ]
-                  await pouchParticipants.put({
-                    ...participant,
-                    completedSessions: completedSessions,
-                  })
 
+                  if (this.props.isTraining) {
+                    this.props.onEndTraining()
+                    pouchParticipants.put({
+                      ...participant,
+                      completedTrainingSession: true,
+                    })
+                  } else {
+                    // post ratings to DB
+                    await pouchRatings.bulkDocs(ratings)
+
+                    // store completed session ID
+                    const sessionId = session.id
+                    const completedSessions = [
+                      ...participant.completedSessions,
+                      sessionId,
+                    ]
+                    await pouchParticipants.put({
+                      ...participant,
+                      completedSessions: completedSessions,
+                    })
+                  }
                   sessionStore.clear()
-                  window.location.href = 'http://localhost:3000'
+                  window.location.href = 'http://localhost:3000/start-session'
                 } else {
                   this.setState({
                     session: { ...this.state.session, index: index + 1 },
