@@ -80,9 +80,7 @@ class Item extends React.Component {
     const initialCloze = this.props.item.clozes.map(cloze => {
       return { original: cloze.original, entered: '', isCorrect: false }
     })
-    this.setState({
-      cloze: initialCloze,
-    })
+    this.setState({ ...initialState, cloze: initialCloze })
   }
 
   render() {

@@ -19,7 +19,6 @@
     • in test study more questions, can probably remove afterwards
     - style für "Which sentence was the most complex" ist noch kaputt
     - put the "what was the hardest sentence" ganz ans Ende
-    - Bug: Antworten von previous Item werden beim nächsten angezeigt
 - Schritt 3
     - content questions?
     - keep punctuation before and after cloze
