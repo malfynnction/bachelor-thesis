@@ -2,6 +2,8 @@ import React, { Fragment } from 'react'
 import Timer from 'react-compound-timer'
 import '../styles/Read.css'
 
+const spaceKeyCode = 32
+
 class Read extends React.Component {
   constructor(props) {
     super(props)
@@ -38,6 +40,16 @@ class Read extends React.Component {
               onMouseDown={() => this.revealItem(timerControl)}
               onMouseUp={() => this.hideItem(timerControl, Timer)}
               onMouseLeave={() => this.hideItem(timerControl, Timer)}
+              onKeyDown={e => {
+                if (e.keyCode === spaceKeyCode) {
+                  this.revealItem(timerControl)
+                }
+              }}
+              onKeyUp={e => {
+                if (e.keyCode === spaceKeyCode) {
+                  this.hideItem(timerControl, Timer)
+                }
+              }}
             >
               Show Paragraph
             </button>

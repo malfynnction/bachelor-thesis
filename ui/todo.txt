@@ -1,9 +1,8 @@
 - introductional & explanatory texts
-- accessibility (z. B. Instructions form, hold button to read,...)
-    - button could be triggered by space key?
 - scroll up after each item (within item partially done, but scrolling too low)
 - instructions
     - screenshots & GIFs
+    - aktuell noch verzerrt wenn view size anders
     - good explanations of everthing
     - "training session"
 - Impressum & Datenschutz?
@@ -36,4 +35,9 @@
     - figure out how to make this available for other people (npm script? -> add to /ui?)
     - alternativeSuggestions kann das gleiche Wort mehrmals enthalten, wenn es mehrmals im Originaltext vorkommt
 - Dockerize everything
+    - stop couch container when exiting?
 - either always or never useState
+
+- Requirement: Docker?
+- create requirements.txt
+- create couch user & pw
