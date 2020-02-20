@@ -5,6 +5,8 @@
     - aktuell noch verzerrt wenn view size anders
     - good explanations of everthing
     - "training session"
+        - has to do training session before first real session
+        - Documentation: need to have a training session with id "Training" in session db
 - Impressum & Datenschutz?
 - what happens after completed session?
 - replace all the "localhost" with the actual url
@@ -29,10 +31,10 @@
     - from seed in url params
     - z. B. seed -> md5 -> first 5 chars
 - pre-processing:
-    - create session docs
     - make input data format more general / easier to replicate
     - figure out how to make this available for other people (npm script? -> add to /ui?)
     - alternativeSuggestions kann das gleiche Wort mehrmals enthalten, wenn es mehrmals im Originaltext vorkommt
+    - how to upload to DB
 - Dockerize everything
     - stop couch container when exiting?
 - either always or never useState

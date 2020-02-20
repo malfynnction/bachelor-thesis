@@ -20,7 +20,8 @@ class Session extends React.Component {
       const newSession = await getNewSession(
         this.props.pouchParticipants,
         this.props.pouchSessions,
-        this.props.pouchItems
+        this.props.pouchItems,
+        this.props.isTraining
       )
       sessionStore.set(newSession)
       this.setState({ session: { ...newSession } })

@@ -63,7 +63,7 @@ const Instructions = props => {
           grouped logic)*/}
         </p>
         {loggedInId !== null ? (
-          <Link className="btn" to="/session">
+          <Link className="btn" to="/start-session">
             Start
           </Link>
         ) : (
@@ -88,7 +88,7 @@ const Instructions = props => {
                   .get(id)
                   .then(() => {
                     participantId.set(id)
-                    window.location.href = 'http://localhost:3000/Session'
+                    window.location.href = 'http://localhost:3000/start-session'
                   })
                   .catch(err => {
                     if (err.status === 404) {

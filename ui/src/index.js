@@ -14,6 +14,7 @@ import Instructions from './components/Instructions'
 import Session from './components/Session'
 import Start from './components/Start'
 import Demographics from './components/Demographics'
+import StartSession from './components/StartSession'
 import createStore from './lib/create-store'
 import newPouchDB from './lib/new-pouch-db'
 
@@ -34,6 +35,8 @@ const getIdFromParams = ({ location }) => {
 const App = () => {
   const id = participantId.get()
   const [showId, setShowId] = useState(Boolean(id))
+  const [isTraining, setIsTraining] = useState(false)
+
   return (
     <Router>
       {/* Wrap everything in an additional "fake" Route to have access to location props*/}
@@ -99,6 +102,9 @@ const App = () => {
                       }}
                     />
                   </Route>
+                  <Route path="/start-session">
+                    <StartSession onStartTraining={() => setIsTraining(true)} />
+                  </Route>
                   <Route path="/session">
                     {showId ? (
                       <Session
@@ -106,6 +112,7 @@ const App = () => {
                         pouchParticipants={pouchParticipants}
                         pouchSessions={pouchSessions}
                         pouchItems={pouchItems}
+                        isTraining={isTraining}
                       />
                     ) : (
                       <Redirect to="/" />

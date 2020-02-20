@@ -58,12 +58,23 @@ const getItems = async (session, pouchItems) => {
   return items
 }
 
-module.exports = async (pouchParticipants, pouchSessions, pouchItems) => {
-  const newSessionId = await chooseNewSession(
-    pouchParticipants,
-    pouchSessions,
-    pouchItems
-  )
+module.exports = async (
+  pouchParticipants,
+  pouchSessions,
+  pouchItems,
+  isTraining
+) => {
+  let newSessionId
+
+  if (isTraining) {
+    newSessionId = 'Training'
+  } else {
+    newSessionId = await chooseNewSession(
+      pouchParticipants,
+      pouchSessions,
+      pouchItems
+    )
+  }
 
   if (newSessionId === -1) {
     return { finishedAllSessions: true }

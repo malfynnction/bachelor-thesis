@@ -68,7 +68,7 @@ class Demographics extends React.Component {
             }
             this.props.createUser(data)
           }}
-          action="/session"
+          action="/start-session"
           className="centered-content demographics-form"
         >
           {this.renderQuestion('Year of birth: ', 'yearOfBirth', 'dropdown', [

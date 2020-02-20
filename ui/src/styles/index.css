@@ -117,3 +117,7 @@ button.button-secondary {
 .flexbox {
   display: flex;
 }
+
+.btn + .btn {
+  margin-left: 15px;
+}
