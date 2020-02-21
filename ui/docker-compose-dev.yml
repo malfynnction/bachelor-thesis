@@ -1,0 +1,17 @@
+version: '3.7'
+services:
+  bachelor-ui:
+    image: node:12.16-alpine3.9
+    ports:
+      - 3000:3000
+    volumes:
+      - type: bind
+        source: .
+        target: /app
+    command: ['npm', 'run', '--prefix', '/app', 'start']
+    depends_on:
+      - couchdb
+  couchdb:
+    image: couchdb:2.3.1
+    ports:
+      - 5984:5984
