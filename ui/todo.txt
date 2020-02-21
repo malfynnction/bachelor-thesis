@@ -1,5 +1,4 @@
 - introductional & explanatory texts
-- scroll up after each item (within item partially done, but scrolling too low)
 - instructions
     - screenshots & GIFs
     - aktuell noch verzerrt wenn view size anders

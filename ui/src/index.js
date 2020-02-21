@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useRef } from 'react'
 import ReactDOM from 'react-dom'
 import './bootstrap/bootstrap.css'
 import './styles/index.css'
@@ -38,6 +38,8 @@ const App = () => {
   const [showId, setShowId] = useState(Boolean(id))
   const [trainingState, setTrainingState] = useState(trainingStore.get())
 
+  const topRef = useRef(null)
+
   if (!trainingState) {
     pouchParticipants.get(id).then(participant => {
       const { completedTrainingSession } = participant
@@ -47,6 +49,10 @@ const App = () => {
       setTrainingState(trainingStateFromDb)
       trainingStore.set(trainingStateFromDb)
     })
+  }
+
+  const scrollToTop = () => {
+    topRef.current.scrollIntoView({ behavior: 'smooth' })
   }
 
   return (
@@ -61,7 +67,7 @@ const App = () => {
           }
           return (
             <Fragment>
-              <header>
+              <header ref={topRef}>
                 <Link to="/">
                   <img
                     src="logo.png"
@@ -138,6 +144,7 @@ const App = () => {
                             trainingStore.set('completed')
                             setTrainingState('completed')
                           }}
+                          onScrollToTop={() => scrollToTop()}
                         />
                       )
                     ) : (
