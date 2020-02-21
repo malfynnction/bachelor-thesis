@@ -6,16 +6,22 @@ import Progress from './Progress'
 
 const participantStore = createStore('participantId')
 const sessionStore = createStore('session')
+const ratingStore = createStore('ratings')
+
+const emptySession = { items: [], index: 0 }
 
 class Session extends React.Component {
   constructor(props) {
     super(props)
-    const session = sessionStore.get()
-    this.state = { session: { ...session }, ratings: [] }
+
+    this.state = { session: emptySession }
   }
 
   async componentDidMount() {
-    if (typeof this.state.session.item === 'undefined') {
+    const session = sessionStore.get()
+    if (session) {
+      this.setState({ session })
+    } else {
       const newSession = await getNewSession(
         this.props.pouchParticipants,
         this.props.pouchSessions,
@@ -23,7 +29,7 @@ class Session extends React.Component {
         this.props.isTraining
       )
       sessionStore.set(newSession)
-      this.setState({ session: { ...newSession } })
+      this.setState({ session: newSession })
     }
   }
 
@@ -82,11 +88,9 @@ class Session extends React.Component {
                 this.props.onScrollToTop()
               }}
               onNextItem={async result => {
-                const ratings = [
-                  ...this.state.ratings,
-                  { ...result, itemId: item._id, participantId },
-                ]
-                this.setState({ ratings })
+                const ratings = ratingStore.get() || []
+                ratings.push({ ...result, itemId: item._id, participantId })
+                ratingStore.set(ratings)
                 if (isLastItem) {
                   const participant = await pouchParticipants.get(participantId)
 
@@ -112,6 +116,7 @@ class Session extends React.Component {
                     })
                   }
                   sessionStore.clear()
+                  ratingStore.clear()
                   window.location.href = 'http://localhost:3000/start-session'
                 } else {
                   this.setState({

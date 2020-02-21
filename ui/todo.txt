@@ -21,8 +21,6 @@
     - put the "what was the hardest sentence" ganz ans Ende
 - Schritt 3
     - content questions?
-- Erwähne: "Wenn Browsernavigation während Session -> Session neu starten!"
-    - or, better yet - fix that??
 - token for crowdsourcing (for payment later)
     - after each session
     - from seed in url params
