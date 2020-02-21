@@ -22,9 +22,8 @@
 - Schritt 3
     - content questions?
 - token for crowdsourcing (for payment later)
-    - after each session
-    - from seed in url params
-    - z. B. seed -> md5 -> first 5 chars
+    - do I need to explain this?
+    - ! we're doing everything client-side, pretty easily hackable !
 - pre-processing:
     - make input data format more general / easier to replicate
     - figure out how to make this available for other people (npm script? -> add to /ui?)
@@ -33,7 +32,8 @@
 - Dockerize everything
     - stop couch container when exiting?
 - either always or never useState
+- make training session available even if has rated all sessions? or move notification from /session to /start-session
 
-- Requirement: Docker?
+- Requirements: + Docker & Compose, - Node & Python
 - create requirements.txt
 - create couch user & pw

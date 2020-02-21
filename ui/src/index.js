@@ -17,20 +17,16 @@ import Demographics from './components/Demographics'
 import StartSession from './components/StartSession'
 import createStore from './lib/create-store'
 import newPouchDB from './lib/new-pouch-db'
+import getFromUrlParams from './lib/get-from-url-params'
 
 const participantId = createStore('participantId')
 const trainingStore = createStore('trainingState')
+const seedStore = createStore('seed')
 
 const pouchParticipants = newPouchDB('participants')
 const pouchRatings = newPouchDB('ratings')
 const pouchSessions = newPouchDB('sessions')
 const pouchItems = newPouchDB('items')
-
-const getIdFromParams = ({ location }) => {
-  const params = location.search.slice(1).split('&')
-  const idParam = params.find(param => param.startsWith('participant-id'))
-  return idParam && idParam.split('=')[1]
-}
 
 const App = () => {
   const id = participantId.get()
@@ -59,10 +55,15 @@ const App = () => {
       {/* Wrap everything in an additional "fake" Route to have access to location props*/}
       <Route
         render={props => {
-          const idFromParams = getIdFromParams(props)
+          const idFromParams = getFromUrlParams('participant-id', props)
           if (idFromParams) {
             participantId.set(idFromParams)
             setShowId(true)
+          }
+
+          const seed = getFromUrlParams('seed', props)
+          if (seed) {
+            seedStore.set(seed)
           }
           return (
             <Fragment>
@@ -120,6 +121,7 @@ const App = () => {
                   </Route>
                   <Route path="/start-session">
                     <StartSession
+                      {...props}
                       onStartTraining={() => {
                         trainingStore.set('in progress')
                         setTrainingState('in progress')

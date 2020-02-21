@@ -117,7 +117,8 @@ class Session extends React.Component {
                   }
                   sessionStore.clear()
                   ratingStore.clear()
-                  window.location.href = 'http://localhost:3000/start-session'
+
+                  window.location.href = `http://localhost:3000/start-session?prev=${session.id}`
                 } else {
                   this.setState({
                     session: { ...this.state.session, index: index + 1 },
