@@ -25,7 +25,7 @@ class startSession extends React.Component {
         <div>
           {this.state.completedTrainingSession
             ? 'You can start a rating session or do a little training session before. '
-            : 'Please go through a training session before starting with the actual ratings. '}
+            : 'Please go through a training session before you start with the actual ratings. '}
           A training session is just like a real session, except your answers
           won't be recorded and you will get a pre-defined set of one very easy,
           one medium, and one very difficult paragraph or sentence.

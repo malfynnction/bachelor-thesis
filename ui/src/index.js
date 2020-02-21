@@ -36,9 +36,18 @@ const getIdFromParams = ({ location }) => {
 const App = () => {
   const id = participantId.get()
   const [showId, setShowId] = useState(Boolean(id))
-  const [trainingState, setTrainingState] = useState(
-    trainingStore.get() || 'not started'
-  )
+  const [trainingState, setTrainingState] = useState(trainingStore.get())
+
+  if (!trainingState) {
+    pouchParticipants.get(id).then(participant => {
+      const { completedTrainingSession } = participant
+      const trainingStateFromDb = completedTrainingSession
+        ? 'completed'
+        : 'not started'
+      setTrainingState(trainingStateFromDb)
+      trainingStore.set(trainingStateFromDb)
+    })
+  }
 
   return (
     <Router>

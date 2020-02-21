@@ -6,7 +6,6 @@
     - good explanations of everthing
     - "training session"
         - Documentation: need to have a training session with id "Training" in session db
-        - get trainingState from DB instead of sessionstorage (in index.js)
 - Impressum & Datenschutz?
 - what happens after completed session?
 - replace all the "localhost" with the actual url
