@@ -20,7 +20,8 @@ const chooseNewSession = async (
   ]).then(([allSessions, allParticipants, loggedInParticipant]) => {
     const completedSessions = loggedInParticipant.completedSessions || []
     const possibleSessions = allSessions.filter(
-      session => !completedSessions.includes(session._id)
+      session =>
+        !completedSessions.includes(session._id) && session._id !== 'Training'
     )
 
     if (possibleSessions.length === 0) {
