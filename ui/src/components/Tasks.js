@@ -2,7 +2,9 @@ import React, { Fragment } from 'react'
 import { get, shuffle } from 'lodash'
 import '../styles/Tasks.css'
 
-const punctuation = /\.|,|-|\(|\)|\/|"|;|:|…/g
+const punctuation = /(\.|!|\?|,|-|\(|\)|\/|"|;|:|…)+/g
+const punctuationInBeginning = new RegExp(`^${punctuation.source}`, 'g')
+const punctuationInEnd = new RegExp(`${punctuation.source}$`, 'g')
 
 class Tasks extends React.Component {
   getSuggestions(original, alternatives) {
@@ -10,9 +12,18 @@ class Tasks extends React.Component {
     return shuffle(suggestions.map(word => word.replace(punctuation, '')))
   }
 
-  deleteWord({ original, wordIndex, alternativeSuggestions }, clozeIndex) {
+  deleteWord(
+    { original, wordIndex, alternativeSuggestions },
+    originalWithPunctuation,
+    clozeIndex
+  ) {
+    const punctuationBefore = originalWithPunctuation.match(
+      punctuationInBeginning
+    )
+    const punctuationAfter = originalWithPunctuation.match(punctuationInEnd)
     return (
       <Fragment>
+        {punctuationBefore ? punctuationBefore[0] : null}
         <select
           onChange={e => {
             const entered = e.target.value
@@ -38,7 +49,8 @@ class Tasks extends React.Component {
               )
             }
           )}
-        </select>{' '}
+        </select>
+        {punctuationAfter ? punctuationAfter[0] : null}{' '}
       </Fragment>
     )
   }
@@ -47,7 +59,7 @@ class Tasks extends React.Component {
     const { text, clozes, type, enclosingParagraph } = this.props.item
     const words = text.split(' ')
     clozes.forEach((cloze, i) => {
-      words[cloze.wordIndex] = this.deleteWord(cloze, i)
+      words[cloze.wordIndex] = this.deleteWord(cloze, words[cloze.wordIndex], i)
     })
     const isSentence = type === 'sentence'
     const splitText = isSentence && enclosingParagraph.split(text)

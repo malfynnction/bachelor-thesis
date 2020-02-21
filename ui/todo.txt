@@ -23,7 +23,6 @@
     - put the "what was the hardest sentence" ganz ans Ende
 - Schritt 3
     - content questions?
-    - keep punctuation before and after cloze
 - Erwähne: "Wenn Browsernavigation während Session -> Session neu starten!"
     - or, better yet - fix that??
 - token for crowdsourcing (for payment later)
