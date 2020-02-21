@@ -1,5 +1,5 @@
-const shuffle = require('lodash.shuffle')
-const createStore = require('./create-store')
+import shuffle from 'lodash.shuffle'
+import createStore from './create-store'
 
 const participantId = (createStore('participantId').get() || '').toString()
 
@@ -59,7 +59,7 @@ const getItems = async (session, pouchItems) => {
   return items
 }
 
-module.exports = async (
+const getNewSession = async (
   pouchParticipants,
   pouchSessions,
   pouchItems,
@@ -88,3 +88,5 @@ module.exports = async (
     id: newSessionId,
   }
 }
+
+export default getNewSession

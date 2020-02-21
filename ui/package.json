@@ -18,6 +18,8 @@
     "react-step-wizard": "^5.3.0"
   },
   "scripts": {
+    "docker:build": "docker build -t bachelor-ui:dev .",
+    "docker-compose:up": "docker-compose up -d",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
