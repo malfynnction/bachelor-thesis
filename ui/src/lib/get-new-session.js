@@ -3,19 +3,14 @@ import createStore from './create-store'
 
 const participantId = (createStore('participantId').get() || '').toString()
 
-const getAll = async db => {
-  const data = await db.allDocs({ include_docs: true })
-  return data.rows.map(row => row.doc)
-}
-
 const chooseNewSession = async (
   pouchParticipants,
   pouchSessions,
   pouchItems
 ) => {
   return Promise.all([
-    getAll(pouchSessions),
-    getAll(pouchParticipants),
+    pouchSessions.getAll(),
+    pouchParticipants.getAll(),
     pouchParticipants.get(participantId),
   ]).then(([allSessions, allParticipants, loggedInParticipant]) => {
     const completedSessions = loggedInParticipant.completedSessions || []

@@ -16,17 +16,17 @@ import Start from './components/Start'
 import Demographics from './components/Demographics'
 import StartSession from './components/StartSession'
 import createStore from './lib/create-store'
-import newPouchDB from './lib/new-pouch-db'
+import createDatabase from './lib/create-database'
 import getFromUrlParams from './lib/get-from-url-params'
 
 const participantId = createStore('participantId')
 const trainingStore = createStore('trainingState')
 const seedStore = createStore('seed')
 
-const pouchParticipants = newPouchDB('participants')
-const pouchRatings = newPouchDB('ratings')
-const pouchSessions = newPouchDB('sessions')
-const pouchItems = newPouchDB('items')
+const pouchParticipants = createDatabase('participants')
+const pouchRatings = createDatabase('ratings')
+const pouchSessions = createDatabase('sessions')
+const pouchItems = createDatabase('items')
 
 const App = () => {
   const id = participantId.get()
@@ -103,8 +103,8 @@ const App = () => {
                   <Route path="/demographics">
                     <Demographics
                       createUser={async data => {
-                        pouchParticipants.allDocs().then(async docs => {
-                          const usedIds = docs.rows.map(
+                        pouchParticipants.getAll().then(async docs => {
+                          const usedIds = docs.map(
                             participant => participant.id
                           )
                           const newId = Math.max(...usedIds, 0) + 1

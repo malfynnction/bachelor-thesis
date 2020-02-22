@@ -102,7 +102,7 @@ class Session extends React.Component {
                     })
                   } else {
                     // post ratings to DB
-                    await pouchRatings.bulkDocs(ratings)
+                    await pouchRatings.putBulk(ratings)
 
                     // store completed session ID
                     const sessionId = session.id

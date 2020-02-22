@@ -37,3 +37,7 @@
     - stop admin party mode (create user & pw)
     - configure (CORS)
 - proper backend
+    - security: 
+        - invalid db names
+        - don't send complete participant object on GET
+        - validate data before writing to DB
