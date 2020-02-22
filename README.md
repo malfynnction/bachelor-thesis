@@ -4,8 +4,8 @@ _TODO: write a proper README_
 
 ## Requirements
 
-- Node (Version specified in `.node-version`)
-- Python 3
+- Docker
+- Docker Compose
 
 ## Initial setup
 

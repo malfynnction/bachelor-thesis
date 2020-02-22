@@ -29,14 +29,11 @@
     - figure out how to make this available for other people (npm script? -> add to /ui?)
     - alternativeSuggestions kann das gleiche Wort mehrmals enthalten, wenn es mehrmals im Originaltext vorkommt
     - how to upload to DB
-- Dockerize everything
-    - stop couch container when exiting?
 - either always or never useState
 - make training session available even if has rated all sessions? or move notification from /session to /start-session
 - authentifizierung nicht nur über ID
-
-- Requirements: + Docker & Compose, - Node & Python
 - create requirements.txt
-- create couch user & pw
-
-- server aaakfahdsfjklhdslif haljk
+- Couch
+    - stop admin party mode (create user & pw)
+    - configure (CORS)
+- proper backend
