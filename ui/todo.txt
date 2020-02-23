@@ -36,6 +36,7 @@
 - Couch
     - stop admin party mode (create user & pw)
     - configure (CORS)
+    - Methoden auf create-database sind nicht mehr "catch"able, muss auf result.status schauen! (siehe instructions.js)
 - proper backend
     - security: 
         - invalid db names

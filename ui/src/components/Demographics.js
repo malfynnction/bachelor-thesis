@@ -61,14 +61,14 @@ class Demographics extends React.Component {
         <h3>Demographic Questions</h3>
         <div>Please fill out the questions below for statistical reasons:</div>
         <form
-          onSubmit={() => {
+          onSubmit={e => {
+            e.preventDefault()
             const data = { ...this.state }
             if (data.gender === 'text') {
               data.gender = data.genderText
             }
             this.props.createUser(data)
           }}
-          action="/start-session"
           className="centered-content demographics-form"
         >
           {this.renderQuestion('Year of birth: ', 'yearOfBirth', 'dropdown', [

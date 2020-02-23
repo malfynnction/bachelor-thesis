@@ -21,7 +21,7 @@
   },
   "scripts": {
     "docker:build": "docker build -t bachelor-ui:dev .",
-    "docker-compose:up": "docker-compose up -d -f docker-compose-dev.yml",
+    "docker-compose:up": "docker-compose -f docker-compose-dev.yml up -d",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -38,6 +38,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "proxy": "http://localhost:8080"
+  }
 }

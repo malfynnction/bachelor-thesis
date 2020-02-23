@@ -35,7 +35,7 @@ const App = () => {
 
   const topRef = useRef(null)
 
-  if (!trainingState) {
+  if (id && !trainingState) {
     pouchParticipants.get(id).then(participant => {
       const { completedTrainingSession } = participant
       const trainingStateFromDb = completedTrainingSession
@@ -105,16 +105,17 @@ const App = () => {
                       createUser={async data => {
                         pouchParticipants.getAll().then(async docs => {
                           const usedIds = docs.map(
-                            participant => participant.id
+                            participant => participant._id
                           )
                           const newId = Math.max(...usedIds, 0) + 1
-                          participantId.set(newId)
-                          setShowId(true)
                           await pouchParticipants.put({
                             ...data,
                             _id: newId.toString(),
                             completedSessions: [],
                           })
+
+                          participantId.set(newId)
+                          setShowId(true)
                         })
                       }}
                     />

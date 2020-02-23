@@ -92,21 +92,18 @@ const Instructions = props => {
                 e.preventDefault()
                 const id = e.target.participantId.value
                 // check if ID exists
-                pouchParticipants
-                  .get(id)
-                  .then(() => {
+                pouchParticipants.get(id).then(result => {
+                  if (result.status === 404) {
+                    setError(
+                      'This ID does not exist. Please make sure you entered the correct ID.'
+                    )
+                  } else if (result.status !== 200) {
+                    setError('An unknown error occurred. Please try again.')
+                  } else {
                     participantId.set(id)
                     window.location.href = 'http://localhost:3000/start-session'
-                  })
-                  .catch(err => {
-                    if (err.status === 404) {
-                      setError(
-                        'This ID does not exist. Please make sure you entered the correct ID.'
-                      )
-                    } else {
-                      setError('An unknown error occurred. Please try again.')
-                    }
-                  })
+                  }
+                })
               }}
             >
               <input

@@ -1,6 +1,21 @@
 version: '3.7'
 services:
-  bachelor-ui:
+  couchdb:
+    image: couchdb:2.3.1
+    ports:
+      - 5984:5984
+  backend:
+    image: node:12.16
+    ports:
+      - 8080:8080
+    volumes:
+      - type: bind
+        source: .
+        target: /app
+    command: ['node', '/app/server.js']
+    depends_on:
+      - couchdb
+  frontend:
     image: node:12.16-alpine3.9
     ports:
       - 3000:3000
@@ -10,8 +25,15 @@ services:
         target: /app
     command: ['npm', 'run', '--prefix', '/app', 'start']
     depends_on:
-      - couchdb
-  couchdb:
-    image: couchdb:2.3.1
+      - backend
+  nginx:
+    image: nginx:1.17.8
     ports:
-      - 5984:5984
+      - 8000:80
+    volumes:
+      - type: bind
+        source: ./nginx.conf
+        target: /etc/nginx/nginx.conf
+    depends_on:
+      - backend
+      - frontend
