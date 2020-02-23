@@ -1,5 +1,5 @@
 {
-  "name": "ui",
+  "name": "bachelor-website",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -20,7 +20,7 @@
     "react-step-wizard": "^5.3.0"
   },
   "scripts": {
-    "docker:build": "docker build -t bachelor-ui:dev .",
+    "docker:build": "docker build -t bachelor-website:dev .",
     "docker-compose:up": "docker-compose -f docker-compose-dev.yml up -d",
     "start": "react-scripts start",
     "build": "react-scripts build",

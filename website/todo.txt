@@ -7,7 +7,7 @@
         - Documentation: need to have a training session with id "Training" in session db
 - Impressum & Datenschutz?
 - what happens after completed session?
-- replace all the "localhost" with the actual url
+- replace all the "localhost" with the actual url or whatever Docker needs
 - TODO comments, "??"-comments
 - What is this "Item 0" heading in Item??
 - mobile
@@ -23,7 +23,7 @@
     - content questions?
 - token for crowdsourcing (for payment later)
     - do I need to explain this?
-    - ! we're doing everything client-side, pretty easily hackable !
+    - move this to server!
 - pre-processing:
     - make input data format more general / easier to replicate
     - figure out how to make this available for other people (npm script? -> add to /ui?)
@@ -35,7 +35,6 @@
 - create requirements.txt
 - Couch
     - stop admin party mode (create user & pw)
-    - configure (CORS)
     - Methoden auf create-database sind nicht mehr "catch"able, muss auf result.status schauen! (siehe instructions.js)
 - proper backend
     - security: 

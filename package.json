@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "cd ui && npm run start",
-    "build": "cd ui && npm run build",
-    "test": "cd ui && npm run test",
-    "eject": "cd ui && npm run eject",
-    "lint": "eslint '{ui,code}/**/*.js'",
+    "start": "cd website && npm run start",
+    "build": "cd website && npm run build",
+    "test": "cd website && npm run test",
+    "eject": "cd website && npm run eject",
+    "lint": "eslint '{website,data-processing}/**/*.js'",
     "prettier": "prettier --write '**/*.{js,json}'",
-    "process-texts": "source venv/bin/activate && python code/process_texts.py"
+    "process-texts": "source venv/bin/activate && python data-processing/process_texts.py"
   },
   "author": "",
   "license": "ISC",

@@ -8,8 +8,8 @@ node_modules/
 ThesisTemplate/
 examples/
 venv/
-processed-data/*
-!processed-data/.keep
+data-processing/processed/*
+!data-processing/processed/.keep
 **/build
 
 npm-debug.log*
