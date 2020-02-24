@@ -8,8 +8,8 @@ node_modules/
 ThesisTemplate/
 examples/
 venv/
-data-processing/processed/*
-!data-processing/processed/.keep
+website/processed-texts/*
+!website/processed-texts/.keep
 **/build
 website/couchdb/data/*
 !website/couchdb/data/.keep

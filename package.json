@@ -9,7 +9,7 @@
     "eject": "cd website && npm run eject",
     "lint": "eslint '{website,data-processing}/**/*.js'",
     "prettier": "prettier --write '**/*.{js,json}'",
-    "process-texts": "source venv/bin/activate && python data-processing/process_texts.py"
+    "process-texts": "source venv/bin/activate && python website/src/lib/process_texts.py"
   },
   "author": "",
   "license": "ISC",

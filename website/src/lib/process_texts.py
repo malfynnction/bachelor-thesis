@@ -23,9 +23,9 @@ NLP.add_pipe(custom_sentence_boundaries, before="parser")
 DATA_PATH = 'data.xlsx'
 SHEET_NAME = 'paragraphs'
 TEXT_COLUMN = 'B'
-OUTPUT_PATH_ITEMS = 'data-processing/processed/items.json'
-OUTPUT_PATH_SESSIONS = 'data-processing/processed/sessions.json'
-INCLUDE_ALL_SENTENCES = True
+OUTPUT_PATH_ITEMS = 'website/processed-texts/items.json'
+OUTPUT_PATH_SESSIONS = 'website/processed-texts/sessions.json'
+INCLUDE_ALL_SENTENCES = True # default: false
 CLOZES_PER_TEXT = 5
 ALTERNATIVE_SUGGESTIONS_PER_CLOZE = 4
 ITEMS_PER_SESSION = 3
@@ -95,7 +95,7 @@ def main():
             "type": "paragraph",
             "text": text.text,
             "sentences": sentences,
-            "partsOfSpeech": parts_of_speech,
+            # "partsOfSpeech": parts_of_speech,
             "clozes": get_clozes(remove_punctuation(parts_of_speech))
         }
 
@@ -113,7 +113,7 @@ def main():
                     "type": "sentence",
                     "text": sentence,
                     "enclosingParagraph": text.text,
-                    "partsOfSpeech": sentence_parts_of_speech,
+                    # "partsOfSpeech": sentence_parts_of_speech,
                     "clozes": get_clozes(remove_punctuation(sentence_parts_of_speech), alternative_pool=parts_of_speech)
                 }
                 item_documents.append(sentence_document)
