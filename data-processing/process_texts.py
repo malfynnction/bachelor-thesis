@@ -76,7 +76,7 @@ def get_sessions(item_ids):
     random.shuffle(item_ids)
     chunks = numpy.split(numpy.array(item_ids), ITEMS_PER_SESSION)
     return [{
-        "_id": i+1,
+        "_id": str(i+1),
         "items": chunk.tolist()
     } for i, chunk in enumerate(chunks)]
 
