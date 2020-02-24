@@ -14,6 +14,7 @@
 - Demographics
     - better age ranges?
     - Kurze Datenschutz / Consent Floskel
+    - Weiterleitung zu /start-session
 - Schritt 2
     - better scales
     - more questions?

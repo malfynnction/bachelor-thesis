@@ -19,7 +19,7 @@ _TODO: write a proper README_
 - `git pull`
 - `npm install`
 - `npm run start`
-- go to [http://localhost:3000](http://localhost:3000)
+- go to [http://localhost:8000](http://localhost:8000)
 - happy editing!
 
 ## Testing

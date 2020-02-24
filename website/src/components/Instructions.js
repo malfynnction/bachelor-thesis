@@ -97,11 +97,11 @@ const Instructions = props => {
                     setError(
                       'This ID does not exist. Please make sure you entered the correct ID.'
                     )
-                  } else if (result.status !== 200) {
+                  } else if (result.error && result.status !== 200) {
                     setError('An unknown error occurred. Please try again.')
                   } else {
                     participantId.set(id)
-                    window.location.href = 'http://localhost:3000/start-session'
+                    window.location.href = 'http://localhost:8000/start-session'
                   }
                 })
               }}
