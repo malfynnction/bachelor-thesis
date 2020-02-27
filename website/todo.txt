@@ -41,3 +41,4 @@
         - invalid db names
         - don't send complete participant object on GET
         - validate data before writing to DB
+- die readme passt noch nicht (npm install und alles nicht mehr nötig wg docker??)

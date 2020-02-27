@@ -3,6 +3,7 @@ import json
 import spacy
 from openpyxl import load_workbook
 import numpy
+import math
 
 NLP = spacy.load('de')
 
@@ -74,7 +75,8 @@ def get_clozes(parts_of_speech, alternative_pool=None):
 
 def get_sessions(item_ids):
     random.shuffle(item_ids)
-    chunks = numpy.split(numpy.array(item_ids), ITEMS_PER_SESSION)
+    chunk_amount = math.ceil(len(item_ids) / ITEMS_PER_SESSION)
+    chunks = numpy.array_split(numpy.array(item_ids), chunk_amount)
     return [{
         "_id": str(i+1),
         "items": chunk.tolist()
