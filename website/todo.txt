@@ -15,9 +15,8 @@
     - Weiterleitung zu /start-session
 - Schritt 2
     - use the scales he wants
-    - more questions?
+    - more/other questions?
     - style für "Which sentence was the most complex" ist noch kaputt
-    - put the "what was the hardest sentence" ganz ans Ende
 - Schritt 3
     - content questions?
 - token for crowdsourcing (for payment later)

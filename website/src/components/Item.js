@@ -119,6 +119,7 @@ class Item extends React.Component {
             }
             answers={this.state.questions}
             item={item}
+            questionType="general"
           />
           <Tasks
             item={item}
@@ -129,6 +130,18 @@ class Item extends React.Component {
             }}
             enteredData={this.state.cloze}
           />
+          {item.type === 'paragraph' ? (
+            <Questions
+              onChange={(key, value) =>
+                this.setState({
+                  questions: { ...this.state.questions, [key]: value },
+                })
+              }
+              answers={this.state.questions}
+              item={item}
+              questionType="hardestSentence"
+            />
+          ) : null}
         </StepWizard>
       </form>
     )
