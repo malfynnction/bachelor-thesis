@@ -3,6 +3,8 @@ import createStore from './create-store'
 
 const participantId = (createStore('participantId').get() || '').toString()
 
+const TRAINING_ID = 'Training'
+
 const chooseNewSession = async (
   pouchParticipants,
   pouchSessions,
@@ -63,7 +65,16 @@ const getNewSession = async (
   let newSessionId
 
   if (isTraining) {
-    newSessionId = 'Training'
+    const trainingSession = await pouchSessions.get(TRAINING_ID)
+    if (trainingSession.status === 404) {
+      newSessionId = await chooseNewSession(
+        pouchParticipants,
+        pouchSessions,
+        pouchItems
+      )
+    } else {
+      newSessionId = TRAINING_ID
+    }
   } else {
     newSessionId = await chooseNewSession(
       pouchParticipants,
