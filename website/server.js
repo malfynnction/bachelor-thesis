@@ -81,6 +81,8 @@ app.put('/database/:name', (req, res) => {
 app.put('/database/:name/_bulk', (req, res) => {
   const { name } = req.params
   const { body } = req
+  const options = req.header('X-Options')
+  console.log(options)
   const database = getDatabase(name)
   database
     .bulkDocs(body)

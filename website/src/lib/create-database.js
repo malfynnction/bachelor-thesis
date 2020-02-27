@@ -18,9 +18,9 @@ module.exports = name => {
       })
       return result
     },
-    putBulk: async data => {
+    putBulk: async (data, options) => {
       return request.put({
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'X-Options': options, 'Content-Type': 'application/json' },
         url: `${databaseUrl}/${name}/_bulk`,
         body: JSON.stringify(data),
       })

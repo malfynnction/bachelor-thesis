@@ -3,30 +3,17 @@
     - screenshots & GIFs
     - aktuell noch verzerrt wenn view size anders
     - good explanations of everything
-- Impressum & Datenschutz?
 - what happens after completed session?
 - replace all the "localhost" with the actual url or whatever Docker needs
 - TODO comments, "??"-comments
 - What is this "Item 0" heading in Item??
 - mobile
-- Demographics
-    - better age ranges?
-    - Kurze Datenschutz / Consent Floskel
 - Schritt 2
     - use the scales he wants
-    - more/other questions?
     - style für "Which sentence was the most complex" ist noch kaputt
-- Schritt 3
-    - content questions?
 - token for crowdsourcing (for payment later)
-    - (how) do I need to explain this?
     - move this to server!
-- pre-processing:
-    - make input data format more general / easier to replicate
-    - figure out how to make this available for other people (npm script? -> add to /ui?)
-    - how to upload to DB
 - make training session available even if has rated all sessions? or move notification from /session to /start-session
-- authentifizierung nicht nur über ID
 - create requirements.txt
 - Couch
     - stop admin party mode (create user & pw)
@@ -37,3 +24,24 @@
         - don't send complete participant object on GET
         - validate data before writing to DB
 - die readme passt noch nicht (npm install und alles nicht mehr nötig wg docker??)
+
+
+
+
+====== WAIT FOR MEETING (05.03.) ======
+
+- pre-processing:
+    - make input data format more general / easier to replicate
+    - figure out how to make this available for other people (npm script? -> add to /ui?)
+    - how to upload to DB
+- authentifizierung nicht nur über ID
+- Impressum & Datenschutz?
+- Demographics
+    - better age ranges?
+    - Kurze Datenschutz / Consent Floskel
+- Schritt 2
+    - more / other questions?
+- Schritt 3
+    - content questions?
+- token for crowdsourcing (for payment later)
+    - (how) do I need to explain this?

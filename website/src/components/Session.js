@@ -7,6 +7,7 @@ import Progress from './Progress'
 const participantStore = createStore('participantId')
 const sessionStore = createStore('session')
 const ratingStore = createStore('ratings')
+const seedStore = createStore('seed')
 
 const emptySession = { items: [], index: 0 }
 
@@ -101,8 +102,13 @@ class Session extends React.Component {
                       completedTrainingSession: true,
                     })
                   } else {
+                    const seed = seedStore.get()
                     // post ratings to DB
-                    await pouchRatings.putBulk(ratings)
+                    const options = { session: session.id }
+                    if (seed) {
+                      options.seed = seed
+                    }
+                    await pouchRatings.putBulk(ratings, options)
 
                     // store completed session ID
                     const sessionId = session.id

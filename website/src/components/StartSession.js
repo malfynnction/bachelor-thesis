@@ -5,7 +5,6 @@ import getFromUrlParams from '../lib/get-from-url-params'
 import hash from 'object-hash'
 
 const participantStore = createStore('participantId')
-const seedStore = createStore('seed')
 
 class startSession extends React.Component {
   constructor(props) {
@@ -16,7 +15,6 @@ class startSession extends React.Component {
   async componentDidMount() {
     let newState = {}
 
-    const seed = seedStore.get()
     if (seed) {
       const previousSession = getFromUrlParams('prev', this.props)
       if (previousSession) {
