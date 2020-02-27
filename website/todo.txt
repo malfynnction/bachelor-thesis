@@ -28,7 +28,6 @@
 - pre-processing:
     - make input data format more general / easier to replicate
     - figure out how to make this available for other people (npm script? -> add to /ui?)
-    - alternativeSuggestions kann das gleiche Wort mehrmals enthalten, wenn es mehrmals im Originaltext vorkommt
     - how to upload to DB
 - make training session available even if has rated all sessions? or move notification from /session to /start-session
 - authentifizierung nicht nur über ID
