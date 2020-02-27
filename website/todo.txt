@@ -12,7 +12,6 @@
 - Demographics
     - better age ranges?
     - Kurze Datenschutz / Consent Floskel
-    - Weiterleitung zu /start-session
 - Schritt 2
     - use the scales he wants
     - more/other questions?
@@ -20,7 +19,7 @@
 - Schritt 3
     - content questions?
 - token for crowdsourcing (for payment later)
-    - do I need to explain this?
+    - (how) do I need to explain this?
     - move this to server!
 - pre-processing:
     - make input data format more general / easier to replicate

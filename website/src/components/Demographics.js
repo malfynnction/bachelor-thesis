@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import '../styles/Demographics.css'
 
 const defaultState = {
@@ -63,11 +64,6 @@ class Demographics extends React.Component {
         <form
           onSubmit={e => {
             e.preventDefault()
-            const data = { ...this.state }
-            if (data.gender === 'text') {
-              data.gender = data.genderText
-            }
-            this.props.createUser(data)
           }}
           className="centered-content demographics-form"
         >
@@ -141,9 +137,20 @@ class Demographics extends React.Component {
               { label: "I don't know", value: 'notDisclosed' },
             ]
           )}
-          <button className="btn" type="submit">
+          <Link
+            className="btn"
+            type="submit"
+            to="/start-session"
+            onClick={() => {
+              const data = { ...this.state }
+              if (data.gender === 'text') {
+                data.gender = data.genderText
+              }
+              this.props.createUser(data)
+            }}
+          >
             Start
-          </button>
+          </Link>
           <div className="start-label">
             By clicking on "Start" you will be assigned a participant ID. Please
             remember it so you can skip this step if you do another session in
