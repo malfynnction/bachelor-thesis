@@ -19,11 +19,19 @@ module.exports = name => {
       return result
     },
     putBulk: async (data, options) => {
-      return request.put({
-        headers: { 'X-Options': options, 'Content-Type': 'application/json' },
-        url: `${databaseUrl}/${name}/_bulk`,
-        body: JSON.stringify(data),
-      })
+      return request
+        .put({
+          headers: {
+            'X-Options': JSON.stringify(options),
+            'Content-Type': 'application/json',
+          },
+          url: `${databaseUrl}/${name}/_bulk`,
+          body: JSON.stringify(data),
+          resolveWithFullResponse: true,
+        })
+        .then(response => {
+          return { token: response.headers['x-token'], body: response.body }
+        })
     },
   }
 }

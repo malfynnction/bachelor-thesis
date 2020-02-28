@@ -1,6 +1,7 @@
 const express = require('express')
 const PouchDB = require('pouchdb')
 const bodyParser = require('body-parser')
+const hash = require('object-hash')
 
 const app = express()
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -81,8 +82,14 @@ app.put('/database/:name', (req, res) => {
 app.put('/database/:name/_bulk', (req, res) => {
   const { name } = req.params
   const { body } = req
-  const options = req.header('X-Options')
-  console.log(options)
+  const options = JSON.parse(req.header('X-Options'))
+
+  const { session, seed } = options
+  if (seed) {
+    const token = hash.MD5(`${session}-${seed}`)
+    res.set({ 'x-token': token })
+  }
+
   const database = getDatabase(name)
   database
     .bulkDocs(body)

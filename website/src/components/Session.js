@@ -92,6 +92,7 @@ class Session extends React.Component {
                 const ratings = ratingStore.get() || []
                 ratings.push({ ...result, itemId: item._id, participantId })
                 ratingStore.set(ratings)
+                let tokenQueryString = ''
                 if (isLastItem) {
                   const participant = await pouchParticipants.get(participantId)
 
@@ -108,7 +109,14 @@ class Session extends React.Component {
                     if (seed) {
                       options.seed = seed
                     }
-                    await pouchRatings.putBulk(ratings, options)
+                    const response = await pouchRatings.putBulk(
+                      ratings,
+                      options
+                    )
+                    const { token } = response
+                    if (token) {
+                      tokenQueryString = `&token=${token}`
+                    }
 
                     // store completed session ID
                     const sessionId = session.id
@@ -124,7 +132,7 @@ class Session extends React.Component {
                   sessionStore.clear()
                   ratingStore.clear()
 
-                  window.location.href = `http://localhost:8000/start-session?prev=${session.id}`
+                  window.location.href = `http://localhost:8000/start-session?prev=${session.id}${tokenQueryString}`
                 } else {
                   this.setState({
                     session: { ...this.state.session, index: index + 1 },
