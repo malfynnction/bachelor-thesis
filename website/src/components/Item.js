@@ -83,8 +83,57 @@ class Item extends React.Component {
     this.setState({ ...initialState, cloze: initialCloze })
   }
 
+  getWizardSteps() {
+    const { item } = this.props
+    const steps = [
+      <Read
+        key="Read"
+        item={item}
+        onTimeUpdate={time => this.setState({ readingTime: time })}
+      />,
+
+      <Questions
+        key="Questions-general"
+        onChange={(key, value) =>
+          this.setState({
+            questions: { ...this.state.questions, [key]: value },
+          })
+        }
+        answers={this.state.questions}
+        item={item}
+        questionType="general"
+      />,
+      <Tasks
+        key="Tasks"
+        item={item}
+        onChange={(index, value) => {
+          const newState = [...this.state.cloze]
+          newState[index] = value
+          this.setState({ cloze: newState })
+        }}
+        enteredData={this.state.cloze}
+      />,
+    ]
+    if (item.type === 'paragraph') {
+      steps.push(
+        <Questions
+          key="Questions-hardestSentence"
+          onChange={(key, value) =>
+            this.setState({
+              questions: { ...this.state.questions, [key]: value },
+            })
+          }
+          answers={this.state.questions}
+          item={item}
+          questionType="hardestSentence"
+        />
+      )
+    }
+    return steps
+  }
+
   render() {
-    const { item, index, isLastItem } = this.props
+    const { index, isLastItem } = this.props
     return (
       <form
         onSubmit={e => e.preventDefault()}
@@ -106,42 +155,7 @@ class Item extends React.Component {
           transitions={{}}
           className="wizard"
         >
-          <Read
-            item={item}
-            onTimeUpdate={time => this.setState({ readingTime: time })}
-          />
-
-          <Questions
-            onChange={(key, value) =>
-              this.setState({
-                questions: { ...this.state.questions, [key]: value },
-              })
-            }
-            answers={this.state.questions}
-            item={item}
-            questionType="general"
-          />
-          <Tasks
-            item={item}
-            onChange={(index, value) => {
-              const newState = [...this.state.cloze]
-              newState[index] = value
-              this.setState({ cloze: newState })
-            }}
-            enteredData={this.state.cloze}
-          />
-          {item.type === 'paragraph' ? (
-            <Questions
-              onChange={(key, value) =>
-                this.setState({
-                  questions: { ...this.state.questions, [key]: value },
-                })
-              }
-              answers={this.state.questions}
-              item={item}
-              questionType="hardestSentence"
-            />
-          ) : null}
+          {this.getWizardSteps()}
         </StepWizard>
       </form>
     )

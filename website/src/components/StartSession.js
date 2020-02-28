@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import createStore from '../lib/create-store'
-import getFromUrlParams from '../lib/get-from-url-params'
-import hash from 'object-hash'
+// import getFromUrlParams from '../lib/get-from-url-params'
+// import hash from 'object-hash'
 
 const participantStore = createStore('participantId')
 
@@ -15,16 +15,16 @@ class startSession extends React.Component {
   async componentDidMount() {
     let newState = {}
 
-    if (seed) {
-      const previousSession = getFromUrlParams('prev', this.props)
-      if (previousSession) {
-        newState.previousSession = previousSession
-      }
-      if (seed && previousSession) {
-        const token = hash.MD5(`${previousSession}-${seed}`)
-        newState.token = token
-      }
-    }
+    // if (seed) {
+    //   const previousSession = getFromUrlParams('prev', this.props)
+    //   if (previousSession) {
+    //     newState.previousSession = previousSession
+    //   }
+    //   if (seed && previousSession) {
+    //     const token = hash.MD5(`${previousSession}-${seed}`)
+    //     newState.token = token
+    //   }
+    // }
 
     const { pouchParticipants } = this.props
     const participantId = participantStore.get()
