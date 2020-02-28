@@ -53,7 +53,7 @@ class startSession extends React.Component {
         again or contact us at TODO
       `
     } else if (previousSession) {
-      thankYou += 'Thank you! Your answers have been saved.'
+      thankYou += 'Thank you! Your answers have been saved. '
       if (this.state.token) {
         thankYou += `Your confirmation code is ${this.state.token}`
       }
