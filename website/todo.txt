@@ -10,20 +10,16 @@
 - mobile
 - Schritt 2
     - use the scales he wants
-    - style für "Which sentence was the most complex" ist noch kaputt
-- make training session available even if has rated all sessions? or move notification from /session to /start-session
 - create requirements.txt
 - Couch
     - stop admin party mode (create user & pw)
     - Methoden auf create-database sind nicht mehr "catch"able, muss auf result.status schauen! (siehe instructions.js)
-- proper backend
-    - security: 
-        - invalid db names
-        - don't send complete participant object on GET
-        - validate data before writing to DB
+- backend security
+    - invalid db names
+    - don't send complete participant object on GET
 - die readme passt noch nicht (npm install und alles nicht mehr nötig wg docker??)
 - 🐞 Reload nach login nötig, weil react-router-dom zu schlau ist und index nicht nochmal rendert
-
+- allow multiple genders
 
 ====== WAIT FOR MEETING (05.03.) ======
 
@@ -42,3 +38,5 @@
     - content questions?
 - token for crowdsourcing (for payment later)
     - (how) do I need to explain this?
+- backend security
+    - validate data before writing to DB

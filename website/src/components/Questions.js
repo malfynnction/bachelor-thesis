@@ -73,7 +73,7 @@ const Questions = props => {
               </div>
               {answers.map(({ label, value }, i) => {
                 return (
-                  <div key={`${key}-${value}`}>
+                  <div key={`${key}-${value}`} className="questionnaire-item">
                     <input
                       onChange={() => props.onChange(key, value)}
                       type="radio"
