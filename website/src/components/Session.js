@@ -134,7 +134,7 @@ class Session extends React.Component {
                   ratingStore.clear()
 
                   this.props.history.push(
-                    `http://localhost:8000/start-session?prev=${session.id}${tokenQueryString}`
+                    `/start-session?prev=${session.id}${tokenQueryString}`
                   )
                 } else {
                   this.setState({

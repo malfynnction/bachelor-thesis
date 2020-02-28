@@ -101,7 +101,7 @@ const Instructions = props => {
                     setError('An unknown error occurred. Please try again.')
                   } else {
                     participantId.set(id)
-                    props.history.push('http://localhost:8000/start-session')
+                    props.history.push('/start-session')
                   }
                 })
               }}
