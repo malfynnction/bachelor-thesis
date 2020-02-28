@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react'
 import createStore from '../lib/create-store'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import '../styles/Instructions.css'
 
 const participantId = createStore('participantId')
@@ -101,7 +101,7 @@ const Instructions = props => {
                     setError('An unknown error occurred. Please try again.')
                   } else {
                     participantId.set(id)
-                    window.location.href = 'http://localhost:8000/start-session'
+                    props.history.push('http://localhost:8000/start-session')
                   }
                 })
               }}
@@ -123,4 +123,4 @@ const Instructions = props => {
   )
 }
 
-export default Instructions
+export default withRouter(Instructions)

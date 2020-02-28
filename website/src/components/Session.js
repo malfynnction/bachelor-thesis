@@ -3,6 +3,7 @@ import Item from './Item'
 import createStore from '../lib/create-store'
 import getNewSession from '../lib/get-new-session'
 import Progress from './Progress'
+import { withRouter } from 'react-router-dom'
 
 const participantStore = createStore('participantId')
 const sessionStore = createStore('session')
@@ -132,7 +133,9 @@ class Session extends React.Component {
                   sessionStore.clear()
                   ratingStore.clear()
 
-                  window.location.href = `http://localhost:8000/start-session?prev=${session.id}${tokenQueryString}`
+                  this.props.history.push(
+                    `http://localhost:8000/start-session?prev=${session.id}${tokenQueryString}`
+                  )
                 } else {
                   this.setState({
                     session: { ...this.state.session, index: index + 1 },
@@ -149,4 +152,4 @@ class Session extends React.Component {
   }
 }
 
-export default Session
+export default withRouter(Session)
