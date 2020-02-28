@@ -5,6 +5,7 @@ import getFromUrlParams from '../lib/get-from-url-params'
 
 const participantStore = createStore('participantId')
 const sessionStore = createStore('session')
+const ratingStore = createStore('ratings')
 
 class startSession extends React.Component {
   constructor(props) {
@@ -28,6 +29,13 @@ class startSession extends React.Component {
       ...newState,
       completedTrainingSession: Boolean(participant.completedTrainingSession),
     })
+  }
+
+  deleteActiveSession() {
+    if (this.state.hasActiveSession) {
+      sessionStore.clear()
+      ratingStore.clear()
+    }
   }
 
   render() {
@@ -84,14 +92,23 @@ class startSession extends React.Component {
             </Link>
           ) : null}
           {this.state.completedTrainingSession ? (
-            <Link className="btn" to="/session">
+            <Link
+              className="btn"
+              to="/session"
+              onClick={() => {
+                this.deleteActiveSession()
+              }}
+            >
               {this.state.hasActiveSession ? 'Start new' : 'Normal'} Session
             </Link>
           ) : null}
           <Link
             className="btn"
             to="/session"
-            onClick={() => this.props.onStartTraining()}
+            onClick={() => {
+              this.deleteActiveSession()
+              this.props.onStartTraining()
+            }}
           >
             Training Session
           </Link>
