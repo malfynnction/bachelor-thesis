@@ -16,7 +16,6 @@
 - backend security
     - don't send complete participant object on GET
 - die readme passt noch nicht (npm install und alles nicht mehr nötig wg docker??)
-- allow multiple genders
 
 ====== WAIT FOR MEETING (05.03.) ======
 

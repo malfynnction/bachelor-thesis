@@ -79,7 +79,7 @@ class Demographics extends React.Component {
             '2000-2010',
             { label: 'Prefer not to say', value: 'notDisclosed' },
           ])}
-          <strong>Gender(s):</strong>
+          <strong>Gender(s)*:</strong>
           <div>
             {[
               { key: 'female', label: 'Female' },
@@ -122,7 +122,7 @@ class Demographics extends React.Component {
               />
             </div>
           </div>
-          {this.renderQuestion('Native Language(s): ', 'nativeLang', 'text')}
+          {this.renderQuestion('Native Language(s)*: ', 'nativeLang', 'text')}
           {this.renderQuestion(
             'German Language Level: ',
             'gerLevel',
@@ -137,6 +137,7 @@ class Demographics extends React.Component {
               { label: "I don't know", value: 'notDisclosed' },
             ]
           )}
+          <div className="note">*separate multiple entries by commas</div>
           <Link
             className="btn"
             type="submit"

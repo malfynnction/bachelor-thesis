@@ -17,3 +17,7 @@ input[type='radio'] {
 .question-label {
   margin-top: 10px;
 }
+
+.note {
+  color: #787678;
+}
