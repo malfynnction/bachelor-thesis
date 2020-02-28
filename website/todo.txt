@@ -11,8 +11,6 @@
 - Schritt 2
     - use the scales he wants
     - style für "Which sentence was the most complex" ist noch kaputt
-- token for crowdsourcing (for payment later)
-    - move this to server!
 - make training session available even if has rated all sessions? or move notification from /session to /start-session
 - create requirements.txt
 - Couch

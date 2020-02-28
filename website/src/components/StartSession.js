@@ -28,23 +28,39 @@ class startSession extends React.Component {
 
   render() {
     const { previousSession } = this.state
+    const previouslyTraining = previousSession === 'Training'
+    const previouslyRating = previousSession && !previouslyTraining
+
+    let thankYou = ''
+    if (previouslyTraining) {
+      thankYou = `
+        You have successfully submitted your test rating.
+        You can now start an actual rating session below.
+        If you have any questions, you can read the
+        <a href='/instructions'>Instructions</a>
+        again or contact us at TODO
+      `
+    } else if (previousSession) {
+      thankYou += 'Thank you! Your answers have been saved.'
+      if (this.state.token) {
+        thankYou += `Your confirmation code is ${this.state.token}`
+      }
+      thankYou +=
+        'You can now close this window or start another session below:'
+    }
     return (
       <div className="tu-border tu-glow center-box centered-content">
-        <h2>Start {previousSession ? 'another' : 'a'} session</h2>
-        {previousSession ? (
-          <div>
-            Thank you! Your answers have been saved.{' '}
-            {this.state.token
-              ? `Your confirmation code is ${this.state.token}. `
-              : null}
-            You can now close this window or start another session below:
-          </div>
+        <h2>Start {previouslyRating ? 'another' : 'a'} session</h2>
+        {thankYou ? (
+          <div dangerouslySetInnerHTML={{ __html: thankYou }} />
         ) : null}
         <div>
           {this.state.completedTrainingSession
             ? `You can start ${
-                previousSession ? 'another' : 'a'
-              } rating session or do a little training session before. `
+                previouslyRating ? 'another' : 'a'
+              } rating session or do ${
+                previouslyTraining ? 'another' : 'a little'
+              } training session before. `
             : 'Please go through a training session before you start with the actual ratings. '}
           A training session is just like a real session, except your answers
           won't be recorded and you will get a pre-defined set of one very easy,
