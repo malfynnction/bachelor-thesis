@@ -50,8 +50,8 @@ class Session extends React.Component {
     const items = session.items || []
     const index = session.index || 0
 
-    const progress = (index + 1) / items.length
-    const isLastItem = progress === 1
+    const progress = index / items.length
+    const isLastItem = index + 1 === items.length
 
     const item = items[index]
 

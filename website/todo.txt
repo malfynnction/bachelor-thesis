@@ -3,7 +3,6 @@
     - screenshots & GIFs
     - aktuell noch verzerrt wenn view size anders
     - good explanations of everything
-- what happens after completed session?
 - replace all the "localhost" with the actual url or whatever Docker needs
 - TODO comments, "??"-comments
 - What is this "Item 0" heading in Item??
