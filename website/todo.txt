@@ -23,8 +23,6 @@
         - validate data before writing to DB
 - die readme passt noch nicht (npm install und alles nicht mehr nötig wg docker??)
 - Was passiert mit dem session state, wenn man auf die Startseite navigiert?
-- center box sollte kleinere max-width haben
-
 
 
 ====== WAIT FOR MEETING (05.03.) ======
