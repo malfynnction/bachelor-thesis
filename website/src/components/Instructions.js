@@ -100,7 +100,7 @@ const Instructions = props => {
                   } else if (result.error && result.status !== 200) {
                     setError('An unknown error occurred. Please try again.')
                   } else {
-                    participantId.set(id)
+                    props.login(id)
                     props.history.push('/start-session')
                   }
                 })
@@ -111,7 +111,9 @@ const Instructions = props => {
                 name="participantId"
                 placeholder="Participant ID"
               />
-              <button className="btn">Start</button>
+              <button type="submit" className="btn">
+                Start
+              </button>
             </form>
             {error.length > 0 ? (
               <div className="tu-border error-box background-pink">{error}</div>

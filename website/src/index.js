@@ -97,7 +97,13 @@ const App = () => {
               <div className="layout centered-content">
                 <Switch>
                   <Route path="/instructions">
-                    <Instructions pouchParticipants={pouchParticipants} />{' '}
+                    <Instructions
+                      pouchParticipants={pouchParticipants}
+                      login={id => {
+                        participantId.set(id)
+                        setShowId(true)
+                      }}
+                    />
                   </Route>
 
                   <Route path="/demographics">

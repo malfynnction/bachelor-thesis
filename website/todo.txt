@@ -14,10 +14,8 @@
     - stop admin party mode (create user & pw)
     - Methoden auf create-database sind nicht mehr "catch"able, muss auf result.status schauen! (siehe instructions.js)
 - backend security
-    - invalid db names
     - don't send complete participant object on GET
 - die readme passt noch nicht (npm install und alles nicht mehr nötig wg docker??)
-- 🐞 Reload nach login nötig, weil react-router-dom zu schlau ist und index nicht nochmal rendert
 - allow multiple genders
 
 ====== WAIT FOR MEETING (05.03.) ======

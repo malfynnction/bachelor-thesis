@@ -140,7 +140,7 @@ class Item extends React.Component {
         autoComplete="off"
         className="item-form"
       >
-        <h3>Item {index}</h3>
+        <h3>Item {index + 1}</h3>
         <StepWizard
           nav={
             <Nav
