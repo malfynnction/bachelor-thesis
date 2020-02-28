@@ -26,63 +26,74 @@ const [participants, ratings, items, sessions] = [
   'sessions',
 ].map(name => newPouchDb(name))
 
-const getDatabase = name => {
-  switch (name) {
-    case 'participants':
-      return participants
-    case 'ratings':
-      return ratings
-    case 'items':
-      return items
-    case 'sessions':
-      return sessions
-    default:
-      return
-  }
-}
-
 const setCorsHeader = res => {
   res.set({ 'access-control-allow-origin': frontendUrl })
   return res
 }
 
-app.get('/database/:name', (req, res) => {
-  const { name } = req.params
-  const database = getDatabase(name)
-  database
+const getAll = async db => {
+  return db
     .allDocs({ include_docs: true })
     .then(result => {
-      setCorsHeader(res).send(result.rows.map(row => row.doc))
+      return result.rows.map(row => row.doc)
     })
-    .catch(e => setCorsHeader(res).send(e))
-})
-
-app.get('/database/:name/:id', (req, res) => {
-  const { name, id } = req.params
-  const database = getDatabase(name)
-  database
-    .get(id)
-    .then(result => {
-      setCorsHeader(res).send(result)
+    .catch(e => {
+      return e
     })
-    .catch(e => setCorsHeader(res).send(e))
+}
+
+const get = async (db, id) => {
+  return db.get(id).catch(e => {
+    return e
+  })
+}
+
+const put = async (db, data) => {
+  return db.put(data).catch(e => {
+    return e
+  })
+}
+
+const putBulk = async (db, data) => {
+  return db.bulkDocs(data).catch(e => {
+    return e
+  })
+}
+
+app.get('/database/participants', async (req, res) => {
+  const result = await getAll(participants)
+  setCorsHeader(res).send(result)
+})
+app.get('/database/participants/:id', async (req, res) => {
+  const { id } = req.params
+  const result = await get(participants, id)
+  setCorsHeader(res).send(result)
+})
+app.put('/database/participants', async (req, res) => {
+  const { body } = req
+  const result = await put(participants, body)
+  setCorsHeader(res).send(result)
 })
 
-app.put('/database/:name', (req, res) => {
-  const { name } = req.params
-  const { body } = req
-
-  const database = getDatabase(name)
-  database
-    .put(body)
-    .then(result => setCorsHeader(res).send(result))
-    .catch(e => setCorsHeader(res).send(e))
+app.get('/database/items/:id', async (req, res) => {
+  const { id } = req.params
+  const result = await get(items, id)
+  setCorsHeader(res).send(result)
 })
 
-app.put('/database/:name/_bulk', (req, res) => {
-  const { name } = req.params
+app.get('/database/sessions', async (req, res) => {
+  const result = await getAll(sessions)
+  setCorsHeader(res).send(result)
+})
+app.get('/database/sessions/:id', async (req, res) => {
+  const { id } = req.params
+  const result = await get(sessions, id)
+  setCorsHeader(res).send(result)
+})
+
+app.put('/database/ratings/_bulk', async (req, res) => {
   const { body } = req
-  const options = JSON.parse(req.header('X-Options'))
+  const options = JSON.parse(req.header('x-options'))
 
   const { session, seed } = options
   if (seed) {
@@ -90,13 +101,8 @@ app.put('/database/:name/_bulk', (req, res) => {
     res.set({ 'x-token': token })
   }
 
-  const database = getDatabase(name)
-  database
-    .bulkDocs(body)
-    .then(result => {
-      setCorsHeader(res).send(result)
-    })
-    .catch(e => setCorsHeader(res).send(e))
+  const result = await putBulk(ratings, body)
+  setCorsHeader(res).send(result)
 })
 
 app.listen(process.env.SERVER_PORT || 8080)

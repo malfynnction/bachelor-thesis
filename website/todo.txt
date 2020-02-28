@@ -1,7 +1,6 @@
 - introductional & explanatory texts
 - instructions
     - screenshots & GIFs
-    - aktuell noch verzerrt wenn view size anders
     - good explanations of everything
 - replace all the "localhost" with the actual url or whatever Docker needs
 - TODO comments, "??"-comments
@@ -15,6 +14,8 @@
 - backend security
     - don't send complete participant object on GET
 - die readme passt noch nicht (npm install und alles nicht mehr nötig wg docker??)
+- 🐞 Nach Trainingsession: automatisch auf /start-session (das soll auch so), dort nur "Training Session" auswählbar, Reload nötig für normale Session
+- 🐞 Nach jeden Item (statt nach jeder Session): Weiterleitung auf /start-session
 
 ====== WAIT FOR MEETING (05.03.) ======
 

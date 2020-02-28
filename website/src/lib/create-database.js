@@ -32,7 +32,7 @@ module.exports = name => {
       return request
         .put({
           headers: {
-            'X-Options': JSON.stringify(options),
+            'x-options': JSON.stringify(options),
             'Content-Type': 'application/json',
           },
           url: `${databaseUrl}/${name}/_bulk`,
