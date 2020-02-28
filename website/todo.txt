@@ -12,7 +12,6 @@
 - create requirements.txt
 - Couch
     - stop admin party mode (create user & pw)
-    - Methoden auf create-database sind nicht mehr "catch"able, muss auf result.status schauen! (siehe instructions.js)
 - backend security
     - don't send complete participant object on GET
 - die readme passt noch nicht (npm install und alles nicht mehr nötig wg docker??)

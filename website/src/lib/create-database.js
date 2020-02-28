@@ -5,7 +5,17 @@ const databaseUrl = 'http://localhost:8000/database'
 module.exports = name => {
   return {
     get: async id => {
-      return request.get(`${databaseUrl}/${name}/${id}`, { json: true })
+      return new Promise((resolve, reject) => {
+        request
+          .get(`${databaseUrl}/${name}/${id}`, { json: true })
+          .then(result => {
+            if (result.error) {
+              reject(result)
+            } else {
+              resolve(result)
+            }
+          })
+      })
     },
     getAll: async () => {
       return request.get(`${databaseUrl}/${name}`, { json: true })
