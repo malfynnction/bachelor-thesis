@@ -4,6 +4,7 @@ import createStore from '../lib/create-store'
 import getFromUrlParams from '../lib/get-from-url-params'
 
 const participantStore = createStore('participantId')
+const sessionStore = createStore('session')
 
 class startSession extends React.Component {
   constructor(props) {
@@ -16,6 +17,9 @@ class startSession extends React.Component {
 
     newState.previousSession = getFromUrlParams('prev', this.props)
     newState.token = getFromUrlParams('token', this.props)
+
+    const activeSession = sessionStore.get()
+    newState.hasActiveSession = activeSession && activeSession.id !== 'Training'
 
     const { pouchParticipants } = this.props
     const participantId = participantStore.get()
@@ -66,10 +70,22 @@ class startSession extends React.Component {
           won't be recorded and you will get a pre-defined set of one very easy,
           one medium, and one very difficult paragraph or sentence.
         </div>
+        {this.state.hasActiveSession ? (
+          <div>
+            You have unsaved ratings. You can continue where you left off and
+            complete your session, or start a new one and delete the unsaved
+            changes.
+          </div>
+        ) : null}
         <div>
+          {this.state.hasActiveSession ? (
+            <Link className="btn" to="/session">
+              Continue Session
+            </Link>
+          ) : null}
           {this.state.completedTrainingSession ? (
             <Link className="btn" to="/session">
-              Normal Session
+              {this.state.hasActiveSession ? 'Start new' : 'Normal'} Session
             </Link>
           ) : null}
           <Link

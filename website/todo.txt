@@ -23,6 +23,7 @@
         - validate data before writing to DB
 - die readme passt noch nicht (npm install und alles nicht mehr nötig wg docker??)
 - Was passiert mit dem session state, wenn man auf die Startseite navigiert?
+- 🐞 Reload nach login nötig, weil react-router-dom zu schlau ist und index nicht nochmal rendert
 
 
 ====== WAIT FOR MEETING (05.03.) ======
