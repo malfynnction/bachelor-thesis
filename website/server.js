@@ -8,8 +8,6 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(bodyParser.raw())
 
-const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:8000'
-
 const newPouchDb = name => {
   const db = new PouchDB(name)
   db.sync(`http://couchdb:5984/${name}`, {
