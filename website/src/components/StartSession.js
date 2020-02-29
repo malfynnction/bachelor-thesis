@@ -27,7 +27,9 @@ class startSession extends React.Component {
     const participant = await pouchParticipants.get(participantId)
     this.setState({
       ...newState,
-      completedTrainingSession: Boolean(participant.completedTrainingSession),
+      completedTrainingSession:
+        Boolean(participant.completedTrainingSession) ||
+        newState.previousSession === 'Training',
     })
   }
 
