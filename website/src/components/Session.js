@@ -1,4 +1,6 @@
 import React, { Fragment } from 'react'
+import PropTypes from 'prop-types'
+import { databasePropType } from '../lib/prop-types'
 import Item from './Item'
 import createStore from '../lib/create-store'
 import getNewSession from '../lib/get-new-session'
@@ -150,6 +152,17 @@ class Session extends React.Component {
       </Fragment>
     )
   }
+}
+
+Session.propTypes = {
+  pouchParticipants: databasePropType,
+  pouchSessions: databasePropType,
+  pouchItems: databasePropType,
+  pouchRatings: databasePropType,
+  isTraining: PropTypes.bool,
+  history: PropTypes.shape({ push: PropTypes.func }),
+  onEndTraining: PropTypes.func,
+  onScrollToTop: PropTypes.func,
 }
 
 export default withRouter(Session)

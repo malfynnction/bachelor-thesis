@@ -1,4 +1,6 @@
 import React, { Fragment, useState } from 'react'
+import PropTypes from 'prop-types'
+import { databasePropType } from '../lib/prop-types'
 import createStore from '../lib/create-store'
 import { Link, withRouter } from 'react-router-dom'
 import '../styles/Instructions.css'
@@ -126,6 +128,12 @@ const Instructions = props => {
       </div>
     </Fragment>
   )
+}
+
+Instructions.propTypes = {
+  pouchParticipants: databasePropType,
+  login: PropTypes.func,
+  history: PropTypes.shape({ push: PropTypes.func }),
 }
 
 export default withRouter(Instructions)

@@ -1,5 +1,7 @@
 import React, { Fragment } from 'react'
+import PropTypes from 'prop-types'
 import '../styles/Questions.css'
+import { itemPropType } from '../lib/prop-types'
 
 const getAllQuestions = (questionType, { type, sentences }) => {
   if (questionType === 'general') {
@@ -61,6 +63,7 @@ const getAllQuestions = (questionType, { type, sentences }) => {
 }
 
 const Questions = props => {
+  console.log(props.answers)
   return (
     <Fragment>
       <div>Now answer some questions about what you just read</div>
@@ -71,7 +74,7 @@ const Questions = props => {
               <div>
                 <strong>{label}</strong>
               </div>
-              {answers.map(({ label, value }, i) => {
+              {answers.map(({ label, value }) => {
                 return (
                   <div key={`${key}-${value}`} className="questionnaire-item">
                     <input
@@ -92,6 +95,13 @@ const Questions = props => {
       )}
     </Fragment>
   )
+}
+
+Questions.propTypes = {
+  questionType: PropTypes.string,
+  item: itemPropType,
+  onChange: PropTypes.func,
+  answers: PropTypes.object,
 }
 
 export default Questions

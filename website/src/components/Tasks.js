@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react'
+import PropTypes from 'prop-types'
 import { get, shuffle } from 'lodash'
 import '../styles/Tasks.css'
+import { itemPropType } from '../lib/prop-types'
 
 const punctuation = /(\.|!|\?|,|-|\(|\)|\/|"|;|:|…)+/g
 const punctuationInBeginning = new RegExp(`^${punctuation.source}`, 'g')
@@ -92,6 +94,18 @@ class Tasks extends React.Component {
       </Fragment>
     )
   }
+}
+
+Tasks.propTypes = {
+  item: itemPropType,
+  onChange: PropTypes.func,
+  enteredData: PropTypes.arrayOf(
+    PropTypes.shape({
+      original: PropTypes.string,
+      entered: PropTypes.string,
+      isCorrect: PropTypes.bool,
+    })
+  ),
 }
 
 export default Tasks

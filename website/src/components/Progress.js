@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import PropTypes from 'prop-types'
 import '../styles/Progress.css'
 
 const Progress = ({ progress, sessionCount }) => {
@@ -10,6 +11,11 @@ const Progress = ({ progress, sessionCount }) => {
       ) : null}
     </Fragment>
   )
+}
+
+Progress.propTypes = {
+  progress: PropTypes.number,
+  sessionCount: PropTypes.number,
 }
 
 export default Progress

@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react'
+import PropTypes from 'prop-types'
 import Timer from 'react-compound-timer'
 import '../styles/Read.css'
+import { itemPropType } from '../lib/prop-types'
 
 const spaceKeyCode = 32
 
@@ -91,5 +93,7 @@ class Read extends React.Component {
     )
   }
 }
+
+Read.propTypes = { onTimeUpdate: PropTypes.func, item: itemPropType }
 
 export default Read

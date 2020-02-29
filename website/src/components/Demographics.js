@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import '../styles/Demographics.css'
 
@@ -106,7 +107,7 @@ class Demographics extends React.Component {
                 id="gender-other"
                 value="other"
                 checked={this.state.gender === 'text'}
-                onChange={e => this.setState({ gender: 'text' })}
+                onChange={() => this.setState({ gender: 'text' })}
               />
               <label htmlFor="gender-other" className="screenreader-only">
                 Other (please write your answer in the text field)
@@ -161,6 +162,10 @@ class Demographics extends React.Component {
       </div>
     )
   }
+}
+
+Demographics.propTypes = {
+  createUser: PropTypes.func,
 }
 
 export default Demographics

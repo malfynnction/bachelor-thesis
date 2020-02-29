@@ -1,4 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { itemPropType } from '../lib/prop-types'
 import StepWizard from 'react-step-wizard'
 import Read from './Read'
 import Questions from './Questions'
@@ -70,7 +72,7 @@ class Item extends React.Component {
     this.initializeState()
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (prevProps.index !== this.props.index) {
       this.initializeState()
     }
@@ -160,6 +162,24 @@ class Item extends React.Component {
       </form>
     )
   }
+}
+
+Item.propTypes = {
+  index: PropTypes.number,
+  item: itemPropType,
+  isLastItem: PropTypes.bool,
+  onScrollToTop: PropTypes.func,
+  onNextItem: PropTypes.func,
+}
+
+Nav.propTypes = {
+  currentStep: PropTypes.number,
+  totalSteps: PropTypes.number,
+  isLastItem: PropTypes.bool,
+  onNextItem: PropTypes.func,
+  firstStep: PropTypes.func,
+  nextStep: PropTypes.func,
+  onScrollToTop: PropTypes.func,
 }
 
 export default Item
