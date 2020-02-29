@@ -37,44 +37,71 @@ const getAll = async db => {
     })
 }
 
-const get = async (db, id) => {
-  return db.get(id).catch(e => {
-    return e
-  })
-}
-
-const put = async (db, data) => {
-  return db.put(data).catch(e => {
-    return e
-  })
-}
-
-const putBulk = async (db, data) => {
-  return db.bulkDocs(data).catch(e => {
-    return e
-  })
-}
+/*
+ * PARTICIPANTS
+ */
 
 app.get('/database/participants', async (req, res) => {
   const result = await getAll(participants)
-  res.send(result)
+  res.send(
+    result.map(participant => {
+      return {
+        _id: participant._id,
+        completedSessions: participant.completedSessions,
+        completedTrainingSession: participant.completedTrainingSession,
+      }
+    })
+  )
 })
 app.get('/database/participants/:id', async (req, res) => {
   const { id } = req.params
-  const result = await get(participants, id)
-  res.send(result)
+  participants
+    .get(id)
+    .then(result => {
+      res.send({
+        _id: result._id,
+        completedSessions: result.completedSessions,
+        completedTrainingSession: result.completedTrainingSession,
+      })
+    })
+    .catch(e => res.send(e))
 })
 app.put('/database/participants', async (req, res) => {
   const { body } = req
-  const result = await put(participants, body)
-  res.send(result)
+  participants
+    .put({
+      _id: body._id,
+      gender: body.gender,
+      genderText: body.genderText,
+      gerLevel: body.gerLevel,
+      yearOfBirth: body.yearOfBirth,
+      nativeLang: body.nativeLang,
+      completedTrainingSession: body.completedTrainingSession,
+      completedSessions: body.completedSessions,
+    })
+    .then(result => {
+      res.send(result)
+    })
+    .catch(e => res.send(e))
 })
+
+/*
+ * ITEMS
+ */
 
 app.get('/database/items/:id', async (req, res) => {
   const { id } = req.params
-  const result = await get(items, id)
-  res.send(result)
+  items
+    .get(id)
+    .then(result => {
+      res.send(result)
+    })
+    .catch(e => res.send(e))
 })
+
+/*
+ * SESSIONS
+ */
 
 app.get('/database/sessions', async (req, res) => {
   const result = await getAll(sessions)
@@ -82,9 +109,17 @@ app.get('/database/sessions', async (req, res) => {
 })
 app.get('/database/sessions/:id', async (req, res) => {
   const { id } = req.params
-  const result = await get(sessions, id)
-  res.send(result)
+  sessions
+    .get(id)
+    .then(result => {
+      res.send(result)
+    })
+    .catch(e => res.send(e))
 })
+
+/*
+ * RATINGS
+ */
 
 app.put('/database/ratings/_bulk', async (req, res) => {
   const { body } = req
@@ -96,8 +131,20 @@ app.put('/database/ratings/_bulk', async (req, res) => {
     res.set({ 'x-token': token })
   }
 
-  const result = await putBulk(ratings, body)
-  res.send(result)
+  ratings
+    .bulkDocs(
+      body.map(rating => {
+        return {
+          readingTime: rating.readingTime,
+          questions: rating.questions,
+          cloze: rating.cloze,
+          itemId: rating.itemId,
+          participantId: rating.participantId,
+        }
+      })
+    )
+    .then(result => res.send(result))
+    .catch(e => res.send(e))
 })
 
 app.listen(process.env.SERVER_PORT || 8080)
