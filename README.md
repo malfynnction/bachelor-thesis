@@ -18,7 +18,7 @@ _TODO: write a proper README_
 
 - `git pull`
 - `npm install`
-- `npm run start`
+- `docker-compose -f website/docker-compose-dev.yml up`
 - go to [http://localhost:8000](http://localhost:8000)
 - happy editing!
 

@@ -13,7 +13,11 @@
     - stop admin party mode (create user & pw)
 - backend security
     - don't send complete participant object on GET
-- die readme passt noch nicht (npm install und alles nicht mehr nötig wg docker??)
+- Docker
+    - production setup
+    - docker-compose-dev should take care of `npm install`
+    - and of the python stuff?
+    - adjust README
 
 ====== WAIT FOR MEETING (05.03.) ======
 

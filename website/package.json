@@ -21,7 +21,6 @@
   },
   "scripts": {
     "docker:build": "docker build -t bachelor-website:dev .",
-    "docker-compose:up": "docker-compose -f docker-compose-dev.yml up -d",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
