@@ -63,10 +63,14 @@ const getAllQuestions = (questionType, { type, sentences }) => {
 }
 
 const Questions = props => {
-  console.log(props.answers)
   return (
     <Fragment>
-      <div>Now answer some questions about what you just read</div>
+      <div>
+        Please answer some questions about the {props.item.type} you just read:
+        <div className="note">
+          (You can choose your answer by clicking anywhere on the scale)
+        </div>
+      </div>
       {getAllQuestions(props.questionType, props.item).map(
         ({ key, label, answers }) => (
           <Fragment key={`question-${key}`}>

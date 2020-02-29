@@ -13,3 +13,7 @@
   display: flex;
   justify-content: center;
 }
+
+.login-input {
+  margin-right: 0.5rem;
+}

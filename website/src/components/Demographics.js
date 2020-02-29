@@ -154,9 +154,9 @@ class Demographics extends React.Component {
             Start
           </Link>
           <div className="start-label">
-            By clicking on "Start" you will be assigned a participant ID. Please
-            remember it so you can skip this step if you do another session in
-            the future.
+            After clicking on "Start" you can find your participant ID in the
+            top right corner. Please remember it so you can skip this step if
+            you come back in the future.
           </div>
         </form>
       </div>

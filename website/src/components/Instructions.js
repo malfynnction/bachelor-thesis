@@ -20,18 +20,23 @@ const Instructions = props => {
           <h2>Instructions</h2>
         </div>
         <p>
-          This study is part of my Bachelor's thesis, in which I'm composing a
-          data set of German sentences and paragraphs and a rating of their
-          complexity and understandability. This data set can then be used to
-          evaluate the complexity and understandability for other texts, as well
-          as to identify the most complex parts of a text.
+          Please read this page carefully and make sure you understand what
+          you're supposed to do.
         </p>
         <p>
-          During this session, you will read sentences and paragraphs and answer
-          questions about their complexity and understandability. You will also
-          get small tasks and questions about the content of the text to further
-          evaluate how easy it is to understand it. Each rating process is
-          divided in three steps:
+          This study is part of my Bachelor's thesis, in which I'm composing a
+          data set of German sentences and paragraphs and a rating of their
+          complexity and understandability. This data set can then be used as a
+          base to identify the most complex parts of a text and later
+          automatically "translate" them to simpler language.
+        </p>
+        <p>
+          In this study, you will have to read sentences and paragraphs and
+          answer questions about their complexity and understandability. All the
+          texts from the data set are grouped in "sessions" of TODO texts. TODO:
+          Your answers will only be saved after rating an entire group of items,
+          not after each individual text. Each rating process is divided in
+          three steps:
         </p>
         <h5>1. Reading</h5>
         <p>
@@ -40,12 +45,14 @@ const Instructions = props => {
           entire paragraph or a single sentence. For sentences, you will see the
           sentence at the top of the page, in a grey box. Please read it
           carefully to make sure you understand it as well as possible.
-          Underneath the sentence you will find the paragraph which the sentence
-          was taken from. You don't have to read it, but it can help you
-          understand the sentence.
+          Underneath the sentence you will find the paragraph that the sentence
+          was taken from. You don't <em>have</em> to read it, but it can help
+          you understand the sentence.
           <br />
           For paragraphs, we will measure how long it takes to read them, so the
-          text will be hidden unless you hold a button below the text.
+          text will be hidden unless you hold a button below the text. Please
+          make sure you read the entire paragraph and understand it as well as
+          you can.
           <span className="img-wrap">
             <img
               src="instructions-read.gif"
@@ -53,24 +60,29 @@ const Instructions = props => {
               className="instruction-img"
             />
           </span>
+          Once you're done, you can click on "Next Step". After that, you won't
+          be able to go back to read the text.
         </p>
         <h5>2. Questions</h5>
         <p>
-          After that, you will be asked questions about the text, e.g. how well
-          you understood it, what the hardest part was, etc..
+          In the second step, you will be asked questions about the text, for
+          example how complex it is or how well you understood it. You can
+          choose your answer by clicking anywhere on the scale. TODO: image /
+          gif
         </p>
-        <h5>3. Tasks</h5>
+        <h5>3. Cloze Test</h5>
         <p>
-          In the last step, you will be asked to complete (several??) small
-          tasks involving the text, like filling in missing words (or answering
-          content questions??).
+          In the last step, you will see the text again, with one or more words
+          missing. Please select the word that was deleted from the original
+          text in the dropdown menu. TODO: image/gif
         </p>
         <h5>Finish</h5>
         <p>
-          After you completed all questions and tasks for a text, you will get a
-          new sentence or paragraph and go back to step 1.
-          {/*(TODO: explain
-          grouped logic)*/}
+          After you completed the rating for one text, you will get a new
+          sentence or paragraph of the same session (group of texts) and can
+          start the rating of that text. After completing all texts of a
+          session, your answers will be saved and you will be redirected to the
+          homepage. TODO: image?
         </p>
         {loggedInId !== null ? (
           <Link className="btn" to="/start-session">
@@ -115,6 +127,7 @@ const Instructions = props => {
                 type="text"
                 name="participantId"
                 placeholder="Participant ID"
+                className="login-input"
               />
               <button type="submit" className="btn">
                 Start
