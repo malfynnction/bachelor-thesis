@@ -4,9 +4,9 @@
 - accessibility
     - Button gedrückt halten meh
 - Schritt 2
-    - save answers for new scales
     - better labels
     - radio button for hardestSentence!!
+    - only first text has questionnaire visible
 - Couch
     - stop admin party mode (create user & pw)
 - Docker
@@ -21,21 +21,6 @@
     - Better title than "text $index" in Item?
     - explanations in all the individual steps
     - Mention Training Session in /instructions?
-- participant 1 bekommt session 2 obwohl schon completed (participant: 
-    {
-    "_id": "1",
-    "_rev": "48-a9607d22fac877093df3922c6ff55e2f",
-    "yearOfBirth": "1950-1960",
-    "nativeLang": "22",
-    "gender": "female",
-    "genderText": "",
-    "gerLevel": "A2",
-    "completedSessions": [
-        "3",
-        "2"
-    ],
-    "completedTrainingSession": true
-    }) 
 
 ====== WAIT FOR MEETING (05.03.) ======
 
@@ -51,6 +36,7 @@
     - Kurze Datenschutz / Consent Floskel
 - Schritt 2
     - more / other questions?
+    - labels
 - Schritt 3
     - content questions?
 - token for crowdsourcing (for payment later)
