@@ -2,12 +2,13 @@ import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import '../styles/Questions.css'
 import { itemPropType } from '../lib/prop-types'
+import { QuestionnaireItemSVGQuality7pt } from '../lib/thefragebogen'
 
-const getAllQuestions = (questionType, { type, sentences }) => {
+const getAllQuestions = (questionType, { _id, type, sentences }) => {
   if (questionType === 'general') {
     return [
       {
-        key: 'readability',
+        key: `${_id}-readability`,
         label: `How difficult was it for you to read this ${type}?`,
         answers: [
           { label: 'very difficult (1)', value: 1 },
@@ -20,7 +21,7 @@ const getAllQuestions = (questionType, { type, sentences }) => {
         ],
       },
       {
-        key: 'complexity',
+        key: `${_id}-complexity`,
         label: `How do you rate the overall complexity of this ${type}?`,
         answers: [
           { label: 'very complex (1)', value: 1 },
@@ -33,7 +34,7 @@ const getAllQuestions = (questionType, { type, sentences }) => {
         ],
       },
       {
-        key: 'understandability',
+        key: `${_id}-understandability`,
         label: `How well did you understand the ${type}?`,
         answers: [
           { label: "didn't understand at all (1)", value: 1 },
@@ -49,7 +50,7 @@ const getAllQuestions = (questionType, { type, sentences }) => {
   } else if (questionType === 'hardestSentence') {
     return [
       {
-        key: 'hardestSentence',
+        key: `${_id}-hardestSentence`,
         label: 'What was the hardest sentence in the paragraph?',
         answers: sentences.map((sentence, i) => {
           return {
@@ -62,7 +63,24 @@ const getAllQuestions = (questionType, { type, sentences }) => {
   }
 }
 
+const renderFragebogen = allQuestions => {
+  allQuestions.forEach(({ key, label, answers }) => {
+    const questionnaireItem = new QuestionnaireItemSVGQuality7pt(
+      '',
+      `<strong>${label}</strong>`,
+      false,
+      answers.map(answer => answer.label)
+    )
+    // questionnaireItem.setEnabled(true)
+    const parent = document.getElementById(key)
+    if (parent && parent.childElementCount === 0) {
+      parent.appendChild(questionnaireItem.createUI())
+    }
+  })
+}
+
 const Questions = props => {
+  const allQuestions = getAllQuestions(props.questionType, props.item)
   return (
     <Fragment>
       <div>
@@ -71,32 +89,34 @@ const Questions = props => {
           (You can choose your answer by clicking anywhere on the scale)
         </div>
       </div>
-      {getAllQuestions(props.questionType, props.item).map(
-        ({ key, label, answers }) => (
-          <Fragment key={`question-${key}`}>
-            <div className="question-box">
-              <div>
-                <strong>{label}</strong>
-              </div>
-              {answers.map(({ label, value }) => {
-                return (
-                  <div key={`${key}-${value}`} className="questionnaire-item">
-                    <input
-                      onChange={() => props.onChange(key, value)}
-                      type="radio"
-                      name={key}
-                      id={`${key}-${value}`}
-                      value={value}
-                      checked={value === props.answers[key]}
-                    />
-                    <label htmlFor={`${key}-${value}`}>{label}</label>
-                  </div>
-                )
-              })}
+      {/* {allQuestions.map(({ key, label, answers }) => (
+        <Fragment key={`question-${key}`}>
+          <div className="question-box">
+            <div>
+              <strong>{label}</strong>
             </div>
-          </Fragment>
-        )
-      )}
+            {answers.map(({ label, value }) => {
+              return (
+                <div key={`${key}-${value}`} className="questionnaire-item">
+                  <input
+                    onChange={() => props.onChange(key, value)}
+                    type="radio"
+                    name={key}
+                    id={`${key}-${value}`}
+                    value={value}
+                    checked={value === props.answers[key]}
+                  />
+                  <label htmlFor={`${key}-${value}`}>{label}</label>
+                </div>
+              )
+            })}
+          </div>
+        </Fragment>
+      ))} */}
+      {allQuestions.map(({ key }) => {
+        return <div key={key} id={key} className="question-box" />
+      })}
+      {renderFragebogen(allQuestions)}
     </Fragment>
   )
 }

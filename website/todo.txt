@@ -1,9 +1,12 @@
 - replace all the "localhost" with the actual url or whatever Docker needs
-- TODO comments, "??"-comments
+- TODO comments
 - mobile
+- accessibility
+    - Button gedrückt halten meh
 - Schritt 2
-    - use the scales he wants
-- create requirements.txt
+    - save answers for new scales
+    - better labels
+    - radio button for hardestSentence!!
 - Couch
     - stop admin party mode (create user & pw)
 - Docker
@@ -13,10 +16,26 @@
     - adjust README
 - Contact (general, on /instructions, on /start-session)
 - wording
+    - Feedback on /instructions?
     - Screenshots & GIFs on /instructions
     - Better title than "text $index" in Item?
     - explanations in all the individual steps
     - Mention Training Session in /instructions?
+- participant 1 bekommt session 2 obwohl schon completed (participant: 
+    {
+    "_id": "1",
+    "_rev": "48-a9607d22fac877093df3922c6ff55e2f",
+    "yearOfBirth": "1950-1960",
+    "nativeLang": "22",
+    "gender": "female",
+    "genderText": "",
+    "gerLevel": "A2",
+    "completedSessions": [
+        "3",
+        "2"
+    ],
+    "completedTrainingSession": true
+    }) 
 
 ====== WAIT FOR MEETING (05.03.) ======
 
@@ -24,6 +43,7 @@
     - make input data format more general / easier to replicate
     - figure out how to make this available for other people (npm script? -> add to /ui?)
     - how to upload to DB
+    - create requirements.txt
 - authentifizierung nicht nur über ID
 - Impressum & Datenschutz?
 - Demographics
@@ -37,5 +57,3 @@
     - (how) do I need to explain this?
 - backend security
     - validate data before writing to DB
-- wording
-    - Feedback on /instructions?
