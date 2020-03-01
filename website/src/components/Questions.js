@@ -82,6 +82,22 @@ class Questions extends React.Component {
     }
   }
 
+  renderFragebogenDivs() {
+    return this.state.questions.map(({ key }) => {
+      const uniqueKey = `${this.props.item._id}-${key}`
+      return (
+        <div
+          key={uniqueKey}
+          id={uniqueKey}
+          className="question-box"
+          onClick={() => {
+            this.props.onChange(key, this.getAnswer(uniqueKey))
+          }}
+        />
+      )
+    })
+  }
+
   renderFragebogen() {
     const questionnaireItems = {}
     this.state.questions.forEach(({ key, label, answers }) => {
@@ -108,6 +124,35 @@ class Questions extends React.Component {
     })
   }
 
+  renderRadioButtons() {
+    return this.state.questions.map(({ key, label, answers }) => {
+      return (
+        <Fragment key={`question-${key}`}>
+          <div className="question-box">
+            <div>
+              <strong>{label}</strong>
+            </div>
+            {answers.map(({ label, value }) => {
+              return (
+                <div key={`${key}-${value}`} className="questionnaire-item">
+                  <input
+                    type="radio"
+                    name={key}
+                    id={`${key}-${value}`}
+                    value={value}
+                    checked={value === this.props.answers[key]}
+                    onChange={() => this.props.onChange(key, value)}
+                  />
+                  <label htmlFor={`${key}-${value}`}>{label}</label>
+                </div>
+              )
+            })}
+          </div>
+        </Fragment>
+      )
+    })
+  }
+
   getAnswer(key) {
     const questionnaireItem = this.state.questionnaireItems[key]
     if (questionnaireItem) {
@@ -131,19 +176,9 @@ class Questions extends React.Component {
           </div>
         </div>
 
-        {this.state.questions.map(({ key }) => {
-          const uniqueKey = `${this.props.item._id}-${key}`
-          return (
-            <div
-              key={uniqueKey}
-              id={uniqueKey}
-              className="question-box"
-              onClick={() => {
-                this.props.onChange(key, this.getAnswer(uniqueKey))
-              }}
-            />
-          )
-        })}
+        {this.props.questionType === 'general'
+          ? this.renderFragebogenDivs()
+          : this.renderRadioButtons()}
       </Fragment>
     )
   }

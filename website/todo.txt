@@ -3,8 +3,6 @@
 - mobile
 - accessibility
     - Button gedrückt halten meh
-- Schritt 2
-    - radio button for hardestSentence!!
 - Couch
     - stop admin party mode (create user & pw)
 - Docker
