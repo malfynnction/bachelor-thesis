@@ -95,7 +95,7 @@ class Demographics extends React.Component {
                   id={`gender-${key}`}
                   value={key}
                   checked={this.state.gender === key}
-                  onChange={e => this.setState({ gender: key })}
+                  onChange={() => this.setState({ gender: key })}
                 />
                 <label htmlFor={`gender-${key}`}>{label}</label>
               </div>

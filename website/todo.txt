@@ -15,7 +15,6 @@
 - wording
     - Feedback on /instructions?
     - Screenshots & GIFs on /instructions
-    - Better title than "text $index" in Item?
     - explanations in all the individual steps
     - Mention Training Session in /instructions?
 
