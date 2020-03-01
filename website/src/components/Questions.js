@@ -76,6 +76,12 @@ class Questions extends React.Component {
     this.renderFragebogen()
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.item._id !== this.props.item._id) {
+      this.renderFragebogen()
+    }
+  }
+
   renderFragebogen() {
     const questionnaireItems = {}
     this.state.questions.forEach(({ key, label, answers }) => {

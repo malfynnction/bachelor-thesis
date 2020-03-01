@@ -4,9 +4,7 @@
 - accessibility
     - Button gedrückt halten meh
 - Schritt 2
-    - better labels
     - radio button for hardestSentence!!
-    - only first text has questionnaire visible
 - Couch
     - stop admin party mode (create user & pw)
 - Docker
