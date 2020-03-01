@@ -1,6 +1,8 @@
 - replace all the "localhost" with the actual url or whatever Docker needs
 - TODO comments
 - mobile
+    - Screenshots & GIFs specifically for mobile?
+    - Screenshots & GIFs too small?
 - accessibility
     - Button gedrückt halten meh
 - Couch
@@ -10,7 +12,6 @@
     - docker-compose-dev should take care of `npm install`
     - and of the python stuff?
     - adjust README
-- Contact (general, on /instructions, on /start-session)
 - wording
     - Feedback on /instructions?
     - Screenshots & GIFs on /instructions
@@ -39,3 +40,7 @@
     - (how) do I need to explain this?
 - backend security
     - validate data before writing to DB
+- Contact (general, on /instructions, on /start-session)
+- mobile
+    - "show paragraph" button not visible if paragraph too long
+    - Fragebogen items way too small

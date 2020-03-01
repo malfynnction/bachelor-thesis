@@ -1,5 +1,11 @@
 .demographics-form {
-  max-width: 50%;
+  max-width: 75%;
+}
+
+@media (min-width: 1200px) {
+  .demographics-form {
+    width: 50%;
+  }
 }
 
 .start-label {
