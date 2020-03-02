@@ -1,6 +1,8 @@
 #cloze {
   padding: 15px;
+  margin: 15px 0px;
   background-color: #eaeaea;
+  border-radius: 5px;
 }
 
 .actual-sentence {

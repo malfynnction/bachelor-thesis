@@ -69,7 +69,7 @@ class Tasks extends React.Component {
     return (
       <Fragment>
         <div>
-          Please fill in the gaps:
+          <strong>Please select the missing word for each gap:</strong>
           {isSentence ? (
             <Fragment>
               <br /> (The enclosing paragraph is shown for more context

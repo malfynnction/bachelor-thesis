@@ -83,19 +83,26 @@ class Questions extends React.Component {
   }
 
   renderFragebogenDivs() {
-    return this.state.questions.map(({ key }) => {
-      const uniqueKey = `${this.props.item._id}-${key}`
-      return (
-        <div
-          key={uniqueKey}
-          id={uniqueKey}
-          className="question-box"
-          onClick={() => {
-            this.props.onChange(key, this.getAnswer(uniqueKey))
-          }}
-        />
-      )
-    })
+    return (
+      <Fragment>
+        <div className="note">
+          (You can choose your answer by clicking anywhere on the scale)
+        </div>
+        {this.state.questions.map(({ key }) => {
+          const uniqueKey = `${this.props.item._id}-${key}`
+          return (
+            <div
+              key={uniqueKey}
+              id={uniqueKey}
+              className="question-box"
+              onClick={() => {
+                this.props.onChange(key, this.getAnswer(uniqueKey))
+              }}
+            />
+          )
+        })}
+      </Fragment>
+    )
   }
 
   renderFragebogen() {
@@ -169,11 +176,8 @@ class Questions extends React.Component {
             {this.state.questions.length > 1
               ? 'these questions'
               : 'this question'}{' '}
-            about the {this.props.item.type} you just read:
+            about the {this.props.item.type} you read:
           </strong>
-          <div className="note">
-            (You can choose your answer by clicking anywhere on the scale)
-          </div>
         </div>
 
         {this.props.questionType === 'general'

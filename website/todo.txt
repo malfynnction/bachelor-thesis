@@ -9,7 +9,7 @@
     - stop admin party mode (create user & pw)
 - Docker
     - production setup
-    - docker-compose-dev should take care of `npm install`
+    - docker-compose-dev should take care of `npm install` (maybe like https://hackernoon.com/a-better-way-to-develop-node-js-with-docker-cd29d3a0093??)
     - and of the python stuff?
     - adjust README
 - wording
@@ -17,6 +17,7 @@
     - Screenshots & GIFs on /instructions
     - explanations in all the individual steps
     - Mention Training Session in /instructions?
+- github action for deployment
 
 ====== WAIT FOR MEETING (05.03.) ======
 

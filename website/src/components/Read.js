@@ -28,6 +28,9 @@ class Read extends React.Component {
       <Timer startImmediately={false} timeToUpdate={100}>
         {timerControl => (
           <Fragment>
+            <div className="note">
+              (Hold the Button "Show Paragraph" to reveal the text)
+            </div>
             <p className={`item-text centered-content`}>
               <span>
                 <span className={`${this.state.showItem ? '' : 'hidden'}`}>
@@ -87,7 +90,11 @@ class Read extends React.Component {
 
     return (
       <Fragment>
-        <div>This is the {item.type} you will be rating: </div>
+        <div>
+          Please read this {item.type} carefully and make sure you understand it
+          as well as you can. You can not come back to read it again once you
+          click on "Next Step".
+        </div>
         {isSentence ? this.renderSentence(item) : this.renderParagraph(item)}
       </Fragment>
     )
