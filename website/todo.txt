@@ -15,9 +15,9 @@
 - wording
     - Feedback on /instructions?
     - Screenshots & GIFs on /instructions
-    - explanations in all the individual steps
     - Mention Training Session in /instructions?
 - github action for deployment
+- content of Item should be centered vertically
 
 ====== WAIT FOR MEETING (05.03.) ======
 
