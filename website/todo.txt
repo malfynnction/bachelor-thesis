@@ -17,7 +17,6 @@
     - Screenshots & GIFs on /instructions
     - Mention Training Session in /instructions?
 - github action for deployment
-- content of Item should be centered vertically
 
 ====== WAIT FOR MEETING (05.03.) ======
 
