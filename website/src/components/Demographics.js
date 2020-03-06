@@ -148,6 +148,7 @@ class Demographics extends React.Component {
               if (data.gender === 'text') {
                 data.gender = data.genderText
               }
+              delete data.genderText
               this.props.createUser(data)
             }}
           >

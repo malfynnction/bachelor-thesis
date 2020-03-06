@@ -15,8 +15,8 @@
 - wording
     - Feedback on /instructions?
     - Screenshots & GIFs on /instructions
-    - Mention Training Session in /instructions?
 - github action for deployment
+- ignore Naderi sentences in pre-processing?
 
 ====== WAIT FOR MEETING (05.03.) ======
 

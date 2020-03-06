@@ -31,6 +31,7 @@ const getAll = async db => {
       return result.rows.map(row => row.doc)
     })
     .catch(e => {
+      console.error(e)
       return e
     })
 }
@@ -45,6 +46,7 @@ app.get('/database/participants', async (req, res) => {
     result.map(participant => {
       return {
         _id: participant._id,
+        _rev: participant._rev,
         completedSessions: participant.completedSessions,
         completedTrainingSession: participant.completedTrainingSession,
       }
@@ -58,19 +60,23 @@ app.get('/database/participants/:id', async (req, res) => {
     .then(result => {
       res.send({
         _id: result._id,
+        _rev: result._rev,
         completedSessions: result.completedSessions,
         completedTrainingSession: result.completedTrainingSession,
       })
     })
-    .catch(e => res.send(e))
+    .catch(e => {
+      console.error(e)
+      res.send(e)
+    })
 })
 app.put('/database/participants', async (req, res) => {
   const { body } = req
   participants
     .put({
       _id: body._id,
+      _rev: body._rev,
       gender: body.gender,
-      genderText: body.genderText,
       gerLevel: body.gerLevel,
       yearOfBirth: body.yearOfBirth,
       nativeLang: body.nativeLang,
@@ -78,9 +84,13 @@ app.put('/database/participants', async (req, res) => {
       completedSessions: body.completedSessions,
     })
     .then(result => {
+      console.log(result)
       res.send(result)
     })
-    .catch(e => res.send(e))
+    .catch(e => {
+      console.error(e)
+      res.send(e)
+    })
 })
 
 /*
@@ -94,7 +104,10 @@ app.get('/database/items/:id', async (req, res) => {
     .then(result => {
       res.send(result)
     })
-    .catch(e => res.send(e))
+    .catch(e => {
+      console.error(e)
+      res.send(e)
+    })
 })
 
 /*
@@ -112,7 +125,10 @@ app.get('/database/sessions/:id', async (req, res) => {
     .then(result => {
       res.send(result)
     })
-    .catch(e => res.send(e))
+    .catch(e => {
+      console.error(e)
+      res.send(e)
+    })
 })
 
 /*
@@ -142,7 +158,10 @@ app.put('/database/ratings/_bulk', async (req, res) => {
       })
     )
     .then(result => res.send(result))
-    .catch(e => res.send(e))
+    .catch(e => {
+      console.error(e)
+      res.send(e)
+    })
 })
 
 app.listen(process.env.SERVER_PORT || 8080)
