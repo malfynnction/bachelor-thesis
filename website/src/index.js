@@ -31,7 +31,7 @@ const pouchItems = createDatabase('items')
 
 const App = () => {
   const id = participantId.get()
-  const [showId, setShowId] = useState(Boolean(id))
+  const [isLoggedIn, setLoggedIn] = useState(Boolean(id))
   const [trainingState, setTrainingState] = useState(trainingStore.get())
 
   const topRef = useRef(null)
@@ -62,7 +62,7 @@ const App = () => {
           const idFromParams = getFromUrlParams('participant-id', props)
           if (idFromParams) {
             participantId.set(idFromParams)
-            setShowId(true)
+            setLoggedIn(true)
           }
 
           const seed = getFromUrlParams('seed', props)
@@ -80,7 +80,7 @@ const App = () => {
                   />
                 </Link>
                 <div id="participant-id">
-                  {showId ? (
+                  {isLoggedIn ? (
                     <Fragment>
                       <span id="participant-id-label">
                         Participant ID: {id}
@@ -89,7 +89,7 @@ const App = () => {
                         to="/"
                         onClick={() => {
                           sessionStorage.clear()
-                          setShowId(false)
+                          setLoggedIn(false)
                         }}
                       >
                         Log out
@@ -105,30 +105,34 @@ const App = () => {
                       pouchParticipants={pouchParticipants}
                       login={id => {
                         participantId.set(id)
-                        setShowId(true)
+                        setLoggedIn(true)
                       }}
                     />
                   </Route>
 
                   <Route path="/demographics">
-                    <Demographics
-                      createUser={async data => {
-                        pouchParticipants.getAll().then(async docs => {
-                          const usedIds = docs.map(
-                            participant => participant._id
-                          )
-                          const newId = Math.max(...usedIds, 0) + 1
-                          await pouchParticipants.put({
-                            ...data,
-                            _id: newId.toString(),
-                            completedSessions: [],
-                          })
+                    {isLoggedIn ? (
+                      <Redirect to="/start-session" />
+                    ) : (
+                      <Demographics
+                        createUser={async data => {
+                          pouchParticipants.getAll().then(async docs => {
+                            const usedIds = docs.map(
+                              participant => participant._id
+                            )
+                            const newId = Math.max(...usedIds, 0) + 1
+                            await pouchParticipants.put({
+                              ...data,
+                              _id: newId.toString(),
+                              completedSessions: [],
+                            })
 
-                          participantId.set(newId)
-                          setShowId(true)
-                        })
-                      }}
-                    />
+                            participantId.set(newId)
+                            setLoggedIn(true)
+                          })
+                        }}
+                      />
+                    )}
                   </Route>
                   <Route path="/start-session">
                     <StartSession
@@ -141,7 +145,7 @@ const App = () => {
                     />
                   </Route>
                   <Route path="/session">
-                    {showId ? (
+                    {isLoggedIn ? (
                       trainingState === 'not started' ? (
                         <Redirect to="/start-session" />
                       ) : (

@@ -29,7 +29,7 @@ class Read extends React.Component {
         {timerControl => (
           <Fragment>
             <div className="note">
-              (Hold the Button "Show Paragraph" to reveal the text)
+              (Hold the Button "Show Paragraph" below to reveal the text)
             </div>
             <p className={`item-text centered-content`}>
               <span>

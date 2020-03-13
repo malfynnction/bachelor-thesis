@@ -17,6 +17,9 @@
     - Screenshots & GIFs on /instructions
 - github action for deployment
 - ignore Naderi sentences in pre-processing?
+- Für hardest sentence: Ganzen Satz speichern, nicht nur Index? -> (would have to update DB schema)
+- "show paragraph" button not visible if paragraph too long => does scrolling while holding work?
+- Die ganze Seite ist Hölle für screenreader, wegen react-step-wizard
 
 ====== WAIT FOR MEETING (05.03.) ======
 
