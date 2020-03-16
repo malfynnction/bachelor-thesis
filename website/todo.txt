@@ -1,48 +1,50 @@
-- replace all the "localhost" with the actual url or whatever Docker needs
-- TODO comments
-- mobile
-    - Screenshots & GIFs specifically for mobile?
-    - Screenshots & GIFs too small?
 - accessibility
     - Button gedrückt halten meh
 - Couch
     - stop admin party mode (create user & pw)
-- Docker
+    - somehow deliver export in csv/excel with paragraphs/sentences and their rating
+- Deploy
     - production setup
     - docker-compose-dev should take care of `npm install` (maybe like https://hackernoon.com/a-better-way-to-develop-node-js-with-docker-cd29d3a0093??)
-    - and of the python stuff?
-    - adjust README
+        - and of the python stuff?
+        - adjust README
+    - github action
 - wording
     - Feedback on /instructions?
     - Screenshots & GIFs on /instructions
-- github action for deployment
-- ignore Naderi sentences in pre-processing?
-- Für hardest sentence: Ganzen Satz speichern, nicht nur Index? -> (would have to update DB schema)
-- "show paragraph" button not visible if paragraph too long => does scrolling while holding work?
-- Die ganze Seite ist Hölle für screenreader, wegen react-step-wizard
-
-====== WAIT FOR MEETING (05.03.) ======
-
+- participant-id in url sollte wohl auch neue ID sein können, dann Weiterleitung zu /demographics instead of /start-session
+- general
+    - Die ganze Seite ist Hölle für screenreader, wegen react-step-wizard
+    - consider changing "session" to "survey"
+    - Contact (general, on /instructions, on /start-session)
+    - Feedback form / possibility somewhere
+    - mobile
+        - UI/UX testing necessary!
+        - Screenshots & GIFs specifically for mobile?
+        - Screenshots & GIFs too small?
+    - replace all the "localhost" with the actual url or whatever Docker needs
+    - "TODO" comments
 - pre-processing:
-    - make input data format more general / easier to replicate
+    - make input data format more general / easier to replicate -> check Laura's format
     - figure out how to make this available for other people (npm script? -> add to /ui?)
     - how to upload to DB
     - create requirements.txt
-- authentifizierung nicht nur über ID
-- Impressum & Datenschutz?
+    - ignore Naderi sentences? Or only some? (bc need some for validity)
 - Demographics
-    - better age ranges?
-    - Kurze Datenschutz / Consent Floskel
+    - better age ranges
+    - consent form
+    - german level can be "native"? Or is that C2?
+- /start-session
+    - when showing confirmation token: ". " missing
+    - crowdsourcing nach session zurück zu crowdsourcing plattform, nicht noch eine session anfangen können
+    - (how) do I need to explain token for crowdsourcing?
+- Schritt 1
+    - "show paragraph" button not visible if paragraph too long => does scrolling while holding work?
 - Schritt 2
     - more / other questions?
-    - labels
+    - labels?
+    - vertical radio scale, but use his format
 - Schritt 3
     - content questions?
-- token for crowdsourcing (for payment later)
-    - (how) do I need to explain this?
-- backend security
-    - validate data before writing to DB
-- Contact (general, on /instructions, on /start-session)
-- mobile
-    - "show paragraph" button not visible if paragraph too long
-    - Fragebogen items way too small
+- Schritt 4 (hardest sentence)
+    - Ganzen Satz speichern, nicht nur Index? -> (would have to update DB schema)
