@@ -59,7 +59,7 @@ class startSession extends React.Component {
     } else if (previousSession) {
       thankYou += 'Thank you! Your answers have been saved. '
       if (this.state.token) {
-        thankYou += `Your confirmation code is ${this.state.token}`
+        thankYou += `Your confirmation code is ${this.state.token}. `
       }
       thankYou +=
         'You can now close this window or start another session below:'

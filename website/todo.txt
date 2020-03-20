@@ -32,7 +32,6 @@
 - Demographics
     - consent form
 - /start-session
-    - when showing confirmation token: ". " missing
     - crowdsourcing nach session zurück zu crowdsourcing plattform, nicht noch eine session anfangen können
     - (how) do I need to explain token for crowdsourcing?
 - Schritt 1
