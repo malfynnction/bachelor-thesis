@@ -1,21 +1,12 @@
 const express = require('express')
-const PouchDB = require('pouchdb')
 const bodyParser = require('body-parser')
 const hash = require('object-hash')
+const newPouchDb = require('./src/lib/new-pouch-db')
 
 const app = express()
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(bodyParser.raw())
-
-const newPouchDb = name => {
-  const db = new PouchDB(name)
-  db.sync(`http://couchdb:5984/${name}`, {
-    live: true,
-    retry: true,
-  })
-  return db
-}
 
 const [participants, ratings, items, sessions] = [
   'participants',
