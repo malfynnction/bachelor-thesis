@@ -78,7 +78,7 @@ app.put('/database/participants', async (req, res) => {
       _rev: body._rev,
       gender: body.gender,
       gerLevel: body.gerLevel,
-      yearOfBirth: body.yearOfBirth,
+      age: body.age,
       nativeLang: body.nativeLang,
       completedTrainingSession: body.completedTrainingSession,
       completedSessions: body.completedSessions,

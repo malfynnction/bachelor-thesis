@@ -30,7 +30,6 @@
     - create requirements.txt
     - ignore Naderi sentences? Or only some? (bc need some for validity)
 - Demographics
-    - better age ranges
     - consent form
     - german level can be "native"? Or is that C2?
 - /start-session

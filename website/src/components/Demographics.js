@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import '../styles/Demographics.css'
 
 const defaultState = {
-  yearOfBirth: '',
+  age: '',
   nativeLang: '',
   gender: '',
   genderText: '',
@@ -68,16 +68,12 @@ class Demographics extends React.Component {
           }}
           className="centered-content demographics-form"
         >
-          {this.renderQuestion('Year of birth: ', 'yearOfBirth', 'dropdown', [
-            '1920-1930',
-            '1930-1940',
-            '1940-1950',
-            '1950-1960',
-            '1960-1970',
-            '1970-1980',
-            '1980-1990',
-            '1990-2000',
-            '2000-2010',
+          {this.renderQuestion('Age: ', 'age', 'dropdown', [
+            '18-26',
+            '27-32',
+            '33-40',
+            '41-55',
+            '56+',
             { label: 'Prefer not to say', value: 'notDisclosed' },
           ])}
           <strong>Gender(s)*:</strong>
