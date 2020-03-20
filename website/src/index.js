@@ -111,28 +111,34 @@ const App = () => {
                   </Route>
 
                   <Route path="/demographics">
-                    {isLoggedIn ? (
-                      <Redirect to="/start-session" />
-                    ) : (
-                      <Demographics
-                        createUser={async data => {
-                          pouchParticipants.getAll().then(async docs => {
-                            const usedIds = docs.map(
-                              participant => participant._id
-                            )
-                            const newId = Math.max(...usedIds, 0) + 1
-                            await pouchParticipants.put({
-                              ...data,
-                              _id: newId.toString(),
-                              completedSessions: [],
-                            })
-
-                            participantId.set(newId)
-                            setLoggedIn(true)
+                    <Demographics
+                      createUser={async data => {
+                        const loggedInId = participantId.get()
+                        if (loggedInId) {
+                          try {
+                            await pouchParticipants.get(loggedInId)
+                            return
+                          } catch (e) {
+                            // this error is expected: id does not exist => create a new participant
+                          }
+                        }
+                        pouchParticipants.getAll().then(async docs => {
+                          const usedIds = docs.map(
+                            participant => participant._id
+                          )
+                          const newId =
+                            loggedInId || Math.max(...usedIds, 0) + 1
+                          await pouchParticipants.put({
+                            ...data,
+                            _id: newId.toString(),
+                            completedSessions: [],
                           })
-                        }}
-                      />
-                    )}
+
+                          participantId.set(newId)
+                          setLoggedIn(true)
+                        })
+                      }}
+                    />
                   </Route>
                   <Route path="/start-session">
                     <StartSession

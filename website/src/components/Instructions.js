@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { databasePropType } from '../lib/prop-types'
 import createStore from '../lib/create-store'
@@ -8,10 +8,32 @@ import '../styles/Instructions.css'
 const participantId = createStore('participantId')
 
 const Instructions = props => {
+  const doesIdExist = id => {
+    return pouchParticipants
+      .get(id)
+      .then(() => {
+        return { exists: true }
+      })
+      .catch(response => {
+        return { exists: false, status: response.status }
+      })
+  }
+
   const { pouchParticipants } = props
 
   const [error, setError] = useState('')
+  const [isNewParticipantFromParams, setIsNewParticipantFromParams] = useState(
+    false
+  )
   const loggedInId = participantId.get()
+
+  useEffect(() => {
+    if (loggedInId) {
+      doesIdExist(loggedInId).then(({ exists }) =>
+        setIsNewParticipantFromParams(!exists)
+      )
+    }
+  }, [])
 
   return (
     <Fragment>
@@ -85,7 +107,10 @@ const Instructions = props => {
           homepage. TODO: image?
         </p>
         {loggedInId !== null ? (
-          <Link className="btn" to="/start-session">
+          <Link
+            className="btn"
+            to={isNewParticipantFromParams ? '/demographics' : '/start-session'}
+          >
             Start
           </Link>
         ) : (
@@ -105,22 +130,18 @@ const Instructions = props => {
               onSubmit={e => {
                 e.preventDefault()
                 const id = e.target.participantId.value
-                // check if ID exists
-                pouchParticipants
-                  .get(id)
-                  .then(() => {
+                doesIdExist(id).then(result => {
+                  if (result.exists) {
                     props.login(id)
                     props.history.push('/start-session')
-                  })
-                  .catch(response => {
-                    if (response.status === 404) {
-                      setError(
-                        'This ID does not exist. Please make sure you entered the correct ID.'
-                      )
-                    } else {
-                      setError('An unknown error occurred. Please try again.')
-                    }
-                  })
+                  } else if (result.status === 404) {
+                    setError(
+                      'This ID does not exist. Please make sure you entered the correct ID.'
+                    )
+                  } else {
+                    setError('An unknown error occurred. Please try again.')
+                  }
+                })
               }}
             >
               <input

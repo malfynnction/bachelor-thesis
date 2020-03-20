@@ -12,7 +12,6 @@
 - wording
     - Feedback on /instructions?
     - Screenshots & GIFs on /instructions
-- participant-id in url sollte wohl auch neue ID sein können, dann Weiterleitung zu /demographics instead of /start-session
 - general
     - Die ganze Seite ist Hölle für screenreader, wegen react-step-wizard
     - consider changing "session" to "survey"
