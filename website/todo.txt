@@ -31,7 +31,6 @@
     - ignore Naderi sentences? Or only some? (bc need some for validity)
 - Demographics
     - consent form
-    - german level can be "native"? Or is that C2?
 - /start-session
     - when showing confirmation token: ". " missing
     - crowdsourcing nach session zurück zu crowdsourcing plattform, nicht noch eine session anfangen können

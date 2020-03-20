@@ -131,6 +131,7 @@ class Demographics extends React.Component {
               'B2',
               'C1',
               'C2',
+              'Native',
               { label: "I don't know", value: 'notDisclosed' },
             ]
           )}
