@@ -14,9 +14,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
+    "@testing-library/jest-dom": "^5.1.1",
+    "@testing-library/react": "^10.0.1",
+    "@testing-library/user-event": "^10.0.0",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "lodash.get": "^4.4.2",
@@ -46,7 +46,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.19.0",
     "husky": "^4.2.3",
-    "lint-staged": "^9.5.0",
+    "lint-staged": "^10.0.8",
     "prettier": "^1.19.1"
   },
   "browserslist": [
@@ -63,8 +63,7 @@
   },
   "lint-staged": {
     "*.js": [
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ]
   }
 }
