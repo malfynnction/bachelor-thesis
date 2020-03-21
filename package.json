@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "cd website && npm run start",
-    "build": "cd website && npm run build",
-    "test": "cd website && npm run test",
-    "eject": "cd website && npm run eject",
+    "docker-build": "docker build -t bachelor-website:dev website",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
     "lint": "eslint '{website,data-processing}/**/*.js'",
     "prettier": "prettier --write '**/*.{js,json}'",
     "process-texts": "source venv/bin/activate && python website/process_texts.py"
