@@ -12,6 +12,9 @@ services:
       - 8080:8080
     volumes:
       - type: bind
+        source: ../node_modules
+        target: /app/node_modules
+      - type: bind
         source: .
         target: /app
     command: ['node', '/app/server.js']
@@ -21,11 +24,18 @@ services:
     image: node:12.16-alpine3.9
     ports:
       - 3000:3000
+    working_dir: /app
     volumes:
       - type: bind
         source: .
         target: /app
-    command: ['npm', 'run', '--prefix', '/app', 'start']
+      - type: bind
+        source: ../node_modules
+        target: /app/node_modules
+      - type: bind
+        source: ../package.json
+        target: /app/package.json
+    command: ['npm', 'start']
     depends_on:
       - backend
   nginx:
