@@ -2,7 +2,7 @@ const request = require('request-promise-native')
 
 const databaseUrl = 'http://localhost:8000/database'
 
-module.exports = name => {
+const createDatabase = name => {
   return {
     get: async id => {
       return new Promise((resolve, reject) => {
@@ -45,3 +45,5 @@ module.exports = name => {
     },
   }
 }
+
+export default createDatabase
