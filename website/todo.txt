@@ -39,7 +39,6 @@
 - Schritt 2
     - more / other questions?
     - labels?
-    - is the implementation similar enough to his table-thing with an explicit "score" column?
 - Schritt 3
     - content questions?
 - Schritt 4 (hardest sentence)

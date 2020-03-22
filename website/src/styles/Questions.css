@@ -13,3 +13,9 @@
 label {
   margin-bottom: 0;
 }
+
+.label-with-score {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}

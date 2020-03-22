@@ -63,6 +63,7 @@ const getAllQuestions = (questionType, { type, sentences }) => {
 }
 
 const Questions = props => {
+  const showScore = props.questionType !== 'hardestSentence'
   return (
     <Fragment>
       <div>
@@ -86,8 +87,12 @@ const Questions = props => {
                       value={value}
                       checked={value === props.answers[key]}
                     />
-                    <label htmlFor={`${key}-${value}`}>
-                      {label} ({value})
+                    <label
+                      htmlFor={`${key}-${value}`}
+                      className={showScore ? 'label-with-score' : ''}
+                    >
+                      <span>{label}</span>
+                      {showScore ? <span>({value})</span> : null}
                     </label>
                   </div>
                 )
