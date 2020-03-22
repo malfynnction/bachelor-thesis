@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { databasePropType } from '../lib/prop-types'
 import { Link } from 'react-router-dom'
@@ -95,27 +95,33 @@ class startSession extends React.Component {
               Continue Session
             </Link>
           ) : null}
-          {this.state.completedTrainingSession ? (
-            <Link
-              className="btn"
-              to="/session"
-              onClick={() => {
-                this.deleteActiveSession()
-              }}
-            >
-              {this.state.hasActiveSession ? 'Start new' : 'Normal'} Session
-            </Link>
-          ) : null}
-          <Link
-            className="btn"
-            to="/session"
-            onClick={() => {
-              this.deleteActiveSession()
-              this.props.onStartTraining()
-            }}
-          >
-            Training Session
-          </Link>
+          {this.state.token ? (
+            <div></div>
+          ) : (
+            <Fragment>
+              {this.state.completedTrainingSession ? (
+                <Link
+                  className="btn"
+                  to="/session"
+                  onClick={() => {
+                    this.deleteActiveSession()
+                  }}
+                >
+                  {this.state.hasActiveSession ? 'Start new' : 'Normal'} Session
+                </Link>
+              ) : null}
+              <Link
+                className="btn"
+                to="/session"
+                onClick={() => {
+                  this.deleteActiveSession()
+                  this.props.onStartTraining()
+                }}
+              >
+                Training Session
+              </Link>
+            </Fragment>
+          )}
         </div>
       </div>
     )
