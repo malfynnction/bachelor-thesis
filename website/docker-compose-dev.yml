@@ -12,11 +12,11 @@ services:
       - 8080:8080
     volumes:
       - type: bind
-        source: ../node_modules
-        target: /app/node_modules
-      - type: bind
         source: .
         target: /app
+      - type: bind
+        source: ../node_modules
+        target: /app/node_modules
     command: ['node', '/app/server.js']
     depends_on:
       - couchdb
