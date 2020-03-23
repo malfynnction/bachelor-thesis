@@ -215,39 +215,6 @@ class Demographics extends React.Component {
             you come back in the future.
           </div>
 
-          <input
-            type="checkbox"
-            checked={this.state.dataConsent}
-            onChange={e => {
-              this.setState({ dataConsent: e.target.checked })
-            }}
-          />
-          <label>
-            I have read the{' '}
-            <span
-              onClick={() => {
-                this.setState({ showConsentForm: true })
-              }}
-              className="clickable"
-            >
-              consent notification {/* TODO */}
-            </span>
-            and agree to participate in this study.
-          </label>
-          {this.state.showConsentForm ? (
-            <div className="consent-form">
-              {consentForm}
-              <button
-                className="btn"
-                onClick={e => {
-                  e.preventDefault()
-                  this.setState({ showConsentForm: false, dataConsent: true })
-                }}
-              >
-                I Agree
-              </button>
-            </div>
-          ) : null}
           <Link
             className={`btn ${this.state.dataConsent ? '' : 'btn-disabled'}`}
             type="submit"
@@ -266,6 +233,41 @@ class Demographics extends React.Component {
           >
             Start
           </Link>
+          <div>
+            <input
+              type="checkbox"
+              checked={this.state.dataConsent}
+              onChange={e => {
+                this.setState({ dataConsent: e.target.checked })
+              }}
+            />
+            <label className="checkbox-label">
+              I have read the{' '}
+              <span
+                onClick={() => {
+                  this.setState({ showConsentForm: true })
+                }}
+                className="clickable"
+              >
+                consent notification {/* TODO */}
+              </span>
+              and want to participate in this study.
+            </label>
+          </div>
+          {this.state.showConsentForm ? (
+            <div className="consent-form">
+              {consentForm}
+              <button
+                className="btn"
+                onClick={e => {
+                  e.preventDefault()
+                  this.setState({ showConsentForm: false, dataConsent: true })
+                }}
+              >
+                I Agree
+              </button>
+            </div>
+          ) : null}
         </form>
       </div>
     )
