@@ -79,8 +79,8 @@ select:focus {
 .centered-content {
   display: flex;
   flex-direction: column;
-  align-items: safe center; /*horizontal alignment*/
-  justify-content: safe space-evenly; /*vertical alignment*/
+  align-items: center; /*horizontal alignment*/
+  justify-content: space-evenly; /*vertical alignment*/
 }
 
 .center-box {
@@ -130,6 +130,7 @@ a.btn,
 button.btn {
   border: 2px solid #c50e1f;
   color: #c50e1f;
+  width: max-content;
 }
 
 a.button-secondary,

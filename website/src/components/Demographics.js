@@ -235,7 +235,7 @@ class Demographics extends React.Component {
             and agree to participate in this study.
           </label>
           {this.state.showConsentForm ? (
-            <div className="consent-form centered-content">
+            <div className="consent-form">
               {consentForm}
               <button
                 className="btn"

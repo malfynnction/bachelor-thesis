@@ -42,4 +42,7 @@ input[type='radio'] {
   border-radius: 0.25rem;
   max-height: 20rem;
   overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
