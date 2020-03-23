@@ -3,6 +3,7 @@
 - Couch
     - stop admin party mode (create user & pw)
     - somehow deliver export in csv/excel with paragraphs/sentences and their rating
+    - backups
 - Deploy
     - production setup
     - docker-compose-dev should take care of `npm install` (maybe like https://hackernoon.com/a-better-way-to-develop-node-js-with-docker-cd29d3a0093??)
@@ -31,8 +32,6 @@
     - ignore Naderi sentences? Or only some? (bc need some for validity)
 - Demographics
     - consent form
-- /start-session
-    - (how) do I need to explain token for crowdsourcing?
 - Schritt 1
     - "show paragraph" button not visible if paragraph too long => does scrolling while holding work?
 - Schritt 2
@@ -42,3 +41,5 @@
     - content questions?
 - Schritt 4 (hardest sentence)
     - Ganzen Satz speichern, nicht nur Index? -> (would have to update DB schema)
+- cross-browser testing
+    - esp. regarding "safe center" / "safe space-evenly"

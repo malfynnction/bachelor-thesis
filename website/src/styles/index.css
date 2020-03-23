@@ -35,8 +35,14 @@ header {
 }
 
 a,
-a:hover {
+a:hover,
+.clickable {
   color: #c50e1f;
+}
+
+.clickable:hover {
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 label.block {
@@ -73,8 +79,8 @@ select:focus {
 .centered-content {
   display: flex;
   flex-direction: column;
-  align-items: center; /*horizontal alignment*/
-  justify-content: space-evenly; /*vertical alignment*/
+  align-items: safe center; /*horizontal alignment*/
+  justify-content: safe space-evenly; /*vertical alignment*/
 }
 
 .center-box {
@@ -130,6 +136,12 @@ a.button-secondary,
 button.button-secondary {
   border: 2px solid #5b4b4b;
   color: #5b4b4b;
+}
+
+.btn.btn-disabled {
+  border: 2px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
 }
 
 .flexbox {

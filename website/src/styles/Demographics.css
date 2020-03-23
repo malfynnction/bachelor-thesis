@@ -4,7 +4,13 @@
 
 @media (min-width: 1200px) {
   .demographics-form {
-    width: 50%;
+    max-width: 50%;
+  }
+}
+
+@media (max-width: 576px) {
+  .demographics-form {
+    max-width: 100%;
   }
 }
 
@@ -26,4 +32,14 @@ input[type='radio'] {
 
 .note {
   color: #787678;
+}
+
+.consent-form {
+  background-color: #cccccc;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  width: 100%;
+  border-radius: 0.25rem;
+  max-height: 20rem;
+  overflow-y: scroll;
 }
