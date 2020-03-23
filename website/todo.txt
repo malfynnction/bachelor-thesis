@@ -32,7 +32,6 @@
 - Demographics
     - consent form
 - /start-session
-    - crowdsourcing nach session zurück zu crowdsourcing plattform, nicht noch eine session anfangen können
     - (how) do I need to explain token for crowdsourcing?
 - Schritt 1
     - "show paragraph" button not visible if paragraph too long => does scrolling while holding work?

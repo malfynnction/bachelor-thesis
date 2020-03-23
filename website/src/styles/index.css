@@ -139,3 +139,7 @@ button.button-secondary {
 .btn + .btn {
   margin-left: 15px;
 }
+
+.centered-text {
+  text-align: center;
+}
