@@ -1,6 +1,5 @@
 import React, { Fragment, useState, useRef } from 'react'
 import ReactDOM from 'react-dom'
-import { Helmet } from 'react-helmet'
 import './bootstrap/bootstrap.css'
 import './styles/index.css'
 import * as serviceWorker from './serviceWorker'
@@ -53,9 +52,6 @@ const App = () => {
 
   return (
     <Router>
-      <Helmet>
-        <title>Readability Study</title>
-      </Helmet>
       {/* Wrap everything in an additional "fake" Route to have access to location props*/}
       <Route
         render={props => {
