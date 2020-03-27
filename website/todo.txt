@@ -19,7 +19,6 @@
     - Contact (general, on /instructions, on /start-session)
     - Feedback form / possibility somewhere
     - mobile
-        - UI/UX testing necessary!
         - Screenshots & GIFs specifically for mobile?
         - Screenshots & GIFs too small?
     - replace all the "localhost" with the actual url or whatever Docker needs
@@ -39,5 +38,7 @@
     - content questions?
 - Schritt 4 (hardest sentence)
     - Ganzen Satz speichern, nicht nur Index? -> (would have to update DB schema)
-- cross-browser testing
-    - esp. regarding "safe center" / "safe space-evenly"
+- testing
+    - cross-browser
+    - mobile
+    - unit tests lol
