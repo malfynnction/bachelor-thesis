@@ -14,51 +14,34 @@ const defaultState = {
 const consentForm = (
   <Fragment>
     <h5>Consent Form</h5>
-    <p>I will tell you a lot of things here</p> {/* TODO */}
     <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi convallis
-      diam odio, ut iaculis neque feugiat a. Maecenas vitae ligula orci. Fusce
-      arcu lacus, sagittis eget leo eget, condimentum tempor sapien. Duis eu
-      orci mi. Etiam sit amet nibh eu neque aliquam sagittis. Aliquam erat
-      volutpat. Vestibulum efficitur lectus et sapien varius dapibus eu eu dui.
-      Aenean dictum, odio eget malesuada tempor, justo justo feugiat nisl, id
-      pellentesque augue lectus egestas metus. Quisque tincidunt tortor neque,
-      eu facilisis ligula placerat a. Vestibulum ante ipsum primis in faucibus
-      orci luctus et ultrices posuere cubilia Curae; In semper a tellus vitae
-      consequat. Nulla sodales dolor et aliquet bibendum. Morbi eget nisl non
-      felis venenatis dictum. Nam faucibus condimentum enim, ac tempus sapien
-      vulputate nec. Vivamus dapibus lectus quis arcu venenatis convallis. Nulla
-      quis ultrices est. Pellentesque tempor libero ut porttitor ornare. Sed
-      nulla nisl, tempus eu ultricies eget, egestas vitae erat. Vestibulum
-      ultricies, lorem ut ullamcorper tincidunt, massa dui commodo tellus, non
-      aliquet mi tellus ac leo. In commodo ante sem, vitae lacinia diam mattis
-      ac. Cras convallis sem tempus auctor tempor. Suspendisse id facilisis
-      turpis, eu dapibus est. Praesent suscipit odio et sapien laoreet, quis
-      egestas dolor sagittis. Maecenas accumsan venenatis quam sed blandit.
-      Mauris pellentesque enim sed dignissim eleifend. Curabitur massa eros,
-      condimentum semper nisl non, volutpat feugiat nulla. Phasellus faucibus
-      massa at lectus interdum aliquam. Cras libero dolor, pharetra ac odio eu,
-      bibendum dictum nulla. In hac habitasse platea dictumst. Vestibulum
-      sodales, diam sed pulvinar finibus, justo elit venenatis dui, egestas
-      vestibulum mi nisl ut justo. Suspendisse ut purus enim. Pellentesque at
-      tincidunt nunc, eleifend scelerisque lacus. Duis facilisis imperdiet
-      faucibus. Mauris accumsan augue ac quam pellentesque vehicula. Donec
-      dictum leo et aliquet tincidunt. Nulla lobortis nibh congue augue
-      efficitur, ut tincidunt mi elementum. Proin non pretium velit. Praesent
-      imperdiet ultrices pulvinar. Pellentesque placerat sit amet tellus sed
-      bibendum. Cras placerat dolor mauris, nec fermentum risus viverra ut.
-      Suspendisse in metus lacinia, laoreet leo ultrices, pulvinar felis.
-      Pellentesque habitant morbi tristique senectus et netus et malesuada fames
-      ac turpis egestas. Nullam dignissim tellus eu ex ultricies, vel posuere
-      justo facilisis. Phasellus viverra congue nisi, id maximus dolor vulputate
-      non. Nullam mollis vestibulum dolor vitae venenatis. Nullam nunc felis,
-      gravida et finibus id, interdum vel felis. Proin mattis elit vitae
-      pellentesque euismod. Aliquam volutpat, lorem ut facilisis condimentum,
-      mauris neque placerat orci, vitae eleifend ligula mi a turpis. Mauris
-      interdum diam non est congue dapibus. Sed sit amet blandit mi, vel feugiat
-      turpis. Nunc pharetra feugiat odio in tincidunt. Vestibulum id consectetur
-      justo. Quisque vitae est erat. Vestibulum ante ipsum primis in faucibus
-      orci luctus et ultrices posuere cubilia Curae; Aenean a feugiat arcu.
+      Your participation in this research study is voluntary. You may choose not
+      to participate. If you decide to participate in this research survey, you
+      may withdraw at any time without giving any reason. If you decide not to
+      participate in this study or if you withdraw from participating at any
+      time, you will not be penalized.
+    </p>
+
+    <p>
+      Your responses will be confidential and we do not collect identifying
+      information such as your name, email address or IP address. Your answers
+      will be saved anonymously, using only an automatically generated
+      participant ID to identify you. No personal data other than the
+      demographic TODO above will be saved or published.
+    </p>
+
+    <p>Clicking on the "I Agree" button below indicates that:</p>
+    <ul>
+      <li>you have read the above information</li>
+      <li>
+        you have been informed about the content and procedure of the study
+      </li>
+      <li>you voluntarily agree to participate</li>
+      <li>you are at least 18 years of age</li>
+    </ul>
+    <p>
+      If you do not wish to participate in the research study, you can simply
+      close this website.
     </p>
   </Fragment>
 )
@@ -222,13 +205,14 @@ class Demographics extends React.Component {
             onClick={e => {
               if (!this.state.dataConsent) {
                 e.preventDefault()
+              } else {
+                const data = { ...this.state.data }
+                if (data.gender === 'text') {
+                  data.gender = data.genderText
+                }
+                delete data.genderText
+                this.props.createUser(data)
               }
-              const data = { ...this.state.data }
-              if (data.gender === 'text') {
-                data.gender = data.genderText
-              }
-              delete data.genderText
-              this.props.createUser(data)
             }}
           >
             Start
@@ -257,6 +241,7 @@ class Demographics extends React.Component {
           {this.state.showConsentForm ? (
             <div className="consent-form">
               {consentForm}
+              <br />
               <button
                 className="btn"
                 onClick={e => {
