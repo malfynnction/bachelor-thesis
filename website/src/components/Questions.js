@@ -54,7 +54,7 @@ const getAllQuestions = (questionType, { type, sentences }) => {
         answers: sentences.map((sentence, i) => {
           return {
             label: sentence,
-            value: i + 1,
+            value: i,
           }
         }),
       },

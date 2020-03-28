@@ -49,7 +49,7 @@ const getHardestSentences = ratings => {
       return acc
     }, {})
   const maxVotes = Math.max(...Object.values(voteCounts))
-  return Object.keys(voteCounts.filter(key => voteCounts[key] === maxVotes))
+  return Object.keys(voteCounts).filter(key => voteCounts[key] === maxVotes)
 }
 
 const download = async () => {
@@ -73,6 +73,7 @@ const download = async () => {
         getAverage(accordingRatings.map(rating => rating.readingTime)) || 0,
     }
 
+    // get the answers to the questions
     allQuestions.forEach(question => {
       const answers = accordingRatings
         .filter(rating => !!rating.questions[question])
@@ -80,10 +81,28 @@ const download = async () => {
       itemResult[`avg${capitalizeFirstLetter(question)}`] = getAverage(answers)
     })
 
+    // get the hardest sentence(s) (only for paragraphs)
     if (item.sentences) {
       const hardestSentences = getHardestSentences(accordingRatings)
-      console.log(hardestSentences)
+      itemResult.hardestSentences = hardestSentences.map(
+        index => item.sentences[index]
+      )
     }
+
+    // get the results of the cloze tests
+    itemResult.clozes = item.clozes.map((cloze, i) => {
+      const answers = accordingRatings.map(rating => rating.cloze[i].isCorrect)
+      const correctAnswers = answers.filter(answer => !!answer)
+      let percentageCorrectAnswers
+      if (answers.length) {
+        percentageCorrectAnswers =
+          (correctAnswers.length / answers.length) * 100
+      }
+      return { deletedWord: cloze.original, percentageCorrectAnswers }
+    })
+    itemResult.percentageCorrectClozes = getAverage(
+      itemResult.clozes.map(cloze => cloze.percentageCorrectAnswers)
+    )
 
     return {
       ...acc,
