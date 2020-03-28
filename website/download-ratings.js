@@ -1,4 +1,5 @@
 const PouchDB = require('pouchdb')
+const fs = require('fs')
 
 const newPouchDb = name => {
   const db = new PouchDB(name)
@@ -8,9 +9,6 @@ const newPouchDb = name => {
   })
   return db
 }
-
-const ratingDb = newPouchDb('ratings')
-const itemDb = newPouchDb('items')
 
 const getAllDocs = async db => {
   return db
@@ -52,7 +50,10 @@ const getHardestSentences = ratings => {
   return Object.keys(voteCounts).filter(key => voteCounts[key] === maxVotes)
 }
 
-const download = async () => {
+const summarizeRatings = async () => {
+  const ratingDb = newPouchDb('ratings')
+  const itemDb = newPouchDb('items')
+
   const [ratings, items] = await Promise.all([
     getAllDocs(ratingDb),
     getAllDocs(itemDb),
@@ -60,7 +61,7 @@ const download = async () => {
 
   const allQuestions = ['readability', 'understandability', 'complexity']
 
-  const result = items.reduce((acc, item) => {
+  return items.reduce((acc, item) => {
     const accordingRatings = ratings.filter(
       rating => rating.itemId === item._id
     )
@@ -111,4 +112,18 @@ const download = async () => {
   }, {})
 }
 
-download()
+const summarizeDemographic = async () => {
+  const participantDb = newPouchDb('participants')
+  const participants = await getAllDocs(participantDb)
+
+  console.log(participants)
+  return {}
+}
+
+// summarizeRatings().then(ratings =>
+//   fs.writeFileSync('./result.json', JSON.stringify(ratings))
+// )
+
+summarizeDemographic().then(demographic =>
+  fs.writeFileSync('./demographic.json', JSON.stringify(demographic))
+)
