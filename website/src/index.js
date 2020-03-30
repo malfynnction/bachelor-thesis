@@ -170,7 +170,11 @@ const App = () => {
                     )}
                   </Route>
                   <Route path="/feedback">
-                    <Feedback participantId={participantId.get()} />
+                    {participantId.get() ? (
+                      <Feedback participantId={participantId.get()} />
+                    ) : (
+                      <Redirect to="/start" />
+                    )}
                   </Route>
                   <Route path="/">
                     <Start />
