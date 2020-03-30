@@ -109,7 +109,7 @@ const Instructions = props => {
         {loggedInId !== null ? (
           <Link
             className="btn"
-            to={isNewParticipantFromParams ? '/demographics' : '/start-session'}
+            to={isNewParticipantFromParams ? '/demographics' : '/start-survey'}
           >
             Start
           </Link>
@@ -133,7 +133,7 @@ const Instructions = props => {
                 doesIdExist(id).then(result => {
                   if (result.exists) {
                     props.login(id)
-                    props.history.push('/start-session')
+                    props.history.push('/start-survey')
                   } else if (result.status === 404) {
                     setError(
                       'This ID does not exist. Please make sure you entered the correct ID.'

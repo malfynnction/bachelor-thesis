@@ -2,12 +2,12 @@ import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import '../styles/Progress.css'
 
-const Progress = ({ progress, sessionCount }) => {
+const Progress = ({ progress, surveyCount }) => {
   return (
     <Fragment>
       <div className="progress-bar" style={{ width: `${progress * 100}%` }} />
-      {sessionCount ? (
-        <div className="session-count">Completed sessions: {sessionCount}</div>
+      {surveyCount ? (
+        <div className="survey-count">Completed surveys: {surveyCount}</div>
       ) : null}
     </Fragment>
   )
@@ -15,7 +15,7 @@ const Progress = ({ progress, sessionCount }) => {
 
 Progress.propTypes = {
   progress: PropTypes.number,
-  sessionCount: PropTypes.number,
+  surveyCount: PropTypes.number,
 }
 
 export default Progress

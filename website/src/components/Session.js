@@ -69,7 +69,7 @@ class Session extends React.Component {
         {session.finishedAllSessions ? null : (
           <Progress
             progress={progress}
-            sessionCount={this.state.completedSessionCount}
+            surveyCount={this.state.completedSessionCount}
           />
         )}
         <div
@@ -136,7 +136,7 @@ class Session extends React.Component {
                   ratingStore.clear()
 
                   this.props.history.push(
-                    `/start-session?prev=${session.id}${tokenQueryString}`
+                    `/start-survey?prev=${session.id}${tokenQueryString}`
                   )
                 } else {
                   this.setState({

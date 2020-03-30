@@ -14,7 +14,7 @@ import Instructions from './components/Instructions'
 import Session from './components/Session'
 import Start from './components/Start'
 import Demographics from './components/Demographics'
-import StartSession from './components/StartSession'
+import StartSurvey from './components/StartSurvey'
 import createStore from './lib/create-store'
 import createDatabase from './lib/create-database'
 import getFromUrlParams from './lib/get-from-url-params'
@@ -136,8 +136,8 @@ const App = () => {
                       }}
                     />
                   </Route>
-                  <Route path="/start-session">
-                    <StartSession
+                  <Route path="/start-survey">
+                    <StartSurvey
                       {...props}
                       onStartTraining={() => {
                         trainingStore.set('in progress')
@@ -149,7 +149,7 @@ const App = () => {
                   <Route path="/session">
                     {isLoggedIn ? (
                       trainingState === 'not started' ? (
-                        <Redirect to="/start-session" />
+                        <Redirect to="/start-survey" />
                       ) : (
                         <Session
                           pouchRatings={pouchRatings}

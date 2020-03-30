@@ -5,11 +5,7 @@ const participantId = (createStore('participantId').get() || '').toString()
 
 const TRAINING_ID = 'Training'
 
-const chooseNewSession = async (
-  pouchParticipants,
-  pouchSessions,
-  pouchItems
-) => {
+const chooseNewSession = async (pouchParticipants, pouchSessions) => {
   return Promise.all([
     pouchSessions.getAll(),
     pouchParticipants.getAll(),
@@ -67,11 +63,7 @@ const getNewSession = async (
   if (isTraining) {
     const trainingSession = await pouchSessions.get(TRAINING_ID)
     if (trainingSession.status === 404) {
-      newSessionId = await chooseNewSession(
-        pouchParticipants,
-        pouchSessions,
-        pouchItems
-      )
+      newSessionId = await chooseNewSession(pouchParticipants, pouchSessions)
     } else {
       newSessionId = TRAINING_ID
     }

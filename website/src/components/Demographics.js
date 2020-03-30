@@ -201,7 +201,7 @@ class Demographics extends React.Component {
           <Link
             className={`btn ${this.state.dataConsent ? '' : 'btn-disabled'}`}
             type="submit"
-            to="/start-session"
+            to="/start-survey"
             onClick={e => {
               if (!this.state.dataConsent) {
                 e.preventDefault()
