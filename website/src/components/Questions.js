@@ -12,9 +12,9 @@ const getAllQuestions = (questionType, { type, sentences }) => {
         answers: [
           { label: 'very difficult', value: 7 },
           { label: 'difficult', value: 6 },
-          { label: 'slightly difficult', value: 5 },
+          { label: 'somewhat difficult', value: 5 },
           { label: 'neutral', value: 4 },
-          { label: 'slightly easy', value: 3 },
+          { label: 'somewhat easy', value: 3 },
           { label: 'easy', value: 2 },
           { label: 'very easy', value: 1 },
         ],
@@ -25,9 +25,9 @@ const getAllQuestions = (questionType, { type, sentences }) => {
         answers: [
           { label: 'very complex', value: 7 },
           { label: 'complex', value: 6 },
-          { label: 'slightly complex', value: 5 },
+          { label: 'somewhat complex', value: 5 },
           { label: 'neutral', value: 4 },
-          { label: 'slightly easy', value: 3 },
+          { label: 'somewhat easy', value: 3 },
           { label: 'easy', value: 2 },
           { label: 'very easy', value: 1 },
         ],

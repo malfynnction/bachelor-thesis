@@ -30,9 +30,6 @@
     - ignore Naderi sentences? Or only some? (bc need some for validity)
 - Schritt 1
     - "show paragraph" button not visible if paragraph too long => does scrolling while holding work?
-- Schritt 2
-    - more / other questions?
-    - labels?
 - testing
     - cross-browser
     - mobile
@@ -40,3 +37,4 @@
 - download results
     - pouch synct beim ersten run noch nicht, erst beim zweiten??
     - und erstellt noch lokale .json für jede db
+    - output format?
