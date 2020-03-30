@@ -15,8 +15,7 @@
     - Screenshots & GIFs on /instructions
 - general
     - Die ganze Seite ist Hölle für screenreader, wegen react-step-wizard
-    - consider changing "session" to "survey"
-    - Contact (general, on /instructions, on /start-survey)
+    - Contact (general, on /instructions, on /start-session)
     - Feedback form / possibility somewhere
     - mobile
         - Screenshots & GIFs specifically for mobile?
