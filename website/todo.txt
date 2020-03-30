@@ -1,5 +1,6 @@
 - accessibility
     - Button gedrückt halten meh
+    - "reveal paragraph" impossible for screenreader
 - Couch
     - stop admin party mode (create user & pw)
     - somehow deliver export in csv/excel with paragraphs/sentences and their rating
@@ -10,9 +11,6 @@
         - and of the python stuff?
         - adjust README
     - github action
-- wording
-    - Feedback on /instructions?
-    - Screenshots & GIFs on /instructions
 - general
     - Die ganze Seite ist Hölle für screenreader, wegen react-step-wizard
     - Contact (general, on /instructions, on /start-session)
@@ -22,6 +20,8 @@
         - Screenshots & GIFs too small?
     - replace all the "localhost" with the actual url or whatever Docker needs
     - "TODO" comments
+    - Feedback on /instructions?
+    - Screenshots & GIFs on /instructions
 - pre-processing:
     - make input data format more general / easier to replicate -> check Laura's format
     - figure out how to make this available for other people (npm script? -> add to /ui?)
@@ -30,11 +30,15 @@
     - ignore Naderi sentences? Or only some? (bc need some for validity)
 - Schritt 1
     - "show paragraph" button not visible if paragraph too long => does scrolling while holding work?
-- testing
-    - cross-browser
-    - mobile
-    - unit tests lol
+- Feedback
+    - content
+    - database
+    - link to it
 - download results
     - pouch synct beim ersten run noch nicht, erst beim zweiten??
     - und erstellt noch lokale .json für jede db
     - output format?
+- testing
+    - cross-browser
+    - mobile
+    - unit tests lol

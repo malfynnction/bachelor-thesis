@@ -18,6 +18,7 @@ import StartSession from './components/StartSession'
 import createStore from './lib/create-store'
 import createDatabase from './lib/create-database'
 import getFromUrlParams from './lib/get-from-url-params'
+import Feedback from './components/Feedback'
 
 const participantId = createStore('participantId')
 const trainingStore = createStore('trainingState')
@@ -167,6 +168,9 @@ const App = () => {
                     ) : (
                       <Redirect to="/" />
                     )}
+                  </Route>
+                  <Route path="/feedback">
+                    <Feedback />
                   </Route>
                   <Route path="/">
                     <Start />
