@@ -52,8 +52,8 @@ class startSurvey extends React.Component {
     if (previouslyTraining) {
       thankYou = `
         <span>You have successfully submitted your test rating.
-        You can now start an actual survey below.
-        If you have any questions, you can read the
+        You can now start an actual survey below.</span>
+        <span>If you have any questions, you can read the
         <a href='/instructions'>Instructions</a>
         again or contact us at TODO</span>
       `
@@ -84,8 +84,8 @@ class startSurvey extends React.Component {
             <div>
               {this.state.completedTrainingSession
                 ? `You can start ${
-                    previouslyRating ? 'another' : 'a'
-                  } rating survey or do ${
+                    previouslyRating ? 'another' : 'an'
+                  } actual survey or do ${
                     previouslyTraining ? 'another' : 'a little'
                   } test survey before. `
                 : 'Please go through a test survey before you start with actual ratings. '}
