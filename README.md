@@ -34,13 +34,14 @@ _TODO_
 
 ## Database
 
-[CouchDB](https://couchdb.apache.org/) is used for the databases for this project. There are four databases:
+[CouchDB](https://couchdb.apache.org/) is used for the databases for this project. There are five databases:
 
 - participants: All the demographic data on the participants will be stored here
 - ratings: The answers the participants gave in the study will be stored here
 - items: This is the main database for all the texts you want to have rated
 - sessions: The texts will be grouped into "sessions" and will always appear grouped together according to the sessions stored in this database.
   - It is recommended to add a training session, so that participants can get familiar with the website before submitting actual ratings. For a training session, you need to _TODO_. If no training session is declared in your database, a random session will be selected when a user requests to do a training session.
+- feedback: all feedback from the participants will be saved here
 
 They can be populated automatically by providing your texts in _TODO_ format and then running `npm run process-texts`.
 

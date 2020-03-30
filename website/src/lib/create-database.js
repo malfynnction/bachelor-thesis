@@ -20,6 +20,14 @@ const createDatabase = name => {
     getAll: async () => {
       return request.get(`${databaseUrl}/${name}`, { json: true })
     },
+    post: async data => {
+      const result = await request.post({
+        headers: { 'Content-Type': 'application/json' },
+        url: `${databaseUrl}/${name}`,
+        body: JSON.stringify(data),
+      })
+      return result
+    },
     put: async data => {
       const result = await request.put({
         headers: { 'Content-Type': 'application/json' },

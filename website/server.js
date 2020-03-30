@@ -8,11 +8,12 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(bodyParser.raw())
 
-const [participants, ratings, items, sessions] = [
+const [participants, ratings, items, sessions, feedback] = [
   'participants',
   'ratings',
   'items',
   'sessions',
+  'feedback',
 ].map(name => newPouchDb(name))
 
 const getAll = async db => {
@@ -149,6 +150,24 @@ app.put('/database/ratings/_bulk', async (req, res) => {
       })
     )
     .then(result => res.send(result))
+    .catch(e => {
+      console.error(e)
+      res.send(e)
+    })
+})
+
+/*
+ * FEEDBACK
+ */
+
+app.post('/database/feedback', async (req, res) => {
+  const { body } = req
+  feedback
+    .post(body)
+    .then(result => {
+      console.log(result)
+      res.send(result)
+    })
     .catch(e => {
       console.error(e)
       res.send(e)

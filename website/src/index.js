@@ -170,7 +170,7 @@ const App = () => {
                     )}
                   </Route>
                   <Route path="/feedback">
-                    <Feedback />
+                    <Feedback participantId={participantId.get()} />
                   </Route>
                   <Route path="/">
                     <Start />

@@ -1,13 +1,17 @@
-import React, { Fragment } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
+import createDatabase from '../lib/create-database'
 
 class Feedback extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      technicalProblems: undefined,
+      participantId: props.participantId,
+      hadTechnicalProblems: undefined,
       technicalProblemsDetails: '',
       notes: '',
     }
+    this.database = createDatabase('feedback')
   }
 
   onChange(key, value) {
@@ -58,12 +62,16 @@ class Feedback extends React.Component {
             it in the future!
           </div>
         </div>
-        <form>
+        <form
+          onSubmit={e => {
+            e.preventDefault()
+            this.database.post(this.state)
+          }}
+        >
           <div>
             <label>
               <strong>
-                How well did you understand what you were supposed to do and how
-                to do it?
+                How well did you understand what you were supposed to do?
               </strong>
             </label>
             {this.renderRadioButtons([
@@ -90,11 +98,11 @@ class Feedback extends React.Component {
               </strong>
             </label>
             {this.renderRadioButtons([
-              { key: 'technicalProblems', label: 'Yes', value: true },
-              { key: 'technicalProblems', label: 'No', value: false },
+              { key: 'hadTechnicalProblems', label: 'Yes', value: true },
+              { key: 'hadTechnicalProblems', label: 'No', value: false },
             ])}
           </div>
-          {this.state.technicalProblems ? (
+          {this.state.hadTechnicalProblems ? (
             <div>
               <label>
                 <strong>Please describe them in a few words:</strong>
@@ -108,10 +116,14 @@ class Feedback extends React.Component {
             </label>
             {this.renderTextArea('notes')}
           </div>
+          <button className="btn">Submit</button>
         </form>
       </div>
     )
   }
+}
+Feedback.propTypes = {
+  participantId: PropTypes.string,
 }
 
 export default Feedback
