@@ -135,10 +135,25 @@ const summarizeDemographic = async () => {
   }, {})
 }
 
+const downloadFeedback = async () => {
+  const feedbackDb = newPouchDb('feedback')
+  const feedback = await getAllDocs(feedbackDb)
+  const actualFeedback = feedback.map(item => {
+    delete item._id
+    delete item._rev
+    return item
+  })
+  return actualFeedback
+}
+
 summarizeRatings().then(ratings =>
   fs.writeFileSync('./result.json', JSON.stringify(ratings))
 )
 
 summarizeDemographic().then(demographic =>
   fs.writeFileSync('./demographic.json', JSON.stringify(demographic))
+)
+
+downloadFeedback().then(feedback =>
+  fs.writeFileSync('./feedback.json', JSON.stringify(feedback))
 )

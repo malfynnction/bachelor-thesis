@@ -45,4 +45,4 @@ _TODO_
 
 They can be populated automatically by providing your texts in _TODO_ format and then running `npm run process-texts`.
 
-After the study, the ratings and participant demographics can be downloaded by running `node website/download-ratings.js`, the results will then be saved in _TODO_ format.
+After the study, the ratings, the submitted feedback, and the participant demographics can be downloaded by running `node website/download-ratings.js`, the results will then be saved in _TODO_ format.

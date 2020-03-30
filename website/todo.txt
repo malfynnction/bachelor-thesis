@@ -33,7 +33,6 @@
     - "show paragraph" button not visible if paragraph too long => does scrolling while holding work?
 - Feedback
     - content
-    - database
     - link to it
     - success / error message after sending
 - download results
