@@ -34,13 +34,10 @@
 - Schritt 2
     - more / other questions?
     - labels?
-- Schritt 3
-    - content questions?
-- Schritt 4 (hardest sentence)
-    - Ganzen Satz speichern, nicht nur Index? -> (would have to update DB schema)
 - testing
     - cross-browser
     - mobile
     - unit tests lol
 - download results
     - pouch synct beim ersten run noch nicht, erst beim zweiten??
+    - und erstellt noch lokale .json für jede db

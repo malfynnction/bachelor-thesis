@@ -116,13 +116,28 @@ const summarizeDemographic = async () => {
   const participantDb = newPouchDb('participants')
   const participants = await getAllDocs(participantDb)
 
-  console.log(participants)
-  return {}
+  const keys = ['age', 'gender', 'nativeLang', 'gerLevel']
+  return participants.reduce((result, participant) => {
+    keys.forEach(key => {
+      if (!participant[key]) {
+        return
+      }
+      if (!result[key]) {
+        result[key] = {}
+      }
+      const values = participant[key].split(',')
+      values.forEach(value => {
+        const prevResult = result[key][value] || 0
+        result[key][value] = prevResult + 1
+      })
+    })
+    return result
+  }, {})
 }
 
-// summarizeRatings().then(ratings =>
-//   fs.writeFileSync('./result.json', JSON.stringify(ratings))
-// )
+summarizeRatings().then(ratings =>
+  fs.writeFileSync('./result.json', JSON.stringify(ratings))
+)
 
 summarizeDemographic().then(demographic =>
   fs.writeFileSync('./demographic.json', JSON.stringify(demographic))
