@@ -45,7 +45,9 @@ class startSession extends React.Component {
   render() {
     const { previousSession } = this.state
     const previouslyTraining = previousSession === 'Training'
-    const previouslyRating = previousSession && !previouslyTraining
+    const previouslyFeedback = previousSession === 'Feedback'
+    const previouslyRating =
+      previousSession && !previouslyTraining && !previouslyFeedback
     const allowAnotherSession = !this.state.token
 
     let thankYou = ''
@@ -57,6 +59,9 @@ class startSession extends React.Component {
         <a href='/instructions'>Instructions</a>
         again or contact us at TODO</span>
       `
+    } else if (previouslyFeedback) {
+      thankYou +=
+        '<span>Thank you for your feedback, this helps us improve the study in the future!</span>'
     } else if (previousSession) {
       thankYou += '<span>Thank you!</span> <span>Your answers have been saved. '
       if (this.state.token) {
@@ -87,11 +92,11 @@ class startSession extends React.Component {
                     previouslyRating ? 'another' : 'an'
                   } actual survey or do ${
                     previouslyTraining ? 'another' : 'a little'
-                  } test survey before. `
+                  } test survey. `
                 : 'Please go through a test survey before you start with actual ratings. '}
-              A test survey is just like a real survey, except your won't be
-              recorded and you will get a pre-defined set of one very one very
-              easy, one medium, and one very difficult text.
+              A test survey is just like a real survey, except your answers
+              won't be recorded and you will get a pre-defined set of one very
+              one very easy, one medium, and one very difficult text.
             </div>
 
             {this.state.hasActiveSession ? (

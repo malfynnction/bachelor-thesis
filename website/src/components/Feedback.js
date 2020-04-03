@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import createDatabase from '../lib/create-database'
 import '../styles/Feedback.css'
 
@@ -67,7 +68,6 @@ class Feedback extends React.Component {
         <form
           onSubmit={e => {
             e.preventDefault()
-            this.database.post(this.state)
           }}
         >
           <div>
@@ -118,7 +118,15 @@ class Feedback extends React.Component {
             </label>
             {this.renderTextArea('notes')}
           </div>
-          <button className="btn">Submit</button>
+          <Link
+            className="btn"
+            to="/start-session?prev=Feedback"
+            onClick={() => {
+              this.database.post(this.state)
+            }}
+          >
+            Submit
+          </Link>
         </form>
       </div>
     )
