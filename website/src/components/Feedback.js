@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import createDatabase from '../lib/create-database'
+import '../styles/Feedback.css'
 
 class Feedback extends React.Component {
   constructor(props) {
@@ -26,6 +27,7 @@ class Feedback extends React.Component {
           name={key}
           value={this.state[key]}
           onChange={e => this.onChange(key, e.target.value)}
+          className="feedback-textarea"
         />
       </div>
     )
@@ -40,7 +42,7 @@ class Feedback extends React.Component {
             <div key={id}>
               <input
                 type="radio"
-                onChange={e => this.onChange(key, value)}
+                onChange={() => this.onChange(key, value)}
                 checked={this.state[key] === value}
                 id={id}
               />
@@ -83,10 +85,10 @@ class Feedback extends React.Component {
             ])}
           </div>
           <div>
-            <label>
+            <label htmlFor="unclearInstructions">
               <strong>
-                For what (if anything) would you have liked a better / different
-                explanation? What was unclear?
+                What was unclear? For what (if anything) would you have liked a
+                better / different explanation?
               </strong>
             </label>
             {this.renderTextArea('unclearInstructions')}
@@ -104,8 +106,8 @@ class Feedback extends React.Component {
           </div>
           {this.state.hadTechnicalProblems ? (
             <div>
-              <label>
-                <strong>Please describe them in a few words:</strong>
+              <label htmlFor="technicalProblemsDetails">
+                <strong>Please describe the problems in a few words:</strong>
               </label>
               {this.renderTextArea('technicalProblemsDetails')}
             </div>

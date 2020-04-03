@@ -55,10 +55,11 @@ label {
 }
 
 input:focus,
-select:focus {
+select:focus,
+textarea:focus {
   outline: none;
-  border: 2px solid #9fb6c4;
-  box-shadow: 0 0 5px #9fb6c4;
+  border: 1px solid #c50e1f;
+  box-shadow: 0 0 10px #c50e1f66;
 }
 
 .tu-border {

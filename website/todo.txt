@@ -35,6 +35,7 @@
     - content
     - link to it
     - success / error message after sending
+        - success => /start-session?prev=feeedback (mit entsprechender message)
 - download results
     - pouch synct beim ersten run noch nicht, erst beim zweiten??
     - und erstellt noch lokale .json für jede db
@@ -43,3 +44,4 @@
     - cross-browser
     - mobile
     - unit tests lol
+- lighthouse? -> Maybe some interesting numbers for thesis?
