@@ -42,6 +42,68 @@ class startSession extends React.Component {
     }
   }
 
+  renderThankYou() {
+    const { previousSession } = this.state
+
+    if (!previousSession) {
+      return null
+    }
+
+    const previouslyTraining = previousSession === 'Training'
+    const previouslyFeedback = previousSession === 'Feedback'
+    const previouslyRating =
+      previousSession && !previouslyTraining && !previouslyFeedback
+    const allowAnotherSession = !this.state.token
+
+    return (
+      <div className="centered-content centered-text">
+        {previouslyTraining ? (
+          <Fragment>
+            <span>
+              You have successfully submitted your test rating. You can now
+              start an actual survey below.
+            </span>
+            <span>
+              If you have any questions, you can read the{' '}
+              <a href="/instructions">Instructions</a> again or contact us at
+              TODO.
+            </span>
+          </Fragment>
+        ) : previouslyFeedback ? (
+          <span>
+            Thank you for your feedback, this helps us improve the study in the
+            future!
+          </span>
+        ) : previousSession ? (
+          <Fragment>
+            <span>Thank you!</span>
+            <span>
+              Your answers have been saved.{' '}
+              {this.state.token ? (
+                <Fragment>
+                  Your confirmation code is <strong>{this.state.token}</strong>,
+                  please copy it and paste it in the corresponding box on the
+                  TODO website.{' '}
+                </Fragment>
+              ) : null}
+            </span>
+            <span>
+              {allowAnotherSession
+                ? 'You can now close this window or start another survey below.'
+                : 'You can now close this window.'}
+            </span>
+          </Fragment>
+        ) : null}
+        {previouslyRating || previouslyTraining ? (
+          <span>
+            We would appreciate some <a href="/feedback">feedback</a> on the
+            study, so that we can improve it in the future.
+          </span>
+        ) : null}
+      </div>
+    )
+  }
+
   render() {
     const { previousSession } = this.state
     const previouslyTraining = previousSession === 'Training'
@@ -49,41 +111,10 @@ class startSession extends React.Component {
     const previouslyRating =
       previousSession && !previouslyTraining && !previouslyFeedback
     const allowAnotherSession = !this.state.token
-
-    let thankYou = ''
-    if (previouslyTraining) {
-      thankYou = `
-        <span>You have successfully submitted your test rating.
-        You can now start an actual survey below.</span>
-        <span>If you have any questions, you can read the
-        <a href='/instructions'>Instructions</a>
-        again or contact us at TODO</span>
-      `
-    } else if (previouslyFeedback) {
-      thankYou +=
-        '<span>Thank you for your feedback, this helps us improve the study in the future!</span>'
-    } else if (previousSession) {
-      thankYou += '<span>Thank you!</span> <span>Your answers have been saved. '
-      if (this.state.token) {
-        thankYou += `Your confirmation code is <strong>${this.state.token}</strong>, please copy it and paste it in the corresponding box on the TODO website. `
-      }
-      if (allowAnotherSession) {
-        thankYou +=
-          'You can now close this window or start another survey below:'
-      } else {
-        thankYou += 'You can now close this window.'
-      }
-      thankYou += '</span>'
-    }
     return (
       <div className="tu-border tu-glow center-box centered-content">
         <h2>Start {previouslyRating ? 'another' : 'a'} survey</h2>
-        {thankYou ? (
-          <div
-            className="centered-content centered-text"
-            dangerouslySetInnerHTML={{ __html: thankYou }}
-          />
-        ) : null}
+        {this.renderThankYou()}
         {allowAnotherSession ? (
           <Fragment>
             <div>
