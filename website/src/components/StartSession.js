@@ -152,7 +152,7 @@ class startSession extends React.Component {
                     this.deleteActiveSession()
                   }}
                 >
-                  {this.state.hasActiveSession ? 'Start new' : 'Normal'} Survey
+                  Start{this.state.hasActiveSession ? ' new' : ''} Survey
                 </Link>
               ) : null}
               <Link
@@ -163,7 +163,7 @@ class startSession extends React.Component {
                   this.props.onStartTraining()
                 }}
               >
-                Test Survey
+                Start Test Survey
               </Link>
             </div>
           </Fragment>
