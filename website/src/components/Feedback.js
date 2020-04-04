@@ -96,6 +96,32 @@ class Feedback extends React.Component {
           <div>
             <label>
               <strong>
+                Was there a moment where you wanted to give a specific answer
+                but weren't able to?{' '}
+              </strong>
+              <span className="note">
+                (e.g. because of a pre-defined answer set where your option was
+                missing)
+              </span>
+            </label>
+            {this.renderRadioButtons([
+              { key: 'isUnableToAnswerCorrectly', label: 'Yes', value: true },
+              { key: 'isUnableToAnswerCorrectly', label: 'No', value: false },
+            ])}
+          </div>
+          {this.state.isUnableToAnswerCorrectly ? (
+            <div>
+              <label htmlFor="unableToAnswerCorrectlyDetails">
+                <strong>
+                  When did that happen and what did you want to answer?
+                </strong>
+              </label>
+              {this.renderTextArea('unableToAnswerCorrectlyDetails')}
+            </div>
+          ) : null}
+          <div>
+            <label>
+              <strong>
                 Were there any technical problems during the survey?
               </strong>
             </label>

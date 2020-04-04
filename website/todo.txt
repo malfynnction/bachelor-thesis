@@ -36,9 +36,7 @@
     - "show paragraph" button not visible if paragraph too long => does scrolling while holding work?
 - Feedback
     - content
-    - success / error message after sending
-        - success => /start-session?prev=feeedback (mit entsprechender message)
-    - submit funktioniert gerade noch nicht
+    - error message after sending (meh weil async onClick :/)
 - download results
     - pouch synct beim ersten run noch nicht, erst beim zweiten??
     - und erstellt noch lokale .json für jede db
@@ -47,4 +45,3 @@
     - cross-browser
     - mobile
     - unit tests lol
-- lighthouse? -> Maybe some interesting numbers for thesis?
