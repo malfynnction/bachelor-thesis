@@ -1,5 +1,4 @@
 const PouchDB = require('pouchdb')
-const fs = require('fs')
 
 const newPouchDb = name => {
   const db = new PouchDB(name)

@@ -22,6 +22,8 @@ module.exports = {
     // allow import/require of local, unpublished modules
     'node/no-unpublished-require': 'off',
     'node/no-unpublished-import': 'off',
+    // allow the use of apostrophes and quotation marks in html
+    'react/no-unescaped-entities': 'off',
   },
   parserOptions: {
     sourceType: 'module',

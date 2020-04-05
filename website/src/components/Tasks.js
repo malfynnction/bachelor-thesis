@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { get, shuffle } from 'lodash'
+import get from 'lodash.get'
+import shuffle from 'lodash.shuffle'
 import '../styles/Tasks.css'
 import { itemPropType } from '../lib/prop-types'
 
