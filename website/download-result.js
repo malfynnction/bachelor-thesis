@@ -146,14 +146,11 @@ const downloadFeedback = async () => {
   return actualFeedback
 }
 
-summarizeRatings().then(ratings =>
-  fs.writeFileSync('./result.json', JSON.stringify(ratings))
-)
-
-summarizeDemographic().then(demographic =>
-  fs.writeFileSync('./demographic.json', JSON.stringify(demographic))
-)
-
-downloadFeedback().then(feedback =>
-  fs.writeFileSync('./feedback.json', JSON.stringify(feedback))
-)
+module.exports = async () => {
+  const [ratings, demographic, feedback] = await Promise.all([
+    summarizeRatings(),
+    summarizeDemographic(),
+    downloadFeedback(),
+  ])
+  return { ratings, demographic, feedback }
+}

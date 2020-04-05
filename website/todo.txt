@@ -3,8 +3,9 @@
     - "reveal paragraph" impossible for screenreader
 - Couch
     - stop admin party mode (create user & pw)
-    - somehow deliver export in csv/excel with paragraphs/sentences and their rating
     - backups
+- Backend
+    - why can I just access it in browser? CORS???
 - Deploy
     - production setup
     - docker-compose-dev should take care of `npm install` (maybe like https://hackernoon.com/a-better-way-to-develop-node-js-with-docker-cd29d3a0093??)
@@ -14,20 +15,20 @@
 - general
     - Die ganze Seite ist Hölle für screenreader, wegen react-step-wizard
     - Contact (general, on /instructions, on /start-session)
-    - Feedback form / possibility somewhere
-    - mobile
-        - Screenshots & GIFs specifically for mobile?
-        - Screenshots & GIFs too small?
     - replace all the "localhost" with the actual url or whatever Docker needs
     - "TODO" comments
-    - Feedback on /instructions?
-    - Screenshots & GIFs on /instructions
 - pre-processing:
     - make input data format more general / easier to replicate -> check Laura's format
     - figure out how to make this available for other people (npm script? -> add to /ui?)
     - how to upload to DB
     - create requirements.txt
     - ignore Naderi sentences? Or only some? (bc need some for validity)
+- instructions:
+    - mobile
+        - Screenshots & GIFs specifically for mobile?
+        - Screenshots & GIFs too small?
+    - Feedback on wording?
+    - Screenshots & GIFs
 - create participant: nutze niedrigste freie ID statt nächsthöchste?
 - start-session
     - refactor wording?
@@ -38,8 +39,6 @@
     - content
     - error message after sending (meh weil async onClick :/)
 - download results
-    - pouch synct beim ersten run noch nicht, erst beim zweiten??
-    - und erstellt noch lokale .json für jede db
     - output format?
 - testing
     - cross-browser

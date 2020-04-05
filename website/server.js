@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const hash = require('object-hash')
 const newPouchDb = require('./src/lib/new-pouch-db')
+const downloadResult = require('./download-result')
 
 const app = express()
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -172,6 +173,15 @@ app.post('/database/feedback', async (req, res) => {
       console.error(e)
       res.send(e)
     })
+})
+
+/*
+ * RESULT
+ */
+
+app.get('/database/result', async (req, res) => {
+  const result = await downloadResult()
+  res.send(result)
 })
 
 app.listen(process.env.SERVER_PORT || 8080)

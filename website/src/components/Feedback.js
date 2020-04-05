@@ -100,8 +100,8 @@ class Feedback extends React.Component {
                 but weren't able to?{' '}
               </strong>
               <span className="note">
-                (e.g. because of a pre-defined answer set where your option was
-                missing)
+                (e.g. because of a pre-defined set of answers where your option
+                was missing)
               </span>
             </label>
             {this.renderRadioButtons([
