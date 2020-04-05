@@ -120,11 +120,15 @@ const App = () => {
                           }
                         }
                         pouchParticipants.getAll().then(async docs => {
-                          const usedIds = docs.map(
-                            participant => participant._id
+                          const usedIds = docs.map(participant =>
+                            parseInt(participant._id)
                           )
-                          const newId =
-                            loggedInId || Math.max(...usedIds, 0) + 1
+
+                          let lowestUnused = 1
+                          while (usedIds.includes(lowestUnused)) {
+                            lowestUnused++
+                          }
+                          const newId = loggedInId || lowestUnused
                           await pouchParticipants.put({
                             ...data,
                             _id: newId.toString(),

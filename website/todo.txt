@@ -29,7 +29,6 @@
         - Screenshots & GIFs too small?
     - Feedback on wording?
     - Screenshots & GIFs
-- create participant: nutze niedrigste freie ID statt nächsthöchste?
 - start-session
     - refactor wording?
     - styling (z.B. Text weniger breit? Nicht centered? Ugh??)
