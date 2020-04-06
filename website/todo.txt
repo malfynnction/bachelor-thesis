@@ -32,8 +32,6 @@
 - start-session
     - refactor wording?
     - styling (z.B. Text weniger breit? Nicht centered? Ugh??)
-- Schritt 1
-    - "show paragraph" button not visible if paragraph too long => does scrolling while holding work?
 - Feedback
     - content
     - error message after sending (meh weil async onClick :/)

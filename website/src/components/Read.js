@@ -6,6 +6,30 @@ import { itemPropType } from '../lib/prop-types'
 
 const spaceKeyCode = 32
 
+const ShowItemTrigger = ({ children, revealItem, hideItem }) => {
+  return (
+    <div
+      onTouchStart={revealItem}
+      onTouchEnd={hideItem}
+      onMouseDown={revealItem}
+      onMouseUp={hideItem}
+      onMouseLeave={hideItem}
+      onKeyDown={e => {
+        if (e.keyCode === spaceKeyCode) {
+          revealItem()
+        }
+      }}
+      onKeyUp={e => {
+        if (e.keyCode === spaceKeyCode) {
+          hideItem()
+        }
+      }}
+    >
+      {children}
+    </div>
+  )
+}
+
 class Read extends React.Component {
   constructor(props) {
     super(props)
@@ -29,35 +53,23 @@ class Read extends React.Component {
         {timerControl => (
           <Fragment>
             <div className="note">
-              (Hold the Button "Show Paragraph" below to reveal the text)
+              (Click and hold the paragraph or the button "Show Paragraph" to
+              reveal the text)
             </div>
-            <p className={`item-text centered-content`}>
-              <span>
-                <span className={`${this.state.showItem ? '' : 'hidden'}`}>
-                  <span className="hidden-content">{text}</span>
-                </span>
-              </span>
-            </p>
-            <button
-              className="btn button-secondary"
-              onTouchStart={() => this.revealItem(timerControl)}
-              onTouchEnd={() => this.hideItem(timerControl, Timer)}
-              onMouseDown={() => this.revealItem(timerControl)}
-              onMouseUp={() => this.hideItem(timerControl, Timer)}
-              onMouseLeave={() => this.hideItem(timerControl, Timer)}
-              onKeyDown={e => {
-                if (e.keyCode === spaceKeyCode) {
-                  this.revealItem(timerControl)
-                }
-              }}
-              onKeyUp={e => {
-                if (e.keyCode === spaceKeyCode) {
-                  this.hideItem(timerControl, Timer)
-                }
-              }}
+            <ShowItemTrigger
+              timerControl={timerControl}
+              revealItem={() => this.revealItem(timerControl)}
+              hideItem={() => this.hideItem(timerControl)}
             >
-              Show Paragraph
-            </button>
+              <p className={`item-text centered-content`}>
+                <span>
+                  <span className={`${this.state.showItem ? '' : 'hidden'}`}>
+                    <span className="hidden-content">{text}</span>
+                  </span>
+                </span>
+              </p>
+              <button className="btn button-secondary">Show Paragraph</button>
+            </ShowItemTrigger>
           </Fragment>
         )}
       </Timer>
