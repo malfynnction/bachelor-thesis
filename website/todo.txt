@@ -4,6 +4,8 @@
 - Couch
     - stop admin party mode (create user & pw)
     - backups
+        - where?
+        - what is the difference between localhost:5984 and couchdb:5984? Which one do I use?
 - Backend
     - why can I just access it in browser? CORS???
 - Deploy
@@ -27,17 +29,22 @@
     - mobile
         - Screenshots & GIFs specifically for mobile?
         - Screenshots & GIFs too small?
-    - Feedback on wording?
+    - wording
     - Screenshots & GIFs
 - start-session
     - refactor wording?
     - styling (z.B. Text weniger breit? Nicht centered? Ugh??)
-- Feedback
-    - content
-    - error message after sending (meh weil async onClick :/)
-- download results
-    - output format?
 - testing
     - cross-browser
     - mobile
     - unit tests lol
+
+
+======= AFTER "MAIL TO BABAK" ======
+
+- download results
+    - output format?
+- Feedback
+    - content
+- general
+    - Contact (general, on /instructions, on /start-session)
