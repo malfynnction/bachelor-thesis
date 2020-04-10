@@ -1,8 +1,8 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const hash = require('object-hash')
-const newPouchDb = require('./src/lib/new-pouch-db')
-const downloadResult = require('./download-result')
+const newPouchDb = require('./lib/new-pouch-db')
+const downloadResult = require('./lib/download-result')
 
 const app = express()
 app.use(bodyParser.urlencoded({ extended: true }))

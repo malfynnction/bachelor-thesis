@@ -1,11 +1,14 @@
 - accessibility
     - Button gedrückt halten meh
     - "reveal paragraph" impossible for screenreader
+    - Die ganze Seite ist Hölle für screenreader, wegen react-step-wizard
 - Couch
     - stop admin party mode (create user & pw)
     - backups
         - where?
         - what is the difference between localhost:5984 and couchdb:5984? Which one do I use?
+        - cronjob
+        - dump instead of replicate
 - Backend
     - why can I just access it in browser? CORS???
 - Deploy
@@ -15,8 +18,6 @@
         - adjust README
     - github action
 - general
-    - Die ganze Seite ist Hölle für screenreader, wegen react-step-wizard
-    - Contact (general, on /instructions, on /start-session)
     - replace all the "localhost" with the actual url or whatever Docker needs
     - "TODO" comments
 - pre-processing:
@@ -38,7 +39,8 @@
     - cross-browser
     - mobile
     - unit tests lol
-
+- bugs
+    - create new participant -> complete training session -> demographic data is missing in db??
 
 ======= AFTER "MAIL TO BABAK" ======
 

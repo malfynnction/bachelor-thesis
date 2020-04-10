@@ -11,8 +11,8 @@ venv/
 website/processed-texts/*
 !website/processed-texts/.keep
 **/build
-website/couchdb/data/*
-!website/couchdb/data/.keep
+**/couchdb/data/*
+!**/couchdb/data/.keep
 
 npm-debug.log*
 yarn-debug.log*

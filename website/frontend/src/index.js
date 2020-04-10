@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useRef } from 'react'
 import ReactDOM from 'react-dom'
-import './bootstrap/bootstrap.css'
+import './styles/bootstrap/bootstrap.css'
 import './styles/index.css'
 import * as serviceWorker from './serviceWorker'
 import {
