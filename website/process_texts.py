@@ -97,7 +97,6 @@ def main():
             "type": "paragraph",
             "text": text.text,
             "sentences": sentences,
-            # "partsOfSpeech": parts_of_speech,
             "clozes": get_clozes(remove_punctuation(parts_of_speech))
         }
 
@@ -115,7 +114,6 @@ def main():
                     "type": "sentence",
                     "text": sentence,
                     "enclosingParagraph": text.text,
-                    # "partsOfSpeech": sentence_parts_of_speech,
                     "clozes": get_clozes(remove_punctuation(sentence_parts_of_speech), alternative_pool=parts_of_speech)
                 }
                 item_documents.append(sentence_document)
