@@ -39,8 +39,7 @@
     - cross-browser
     - mobile
     - unit tests lol
-- bugs
-    - create new participant -> complete training session -> demographic data is missing in db??
+- should download-results use the existing API endpoints?
 
 ======= AFTER "MAIL TO BABAK" ======
 

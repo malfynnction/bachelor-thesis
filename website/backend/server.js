@@ -35,28 +35,14 @@ const getAll = async db => {
 
 app.get('/database/participants', async (req, res) => {
   const result = await getAll(participants)
-  res.send(
-    result.map(participant => {
-      return {
-        _id: participant._id,
-        _rev: participant._rev,
-        completedSessions: participant.completedSessions,
-        completedTrainingSession: participant.completedTrainingSession,
-      }
-    })
-  )
+  res.send(result)
 })
 app.get('/database/participants/:id', async (req, res) => {
   const { id } = req.params
   participants
     .get(id)
     .then(result => {
-      res.send({
-        _id: result._id,
-        _rev: result._rev,
-        completedSessions: result.completedSessions,
-        completedTrainingSession: result.completedTrainingSession,
-      })
+      res.send(result)
     })
     .catch(e => {
       console.error(e)
@@ -77,7 +63,6 @@ app.put('/database/participants', async (req, res) => {
       completedSessions: body.completedSessions,
     })
     .then(result => {
-      console.log(result)
       res.send(result)
     })
     .catch(e => {
@@ -166,7 +151,6 @@ app.post('/database/feedback', async (req, res) => {
   feedback
     .post(body)
     .then(result => {
-      console.log(result)
       res.send(result)
     })
     .catch(e => {
