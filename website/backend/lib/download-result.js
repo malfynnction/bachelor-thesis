@@ -1,14 +1,3 @@
-const PouchDB = require('pouchdb')
-
-const newPouchDb = name => {
-  const db = new PouchDB(name)
-  db.sync(`http://localhost:5984/${name}`, {
-    live: true,
-    retry: true,
-  })
-  return db
-}
-
 const getAllDocs = async db => {
   return db
     .allDocs({ include_docs: true })
@@ -49,13 +38,10 @@ const getHardestSentences = ratings => {
   return Object.keys(voteCounts).filter(key => voteCounts[key] === maxVotes)
 }
 
-const summarizeRatings = async () => {
-  const ratingDb = newPouchDb('ratings')
-  const itemDb = newPouchDb('items')
-
+const summarizeRatings = async (ratingDB, itemDB) => {
   const [ratings, items] = await Promise.all([
-    getAllDocs(ratingDb),
-    getAllDocs(itemDb),
+    getAllDocs(ratingDB),
+    getAllDocs(itemDB),
   ])
 
   const allQuestions = ['readability', 'understandability', 'complexity']
@@ -111,9 +97,8 @@ const summarizeRatings = async () => {
   }, {})
 }
 
-const summarizeDemographic = async () => {
-  const participantDb = newPouchDb('participants')
-  const participants = await getAllDocs(participantDb)
+const summarizeDemographic = async participantDB => {
+  const participants = await getAllDocs(participantDB)
 
   const keys = ['age', 'gender', 'nativeLang', 'gerLevel']
   return participants.reduce((result, participant) => {
@@ -134,9 +119,8 @@ const summarizeDemographic = async () => {
   }, {})
 }
 
-const downloadFeedback = async () => {
-  const feedbackDb = newPouchDb('feedback')
-  const feedback = await getAllDocs(feedbackDb)
+const downloadFeedback = async feedbackDB => {
+  const feedback = await getAllDocs(feedbackDB)
   const actualFeedback = feedback.map(item => {
     delete item._id
     delete item._rev
@@ -145,11 +129,11 @@ const downloadFeedback = async () => {
   return actualFeedback
 }
 
-module.exports = async () => {
+module.exports = async ({ participantDB, itemDB, ratingDB, feedbackDB }) => {
   const [ratings, demographic, feedback] = await Promise.all([
-    summarizeRatings(),
-    summarizeDemographic(),
-    downloadFeedback(),
+    summarizeRatings(ratingDB, itemDB),
+    summarizeDemographic(participantDB),
+    downloadFeedback(feedbackDB),
   ])
   return { ratings, demographic, feedback }
 }

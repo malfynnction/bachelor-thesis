@@ -1,16 +1,14 @@
 - accessibility
-    - Button gedrückt halten meh
     - "reveal paragraph" impossible for screenreader
     - Die ganze Seite ist Hölle für screenreader, wegen react-step-wizard
 - Couch
     - stop admin party mode (create user & pw)
     - backups
         - where?
-        - what is the difference between localhost:5984 and couchdb:5984? Which one do I use?
         - cronjob
         - dump instead of replicate
 - Backend
-    - why can I just access it in browser? CORS???
+    - why can I just access it in browser????
 - Deploy
     - production setup
     - docker-compose-dev should take care of `npm install` (maybe like https://hackernoon.com/a-better-way-to-develop-node-js-with-docker-cd29d3a0093??)
@@ -39,13 +37,4 @@
     - cross-browser
     - mobile
     - unit tests lol
-- should download-results use the existing API endpoints?
-
-======= AFTER "MAIL TO BABAK" ======
-
-- download results
-    - output format?
-- Feedback
-    - content
-- general
-    - Contact (general, on /instructions, on /start-session)
+    

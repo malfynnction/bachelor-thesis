@@ -164,7 +164,12 @@ app.post('/database/feedback', async (req, res) => {
  */
 
 app.get('/database/result', async (req, res) => {
-  const result = await downloadResult()
+  const result = await downloadResult({
+    participantDB: participants,
+    itemDB: items,
+    ratingDB: ratings,
+    feedbackDB: feedback,
+  })
   res.send(result)
 })
 
