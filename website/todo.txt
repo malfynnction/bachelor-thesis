@@ -19,6 +19,7 @@
     - "TODO" comments
     - catch backend errors (v.a. 404)
     - Routing kaputt (Reload)
+    - /database -> /api
 - pre-processing:
     - make input data format more general / easier to replicate -> check Laura's format
     - figure out how to make this available for other people (npm script? -> add to /ui?)
