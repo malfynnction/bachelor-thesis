@@ -1,0 +1,28 @@
+version: '3.7'
+services:
+  couchdb:
+    image: couchdb:2.3.1
+    volumes:
+      - ./couchdb/data:/opt/couchdb/data
+  backend:
+    image: malfynnction/bachelor-backend:0.1.0
+    depends_on:
+      - couchdb
+  frontend:
+    image: malfynnction/bachelor-frontend:0.1.0
+    depends_on:
+      - backend
+  nginx:
+    image: nginx:1.17.8-alpine
+    ports:
+      - 80:80
+    volumes:
+      - type: bind
+        source: nginx.conf
+        target: /etc/nginx/conf.d/default.conf
+      - type: bind
+        source: htpasswd
+        target: /etc/nginx/htpasswd
+    depends_on:
+      - backend
+      - frontend
