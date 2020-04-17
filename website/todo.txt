@@ -6,18 +6,19 @@
     - backups
         - where?
         - cronjob
-        - dump instead of replicate
-- Backend
-    - why can I just access it in browser????
+        - dump /data instead of replicate
 - Deploy
     - production setup
     - docker-compose-dev should take care of `npm install` (maybe like https://hackernoon.com/a-better-way-to-develop-node-js-with-docker-cd29d3a0093??)
         - and of the python stuff?
         - adjust README
     - github action
+    - Monitoring??
 - general
     - replace all the "localhost" with the actual url or whatever Docker needs
     - "TODO" comments
+    - catch backend errors (v.a. 404)
+    - Routing kaputt (Reload)
 - pre-processing:
     - make input data format more general / easier to replicate -> check Laura's format
     - figure out how to make this available for other people (npm script? -> add to /ui?)
@@ -31,7 +32,6 @@
     - wording
     - Screenshots & GIFs
 - start-session
-    - refactor wording?
     - styling (z.B. Text weniger breit? Nicht centered? Ugh??)
 - testing
     - cross-browser
