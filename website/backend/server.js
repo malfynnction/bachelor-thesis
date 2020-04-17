@@ -29,6 +29,15 @@ const getAll = async db => {
     })
 }
 
+const shutdown = () => {
+  console.log('Shutting down backend server...')
+  server.close(() => {
+    console.log('Backend server shut down.')
+  })
+  //eslint-disable-next-line  no-process-exit
+  process.exit(0)
+}
+
 /*
  * PARTICIPANTS
  */
@@ -173,4 +182,13 @@ app.get('/database/result', async (req, res) => {
   res.send(result)
 })
 
-app.listen(process.env.SERVER_PORT || 8080)
+console.log('Starting backend service...')
+
+const port = process.env.SERVER_PORT || 8080
+
+const server = app.listen(port, () => {
+  console.log(`Backend server listening on Port ${port}`)
+})
+
+process.on('SIGTERM', shutdown)
+process.on('SIGINT', shutdown)

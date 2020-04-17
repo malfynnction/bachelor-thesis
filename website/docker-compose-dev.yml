@@ -5,7 +5,7 @@ services:
     ports:
       - 5984:5984
     volumes:
-      - ./backend/couchdb/data:/opt/couchdb/data
+      - ./couchdb/data:/opt/couchdb/data
   backend:
     image: node:12.16
     ports:
