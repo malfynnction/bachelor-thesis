@@ -7,3 +7,5 @@ RUN npm install
 
 COPY . /app
 ENTRYPOINT ["node", "/app/server.js" ]
+
+EXPOSE 8080

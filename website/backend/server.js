@@ -184,8 +184,7 @@ app.get('/database/result', async (req, res) => {
 
 console.log('Starting backend service...')
 
-const port = process.env.SERVER_PORT || 8080
-
+const port = 8080
 const server = app.listen(port, () => {
   console.log(`Backend server listening on Port ${port}`)
 })
