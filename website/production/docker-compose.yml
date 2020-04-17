@@ -2,6 +2,7 @@ version: '3.7'
 services:
   couchdb:
     image: couchdb:2.3.1
+    restart: always
     volumes:
       - ./couchdb/data:/opt/couchdb/data
   backend:
@@ -10,12 +11,15 @@ services:
       - couchdb
   frontend:
     image: malfynnction/bachelor-frontend:0.1.0
+    restart: always
     depends_on:
       - backend
   nginx:
     image: nginx:1.17.8-alpine
+    restart: always
     ports:
       - 80:80
+      - 443:443
     volumes:
       - type: bind
         source: ./nginx.conf
@@ -23,6 +27,23 @@ services:
       - type: bind
         source: ./htpasswd
         target: /etc/nginx/htpasswd
+      - type: bind
+        source: ./certbot/conf
+        target: /etc/letsencrypt
+      - type: bind
+        source: ./certbot/www
+        target: /var/www/certbot
     depends_on:
       - backend
       - frontend
+  certbot:
+    image: certbot/certbot:v1.3.0
+    restart: always
+    volumes:
+      - type: bind
+        source: ./certbot/conf
+        target: /etc/letsencrypt
+      - type: bind
+        source: ./certbot/www
+        target: /var/www/certbot
+    entrypoint: "/bin/sh -c 'while true; do certbot renew; sleep 43200; done'"
