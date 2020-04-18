@@ -1,6 +1,6 @@
 const request = require('request-promise-native')
 
-const databaseUrl = 'http://localhost:8000/database'
+const databaseUrl = 'http://localhost:8000/api'
 
 const createDatabase = name => {
   return {

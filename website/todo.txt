@@ -8,7 +8,6 @@
         - cronjob
         - dump /data instead of replicate
 - Deploy
-    - production setup
     - docker-compose-dev should take care of `npm install` (maybe like https://hackernoon.com/a-better-way-to-develop-node-js-with-docker-cd29d3a0093??)
         - and of the python stuff?
         - adjust README
@@ -18,8 +17,7 @@
     - replace all the "localhost" with the actual url or whatever Docker needs
     - "TODO" comments
     - catch backend errors (v.a. 404)
-    - Routing kaputt (Reload)
-    - /database -> /api
+    - Routing in production kaputt (Reload)
 - pre-processing:
     - make input data format more general / easier to replicate -> check Laura's format
     - figure out how to make this available for other people (npm script? -> add to /ui?)

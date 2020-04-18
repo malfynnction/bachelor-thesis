@@ -42,11 +42,11 @@ const shutdown = () => {
  * PARTICIPANTS
  */
 
-app.get('/database/participants', async (req, res) => {
+app.get('/api/participants', async (req, res) => {
   const result = await getAll(participants)
   res.send(result)
 })
-app.get('/database/participants/:id', async (req, res) => {
+app.get('/api/participants/:id', async (req, res) => {
   const { id } = req.params
   participants
     .get(id)
@@ -58,7 +58,7 @@ app.get('/database/participants/:id', async (req, res) => {
       res.send(e)
     })
 })
-app.put('/database/participants', async (req, res) => {
+app.put('/api/participants', async (req, res) => {
   const { body } = req
   participants
     .put({
@@ -84,7 +84,7 @@ app.put('/database/participants', async (req, res) => {
  * ITEMS
  */
 
-app.get('/database/items/:id', async (req, res) => {
+app.get('/api/items/:id', async (req, res) => {
   const { id } = req.params
   items
     .get(id)
@@ -101,11 +101,11 @@ app.get('/database/items/:id', async (req, res) => {
  * SESSIONS
  */
 
-app.get('/database/sessions', async (req, res) => {
+app.get('/api/sessions', async (req, res) => {
   const result = await getAll(sessions)
   res.send(result)
 })
-app.get('/database/sessions/:id', async (req, res) => {
+app.get('/api/sessions/:id', async (req, res) => {
   const { id } = req.params
   sessions
     .get(id)
@@ -122,7 +122,7 @@ app.get('/database/sessions/:id', async (req, res) => {
  * RATINGS
  */
 
-app.put('/database/ratings/_bulk', async (req, res) => {
+app.put('/api/ratings/_bulk', async (req, res) => {
   const { body } = req
   const options = JSON.parse(req.header('x-options'))
 
@@ -155,7 +155,7 @@ app.put('/database/ratings/_bulk', async (req, res) => {
  * FEEDBACK
  */
 
-app.post('/database/feedback', async (req, res) => {
+app.post('/api/feedback', async (req, res) => {
   const { body } = req
   feedback
     .post(body)
@@ -172,7 +172,7 @@ app.post('/database/feedback', async (req, res) => {
  * RESULT
  */
 
-app.get('/database/result', async (req, res) => {
+app.get('/api/result', async (req, res) => {
   const result = await downloadResult({
     participantDB: participants,
     itemDB: items,
