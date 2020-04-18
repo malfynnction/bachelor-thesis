@@ -27,7 +27,7 @@ const consentForm = (
       information such as your name, email address or IP address. Your answers
       will be saved anonymously, using only an automatically generated
       participant ID to identify you. No personal data other than the
-      demographic TODO above will be saved or published.
+      demographic information above will be saved or published.
     </p>
 
     <p>Clicking on the "I Agree" button below indicates that:</p>
@@ -233,7 +233,7 @@ class Demographics extends React.Component {
                 }}
                 className="clickable"
               >
-                consent notification {/* TODO */}
+                consent notification
               </span>
               and want to participate in this study.
             </label>

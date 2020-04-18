@@ -88,9 +88,8 @@ const Instructions = props => {
         <h5>2. Questions</h5>
         <p>
           In the second step, you will be asked questions about the text, for
-          example how complex it is or how well you understood it. You can
-          choose your answer by clicking anywhere on the scale. TODO: image /
-          gif
+          example how complex you think it is or how well you understood it.
+          TODO: image / gif
         </p>
         <h5>3. Cloze Test</h5>
         <p>
