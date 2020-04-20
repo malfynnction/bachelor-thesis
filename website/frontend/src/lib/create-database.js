@@ -1,6 +1,10 @@
 const request = require('request-promise-native')
 
-const databaseUrl = 'http://localhost:8000/api'
+const backendUrl =
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:8000'
+    : 'http://nginx'
+const databaseUrl = `${backendUrl}/api`
 
 const createDatabase = name => {
   return {
