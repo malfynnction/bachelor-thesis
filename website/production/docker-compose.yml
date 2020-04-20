@@ -5,6 +5,7 @@ services:
     restart: always
     volumes:
       - ./couchdb/data:/opt/couchdb/data
+      - ./couchdb.ini:/opt/couchdb/etc/local.ini
   backend:
     image: malfynnction/bachelor-backend:0.1.0
     depends_on:

@@ -13,6 +13,7 @@ website/processed-texts/*
 **/build
 **/couchdb/data/*
 !**/couchdb/data/.keep
+website/production/couchdb.ini
 
 npm-debug.log*
 yarn-debug.log*

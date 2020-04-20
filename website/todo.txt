@@ -2,7 +2,6 @@
     - "reveal paragraph" impossible for screenreader
     - Die ganze Seite ist Hölle für screenreader, wegen react-step-wizard
 - Couch
-    - stop admin party mode (create user & pw)
     - backups
         - where?
         - cronjob
