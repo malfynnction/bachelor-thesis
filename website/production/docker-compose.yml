@@ -13,6 +13,8 @@ services:
   frontend:
     image: malfynnction/bachelor-frontend:0.1.0
     restart: always
+    environment:
+      - REACT_APP_URL=https://text-stat.qu.tu-berlin.de
     depends_on:
       - backend
   nginx:
