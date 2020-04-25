@@ -14,7 +14,9 @@ website/processed-texts/*
 **/couchdb/data/*
 !**/couchdb/data/.keep
 website/production/couchdb.ini
+coverage/
 
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
