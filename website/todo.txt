@@ -17,7 +17,6 @@
     - make input data format more general / easier to replicate -> check Laura's format
     - figure out how to make this available for other people (npm script? -> add to /ui?)
         - adjust README re:installation of python stuff
-    - how to upload to DB
     - create requirements.txt
     - ignore Naderi sentences? Or only some? (bc need some for validity)
 - instructions:

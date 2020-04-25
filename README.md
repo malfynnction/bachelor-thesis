@@ -46,6 +46,6 @@ _TODO_
   - It is recommended to add a training session, so that participants can get familiar with the website before submitting actual ratings. For a training session, you need to _TODO_. If no training session is declared in your database, a random session will be selected when a user requests to do a training session.
 - feedback: all feedback from the participants will be saved here
 
-They can be populated automatically by providing your texts in _TODO_ format and then running `npm run process-texts`.
+The `item` and `session` docs can be generated automatically by providing your texts in _TODO_ format and then running `npm run process-texts`. This will create two files in `website/processed-texts`. You then need to upload this folder to your server (e.g. via `scp website/processed-texts/* TODO:processed-texts/`) and add them to your DB by running `public/bin/upload-texts.sh` on your server.
 
 After the study, the ratings, the submitted feedback, and the participant demographics can be downloaded by requesting /api/results, the results will then be returned in _TODO_ format.
