@@ -47,25 +47,23 @@ const Instructions = props => {
         </p>
         <p>
           This study is part of my Bachelor's thesis, in which I'm composing a
-          data set of German sentences and paragraphs and a rating of their
-          complexity and understandability. This data set can then be used as a
-          base to identify the most complex parts of a text and later
-          automatically "translate" them to simpler language.
+          data set of German texts and a rating of their complexity and
+          understandability. This data set can then be used as a basis for
+          identifying the most complex parts of texts and later automatically
+          "translate" them to simpler language.
         </p>
         <p>
-          In this study, you will have to read sentences and paragraphs and
-          answer questions about their complexity and understandability. All the
-          texts from the data set are grouped in "sessions" of TODO texts. TODO:
-          Your answers will only be saved after rating an entire group of items,
-          not after each individual text. Each rating process is divided in
-          three steps:
+          In this study, you will read sentences & paragraphs and answer
+          questions about their complexity and understandability. Each survey
+          consists of TODO texts, for each of which you will be led through the
+          following three steps:
         </p>
         <h5>1. Reading</h5>
         <p>
           In the first step you can read the text that you will be rating. This
-          page will look slightly different, depending on whether the text is an
-          entire paragraph or a single sentence. For sentences, you will see the
-          sentence at the top of the page, in a grey box. Please read it
+          page will look slightly different depending on whether the text is an
+          entire paragraph or a single sentence. For sentences you will see the
+          sentence at the top of the page in a grey box. Please read it
           carefully to make sure you understand it as well as possible.
           Underneath the sentence you will find the paragraph that the sentence
           was taken from. You don't <em>have</em> to read it, but it can help
@@ -75,9 +73,14 @@ const Instructions = props => {
           text will be hidden unless you hold a button below the text. Please
           make sure you read the entire paragraph and understand it as well as
           you can.
-          <span className="img-wrap">
+          <span className="img-wrap img-2">
             <img
               src="instructions-read.gif"
+              alt="GIF of the page where you can read the text. The heading says 'TODO' but the text is hidden by a light blue block. A cursor appears, presses a button labeled 'TODO' and the block disappears, making the text readable as long as the button is held, the the block appears again."
+              className="instruction-img"
+            />
+            <img
+              src="instructions-read-sentence.png"
               alt="GIF of the page where you can read the text. The heading says 'TODO' but the text is hidden by a light blue block. A cursor appears, presses a button labeled 'TODO' and the block disappears, making the text readable as long as the button is held, the the block appears again."
               className="instruction-img"
             />
@@ -89,21 +92,26 @@ const Instructions = props => {
         <p>
           In the second step, you will be asked questions about the text, for
           example how complex you think it is or how well you understood it.
-          TODO: image / gif
         </p>
         <h5>3. Cloze Test</h5>
         <p>
-          In the last step, you will see the text again, with one or more words
-          missing. Please select the word that was deleted from the original
-          text in the dropdown menu. TODO: image/gif
+          In the last step you will see the text again, but with several words
+          left out. Please select the missing words in the dropdown menus.
+          <span className="img-wrap">
+            <img
+              src="instructions-cloze.png"
+              alt="GIF of the page where you can read the text. The heading says 'TODO' but the text is hidden by a light blue block. A cursor appears, presses a button labeled 'TODO' and the block disappears, making the text readable as long as the button is held, the the block appears again."
+              className="instruction-img"
+            />
+          </span>
         </p>
         <h5>Finish</h5>
         <p>
-          After you completed the rating for one text, you will get a new
-          sentence or paragraph of the same session (group of texts) and can
-          start the rating of that text. After completing all texts of a
-          session, your answers will be saved and you will be redirected to the
-          homepage. TODO: image?
+          After you complete the rating for one text, you will get the next
+          sentence or paragraph and can start the rating of that text. After
+          completing all texts of a survey, your answers will be saved and you
+          will be redirected to the homepage. You can then start another survey
+          if you want to.
         </p>
         {loggedInId !== null ? (
           <Link

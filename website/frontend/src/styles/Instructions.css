@@ -14,6 +14,10 @@
   justify-content: center;
 }
 
+.img-2 > img {
+  width: 50%;
+}
+
 .login-input {
   margin-right: 0.5rem;
 }

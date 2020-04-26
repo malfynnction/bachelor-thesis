@@ -25,6 +25,8 @@
         - Screenshots & GIFs too small?
     - wording
     - Screenshots & GIFs
+        - proper alt texts
+        - Step 1: sentence vs. paragraph besser darstellen
 - start-session
     - styling (z.B. Text weniger breit? Nicht centered? Ugh??)
 - testing
