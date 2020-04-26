@@ -69,18 +69,18 @@ const Instructions = props => {
           was taken from. You don't <em>have</em> to read it, but it can help
           you understand the sentence.
           <br />
-          For paragraphs, we will measure how long it takes to read them, so the
+          For paragraphs we will measure how long it takes to read them, so the
           text will be hidden unless you hold a button below the text. Please
           make sure you read the entire paragraph and understand it as well as
           you can.
           <span className="img-wrap img-2">
             <img
-              src="instructions-read.gif"
+              src="instructions-read-sentence.png"
               alt="GIF of the page where you can read the text. The heading says 'TODO' but the text is hidden by a light blue block. A cursor appears, presses a button labeled 'TODO' and the block disappears, making the text readable as long as the button is held, the the block appears again."
               className="instruction-img"
             />
             <img
-              src="instructions-read-sentence.png"
+              src="instructions-read-paragraph.gif"
               alt="GIF of the page where you can read the text. The heading says 'TODO' but the text is hidden by a light blue block. A cursor appears, presses a button labeled 'TODO' and the block disappears, making the text readable as long as the button is held, the the block appears again."
               className="instruction-img"
             />
