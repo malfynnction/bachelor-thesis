@@ -19,6 +19,7 @@ import createStore from './lib/create-store'
 import createDatabase from './lib/create-database'
 import getFromUrlParams from './lib/get-from-url-params'
 import Feedback from './components/Feedback'
+import Consent from './components/Consent'
 
 const participantId = createStore('participantId')
 const trainingStore = createStore('trainingState')
@@ -109,6 +110,7 @@ const App = () => {
 
                   <Route path="/demographics">
                     <Demographics
+                      consent={getFromUrlParams('consent', props)}
                       createUser={async data => {
                         const loggedInId = participantId.get()
                         if (loggedInId) {
@@ -179,6 +181,9 @@ const App = () => {
                     ) : (
                       <Redirect to="/start" />
                     )}
+                  </Route>
+                  <Route path="/consent">
+                    <Consent prev={getFromUrlParams('prev', props)} />
                   </Route>
                   <Route path="/">
                     <Start />

@@ -6,13 +6,19 @@
         - where?
         - cronjob
         - dump /data instead of replicate
+    - config wird nicht richtig auf den Server kopiert?
+    - proper admin credentials
 - Deploy
     - github action?
     - Monitoring??
+    - nginx logging ohne IPs
 - general
     - "TODO" comments
     - catch backend errors (v.a. 404)
     - Wie können Menschen das tatsächlich wiederverwenden? Bessere README!
+    - email for contact (on /instructions, on /feedback?)
+    - add GDPR foo
+    - consent notification & GDPR foo auf Startseite verlinken
 - pre-processing:
     - make input data format more general / easier to replicate -> check Laura's format
     - figure out how to make this available for other people (npm script? -> add to /ui?)
@@ -24,6 +30,7 @@
         - Screenshots & GIFs specifically for mobile?
         - Screenshots & GIFs too small?
     - wording
+        - Who is "I"?
     - Screenshots & GIFs
         - proper alt texts
         - Step 1: sentence vs. paragraph besser darstellen
@@ -33,4 +40,3 @@
     - cross-browser
     - mobile
     - unit tests lol
-    

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import '../styles/Demographics.css'
@@ -11,48 +11,12 @@ const defaultState = {
   gerLevel: '',
 }
 
-const consentForm = (
-  <Fragment>
-    <h5>Consent Form</h5>
-    <p>
-      Your participation in this research study is voluntary. You may choose not
-      to participate. If you decide to participate in this research survey, you
-      may withdraw at any time without giving any reason. If you decide not to
-      participate in this study or if you withdraw from participating at any
-      time, you will not be penalized.
-    </p>
-
-    <p>
-      Your responses will be confidential and we do not collect identifying
-      information such as your name, email address or IP address. Your answers
-      will be saved anonymously, using only an automatically generated
-      participant ID to identify you. No personal data other than the
-      demographic information above will be saved or published.
-    </p>
-
-    <p>Clicking on the "I Agree" button below indicates that:</p>
-    <ul>
-      <li>you have read the above information</li>
-      <li>
-        you have been informed about the content and procedure of the study
-      </li>
-      <li>you voluntarily agree to participate</li>
-      <li>you are at least 18 years of age</li>
-    </ul>
-    <p>
-      If you do not wish to participate in the research study, you can simply
-      close this website.
-    </p>
-  </Fragment>
-)
-
 class Demographics extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       data: { ...defaultState },
-      dataConsent: false,
-      showConsentForm: false,
+      dataConsent: props.consent,
     }
   }
 
@@ -227,32 +191,10 @@ class Demographics extends React.Component {
             />
             <label className="checkbox-label">
               I have read the{' '}
-              <span
-                onClick={() => {
-                  this.setState({ showConsentForm: true })
-                }}
-                className="clickable"
-              >
-                consent notification{' '}
-              </span>
+              <a href="/consent?prev=demographics">consent notification </a>
               and want to participate in this study.
             </label>
           </div>
-          {this.state.showConsentForm ? (
-            <div className="consent-form">
-              {consentForm}
-              <br />
-              <button
-                className="btn"
-                onClick={e => {
-                  e.preventDefault()
-                  this.setState({ showConsentForm: false, dataConsent: true })
-                }}
-              >
-                I Agree
-              </button>
-            </div>
-          ) : null}
         </form>
       </div>
     )
@@ -260,6 +202,7 @@ class Demographics extends React.Component {
 }
 
 Demographics.propTypes = {
+  consent: PropTypes.bool,
   createUser: PropTypes.func,
 }
 
