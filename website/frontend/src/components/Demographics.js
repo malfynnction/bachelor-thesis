@@ -233,7 +233,7 @@ class Demographics extends React.Component {
                 }}
                 className="clickable"
               >
-                consent notification
+                consent notification{' '}
               </span>
               and want to participate in this study.
             </label>
