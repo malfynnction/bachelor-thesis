@@ -62,13 +62,16 @@ const Instructions = props => {
         <p>
           In the first step you can read the text that you will be rating. This
           page will look slightly different depending on whether the text is an
-          entire paragraph or a single sentence. For sentences you will see the
-          sentence at the top of the page in a grey box. Please read it
-          carefully to make sure you understand it as well as possible.
-          Underneath the sentence you will find the paragraph that the sentence
-          was taken from. You don't <em>have</em> to read it, but it can help
-          you understand the sentence.
-          <br />
+          entire paragraph or a single sentence.
+        </p>
+        <p>
+          For sentences you will see the sentence at the top of the page in a
+          grey box. Please read it carefully to make sure you understand it as
+          well as possible. Underneath the sentence you will find the paragraph
+          that the sentence was taken from. You don't <em>have</em> to read it,
+          but it can help you understand the sentence.
+        </p>
+        <p>
           For paragraphs we will measure how long it takes to read them, so the
           text will be hidden unless you hold a button below the text. Please
           make sure you read the entire paragraph and understand it as well as
