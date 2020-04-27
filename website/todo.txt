@@ -26,14 +26,7 @@
     - create requirements.txt
     - ignore Naderi sentences? Or only some? (bc need some for validity)
 - instructions:
-    - mobile
-        - Screenshots & GIFs specifically for mobile?
-        - Screenshots & GIFs too small?
-    - wording
-        - Who is "I"?
-    - Screenshots & GIFs
-        - proper alt texts
-        - Step 1: sentence vs. paragraph besser darstellen
+    - Who is "I"?
 - start-session
     - styling (z.B. Text weniger breit? Nicht centered? Ugh??)
 - testing
