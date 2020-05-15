@@ -20,6 +20,7 @@ import createDatabase from './lib/create-database'
 import getFromUrlParams from './lib/get-from-url-params'
 import Feedback from './components/Feedback'
 import Consent from './components/Consent'
+import Logout from './components/Logout'
 
 const participantId = createStore('participantId')
 const trainingStore = createStore('trainingState')
@@ -50,6 +51,11 @@ const App = () => {
 
   const scrollToTop = () => {
     topRef.current.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  const onLogOut = () => {
+    sessionStorage.clear()
+    setLoggedIn(false)
   }
 
   return (
@@ -83,13 +89,7 @@ const App = () => {
                       <span id="participant-id-label">
                         Participant ID: {id}
                       </span>
-                      <Link
-                        to="/"
-                        onClick={() => {
-                          sessionStorage.clear()
-                          setLoggedIn(false)
-                        }}
-                      >
+                      <Link to="/logout" onClick={onLogOut}>
                         Log out
                       </Link>
                     </Fragment>
@@ -98,6 +98,9 @@ const App = () => {
               </header>
               <div className="layout centered-content">
                 <Switch>
+                  <Route path="/logout">
+                    <Logout isLoggedIn={isLoggedIn} onLogOut={onLogOut} />
+                  </Route>
                   <Route path="/instructions">
                     <Instructions
                       pouchParticipants={pouchParticipants}
@@ -107,7 +110,6 @@ const App = () => {
                       }}
                     />
                   </Route>
-
                   <Route path="/demographics">
                     <Demographics
                       consent={getFromUrlParams('consent', props)}
