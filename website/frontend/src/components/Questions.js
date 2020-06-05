@@ -110,6 +110,9 @@ Questions.propTypes = {
   item: itemPropType,
   onChange: PropTypes.func,
   answers: PropTypes.object,
+  onPreventNext: PropTypes.func,
+  onAllowNext: PropTypes.func,
+  preventNext: PropTypes.bool,
 }
 
 export default Questions

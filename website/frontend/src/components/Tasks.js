@@ -107,6 +107,9 @@ Tasks.propTypes = {
       isCorrect: PropTypes.bool,
     })
   ),
+  onPreventNext: PropTypes.func,
+  onAllowNext: PropTypes.func,
+  preventNext: PropTypes.bool,
 }
 
 export default Tasks

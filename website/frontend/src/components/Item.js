@@ -40,6 +40,7 @@ const Nav = props => {
       </div>
       <button
         className="btn"
+        disabled={!!props.preventNext}
         onClick={() => {
           if (isLastStep) {
             props.onNextItem()
@@ -52,6 +53,9 @@ const Nav = props => {
       >
         {buttonText}
       </button>
+      {props.preventNext ? (
+        <span className="note">{props.preventNext}</span>
+      ) : null}
     </div>
   )
 }
@@ -91,7 +95,17 @@ class Item extends React.Component {
       <Read
         key="Read"
         item={item}
-        onTimeUpdate={time => this.setState({ readingTime: time })}
+        onTimeUpdate={time => {
+          if (time < 5000 && !this.state.preventNext) {
+            this.setState({
+              preventNext:
+                'Please hold the button "Show Paragraph" and read the text carefully.', // TODO: also do this in the beginning, before anything has been clicked
+              readingTime: time,
+            })
+          } else {
+            this.setState({ readingTime: time })
+          }
+        }}
       />,
 
       <Questions
@@ -104,6 +118,9 @@ class Item extends React.Component {
         answers={this.state.questions}
         item={item}
         questionType="general"
+        onPreventNext={reason => this.setState({ preventNext: reason })}
+        onAllowNext={() => this.setState({ preventNext: '' })}
+        preventNext={!!this.state.preventNext}
       />,
       <Tasks
         key="Tasks"
@@ -114,6 +131,9 @@ class Item extends React.Component {
           this.setState({ cloze: newState })
         }}
         enteredData={this.state.cloze}
+        onPreventNext={reason => this.setState({ preventNext: reason })}
+        onAllowNext={() => this.setState({ preventNext: '' })}
+        preventNext={!!this.state.preventNext}
       />,
     ]
     if (item.type === 'paragraph') {
@@ -128,6 +148,9 @@ class Item extends React.Component {
           answers={this.state.questions}
           item={item}
           questionType="hardestSentence"
+          onPreventNext={reason => this.setState({ preventNext: reason })}
+          onAllowNext={() => this.setState({ preventNext: '' })}
+          preventNext={!!this.state.preventNext}
         />
       )
     }
@@ -148,9 +171,11 @@ class Item extends React.Component {
         <StepWizard
           nav={
             <Nav
+              preventNext={this.state.preventNext}
               onNextItem={() => {
+                const { readingTime, questions, cloze } = this.state
                 this.props.onScrollToTop()
-                this.props.onNextItem(this.state)
+                this.props.onNextItem({ readingTime, questions, cloze })
               }}
               isLastItem={isLastItem}
               onScrollToTop={() => this.props.onScrollToTop()}
@@ -182,6 +207,7 @@ Nav.propTypes = {
   firstStep: PropTypes.func,
   nextStep: PropTypes.func,
   onScrollToTop: PropTypes.func,
+  preventNext: PropTypes.string,
 }
 
 export default Item
