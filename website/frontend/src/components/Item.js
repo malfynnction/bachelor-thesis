@@ -99,13 +99,16 @@ class Item extends React.Component {
           if (time < 5000 && !this.state.preventNext) {
             this.setState({
               preventNext:
-                'Please hold the button "Show Paragraph" and read the text carefully.', // TODO: also do this in the beginning, before anything has been clicked
+                'Please hold the button "Show Paragraph" and read the text carefully.',
               readingTime: time,
             })
           } else {
             this.setState({ readingTime: time })
           }
         }}
+        onPreventNext={reason => this.setState({ preventNext: reason })}
+        onAllowNext={() => this.setState({ preventNext: '' })}
+        preventNext={!!this.state.preventNext}
       />,
 
       <Questions

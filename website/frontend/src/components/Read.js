@@ -34,6 +34,12 @@ class Read extends React.Component {
   constructor(props) {
     super(props)
     this.state = { showItem: false }
+
+    if (props.item.type === 'paragraph' && !props.preventNext) {
+      props.onPreventNext(
+        'Please hold the button "Show Paragraph" and read the text carefully.'
+      )
+    }
   }
 
   revealItem(timerControl) {
@@ -67,8 +73,8 @@ class Read extends React.Component {
                     <span className="hidden-content">{text}</span>
                   </span>
                 </span>
+                <button className="btn">Show Paragraph</button>
               </p>
-              <button className="btn button-secondary">Show Paragraph</button>
             </ShowItemTrigger>
           </Fragment>
         )}
@@ -113,6 +119,12 @@ class Read extends React.Component {
   }
 }
 
-Read.propTypes = { onTimeUpdate: PropTypes.func, item: itemPropType }
+Read.propTypes = {
+  onTimeUpdate: PropTypes.func,
+  item: itemPropType,
+  onPreventNext: PropTypes.func,
+  onAllowNext: PropTypes.func,
+  preventNext: PropTypes.bool,
+}
 
 export default Read
