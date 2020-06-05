@@ -154,7 +154,21 @@ class Demographics extends React.Component {
               { label: "I don't know", value: 'notDisclosed' },
             ]
           )}
-          <div className="note">*separate multiple entries by commas</div>
+
+          <div>
+            <input
+              type="checkbox"
+              checked={this.state.dataConsent}
+              onChange={e => {
+                this.setState({ dataConsent: e.target.checked })
+              }}
+            />
+            <label className="checkbox-label">
+              I have read the{' '}
+              <a href="/consent?prev=demographics">consent notification </a>
+              and want to participate in this study.
+            </label>
+          </div>
 
           <div className="start-label centered-text">
             After clicking on "Start" you can find your participant ID in the
@@ -181,20 +195,8 @@ class Demographics extends React.Component {
           >
             Start
           </Link>
-          <div>
-            <input
-              type="checkbox"
-              checked={this.state.dataConsent}
-              onChange={e => {
-                this.setState({ dataConsent: e.target.checked })
-              }}
-            />
-            <label className="checkbox-label">
-              I have read the{' '}
-              <a href="/consent?prev=demographics">consent notification </a>
-              and want to participate in this study.
-            </label>
-          </div>
+          <br />
+          <div className="note">*separate multiple entries by commas</div>
         </form>
       </div>
     )
