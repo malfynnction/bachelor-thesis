@@ -35,17 +35,22 @@ const App = () => {
   const id = participantId.get()
   const [isLoggedIn, setLoggedIn] = useState(Boolean(id))
   const [trainingState, setTrainingState] = useState(trainingStore.get())
+  const [completedSessionCount, setCompletedSessionCount] = useState()
 
   const topRef = useRef(null)
 
-  if (id && !trainingState) {
+  if (id && (!trainingState || typeof completedSessionCount === 'undefined')) {
     pouchParticipants.get(id).then(participant => {
-      const { completedTrainingSession } = participant
+      const { completedTrainingSession, completedSessions } = participant
       const trainingStateFromDb = completedTrainingSession
         ? 'completed'
         : 'not started'
       setTrainingState(trainingStateFromDb)
       trainingStore.set(trainingStateFromDb)
+
+      if (completedSessions.length !== completedSessionCount) {
+        setCompletedSessionCount(completedSessions.length)
+      }
     })
   }
 
@@ -56,6 +61,37 @@ const App = () => {
   const onLogOut = () => {
     sessionStorage.clear()
     setLoggedIn(false)
+  }
+
+  const renderHeader = () => {
+    return (
+      <Fragment>
+        <header ref={topRef}>
+          <Link to="/">
+            <img
+              src="logo.png"
+              id="header-img"
+              alt="Logo of the Technische Universität Berlin"
+            />
+          </Link>
+          <div id="participant-id">
+            {isLoggedIn ? (
+              <Fragment>
+                <span id="participant-id-label">Participant ID: {id}</span>
+                <Link to="/logout" onClick={onLogOut}>
+                  Log out
+                </Link>
+              </Fragment>
+            ) : null}
+          </div>
+        </header>
+        {completedSessionCount ? (
+          <div className="survey-count">
+            Completed surveys: {completedSessionCount}
+          </div>
+        ) : null}
+      </Fragment>
+    )
   }
 
   return (
@@ -75,27 +111,7 @@ const App = () => {
           }
           return (
             <Fragment>
-              <header ref={topRef}>
-                <Link to="/">
-                  <img
-                    src="logo.png"
-                    id="header-img"
-                    alt="Logo of the Technische Universität Berlin"
-                  />
-                </Link>
-                <div id="participant-id">
-                  {isLoggedIn ? (
-                    <Fragment>
-                      <span id="participant-id-label">
-                        Participant ID: {id}
-                      </span>
-                      <Link to="/logout" onClick={onLogOut}>
-                        Log out
-                      </Link>
-                    </Fragment>
-                  ) : null}
-                </div>
-              </header>
+              {renderHeader()}
               <div className="layout centered-content">
                 <Switch>
                   <Route path="/logout">

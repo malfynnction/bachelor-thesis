@@ -57,21 +57,9 @@ class Session extends React.Component {
 
     const item = items[index]
 
-    pouchParticipants.get(participantId).then(participant => {
-      const completedSessionCount = participant.completedSessions.length
-      if (this.state.completedSessionCount !== completedSessionCount) {
-        this.setState({ completedSessionCount })
-      }
-    })
-
     return (
       <Fragment>
-        {session.finishedAllSessions ? null : (
-          <Progress
-            progress={progress}
-            sessionCount={this.state.completedSessionCount}
-          />
-        )}
+        {session.finishedAllSessions ? null : <Progress progress={progress} />}
         <div
           className={`tu-border tu-glow center-box flexbox ${
             session.finishedAllSessions ? 'centered-content' : ''
