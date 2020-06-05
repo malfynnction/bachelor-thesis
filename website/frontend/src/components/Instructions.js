@@ -96,6 +96,13 @@ const Instructions = props => {
           will be redirected to the homepage. You can then start another survey
           if you want to.
         </p>
+        <p>
+          <strong>Remember:</strong> There are no right or wrong answers as long
+          as you read the text carefully, follow the instructions and give your
+          honest opinion. Your responses directly influence important decisions
+          to be made. In case you get tired or cannot focus for any reason, take
+          a break and come back later.
+        </p>
         {loggedInId !== null ? (
           <Link
             className="btn"
