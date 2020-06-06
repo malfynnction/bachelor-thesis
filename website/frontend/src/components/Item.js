@@ -96,15 +96,16 @@ class Item extends React.Component {
         key="Read"
         item={item}
         onTimeUpdate={time => {
-          if (time < 5000 && !this.state.preventNext) {
-            this.setState({
-              preventNext:
-                'Please hold the button "Show Paragraph" and read the text carefully.',
-              readingTime: time,
-            })
-          } else {
-            this.setState({ readingTime: time })
+          const readingTime = time
+          let preventNext = this.state.preventNext
+          console.log(time)
+          if (time < 5000 && !preventNext) {
+            preventNext =
+              'Please hold "Show Paragraph" and read the text carefully.'
+          } else if (time >= 5000 && preventNext) {
+            preventNext = ''
           }
+          this.setState({ readingTime, preventNext })
         }}
         onPreventNext={reason => this.setState({ preventNext: reason })}
         onAllowNext={() => this.setState({ preventNext: '' })}

@@ -37,7 +37,7 @@ class Read extends React.Component {
 
     if (props.item.type === 'paragraph' && !props.preventNext) {
       props.onPreventNext(
-        'Please hold the button "Show Paragraph" and read the text carefully.'
+        'Please hold "Show Paragraph" and read the text carefully.'
       )
     }
   }
