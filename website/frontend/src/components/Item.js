@@ -107,6 +107,14 @@ class Item extends React.Component {
 
   getWizardSteps() {
     const { item } = this.props
+    const requiredQuestions = [
+      'questions.readability',
+      'questions.complexity',
+      'questions.understandability',
+    ]
+    if (item.type === 'sentence') {
+      requiredQuestions.push('questions.paragraphNecessary')
+    }
     const steps = [
       {
         component: (
@@ -145,11 +153,7 @@ class Item extends React.Component {
             questionType="general"
           />
         ),
-        requiredFields: [
-          'questions.readability',
-          'questions.complexity',
-          'questions.understandability',
-        ],
+        requiredFields: requiredQuestions,
       },
       {
         component: (
