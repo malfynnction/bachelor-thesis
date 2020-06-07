@@ -47,10 +47,11 @@ const Instructions = props => {
         </p>
         <p>
           This study is part of my Bachelor's thesis, in which I'm composing a
-          data set of German texts and a rating of their complexity and
-          understandability. This data set can then be used as a basis for
-          identifying the most complex parts of texts and later automatically
-          "translate" them to simpler language.
+          data set of German texts and a{' '}
+          <strong>rating of their complexity and understandability. </strong>
+          This data set can then be used as a basis for identifying the most
+          complex parts of texts and later automatically "translate" them to
+          simpler language.
         </p>
         <p>
           In this study, you will read sentences & paragraphs and answer
@@ -60,9 +61,9 @@ const Instructions = props => {
         </p>
         <h5>1. Reading</h5>
         <p>
-          In the first step you can read the text that you will be rating. This
-          page will look slightly different depending on whether the text is an
-          entire paragraph or a single sentence.
+          In the first step you can <strong>read the text</strong> that you will
+          be rating. This page will look slightly different depending on whether
+          the text is an entire paragraph or a single sentence.
         </p>
         <p>
           For sentences you will see the sentence at the top of the page in a
@@ -80,13 +81,15 @@ const Instructions = props => {
         </p>
         <h5>2. Questions</h5>
         <p>
-          In the second step you will be asked questions about the text, for
-          example how complex you think it is or how well you understood it.
+          In the second step you will be asked{' '}
+          <strong>questions about the text</strong>, for example how complex you
+          think it is or how well you understood it.
         </p>
         <h5>3. Cloze Test</h5>
         <p>
           In the last step you will see the text again, but with several words
-          left out. Please select the missing words in the dropdown menus.
+          left out. Please <strong>select the missing words</strong> in the
+          dropdown menus.
         </p>
         <h5>Finish</h5>
         <p>
@@ -97,11 +100,12 @@ const Instructions = props => {
           if you want to.
         </p>
         <p>
-          <strong>Remember:</strong> There are no right or wrong answers as long
-          as you read the text carefully, follow the instructions and give your
-          honest opinion. Your responses directly influence important decisions
-          to be made. In case you get tired or cannot focus for any reason, take
-          a break and come back later.
+          <strong>Remember:</strong> There are{' '}
+          <strong>no right or wrong answers</strong> as long as you read the
+          text carefully, follow the instructions and give your honest opinion.
+          Your responses directly influence important decisions to be made. In
+          case you get tired or cannot focus for any reason, take a break and
+          come back later.
         </p>
         {loggedInId !== null ? (
           <Link
