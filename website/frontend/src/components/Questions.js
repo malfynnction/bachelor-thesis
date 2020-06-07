@@ -5,7 +5,7 @@ import { itemPropType } from '../lib/prop-types'
 
 const getAllQuestions = (questionType, { type, sentences }) => {
   if (questionType === 'general') {
-    return [
+    const questions = [
       {
         key: 'readability',
         label: `How difficult was it for you to read this ${type}?`,
@@ -46,6 +46,41 @@ const getAllQuestions = (questionType, { type, sentences }) => {
         ],
       },
     ]
+    console.log(type)
+    if (type === 'sentence') {
+      questions.push({
+        key: 'paragraphNecessary',
+        label:
+          'Did you need to read the paragraph in order to understand the sentence?',
+        answers: [
+          {
+            label: "Without it, I wouldn't have understood anything",
+            value: 7,
+          },
+          {
+            label:
+              'Without it, I would have understood some parts, but not the overall meaning',
+            value: 6,
+          },
+          {
+            label: 'It helped me understand the sentence a bit better',
+            value: 5,
+          },
+          {
+            label: "It didn't give me any value, but also no disadvantages",
+            value: 4,
+          },
+          { label: "I didn't even read it", value: 3 },
+          { label: 'I found it distracting', value: 2 },
+          {
+            label:
+              'I would have understood the sentence better without the paragraph',
+            value: 1,
+          },
+        ],
+      })
+    }
+    return questions
   } else if (questionType === 'hardestSentence') {
     return [
       {
