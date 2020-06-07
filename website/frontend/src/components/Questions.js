@@ -46,7 +46,6 @@ const getAllQuestions = (questionType, { type, sentences }) => {
         ],
       },
     ]
-    console.log(type)
     if (type === 'sentence') {
       questions.push({
         key: 'paragraphNecessary',
