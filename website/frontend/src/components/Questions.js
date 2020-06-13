@@ -50,32 +50,15 @@ const getAllQuestions = (questionType, { type, sentences }) => {
       questions.push({
         key: 'paragraphNecessary',
         label:
-          'Did you need to read the paragraph in order to understand the sentence?',
+          'How much do you agree with the following statement: "Reading the surrounding paragraph was necessary to understand the meaning of the sentence."',
         answers: [
-          {
-            label: "Without it, I wouldn't have understood anything",
-            value: 7,
-          },
-          {
-            label:
-              'Without it, I would have understood some parts, but not the overall meaning',
-            value: 6,
-          },
-          {
-            label: 'It helped me understand the sentence a bit better',
-            value: 5,
-          },
-          {
-            label: "It didn't give me any value, but also no disadvantages",
-            value: 4,
-          },
-          { label: "I didn't even read it", value: 3 },
-          { label: 'I found it distracting', value: 2 },
-          {
-            label:
-              'I would have understood the sentence better without the paragraph',
-            value: 1,
-          },
+          { label: 'Completely agree', value: 7 },
+          { label: 'Mostly agree', value: 6 },
+          { label: 'Slightly agree', value: 5 },
+          { label: 'Neither agree nor disagree', value: 4 },
+          { label: 'Slightly disagree', value: 3 },
+          { label: 'Mostly disagree', value: 2 },
+          { label: 'Completely disagree', value: 1 },
         ],
       })
     }
