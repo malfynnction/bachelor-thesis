@@ -61,6 +61,7 @@ const App = () => {
   const onLogOut = () => {
     localStorage.clear()
     setLoggedIn(false)
+    setCompletedSessionCount()
   }
 
   const renderHeader = () => {
