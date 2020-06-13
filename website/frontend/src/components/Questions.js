@@ -108,7 +108,7 @@ const Questions = props => {
                       htmlFor={`${key}-${value}`}
                       className={showScore ? 'label-with-score' : ''}
                     >
-                      <span>{label}</span>
+                      <span className="answer-label">{label}</span>
                       {showScore ? <span>({value})</span> : null}
                     </label>
                   </div>

@@ -17,5 +17,10 @@ label {
 .label-with-score {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+}
+
+.label-with-score > .answer-label {
+  min-width: 45%;
+  margin-right: 10px;
 }
