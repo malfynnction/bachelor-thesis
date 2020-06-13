@@ -1,5 +1,5 @@
 module.exports = key => {
-  const store = sessionStorage
+  const store = localStorage
 
   return {
     set(data) {

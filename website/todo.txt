@@ -19,17 +19,33 @@
     - email for contact (on /instructions, on /feedback?)
     - add GDPR foo
     - consent notification & GDPR foo auf Startseite verlinken
+    - Explizite Antwortmöglichkeit "I don't know"
 - pre-processing:
     - make input data format more general / easier to replicate -> check Laura's format
     - figure out how to make this available for other people (npm script? -> add to /ui?)
         - adjust README re:installation of python stuff
     - create requirements.txt
     - ignore Naderi sentences? Or only some? (bc need some for validity)
+    - 10 items per survey
+    - 1 golden standard question / survey (-> validity)
 - instructions:
     - Who is "I"?
-- start-session
-    - styling (z.B. Text weniger breit? Nicht centered? Ugh??)
+- demographics:
+    - listening comprehension (-> see mail "German test")
+- questions
+    - numbers closer to labels
 - testing
     - cross-browser
     - mobile
     - unit tests lol
+- Docker
+    - should take care of `npm install` even for dev
+- Documentation
+    - local vs. session storage (online study vs lab) => frontend/src/lib/create-store, l. 2
+
+
+
+BABAKS MAIL
+
+- read
+    - "show paragraph" button green/blue

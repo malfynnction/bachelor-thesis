@@ -59,7 +59,7 @@ const App = () => {
   }
 
   const onLogOut = () => {
-    sessionStorage.clear()
+    localStorage.clear()
     setLoggedIn(false)
   }
 
