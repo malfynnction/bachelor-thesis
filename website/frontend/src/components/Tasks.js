@@ -52,6 +52,7 @@ class Tasks extends React.Component {
               )
             }
           )}
+          <option value="idk">(I don't know)</option>
         </select>
         {punctuationAfter ? punctuationAfter[0] : null}{' '}
       </Fragment>
