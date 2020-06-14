@@ -21,6 +21,7 @@ import getFromUrlParams from './lib/get-from-url-params'
 import Feedback from './components/Feedback'
 import Consent from './components/Consent'
 import Logout from './components/Logout'
+import ListeningExercise from './components/ListeningExercise'
 
 const participantId = createStore('participantId')
 const trainingStore = createStore('trainingState')
@@ -117,6 +118,9 @@ const App = () => {
                 <Switch>
                   <Route path="/logout">
                     <Logout isLoggedIn={isLoggedIn} onLogOut={onLogOut} />
+                  </Route>
+                  <Route path="/listening-exercise">
+                    <ListeningExercise />
                   </Route>
                   <Route path="/instructions">
                     <Instructions
