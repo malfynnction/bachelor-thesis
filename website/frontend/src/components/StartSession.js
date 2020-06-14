@@ -122,7 +122,7 @@ class startSession extends React.Component {
                 ? `You can start ${
                     previouslyRating ? 'another' : 'an'
                   } actual survey or do ${
-                    previouslyTraining ? 'another' : 'a little'
+                    previouslyTraining ? 'another' : 'a short'
                   } test survey. `
                 : 'Please go through a test survey before you start with actual ratings. '}
               A test survey is just like a real survey, except your answers
