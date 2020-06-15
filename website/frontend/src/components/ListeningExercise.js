@@ -19,7 +19,7 @@ const ListeningExercise = () => {
     <div className="tu-border tu-glow center-box centered-content">
       <h3>Listening Comprehension</h3>
       <div>
-        Please listen to the audio and answer the questions to helo us better
+        Please listen to the audio and answer the questions to help us better
         estimate your German level (TODO: this won't have an influence on
         quality and compensation and stuff)
       </div>
