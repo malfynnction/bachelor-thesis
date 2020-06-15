@@ -18,12 +18,13 @@ const Consent = props => {
         Your responses will be confidential and we do not collect identifying
         information such as your name, email address or IP address. Your answers
         will be saved anonymously, using only an automatically generated
-        participant ID to identify you. No personal data other than the
-        demographic information above will be saved or published.
+        participant ID to identify you. No personal data other than your
+        demographic information (age, gender(s), native language(s), and german
+        language level) will be saved or published.
       </p>
       {prev === 'demographics' ? (
         <Fragment>
-          <p>Clicking on the "I Agree" button below indicates that:</p>
+          <p>Clicking on "I Agree" below indicates that:</p>
           <ul>
             <li>you have read the above information</li>
             <li>
