@@ -22,6 +22,7 @@ const Consent = props => {
         demographic information (age, gender(s), native language(s), and german
         language level) will be saved or published.
       </p>
+      {/* TODO: GDPR? */}
       {prev === 'demographics' ? (
         <Fragment>
           <p>Clicking on "I Agree" below indicates that:</p>

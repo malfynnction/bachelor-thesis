@@ -96,6 +96,18 @@ const App = () => {
     )
   }
 
+  const renderFooter = () => {
+    return (
+      <footer>
+        <Link to="/consent">Data Protection</Link>
+        <div className="vertical-separator" />
+        <a href="mailto:f.heintz@campus.tu-berlin.de" target="blank">
+          Contact
+        </a>
+      </footer>
+    )
+  }
+
   return (
     <Router>
       {/* Wrap everything in an additional "fake" Route to have access to location props*/}
@@ -213,6 +225,7 @@ const App = () => {
                   </Route>
                 </Switch>
               </div>
+              {renderFooter()}
             </Fragment>
           )
         }}

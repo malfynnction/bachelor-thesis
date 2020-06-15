@@ -19,6 +19,27 @@ header {
   background-color: white;
 }
 
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem;
+  margin-top: auto;
+}
+
+.vertical-separator {
+  padding: 0 1rem 0 1rem;
+}
+
+.vertical-separator:before {
+  content: '|';
+}
+
 #header-img {
   padding: 10px 1em;
   height: 5rem;
