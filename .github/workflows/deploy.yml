@@ -35,5 +35,6 @@ jobs:
           key: ${{ secrets.PRIVATE_SSH_KEY  }}
           source: website/production/*
           target: production-test
+          strip_components: 2
       - name: Deploy
         run: echo TODO
