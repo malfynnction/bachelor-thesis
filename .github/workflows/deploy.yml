@@ -25,4 +25,6 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           workdir: website/backend
       - name: Copy production dir to server
+        run: echo TODO
       - name: Deploy
+        run: echo TODO
