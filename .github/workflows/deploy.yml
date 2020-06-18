@@ -39,7 +39,9 @@ jobs:
       - name: Deploy
         uses: fifsky/ssh-action@1f1f1ea
         with:
-          command: 'cd production && docker-compose up -d'
+          command: |
+            cd production
+            docker-compose up -d
           host: ${{ env. SERVER }}
           user: ${{ env.USER }}
           key: ${{ secrets.PRIVATE_SSH_KEY }}
