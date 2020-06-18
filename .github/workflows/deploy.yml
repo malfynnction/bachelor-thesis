@@ -34,7 +34,12 @@ jobs:
           username: ${{ env.USER }}
           key: ${{ secrets.PRIVATE_SSH_KEY  }}
           source: website/production/*
-          target: production-test
+          target: production
           strip_components: 2
       - name: Deploy
-        run: echo TODO
+        uses: fifsky/ssh-action@1f1f1ea
+        with:
+          command: 'cd production && docker-compose up -d'
+          host: ${{ env. SERVER }}
+          user: ${{ env.USER }}
+          key: ${{ secrets.PRIVATE_SSH_KEY }}
