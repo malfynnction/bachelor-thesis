@@ -6,8 +6,11 @@ on:
       - main
 
 jobs:
-  test:
+  deploy:
     runs-on: ubuntu-latest
+    env:
+      SERVER: text-stat.qu.tu-berlin.de
+      USER: adminuser
     steps:
       - uses: actions/checkout@v1
       - name: Publish Frontend
@@ -25,6 +28,12 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           workdir: website/backend
       - name: Copy production dir to server
-        run: echo TODO
+        uses: appleboy/scp-action@edc8ec9
+        with:
+          host: ${{ env.SERVER }}
+          username: ${{ env.USER }}
+          key: ${{ secrets.PRIVATE_SSH_KEY  }}
+          source: website/production/*
+          target: production-test
       - name: Deploy
         run: echo TODO
