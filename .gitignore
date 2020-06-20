@@ -13,7 +13,6 @@ website/processed-texts/*
 **/build
 **/couchdb/data/*
 !**/couchdb/data/.keep
-website/production/couchdb.ini
 coverage/
 
 npm-debug.log*

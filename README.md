@@ -11,8 +11,6 @@ _TODO: write a proper README_
 
 - `git clone https://github.com/malfynnction/bachelor-thesis.git && cd bachelor-thesis`
 - `npm install`
-- `cp website/couchdb/example.couchdb.ini website/production/couchdb.ini`
-- Edit `website/production/couchdb.ini`: replace "USERNAME" and "PASSWORD" with admin credentials of your choice
 - Change "https://text-stat.qu.tu-berlin.de" in `website/frontend/Dockerfile` to your url
 - `python3 -m venv ./venv && source venv/bin/activate && pip install -r requirements.txt`
 - [Populate database](#database)

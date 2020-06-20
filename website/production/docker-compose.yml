@@ -7,7 +7,6 @@ services:
       - 127.0.0.1:5984:5984
     volumes:
       - ./couchdb/data:/opt/couchdb/data
-      - ./couchdb.ini:/opt/couchdb/etc/local.ini
     environment:
       - COUCHDB_USER=admin
       - COUCHDB_PASSWORD
