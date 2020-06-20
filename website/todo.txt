@@ -5,8 +5,6 @@
         - dump /data instead of replicate
     - proper admin credentials
 - Deploy
-    - github action?
-        - couchdb.ini ist gitignored, muss aber auf dem Server da sein
     - Monitoring??
     - nginx logging ohne IPs
 - Docker
