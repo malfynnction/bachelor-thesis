@@ -1,51 +1,46 @@
-- accessibility
-    - "reveal paragraph" impossible for screenreader
-    - Die ganze Seite ist Hölle für screenreader, wegen react-step-wizard
 - Couch
     - backups
         - where?
         - cronjob
         - dump /data instead of replicate
-    - config wird nicht richtig auf den Server kopiert?
     - proper admin credentials
 - Deploy
     - github action?
+        - couchdb.ini ist gitignored, muss aber auf dem Server da sein
     - Monitoring??
     - nginx logging ohne IPs
+- Docker
+    - should take care of `npm install` even for dev
+
+- pre-processing:
+    - ignore Naderi (2019) sentences? Or only some? (bc need some for validity)
+    - put in 1 golden standard question per session
+
 - general
     - "TODO" comments
-    - catch backend errors (v.a. 404)
-    - Wie können Menschen das tatsächlich wiederverwenden? Bessere README!
-    - email for contact (on /instructions, on /feedback?)
     - add GDPR foo
-    - consent notification & GDPR foo auf Startseite verlinken
-    - Explizite Antwortmöglichkeit "I don't know"
-- pre-processing:
-    - make input data format more general / easier to replicate -> check Laura's format
-    - figure out how to make this available for other people (npm script? -> add to /ui?)
-        - adjust README re:installation of python stuff
-    - create requirements.txt
-    - ignore Naderi sentences? Or only some? (bc need some for validity)
-    - 10 items per survey
-    - 1 golden standard question / survey (-> validity)
+    - /consent -> /privacy
 - instructions:
     - Who is "I"?
 - demographics:
     - listening comprehension (-> see mail "German test")
-- questions
-    - numbers closer to labels
+- accessibility
+    - "reveal paragraph" impossible for screenreader
+    - Die ganze Seite ist Hölle für screenreader, wegen react-step-wizard
+    - transcriptions for audio in /listening-exercise
+
 - testing
     - cross-browser
     - mobile
     - unit tests lol
-- Docker
-    - should take care of `npm install` even for dev
+
 - Documentation
     - local vs. session storage (online study vs lab) => frontend/src/lib/create-store, l. 2
-
-
-
-BABAKS MAIL
-
-- read
-    - "show paragraph" button green/blue
+- Reusability
+    - Wie können Menschen das tatsächlich wiederverwenden?
+    - Bessere README!
+    - make input data format for pre-processing more general / easier to replicate -> check Laura's format
+    - create requirements.txt
+        - adjust README re:installation of python stuff
+    - mail address in footer easier configurable
+    - local vs. session storage configurable? (see "Documentation" above)

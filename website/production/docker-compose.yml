@@ -8,6 +8,9 @@ services:
     volumes:
       - ./couchdb/data:/opt/couchdb/data
       - ./couchdb.ini:/opt/couchdb/etc/local.ini
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD
   backend:
     image: malfynnction/bachelor-backend:latest
     depends_on:
