@@ -68,6 +68,7 @@ app.put('/api/participants', async (req, res) => {
       gerLevel: body.gerLevel,
       age: body.age,
       nativeLang: body.nativeLang,
+      audioAnswers: body.audioAnswers,
       completedTrainingSession: body.completedTrainingSession,
       completedSessions: body.completedSessions,
     })

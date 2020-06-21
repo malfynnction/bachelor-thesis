@@ -130,7 +130,7 @@ const ListeningExercise = props => {
           if (!dataConsent) {
             e.preventDefault()
           } else {
-            props.createUser()
+            props.createUser(checkedAnswers)
           }
         }}
       >

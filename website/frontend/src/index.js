@@ -137,12 +137,13 @@ const App = () => {
                   <Route path="/listening-exercise">
                     <ListeningExercise
                       consent={getFromUrlParams('consent', props)}
-                      createUser={async () => {
-                        const data = demographicStore.get()
-                        if (data && data.gender === 'text') {
+                      createUser={async audioAnswers => {
+                        const data = demographicStore.get() || {}
+                        data.audioAnswers = audioAnswers
+                        if (data.gender === 'text') {
                           data.gender = data.genderText
-                          delete data.genderText
                         }
+                        delete data.genderText
 
                         const loggedInId = participantId.get()
                         if (loggedInId) {
