@@ -24,6 +24,9 @@ import Logout from './components/Logout'
 import ListeningExercise from './components/ListeningExercise'
 
 const participantId = createStore('participantId')
+const demographicStore = createStore('demographic', {
+  deleteAfterSession: true,
+})
 const trainingStore = createStore('trainingState')
 const seedStore = createStore('seed')
 
@@ -132,21 +135,15 @@ const App = () => {
                     <Logout isLoggedIn={isLoggedIn} onLogOut={onLogOut} />
                   </Route>
                   <Route path="/listening-exercise">
-                    <ListeningExercise />
-                  </Route>
-                  <Route path="/instructions">
-                    <Instructions
-                      pouchParticipants={pouchParticipants}
-                      login={id => {
-                        participantId.set(id)
-                        setLoggedIn(true)
-                      }}
-                    />
-                  </Route>
-                  <Route path="/demographics">
-                    <Demographics
+                    <ListeningExercise
                       consent={getFromUrlParams('consent', props)}
-                      createUser={async data => {
+                      createUser={async () => {
+                        const data = demographicStore.get()
+                        if (data && data.gender === 'text') {
+                          data.gender = data.genderText
+                          delete data.genderText
+                        }
+
                         const loggedInId = participantId.get()
                         if (loggedInId) {
                           try {
@@ -177,6 +174,18 @@ const App = () => {
                         })
                       }}
                     />
+                  </Route>
+                  <Route path="/instructions">
+                    <Instructions
+                      pouchParticipants={pouchParticipants}
+                      login={id => {
+                        participantId.set(id)
+                        setLoggedIn(true)
+                      }}
+                    />
+                  </Route>
+                  <Route path="/demographics">
+                    <Demographics />
                   </Route>
                   <Route path="/start-session">
                     <StartSession

@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import '../styles/Demographics.css'
+import createStore from '../lib/create-store'
 
 const defaultState = {
   age: '',
@@ -11,12 +12,15 @@ const defaultState = {
   gerLevel: '',
 }
 
+const demographicStore = createStore('demographic', {
+  deleteAfterSession: true,
+})
+
 class Demographics extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       data: { ...defaultState },
-      dataConsent: props.consent,
     }
   }
 
@@ -155,45 +159,14 @@ class Demographics extends React.Component {
             ]
           )}
 
-          <div>
-            <input
-              type="checkbox"
-              checked={this.state.dataConsent}
-              onChange={e => {
-                this.setState({ dataConsent: e.target.checked })
-              }}
-            />
-            <label className="checkbox-label">
-              I have read the{' '}
-              <a href="/consent?prev=demographics">consent notification </a>
-              and want to participate in this study.
-            </label>
-          </div>
-
-          <div className="start-label centered-text">
-            After clicking on "Start" you can find your participant ID in the
-            top right corner. Please remember it so you can skip this step if
-            you come back in the future.
-          </div>
-
           <Link
-            className={`btn ${this.state.dataConsent ? '' : 'btn-disabled'}`}
-            type="submit"
+            className="btn"
             to="/listening-exercise"
-            onClick={e => {
-              if (!this.state.dataConsent) {
-                e.preventDefault()
-              } else {
-                const data = { ...this.state.data }
-                if (data.gender === 'text') {
-                  data.gender = data.genderText
-                }
-                delete data.genderText
-                this.props.createUser(data)
-              }
+            onClick={() => {
+              demographicStore.set(this.state.data)
             }}
           >
-            Start
+            Continue
           </Link>
           <br />
           <div className="note">*separate multiple entries by commas</div>

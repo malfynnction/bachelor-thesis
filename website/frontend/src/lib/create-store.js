@@ -1,5 +1,5 @@
-module.exports = key => {
-  const store = localStorage
+module.exports = (key, options = {}) => {
+  const store = options.deleteAfterSession ? sessionStorage : localStorage
 
   return {
     set(data) {

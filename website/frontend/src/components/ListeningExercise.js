@@ -36,8 +36,9 @@ const AudioQuestion = props => {
   )
 }
 
-const ListeningExercise = () => {
+const ListeningExercise = props => {
   const [checkedAnswers, setCheckedAnswers] = useState({})
+  const [dataConsent, setDataConsent] = useState(props.consent)
 
   return (
     <div className="tu-border tu-glow center-box centered-content">
@@ -98,14 +99,53 @@ const ListeningExercise = () => {
           }}
         />
       ))}
-      <Link className="btn" type="submit" to="/start-session" onClick={e => {}}>
-        Submit
+
+      <div>
+        <input
+          type="checkbox"
+          checked={dataConsent}
+          onChange={e => {
+            setDataConsent(e.target.checked)
+          }}
+        />
+        <label className="checkbox-label">
+          I have read the{' '}
+          <a href="/consent?prev=listening-exercise">consent notification </a>
+          and want to participate in this study.
+        </label>
+      </div>
+
+      <div className="start-label centered-text">
+        After clicking on "Start" you can find your participant ID in the top
+        right corner. Please remember it so you can skip this step if you come
+        back in the future.
+      </div>
+
+      <Link
+        className={`btn ${dataConsent ? '' : 'btn-disabled'}`}
+        type="submit"
+        to="/start-session"
+        disabled={!dataConsent}
+        onClick={e => {
+          if (!dataConsent) {
+            e.preventDefault()
+          } else {
+            props.createUser()
+          }
+        }}
+      >
+        Start
       </Link>
     </div>
   )
 }
 
 export default ListeningExercise
+
+ListeningExercise.propTypes = {
+  createUser: PropTypes.func,
+  consent: PropTypes.bool,
+}
 
 AudioQuestion.propTypes = {
   fileName: PropTypes.string,

@@ -23,7 +23,7 @@ const Consent = props => {
         language level) will be saved or published.
       </p>
       {/* TODO: GDPR? */}
-      {prev === 'demographics' ? (
+      {prev === 'listening-exercise' ? (
         <Fragment>
           <p>Clicking on "I Agree" below indicates that:</p>
           <ul>
@@ -43,7 +43,7 @@ const Consent = props => {
         close this website.
       </p>
       <br />
-      <a className="btn" href="/demographics?consent=true">
+      <a className="btn" href={`/${prev}?consent=true`}>
         I Agree
       </a>
     </div>
