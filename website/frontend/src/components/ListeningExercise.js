@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import createStore from '../lib/create-store'
+
+const audioAnswers = createStore('audio', { deleteAfterSession: true })
 
 const AudioQuestion = props => {
   const { key, label, answers } = props.question
@@ -37,7 +40,7 @@ const AudioQuestion = props => {
 }
 
 const ListeningExercise = props => {
-  const [checkedAnswers, setCheckedAnswers] = useState({})
+  const [checkedAnswers, setCheckedAnswers] = useState(audioAnswers.get() || {})
   const [dataConsent, setDataConsent] = useState(props.consent)
 
   return (
@@ -92,10 +95,12 @@ const ListeningExercise = props => {
                 newAnswers.splice(index, 1)
               }
             }
-            setCheckedAnswers({
+            const newState = {
               ...checkedAnswers,
               [question.key]: newAnswers,
-            })
+            }
+            setCheckedAnswers(newState)
+            audioAnswers.set(newState)
           }}
         />
       ))}
@@ -103,7 +108,7 @@ const ListeningExercise = props => {
       <div>
         <input
           type="checkbox"
-          checked={dataConsent}
+          checked={!!dataConsent}
           onChange={e => {
             setDataConsent(e.target.checked)
           }}
