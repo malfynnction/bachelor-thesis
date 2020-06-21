@@ -20,3 +20,14 @@ export const itemPropType = PropTypes.shape({
     })
   ),
 })
+
+export const questionPropType = {
+  key: PropTypes.string,
+  label: PropTypes.string,
+  answers: PropTypes.arrayOf(
+    PropTypes.shape({ label: PropTypes.string, value: PropTypes.number })
+  ),
+  checkedAnswer: PropTypes.string,
+  showScore: PropTypes.bool,
+  onChange: PropTypes.func,
+}

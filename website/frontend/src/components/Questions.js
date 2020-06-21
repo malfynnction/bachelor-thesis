@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import '../styles/Questions.css'
-import { itemPropType } from '../lib/prop-types'
+import { itemPropType, questionPropType } from '../lib/prop-types'
 
 const getAllQuestions = (questionType, { type, sentences }) => {
   if (questionType === 'general') {
@@ -79,6 +79,38 @@ const getAllQuestions = (questionType, { type, sentences }) => {
   }
 }
 
+export const Question = props => {
+  const { key, label, answers, checkedAnswer, showScore } = props
+  return (
+    <div className="question-box">
+      <div>
+        <strong>{label}</strong>
+      </div>
+      {answers.map(({ label, value }) => {
+        return (
+          <div key={`${key}-${value}`} className="questionnaire-item">
+            <input
+              onChange={() => props.onChange(key, value)}
+              type="radio"
+              name={key}
+              id={`${key}-${value}`}
+              value={value}
+              checked={value === checkedAnswer}
+            />
+            <label
+              htmlFor={`${key}-${value}`}
+              className={showScore ? 'label-with-score' : ''}
+            >
+              <span className="answer-label">{label}</span>
+              {showScore ? <span>({value})</span> : null}
+            </label>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
 const Questions = props => {
   const showScore = props.questionType !== 'hardestSentence'
   return (
@@ -88,39 +120,21 @@ const Questions = props => {
       </div>
       {getAllQuestions(props.questionType, props.item).map(
         ({ key, label, answers }) => (
-          <Fragment key={`question-${key}`}>
-            <div className="question-box">
-              <div>
-                <strong>{label}</strong>
-              </div>
-              {answers.map(({ label, value }) => {
-                return (
-                  <div key={`${key}-${value}`} className="questionnaire-item">
-                    <input
-                      onChange={() => props.onChange(key, value)}
-                      type="radio"
-                      name={key}
-                      id={`${key}-${value}`}
-                      value={value}
-                      checked={value === props.answers[key]}
-                    />
-                    <label
-                      htmlFor={`${key}-${value}`}
-                      className={showScore ? 'label-with-score' : ''}
-                    >
-                      <span className="answer-label">{label}</span>
-                      {showScore ? <span>({value})</span> : null}
-                    </label>
-                  </div>
-                )
-              })}
-            </div>
-          </Fragment>
+          <Question
+            key={key}
+            label={label}
+            answers={answers}
+            checkedAnswer={props.answers[key]}
+            onChange={(key, value) => props.onChange(key, value)}
+            showScore={showScore}
+          />
         )
       )}
     </Fragment>
   )
 }
+
+Question.propTypes = questionPropType
 
 Questions.propTypes = {
   questionType: PropTypes.string,
