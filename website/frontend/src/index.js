@@ -64,6 +64,7 @@ const App = () => {
 
   const onLogOut = () => {
     localStorage.clear()
+    sessionStorage.clear()
     setLoggedIn(false)
     setCompletedSessionCount()
   }
@@ -139,7 +140,7 @@ const App = () => {
                       consent={getFromUrlParams('consent', props)}
                       createUser={async audioAnswers => {
                         const data = demographicStore.get() || {}
-                        data.audioAnswers = audioAnswers
+                        data.listeningExercise = audioAnswers
                         if (data.gender === 'text') {
                           data.gender = data.genderText
                         }

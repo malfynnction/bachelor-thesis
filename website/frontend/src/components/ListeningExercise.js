@@ -5,6 +5,8 @@ import createStore from '../lib/create-store'
 
 const audioAnswers = createStore('audio', { deleteAfterSession: true })
 
+const correctAnswers = { 'audio-1': [1], 'audio-2': [0, 2] }
+
 const AudioQuestion = props => {
   const { key, label, answers } = props.question
   return (
@@ -135,7 +137,21 @@ const ListeningExercise = props => {
           if (!dataConsent) {
             e.preventDefault()
           } else {
-            props.createUser(checkedAnswers)
+            const score = Object.keys(correctAnswers).reduce(
+              (prevScore, question) => {
+                const checked = checkedAnswers[question]
+                const correct = correctAnswers[question]
+                const correctlyChecked = checked.reduce((sum, answer) => {
+                  return sum + correct.includes(answer)
+                }, 0)
+                const incorrectlyChecked = checked.reduce((sum, answer) => {
+                  return sum + !correct.includes(answer)
+                }, 0)
+                return prevScore + correctlyChecked - incorrectlyChecked
+              },
+              0
+            )
+            props.createUser({ answers: checkedAnswers, score })
           }
         }}
       >

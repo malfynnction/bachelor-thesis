@@ -61,17 +61,7 @@ app.get('/api/participants/:id', async (req, res) => {
 app.put('/api/participants', async (req, res) => {
   const { body } = req
   participants
-    .put({
-      _id: body._id,
-      _rev: body._rev,
-      gender: body.gender,
-      gerLevel: body.gerLevel,
-      age: body.age,
-      nativeLang: body.nativeLang,
-      audioAnswers: body.audioAnswers,
-      completedTrainingSession: body.completedTrainingSession,
-      completedSessions: body.completedSessions,
-    })
+    .put(body)
     .then(result => {
       res.send(result)
     })
