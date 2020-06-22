@@ -160,10 +160,10 @@ app.post('/api/feedback', async (req, res) => {
 })
 
 /*
- * RESULT
+ * RESULTS
  */
 
-app.get('/api/result', async (req, res) => {
+app.get('/api/results', async (req, res) => {
   const result = await downloadResult({
     participantDB: participants,
     itemDB: items,
