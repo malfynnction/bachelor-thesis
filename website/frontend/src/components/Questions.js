@@ -80,7 +80,7 @@ const getAllQuestions = (questionType, { type, sentences }) => {
 }
 
 export const Question = props => {
-  const { key, label, answers, checkedAnswer, showScore } = props
+  const { questionKey, label, answers, checkedAnswer, showScore } = props
   return (
     <div className="question-box">
       <div>
@@ -88,17 +88,17 @@ export const Question = props => {
       </div>
       {answers.map(({ label, value }) => {
         return (
-          <div key={`${key}-${value}`} className="questionnaire-item">
+          <div key={`${questionKey}-${value}`} className="questionnaire-item">
             <input
-              onChange={() => props.onChange(key, value)}
+              onChange={() => props.onChange(questionKey, value)}
               type="radio"
-              name={key}
-              id={`${key}-${value}`}
+              name={questionKey}
+              id={`${questionKey}-${value}`}
               value={value}
               checked={value === checkedAnswer}
             />
             <label
-              htmlFor={`${key}-${value}`}
+              htmlFor={`${questionKey}-${value}`}
               className={showScore ? 'label-with-score' : ''}
             >
               <span className="answer-label">{label}</span>
@@ -122,6 +122,7 @@ const Questions = props => {
         ({ key, label, answers }) => (
           <Question
             key={key}
+            questionKey={key}
             label={label}
             answers={answers}
             checkedAnswer={props.answers[key]}
