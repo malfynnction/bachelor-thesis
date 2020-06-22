@@ -14,7 +14,10 @@ const AudioQuestion = props => {
       <audio controls>
         <source src={props.fileName} type="audio/mpeg" />
         Your browser does not support playing audio. Here is a{' '}
-        <a href="TODO">link to download the audio</a> instead.
+        <a href={props.fileName} download>
+          link to download the audio
+        </a>{' '}
+        instead.
       </audio>
 
       <div>
