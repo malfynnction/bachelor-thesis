@@ -10,33 +10,31 @@ const correctAnswers = { 'audio-1': [1], 'audio-2': [0, 2] }
 const AudioQuestion = props => {
   const { key, label, answers } = props.question
   return (
-    <div>
+    <div className="question-box">
       <audio controls>
         <source src={props.fileName} type="audio/mpeg" />
         Your browser does not support playing audio. Here is a{' '}
         <a href="TODO">link to download the audio</a> instead.
       </audio>
 
-      <div className="question-box">
-        <div>
-          <strong>{label}</strong>
-        </div>
-        {answers.map((answer, i) => (
-          <div key={`${key}-${i}`}>
-            <input
-              type="checkbox"
-              id={`${key}-${i}`}
-              name={key}
-              value={`${key}-${i}`}
-              checked={props.checkedAnswers.includes(i)}
-              onChange={e => {
-                props.onChange(i, e.target.checked)
-              }}
-            />
-            <label htmlFor={`${key}-${i}`}>{answer}</label>
-          </div>
-        ))}
+      <div>
+        <strong>{label}</strong>
       </div>
+      {answers.map((answer, i) => (
+        <div key={`${key}-${i}`} className="questionnaire-item">
+          <input
+            type="checkbox"
+            id={`${key}-${i}`}
+            name={key}
+            value={`${key}-${i}`}
+            checked={props.checkedAnswers.includes(i)}
+            onChange={e => {
+              props.onChange(i, e.target.checked)
+            }}
+          />
+          <label htmlFor={`${key}-${i}`}>{answer}</label>
+        </div>
+      ))}
     </div>
   )
 }
