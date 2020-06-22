@@ -115,6 +115,13 @@ const summarizeDemographic = async participantDB => {
         result[key][value] = prevResult + 1
       })
     })
+    try {
+      result.avgListeningScore =
+        (result.avgListeningScore || 0) +
+        participant.listeningExercise.score / participants.length
+    } catch (e) {
+      console.log(e)
+    }
     return result
   }, {})
 }
