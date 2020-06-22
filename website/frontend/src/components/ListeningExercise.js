@@ -53,7 +53,7 @@ const ListeningExercise = props => {
       </div>
       {[
         {
-          fileName: 'vexento.mp3',
+          fileName: 'honk.mp3',
           question: {
             key: 'audio-1',
             label: 'Please check all the statements that are TRUE:',
