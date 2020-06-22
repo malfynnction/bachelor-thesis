@@ -12,7 +12,7 @@ const AudioQuestion = props => {
   return (
     <div>
       <audio controls>
-        <source src={props.fileName} type="TODO" />
+        <source src={props.fileName} type="audio/mpeg" />
         Your browser does not support playing audio. Here is a{' '}
         <a href="TODO">link to download the audio</a> instead.
       </audio>
@@ -55,7 +55,7 @@ const ListeningExercise = props => {
       </div>
       {[
         {
-          fileName: '',
+          fileName: 'vexento.mp3',
           question: {
             key: 'audio-1',
             label: 'Please check all the statements that are TRUE:',
@@ -67,7 +67,7 @@ const ListeningExercise = props => {
           },
         },
         {
-          fileName: '',
+          fileName: 'honk.mp3',
           question: {
             key: 'audio-2',
             label: 'Please check all the statements that are FALSE:',
