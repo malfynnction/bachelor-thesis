@@ -19,9 +19,11 @@ label {
   width: 100%;
   display: flex;
   justify-content: flex-start;
+  text-align: start;
 }
 
 .label-with-score > .answer-label {
-  min-width: 45%;
+  width: 15rem;
+  max-width: 80%;
   margin-right: 10px;
 }
