@@ -44,7 +44,7 @@ jobs:
           command: |
             cd production
             echo "COUCHDB_PASSWORD=${{env.COUCHDB_PASSWORD}}" > .env
-            docker-compose up -d
+            docker-compose pull && docker-compose up -d
           host: ${{ env. SERVER }}
           user: ${{ env.USER }}
           key: ${{ secrets.PRIVATE_SSH_KEY }}
