@@ -55,6 +55,24 @@ footer {
   padding-right: 20px;
 }
 
+@media (max-width: 360px) {
+  #participant-id {
+    top: 1rem;
+    right: 0rem;
+    padding-right: 10px;
+    text-align: end;
+  }
+
+  #participant-id-label {
+    padding-right: 0px;
+  }
+
+  #participant-id-label::after {
+    content: '\A';
+    white-space: pre;
+  }
+}
+
 a,
 a:hover,
 .clickable {
