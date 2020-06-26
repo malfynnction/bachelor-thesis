@@ -173,8 +173,9 @@ const ListeningExercise = props => {
           onChange={e => {
             setDataConsent(e.target.checked)
           }}
+          id="consent"
         />
-        <label className="checkbox-label">
+        <label className="checkbox-label" htmlFor="consent">
           I have read the{' '}
           <a href="/consent?prev=listening-exercise">consent notification </a>
           and want to participate in this study.
