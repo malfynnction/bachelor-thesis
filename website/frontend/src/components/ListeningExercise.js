@@ -197,7 +197,6 @@ const ListeningExercise = props => {
           if (!dataConsent) {
             e.preventDefault()
           } else {
-            e.preventDefault()
             const score = questions.reduce((sum, { question }) => {
               return (
                 sum +
