@@ -90,7 +90,7 @@ const ListeningExercise = props => {
               'Die Lobby ist mächtiger als die Verbraucher*innen.',
               'Der Renteneintritt sollte bei 17 Jahren liegen.',
               'Eine Person, die eine de Fragen am besten beantworten könnte, war nicht in dem Gespräch.',
-              'Die Bauorganistationen sind wichtiger für die Gesetze als die Politiker*innen.',
+              'Die Bauorganisationen sind wichtiger für die Gesetze als die Politiker*innen.',
             ],
           },
         },
