@@ -136,11 +136,21 @@ const downloadFeedback = async feedbackDB => {
   return actualFeedback
 }
 
+const downloadParticipants = async participantDB => {
+  const participants = await getAllDocs(participantDB)
+  return participants.map(participant => {
+    delete participant._id
+    delete participant._rev
+    delete participant.completedTrainingSession
+  })
+}
+
 module.exports = async ({ participantDB, itemDB, ratingDB, feedbackDB }) => {
-  const [ratings, demographic, feedback] = await Promise.all([
+  const [ratings, demographic, feedback, participants] = await Promise.all([
     summarizeRatings(ratingDB, itemDB),
     summarizeDemographic(participantDB),
     downloadFeedback(feedbackDB),
+    downloadParticipants(participantDB),
   ])
-  return { ratings, demographic, feedback }
+  return { ratings, demographic, feedback, participants }
 }
