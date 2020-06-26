@@ -34,10 +34,10 @@ class Feedback extends React.Component {
     )
   }
 
-  renderRadioButtons(buttons) {
+  renderRadioButtons(key, buttons) {
     return (
       <div>
-        {buttons.map(({ key, label, value }) => {
+        {buttons.map(({ label, value }) => {
           const id = `${key}-${value}`
           return (
             <div key={id}>
@@ -76,12 +76,12 @@ class Feedback extends React.Component {
                 How well did you understand what you were supposed to do?
               </strong>
             </label>
-            {this.renderRadioButtons([
-              { key: '', label: 'completely', value: 1 },
-              { key: '', label: 'more or less', value: 2 },
-              { key: '', label: 'TODO', value: 3 },
-              { key: '', label: 'a little bit', value: 4 },
-              { key: '', label: 'not at all', value: 5 },
+            {this.renderRadioButtons('didUnderstandInstructions', [
+              { label: 'completely', value: 1 },
+              { label: 'more or less', value: 2 },
+              { label: 'TODO', value: 3 },
+              { label: 'a little bit', value: 4 },
+              { label: 'not at all', value: 5 },
             ])}
           </div>
           <div>
@@ -104,12 +104,12 @@ class Feedback extends React.Component {
                 was missing)
               </span>
             </label>
-            {this.renderRadioButtons([
-              { key: 'isUnableToAnswerCorrectly', label: 'Yes', value: true },
-              { key: 'isUnableToAnswerCorrectly', label: 'No', value: false },
+            {this.renderRadioButtons('unableToAnswerCorrectly', [
+              { label: 'Yes', value: true },
+              { label: 'No', value: false },
             ])}
           </div>
-          {this.state.isUnableToAnswerCorrectly ? (
+          {this.state.unableToAnswerCorrectly ? (
             <div>
               <label htmlFor="unableToAnswerCorrectlyDetails">
                 <strong>
@@ -125,9 +125,9 @@ class Feedback extends React.Component {
                 Were there any technical problems during the survey?
               </strong>
             </label>
-            {this.renderRadioButtons([
-              { key: 'hadTechnicalProblems', label: 'Yes', value: true },
-              { key: 'hadTechnicalProblems', label: 'No', value: false },
+            {this.renderRadioButtons('hadTechnicalProblems', [
+              { label: 'Yes', value: true },
+              { label: 'No', value: false },
             ])}
           </div>
           {this.state.hadTechnicalProblems ? (
