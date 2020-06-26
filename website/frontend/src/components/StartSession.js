@@ -4,6 +4,7 @@ import { databasePropType } from '../lib/prop-types'
 import { Link } from 'react-router-dom'
 import createStore from '../lib/create-store'
 import getFromUrlParams from '../lib/get-from-url-params'
+import '../styles/StartSession.css'
 
 const participantStore = createStore('participantId')
 const sessionStore = createStore('session')
@@ -137,7 +138,7 @@ class startSession extends React.Component {
                 unsaved changes.
               </div>
             ) : null}
-            <div>
+            <div className="start-session">
               {this.state.hasActiveSession ? (
                 <Link className="btn" to="/session">
                   Continue Survey
