@@ -5,7 +5,85 @@ import createStore from '../lib/create-store'
 
 const audioAnswers = createStore('audio', { deleteAfterSession: true })
 
-const correctAnswers = { q1: [1, 3], q2: [0, 1, 2], q3: [0, 2] } // TODO
+const questions = [
+  {
+    fileName: 'q1.wav',
+    question: {
+      key: 'q1',
+      target: 'alle richtigen',
+      answers: [
+        { label: 'An dem Test nahmen 80 Supermärkte teil.', isCorrect: false },
+        {
+          label: 'Für die Kund*innen ist der Preis am wichtigsten.',
+          isCorrect: true,
+        },
+        {
+          label: 'Der Handel folgte der Präferenz der Gesetze.',
+          isCorrect: false,
+        },
+        {
+          label: 'Mehr als 70% der Kund*innen kaufen das billigste Produkt.',
+          isCorrect: true,
+        },
+      ],
+    },
+  },
+  {
+    fileName: 'q2.wav',
+    question: {
+      key: 'q2',
+      target: 'alle falschen',
+      answers: [
+        {
+          label: 'Kotelett sollte aus dem Menü entfernt werden.',
+          isCorrect: true,
+        },
+        {
+          label:
+            'Verbraucher*innen sind nicht offen, mehr für die Fleischprodukte zu bezahlen.',
+          isCorrect: true,
+        },
+        {
+          label:
+            'Schweinefleisch ist wichtiger als Geflügelfleisch für Verbraucher*innen.',
+          isCorrect: true,
+        },
+        {
+          label:
+            'Weitere Räume in den Supermärkten wurden im Gespräch nicht besprochen.',
+          isCorrect: false,
+        },
+      ],
+    },
+  },
+  {
+    fileName: 'q3.wav',
+    question: {
+      key: 'q3',
+      target: 'alle richtigen',
+      answers: [
+        {
+          label: 'Die Lobby ist mächtiger als die Verbraucher*innen.',
+          isCorrect: true,
+        },
+        {
+          label: 'Der Renteneintritt sollte bei 17 Jahren liegen.',
+          isCorrect: false,
+        },
+        {
+          label:
+            'Eine Person, die eine der Fragen am besten beantworten könnte, war nicht in dem Gespräch.',
+          isCorrect: true,
+        },
+        {
+          label:
+            'Die Bauorganisationen sind wichtiger für die Gesetze als die Politiker*innen.',
+          isCorrect: false,
+        },
+      ],
+    },
+  },
+]
 
 const AudioQuestion = props => {
   const { key, target, answers } = props.question
@@ -41,7 +119,7 @@ const AudioQuestion = props => {
               props.onChange(i, e.target.checked)
             }}
           />
-          <label htmlFor={`${key}-${i}`}>{answer}</label>
+          <label htmlFor={`${key}-${i}`}>{answer.label}</label>
         </div>
       ))}
     </div>
@@ -51,7 +129,6 @@ const AudioQuestion = props => {
 const ListeningExercise = props => {
   const [checkedAnswers, setCheckedAnswers] = useState(audioAnswers.get() || {})
   const [dataConsent, setDataConsent] = useState(props.consent)
-
   return (
     <div className="tu-border tu-glow center-box centered-content">
       <h3>Listening Comprehension</h3>
@@ -60,47 +137,7 @@ const ListeningExercise = props => {
         estimate your German level (TODO: this won't have an influence on
         quality and compensation and stuff)
       </div>
-      {[
-        {
-          fileName: 'q1.wav',
-          question: {
-            key: 'q1',
-            target: 'alle richtigen',
-            answers: [
-              'An dem Test nahmen 80 Supermärkte teil.',
-              'Für die Kund*innen ist der Preis am wichtigsten.',
-              'Der Handel folgte der Präferenz der Gesetze.',
-              'Mehr als 70% der Kund*innen kaufen das billigste Produkt.',
-            ],
-          },
-        },
-        {
-          fileName: 'q2.wav',
-          question: {
-            key: 'q2',
-            target: 'alle falschen',
-            answers: [
-              'Kotelett sollte aus dem Menü entfernt werden.',
-              'Verbraucher*innen sind nicht offen, mehr für die Fleischprodukte zu bezahlen.',
-              'Schweinefleisch ist wichtiger als Geflügelfleisch für Verbraucher*innen.',
-              'Weitere Räume in den Supermärkten wurden im Gespräch nicht besprochen.',
-            ],
-          },
-        },
-        {
-          fileName: 'q3.wav',
-          question: {
-            key: 'q3',
-            target: 'alle richtigen',
-            answers: [
-              'Die Lobby ist mächtiger als die Verbraucher*innen.',
-              'Der Renteneintritt sollte bei 17 Jahren liegen.',
-              'Eine Person, die eine de Fragen am besten beantworten könnte, war nicht in dem Gespräch.',
-              'Die Bauorganisationen sind wichtiger für die Gesetze als die Politiker*innen.',
-            ],
-          },
-        },
-      ].map(({ fileName, question }, i) => (
+      {questions.map(({ fileName, question }, i) => (
         <AudioQuestion
           key={`audio-question-${i}`}
           fileName={fileName}
@@ -159,20 +196,19 @@ const ListeningExercise = props => {
           if (!dataConsent) {
             e.preventDefault()
           } else {
-            const score = Object.keys(correctAnswers).reduce(
-              (prevScore, question) => {
-                const checked = checkedAnswers[question]
-                const correct = correctAnswers[question]
-                const correctlyChecked = checked.reduce((sum, answer) => {
-                  return sum + correct.includes(answer)
+            e.preventDefault()
+            const score = questions.reduce((sum, { question }) => {
+              return (
+                sum +
+                question.answers.reduce((questionScore, answer, i) => {
+                  return (
+                    questionScore +
+                    (answer.isCorrect ===
+                      checkedAnswers[question.key].includes(i))
+                  )
                 }, 0)
-                const incorrectlyChecked = checked.reduce((sum, answer) => {
-                  return sum + !correct.includes(answer)
-                }, 0)
-                return prevScore + correctlyChecked - incorrectlyChecked
-              },
-              0
-            )
+              )
+            }, 0)
             props.createUser({ answers: checkedAnswers, score })
           }
         }}
@@ -195,7 +231,9 @@ AudioQuestion.propTypes = {
   question: PropTypes.shape({
     key: PropTypes.string,
     target: PropTypes.string,
-    answers: PropTypes.arrayOf(PropTypes.string),
+    answers: PropTypes.arrayOf(
+      PropTypes.shape({ label: PropTypes.string, isCorrect: PropTypes.bool })
+    ),
   }),
   checkedAnswers: PropTypes.arrayOf(PropTypes.number),
   onChange: PropTypes.func,
