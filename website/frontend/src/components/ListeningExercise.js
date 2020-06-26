@@ -8,7 +8,7 @@ const audioAnswers = createStore('audio', { deleteAfterSession: true })
 const correctAnswers = { q1: [1, 3], q2: [0, 1, 2], q3: [0, 2] } // TODO
 
 const AudioQuestion = props => {
-  const { key, label, answers } = props.question
+  const { key, target, answers } = props.question
   return (
     <div className="question-box">
       <audio controls>
@@ -21,7 +21,13 @@ const AudioQuestion = props => {
       </audio>
 
       <div>
-        <strong>{label}</strong>
+        <strong>
+          Bitte hören Sie sich den Audioclip an und wählen Sie{' '}
+          <u>
+            <em>{target}</em>
+          </u>{' '}
+          Aussagen aus:
+        </strong>
       </div>
       {answers.map((answer, i) => (
         <div key={`${key}-${i}`} className="questionnaire-item">
@@ -59,7 +65,7 @@ const ListeningExercise = props => {
           fileName: 'q1.wav',
           question: {
             key: 'q1',
-            label: 'Please check all the statements that are TRUE:',
+            target: 'alle richtigen',
             answers: [
               'An dem Test nahmen 80 Supermärkte teil.',
               'Für die Kund*innen ist der Preis am wichtigsten.',
@@ -72,7 +78,7 @@ const ListeningExercise = props => {
           fileName: 'q2.wav',
           question: {
             key: 'q2',
-            label: 'Please check all the statements that are FALSE:',
+            target: 'alle falschen',
             answers: [
               'Kotelett sollte aus dem Menü entfernt werden.',
               'Verbraucher*innen sind nicht offen, mehr für die Fleischprodukte zu bezahlen.',
@@ -85,7 +91,7 @@ const ListeningExercise = props => {
           fileName: 'q3.wav',
           question: {
             key: 'q3',
-            label: 'Please check all the statements that are TRUE:',
+            target: 'alle richtigen',
             answers: [
               'Die Lobby ist mächtiger als die Verbraucher*innen.',
               'Der Renteneintritt sollte bei 17 Jahren liegen.',
@@ -188,7 +194,7 @@ AudioQuestion.propTypes = {
   fileName: PropTypes.string,
   question: PropTypes.shape({
     key: PropTypes.string,
-    label: PropTypes.string,
+    target: PropTypes.string,
     answers: PropTypes.arrayOf(PropTypes.string),
   }),
   checkedAnswers: PropTypes.arrayOf(PropTypes.number),
