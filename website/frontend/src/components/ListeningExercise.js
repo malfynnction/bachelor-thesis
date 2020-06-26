@@ -5,14 +5,14 @@ import createStore from '../lib/create-store'
 
 const audioAnswers = createStore('audio', { deleteAfterSession: true })
 
-const correctAnswers = { 'audio-1': [1], 'audio-2': [0, 2] }
+const correctAnswers = { q1: [1, 3], q2: [0, 1, 2], q3: [0, 2] } // TODO
 
 const AudioQuestion = props => {
   const { key, label, answers } = props.question
   return (
     <div className="question-box">
       <audio controls>
-        <source src={props.fileName} type="audio/mpeg" />
+        <source src={props.fileName} type="audio/wav" />
         Your browser does not support playing audio. Here is a{' '}
         <a href={props.fileName} download>
           link to download the audio
@@ -56,26 +56,41 @@ const ListeningExercise = props => {
       </div>
       {[
         {
-          fileName: 'honk.mp3',
+          fileName: 'q1.wav',
           question: {
-            key: 'audio-1',
+            key: 'q1',
             label: 'Please check all the statements that are TRUE:',
             answers: [
-              'This statement is false',
-              'This statement is true.',
-              'This statement is false.',
+              'An dem Test nahmen 80 Supermärkte teil.',
+              'Für die Kund*innen ist der Preis am wichtigsten.',
+              'Der Handel folgte der Präferenz der Gesetze.',
+              'Mehr als 70% der Kund*innen kaufen das billigste Produkt.',
             ],
           },
         },
         {
-          fileName: 'honk.mp3',
+          fileName: 'q2.wav',
           question: {
-            key: 'audio-2',
+            key: 'q2',
             label: 'Please check all the statements that are FALSE:',
             answers: [
-              'This statement is false',
-              'This statement is true.',
-              'This statement is false.',
+              'Kotelett sollte aus dem Menü entfernt werden.',
+              'Verbraucher*innen sind nicht offen, mehr für die Fleischprodukte zu bezahlen.',
+              'Schweinefleisch ist wichtiger als Geflügelfleisch für Verbraucher*innen.',
+              'Weitere Räume in den Supermärkten wurden im Gespräch nicht besprochen.',
+            ],
+          },
+        },
+        {
+          fileName: 'q3.wav',
+          question: {
+            key: 'q3',
+            label: 'Please check all the statements that are TRUE:',
+            answers: [
+              'Die Lobby ist mächtiger als die Verbraucher*innen.',
+              'Der Renteneintritt sollte bei 17 Jahren liegen.',
+              'Eine Person, die eine de Fragen am besten beantworten könnte, war nicht in der Besprechung.',
+              'Die Bauorganistationen sind wichtiger für die Gesetze als die Politiker*innen.',
             ],
           },
         },
