@@ -77,11 +77,13 @@ class Feedback extends React.Component {
               </strong>
             </label>
             {this.renderRadioButtons('didUnderstandInstructions', [
-              { label: 'completely', value: 1 },
-              { label: 'more or less', value: 2 },
-              { label: 'TODO', value: 3 },
-              { label: 'a little bit', value: 4 },
-              { label: 'not at all', value: 5 },
+              { label: 'Always', value: 1 },
+              { label: 'Almost always', value: 2 },
+              { label: 'Often', value: 3 },
+              { label: 'Sometimes', value: 4 },
+              { label: 'Rarely', value: 5 },
+              { label: 'Almost never', value: 6 },
+              { label: 'Never', value: 7 },
             ])}
           </div>
           <div>
