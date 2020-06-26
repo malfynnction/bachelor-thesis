@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 
-const Consent = props => {
+const Privacy = props => {
   const { prev } = props
   return (
     <div className="tu-border tu-glow center-box centered-content">
-      <h3>Consent Form</h3>
+      <h3>Data Protection and Privacy</h3>
       <p>
         Your participation in this research study is voluntary. You may choose
         not to participate. If you decide to participate in this research
@@ -50,8 +50,8 @@ const Consent = props => {
   )
 }
 
-export default Consent
+export default Privacy
 
-Consent.propTypes = {
+Privacy.propTypes = {
   prev: PropTypes.string,
 }

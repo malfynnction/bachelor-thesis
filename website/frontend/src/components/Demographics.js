@@ -177,7 +177,6 @@ class Demographics extends React.Component {
 }
 
 Demographics.propTypes = {
-  consent: PropTypes.bool,
   createUser: PropTypes.func,
 }
 

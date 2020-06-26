@@ -19,7 +19,7 @@ import createStore from './lib/create-store'
 import createDatabase from './lib/create-database'
 import getFromUrlParams from './lib/get-from-url-params'
 import Feedback from './components/Feedback'
-import Consent from './components/Consent'
+import Privacy from './components/Privacy'
 import Logout from './components/Logout'
 import ListeningExercise from './components/ListeningExercise'
 
@@ -103,7 +103,7 @@ const App = () => {
   const renderFooter = () => {
     return (
       <footer>
-        <Link to="/consent">Data Protection</Link>
+        <Link to="/privacy">Data Protection</Link>
         <div className="vertical-separator" />
         <a href="mailto:f.heintz@campus.tu-berlin.de" target="blank">
           Contact
@@ -228,8 +228,8 @@ const App = () => {
                       <Redirect to="/start" />
                     )}
                   </Route>
-                  <Route path="/consent">
-                    <Consent prev={getFromUrlParams('prev', props)} />
+                  <Route path="/privacy">
+                    <Privacy prev={getFromUrlParams('prev', props)} />
                   </Route>
                   <Route path="/">
                     <Start />

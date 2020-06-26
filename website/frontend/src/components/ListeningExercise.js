@@ -177,7 +177,7 @@ const ListeningExercise = props => {
         />
         <label className="checkbox-label" htmlFor="consent">
           I have read the{' '}
-          <a href="/consent?prev=listening-exercise">consent notification </a>
+          <a href="/privacy?prev=listening-exercise">consent notification </a>
           and want to participate in this study.
         </label>
       </div>
