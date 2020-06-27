@@ -43,9 +43,11 @@ const Privacy = props => {
         close this website.
       </p>
       <br />
-      <a className="btn" href={`/${prev}?consent=true`}>
-        I Agree
-      </a>
+      {prev ? (
+        <a className="btn" href={`/${prev}?consent=true`}>
+          I Agree
+        </a>
+      ) : null}
     </div>
   )
 }
