@@ -99,7 +99,7 @@ export const Question = props => {
             />
             <label
               htmlFor={`${questionKey}-${value}`}
-              className={showScore ? 'label-with-score' : ''}
+              className={showScore ? 'label-with-score' : 'label-without-score'}
             >
               <span className="answer-label">{label}</span>
               {showScore ? <span>({value})</span> : null}

@@ -22,6 +22,11 @@ label {
   text-align: start;
 }
 
+.label-without-score {
+  /* leave room for the actual radio button bc otherwise safari does weird stuff*/
+  max-width: 90%;
+}
+
 .label-with-score > .answer-label {
   width: 15rem;
   max-width: 80%;
