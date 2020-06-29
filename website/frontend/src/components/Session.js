@@ -111,10 +111,10 @@ class Session extends React.Component {
 
                     // store completed session ID
                     const sessionId = session.id
-                    const completedSessions = [
+                    const completedSessions = {
                       ...participant.completedSessions,
-                      sessionId,
-                    ]
+                      [sessionId]: token,
+                    }
                     await pouchParticipants.put({
                       ...participant,
                       completedSessions: completedSessions,

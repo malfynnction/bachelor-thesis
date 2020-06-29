@@ -11,10 +11,11 @@ const chooseNewSession = async (pouchParticipants, pouchSessions) => {
     pouchParticipants.getAll(),
     pouchParticipants.get(participantId),
   ]).then(([allSessions, allParticipants, loggedInParticipant]) => {
-    const completedSessions = loggedInParticipant.completedSessions || []
+    const completedSessions = loggedInParticipant.completedSessions || {}
     const possibleSessions = allSessions.filter(
       session =>
-        !completedSessions.includes(session._id) && session._id !== 'Training'
+        !Object.keys(completedSessions).includes(session._id) &&
+        session._id !== 'Training'
     )
 
     if (possibleSessions.length === 0) {
@@ -25,7 +26,7 @@ const chooseNewSession = async (pouchParticipants, pouchSessions) => {
     possibleSessions.forEach(session => (completedCounts[session._id] = 0))
 
     for (const participant of allParticipants) {
-      participant.completedSessions.forEach(completed => {
+      Object.keys(participant.completedSessions).forEach(completed => {
         const isPossible = possibleSessions.some(session => {
           return session._id === completed
         })

@@ -52,8 +52,8 @@ const App = () => {
       setTrainingState(trainingStateFromDb)
       trainingStore.set(trainingStateFromDb)
 
-      if (completedSessions.length !== completedSessionCount) {
-        setCompletedSessionCount(completedSessions.length)
+      if (Object.keys(completedSessions).length !== completedSessionCount) {
+        setCompletedSessionCount(Object.keys(completedSessions).length)
       }
     })
   }
@@ -168,7 +168,7 @@ const App = () => {
                           await pouchParticipants.put({
                             ...data,
                             _id: newId.toString(),
-                            completedSessions: [],
+                            completedSessions: {},
                           })
 
                           participantId.set(newId)
