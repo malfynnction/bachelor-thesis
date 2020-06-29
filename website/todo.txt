@@ -1,5 +1,5 @@
 - Couch
-    - backups: cronjob -> dump couchdb/data/ (where?)
+    - store backups outside of server
 - Deploy
     - Monitoring??
     - nginx logging ohne IPs
@@ -22,6 +22,8 @@
     - transcriptions for audio in /listening-exercise
 - privacy
     - add GDPR stuff
+- read
+    - Make paragraph text not selectable? It gets very annoying on mobile.
 
 - testing
     - cross-browser
@@ -41,4 +43,3 @@
     - create requirements.txt
         - adjust README re:installation of python stuff
     - mail address in footer easier configurable
-    - local vs. session storage configurable? (see "Documentation" above)
