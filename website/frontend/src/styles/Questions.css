@@ -15,16 +15,15 @@ label {
   margin-bottom: 0;
 }
 
+.answer {
+  /* leave room for the actual radio button bc otherwise safari does weird stuff*/
+  max-width: 90%;
+}
+
 .label-with-score {
-  width: 100%;
   display: flex;
   justify-content: flex-start;
   text-align: start;
-}
-
-.label-without-score {
-  /* leave room for the actual radio button bc otherwise safari does weird stuff*/
-  max-width: 90%;
 }
 
 .label-with-score > .answer-label {
