@@ -5,6 +5,9 @@ import { Link } from 'react-router-dom'
 import createStore from '../lib/create-store'
 import getFromUrlParams from '../lib/get-from-url-params'
 import '../styles/StartSession.css'
+import allRequiredEnvVars from '../lib/all-required-env-vars'
+
+allRequiredEnvVars(['REACT_APP_CONTACT_MAIL'])
 
 const participantStore = createStore('participantId')
 const sessionStore = createStore('session')
@@ -71,8 +74,14 @@ class startSession extends React.Component {
               </span>
               <span>
                 If you have any questions, you can read the{' '}
-                <a href="/instructions">Instructions</a> again or contact us at
-                TODO.{' '}
+                <a href="/instructions">Instructions</a> again or contact us at{' '}
+                <a
+                  href={`mailto:${process.env.REACT_APP_CONTACT_MAIL}`}
+                  target="blank"
+                >
+                  {process.env.REACT_APP_CONTACT_MAIL}
+                </a>
+                .{' '}
               </span>
             </Fragment>
           ) : previouslyFeedback ? (

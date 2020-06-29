@@ -42,4 +42,4 @@
     - make input data format for pre-processing more general / easier to replicate -> check Laura's format
     - create requirements.txt
         - adjust README re:installation of python stuff
-    - mail address in footer easier configurable
+    - .env.example > .env

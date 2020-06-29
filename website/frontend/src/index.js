@@ -22,6 +22,9 @@ import Feedback from './components/Feedback'
 import Privacy from './components/Privacy'
 import Logout from './components/Logout'
 import ListeningExercise from './components/ListeningExercise'
+import allRequiredEnvVars from './lib/all-required-env-vars'
+
+allRequiredEnvVars(['REACT_APP_CONTACT_MAIL'])
 
 const participantId = createStore('participantId')
 const demographicStore = createStore('demographic', {
@@ -105,7 +108,7 @@ const App = () => {
       <footer>
         <Link to="/privacy">Data Protection</Link>
         <div className="vertical-separator" />
-        <a href="mailto:f.heintz@campus.tu-berlin.de" target="blank">
+        <a href={`mailto:${process.env.REACT_APP_CONTACT_MAIL}`} target="blank">
           Contact
         </a>
       </footer>
