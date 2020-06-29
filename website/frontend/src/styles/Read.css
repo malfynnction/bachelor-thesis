@@ -12,6 +12,7 @@
   padding: 10px;
   border-radius: 5px;
   background-color: #eaeaea;
+  hyphens: auto;
 }
 
 .item-text > span {
