@@ -1,9 +1,5 @@
 - Couch
-    - backups
-        - where?
-        - cronjob
-        - dump /data instead of replicate
-    - proper admin credentials
+    - backups: cronjob -> dump couchdb/data/ (where?)
 - Deploy
     - Monitoring??
     - nginx logging ohne IPs
@@ -16,21 +12,25 @@
 
 - general
     - "TODO" comments
-    - add GDPR foo
-    - /consent -> /privacy
+    - payment / compensation logic
+        - explain where/how to get payment (mail, participant ID, token)
 - instructions:
     - Who is "I"?
-- demographics:
-    - listening comprehension (-> see mail "German test")
 - accessibility
     - "reveal paragraph" impossible for screenreader
     - Die ganze Seite ist Hölle für screenreader, wegen react-step-wizard
     - transcriptions for audio in /listening-exercise
+- privacy
+    - add GDPR stuff
 
 - testing
     - cross-browser
     - mobile
     - unit tests lol
+
+- production-ready
+    - use correct amount of sessions & texts
+    - wipe staging DB
 
 - Documentation
     - local vs. session storage (online study vs lab) => frontend/src/lib/create-store, l. 2
