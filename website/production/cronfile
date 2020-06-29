@@ -1,2 +1,1 @@
-# 0 2 * * *  echo "TODO" >> /home/adminuser/test.txt >/dev/null 2>&1
-* * * * *  echo "TODO" >> /home/adminuser/test.txt >/dev/null 2>&1
+0 2 * * *  ./backup-db.sh >/dev/null 2>&1
