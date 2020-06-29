@@ -118,10 +118,12 @@ app.put('/api/ratings/_bulk', async (req, res) => {
   const options = JSON.parse(req.header('x-options'))
 
   const { session, seed } = options
+
+  let tokenString = `${body[0].participantId}-${session}`
   if (seed) {
-    const token = hash.MD5(`${session}-${seed}`)
-    res.set({ 'x-token': token })
+    tokenString += `-${seed}`
   }
+  res.set({ 'x-token': hash.MD5(tokenString) })
 
   ratings
     .bulkDocs(
