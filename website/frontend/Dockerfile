@@ -7,8 +7,10 @@ RUN npm install
 
 COPY src /app/src
 COPY public /app/public
-COPY ../.env /app/.env
+
 ENV REACT_APP_URL=https://text-stat.qu.tu-berlin.de
+ARG REACT_APP_CONTACT_MAIL
+
 RUN npm run build
 
 FROM nginx:1.17.9-alpine 
