@@ -17,5 +17,17 @@
     "react-step-wizard": "^5.3.0",
     "request": "^2.88.2",
     "request-promise-native": "^1.0.8"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
