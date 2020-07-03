@@ -2,7 +2,6 @@
     - store backups outside of server
 - Deploy
     - Monitoring??
-    - nginx logging ohne IPs
 - Docker
     - should take care of `npm install` even for dev
 
@@ -42,4 +41,4 @@
     - make input data format for pre-processing more general / easier to replicate -> check Laura's format
     - create requirements.txt
         - adjust README re:installation of python stuff
-    - .env.example > .env
+    - .env.example > .env & github secrets
