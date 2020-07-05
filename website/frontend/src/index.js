@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useRef } from 'react'
+import React, { Fragment, useEffect, useState, useRef } from 'react'
 import ReactDOM from 'react-dom'
 import './styles/bootstrap/bootstrap.css'
 import './styles/index.css'
@@ -45,26 +45,29 @@ const App = () => {
   const id = participantId.get()
   const [isLoggedIn, setLoggedIn] = useState(Boolean(id))
   const [trainingState, setTrainingState] = useState(trainingStore.get())
-  const [completedSessionCount, setCompletedSessionCount] = useState()
   const [participant, setParticipant] = useState({ ...emptyParticipant })
 
   const topRef = useRef(null)
 
-  if (id && (!trainingState || typeof completedSessionCount === 'undefined')) {
-    pouchParticipants.get(id).then(participant => {
-      setParticipant(participant)
-      const { completedTrainingSession, completedSessions } = participant
-      const trainingStateFromDb = completedTrainingSession
-        ? 'completed'
-        : 'not started'
-      setTrainingState(trainingStateFromDb)
-      trainingStore.set(trainingStateFromDb)
-
-      if (Object.keys(completedSessions).length !== completedSessionCount) {
-        setCompletedSessionCount(Object.keys(completedSessions).length)
-      }
-    })
-  }
+  useEffect(() => {
+    pouchParticipants
+      .get(id)
+      .then(participant => {
+        setParticipant(participant)
+        const { completedTrainingSession } = participant
+        const trainingStateFromDb = completedTrainingSession
+          ? 'completed'
+          : 'not started'
+        setTrainingState(trainingStateFromDb)
+        trainingStore.set(trainingStateFromDb)
+      })
+      .catch(err => {
+        // nonexistent participant is expected when not logged in
+        if (id || err.status !== 404) {
+          console.error(err)
+        }
+      })
+  }, [id])
 
   const scrollToTop = () => {
     topRef.current.scrollIntoView({ behavior: 'smooth' })
@@ -74,11 +77,11 @@ const App = () => {
     localStorage.clear()
     sessionStorage.clear()
     setLoggedIn(false)
-    setCompletedSessionCount()
     setParticipant({ ...emptyParticipant })
   }
 
   const renderHeader = () => {
+    const sessionCount = Object.keys(participant.completedSessions).length
     return (
       <Fragment>
         <header ref={topRef}>
@@ -100,10 +103,8 @@ const App = () => {
             ) : null}
           </div>
         </header>
-        {completedSessionCount ? (
-          <div className="survey-count">
-            Completed surveys: {completedSessionCount}
-          </div>
+        {sessionCount ? (
+          <div className="survey-count">Completed surveys: {sessionCount}</div>
         ) : null}
       </Fragment>
     )
