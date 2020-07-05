@@ -22,7 +22,6 @@ import Feedback from './components/Feedback'
 import Privacy from './components/Privacy'
 import Logout from './components/Logout'
 import ListeningExercise from './components/ListeningExercise'
-import ConfirmationCodes from './components/ConfirmationCodes'
 import allRequiredEnvVars from './lib/all-required-env-vars'
 
 allRequiredEnvVars(['REACT_APP_CONTACT_MAIL'])
@@ -104,12 +103,7 @@ const App = () => {
           </div>
         </header>
         {sessionCount ? (
-          <div className="survey-count">
-            <div>Completed surveys: {sessionCount} </div>
-            <div>
-              <Link to="/confirmation-codes">Confirmation Codes</Link>
-            </div>
-          </div>
+          <div className="survey-count">Completed surveys: {sessionCount}</div>
         ) : null}
       </Fragment>
     )
@@ -190,11 +184,6 @@ const App = () => {
                           setLoggedIn(true)
                         })
                       }}
-                    />
-                  </Route>
-                  <Route path="/confirmation-codes">
-                    <ConfirmationCodes
-                      tokens={Object.values(participant.completedSessions)}
                     />
                   </Route>
                   <Route path="/instructions">
