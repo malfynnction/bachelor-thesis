@@ -22,6 +22,7 @@ import Feedback from './components/Feedback'
 import Privacy from './components/Privacy'
 import Logout from './components/Logout'
 import ListeningExercise from './components/ListeningExercise'
+import ConfirmationCodes from './components/ConfirmationCodes'
 import allRequiredEnvVars from './lib/all-required-env-vars'
 
 allRequiredEnvVars(['REACT_APP_CONTACT_MAIL'])
@@ -38,16 +39,20 @@ const pouchRatings = createDatabase('ratings')
 const pouchSessions = createDatabase('sessions')
 const pouchItems = createDatabase('items')
 
+const emptyParticipant = { completedSessions: [] }
+
 const App = () => {
   const id = participantId.get()
   const [isLoggedIn, setLoggedIn] = useState(Boolean(id))
   const [trainingState, setTrainingState] = useState(trainingStore.get())
   const [completedSessionCount, setCompletedSessionCount] = useState()
+  const [participant, setParticipant] = useState({ ...emptyParticipant })
 
   const topRef = useRef(null)
 
   if (id && (!trainingState || typeof completedSessionCount === 'undefined')) {
     pouchParticipants.get(id).then(participant => {
+      setParticipant(participant)
       const { completedTrainingSession, completedSessions } = participant
       const trainingStateFromDb = completedTrainingSession
         ? 'completed'
@@ -70,6 +75,7 @@ const App = () => {
     sessionStorage.clear()
     setLoggedIn(false)
     setCompletedSessionCount()
+    setParticipant({ ...emptyParticipant })
   }
 
   const renderHeader = () => {
@@ -178,6 +184,11 @@ const App = () => {
                           setLoggedIn(true)
                         })
                       }}
+                    />
+                  </Route>
+                  <Route path="/confirmation-codes">
+                    <ConfirmationCodes
+                      tokens={Object.values(participant.completedSessions)}
                     />
                   </Route>
                   <Route path="/instructions">

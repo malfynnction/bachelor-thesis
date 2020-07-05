@@ -96,8 +96,23 @@ const Instructions = props => {
           After you complete the rating for one text, you will get the next
           sentence or paragraph and can start the rating of that text. After
           completing all texts of a survey, your answers will be saved and you
-          will be redirected to the homepage. You can then start another survey
-          if you want to.
+          will be redirected to the homepage. You can then{' '}
+          <strong>start another survey</strong> if you want to.
+        </p>
+        <h5>Payment</h5>
+        <p>
+          You can receive a compensation of TODO€ (via Amazon gift card (TODO:
+          really?)) per TODO completed surveys. In order to receive the gift
+          card, please send a mail to{' '}
+          <a
+            href={`mailto:${process.env.REACT_APP_CONTACT_MAIL}`}
+            target="blank"
+          >
+            {process.env.REACT_APP_CONTACT_MAIL}
+          </a>{' '}
+          including your participant ID (can be found in the upper right corner
+          after signing up) and the confirmation codes of all the surverys you
+          completed (can be found <Link to="/confirmation-codes">here</Link>).
         </p>
         <p>
           <strong>Remember:</strong> There are{' '}
