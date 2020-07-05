@@ -104,7 +104,12 @@ const App = () => {
           </div>
         </header>
         {sessionCount ? (
-          <div className="survey-count">Completed surveys: {sessionCount}</div>
+          <div className="survey-count">
+            <div>Completed surveys: {sessionCount} </div>
+            <div>
+              <Link to="/confirmation-codes">Confirmation Codes</Link>
+            </div>
+          </div>
         ) : null}
       </Fragment>
     )
