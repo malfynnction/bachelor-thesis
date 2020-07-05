@@ -50,75 +50,95 @@ class startSession extends React.Component {
   renderThankYou() {
     const { previousSession } = this.state
 
-    if (!previousSession) {
-      return null
-    }
-
     const previouslyTraining = previousSession === 'Training'
     const previouslyFeedback = previousSession === 'Feedback'
     const previouslyRating =
       previousSession && !previouslyTraining && !previouslyFeedback
     const allowAnotherSession = !this.state.seed
 
-    return (
-      <Fragment>
-        {previouslyRating ? (
-          <div className="centered-content centered-text">Thank you!</div>
-        ) : null}
+    if (previouslyTraining) {
+      return (
         <div>
-          {previouslyTraining ? (
-            <Fragment>
-              <span>
-                You have successfully submitted your test rating. You can now
-                start an actual survey below.{' '}
-              </span>
-              <span>
-                If you have any questions, you can read the{' '}
-                <a href="/instructions">Instructions</a> again or contact us at{' '}
-                <a
-                  href={`mailto:${process.env.REACT_APP_CONTACT_MAIL}`}
-                  target="blank"
-                >
-                  {process.env.REACT_APP_CONTACT_MAIL}
-                </a>
-                .{' '}
-              </span>
-            </Fragment>
-          ) : previouslyFeedback ? (
-            <span>
-              Thank you for your feedback, this helps us improve the study in
-              the future!
-            </span>
-          ) : previousSession ? (
+          <span>
+            You have successfully submitted your test rating. You can now start
+            an actual survey below.{' '}
+          </span>
+          <span>
+            If you have any questions, you can read the{' '}
+            <a href="/instructions">Instructions</a> again or contact us at{' '}
+            <a
+              href={`mailto:${process.env.REACT_APP_CONTACT_MAIL}`}
+              target="blank"
+            >
+              {process.env.REACT_APP_CONTACT_MAIL}
+            </a>
+            .{' '}
+          </span>
+          <div>
+            We would also appreciate some <a href="/feedback">feedback</a> on
+            the study, so that we can improve it in the future.
+          </div>
+        </div>
+      )
+    }
+
+    if (previouslyFeedback) {
+      return (
+        <span>
+          Thank you for your feedback, this helps us improve the study in the
+          future!
+        </span>
+      )
+    }
+
+    if (previouslyRating) {
+      return (
+        <Fragment>
+          {this.state.token ? (
             <Fragment>
               <div>
-                Your answers have been saved.{' '}
-                {this.state.token ? (
-                  <Fragment>
-                    Your confirmation code is{' '}
-                    <strong>{this.state.token}</strong>.{' '}
-                    {this.state.seed
-                      ? 'Please copy it and paste it in the corresponding box on the TODO website. '
-                      : 'Please [TODO: remember and then send us mail]'}
-                  </Fragment>
-                ) : null}
+                Thank you! Your answers have been saved. Your confirmation code
+                is
               </div>
-              <span>
-                {allowAnotherSession
-                  ? 'You can now close this window or start another survey below. '
-                  : 'You can now close this window.'}
-              </span>
+              <div className="tu-border">
+                <strong>{this.state.token}</strong>
+              </div>
+              {this.state.seed ? (
+                'Please copy it and paste it in the corresponding box on the TODO website. '
+              ) : (
+                <div>
+                  Please remember it (TODO: phrasing).{' '}
+                  <strong>
+                    You won't be able to see the code again after leaving this
+                    page. (TODO: wording){' '}
+                  </strong>
+                  In order to receive your compensation (TODO € Amazon gift card
+                  per TODO completed surveys), please send a mail to{' '}
+                  <a
+                    href={`mailto:${process.env.REACT_APP_CONTACT_MAIL}`}
+                    target="blank"
+                  >
+                    {process.env.REACT_APP_CONTACT_MAIL}
+                  </a>
+                  , including your participant ID (can be found in the upper
+                  right corner) and the confirmation codes of all the surverys
+                  you completed.
+                </div>
+              )}
             </Fragment>
           ) : null}
-          {previouslyRating || previouslyTraining ? (
-            <span>
-              We would appreciate some <a href="/feedback">feedback</a> on the
-              study, so that we can improve it in the future.
-            </span>
-          ) : null}
-        </div>
-      </Fragment>
-    )
+          <div>
+            {allowAnotherSession
+              ? 'You can now close this window or start another survey below.'
+              : 'You can now close this window.'}{' '}
+            We would also appreciate some <a href="/feedback">feedback</a> on
+            the study, so that we can improve it in the future.
+          </div>
+        </Fragment>
+      )
+    }
+
+    return null
   }
 
   render() {

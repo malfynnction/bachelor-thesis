@@ -11,8 +11,9 @@
 
 - general
     - "TODO" comments
-    - payment / compensation logic
-        - explain where/how to get payment (mail, participant ID, token)
+    - Bug: wenn logout und dann anderer user login, dann session starten: bekommt session (oder "rated everything") von altem user, obwohl localstorage zwischendurch gewiped wird??¿
+    - some pages shouldn't work when you're not logged in (e.g. start-session)
+    - "we" -> "I", "us" -> "me" etc.?
 - instructions:
     - Who is "I"?
 - accessibility

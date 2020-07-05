@@ -101,7 +101,7 @@ const Instructions = props => {
         </p>
         <h5>Payment</h5>
         <p>
-          You can receive a compensation of TODO€ (via Amazon gift card (TODO:
+          You can receive a compensation of TODO € (via Amazon gift card (TODO:
           really?)) per TODO completed surveys. In order to receive the gift
           card, please send a mail to{' '}
           <a
@@ -109,10 +109,10 @@ const Instructions = props => {
             target="blank"
           >
             {process.env.REACT_APP_CONTACT_MAIL}
-          </a>{' '}
-          including your participant ID (can be found in the upper right corner
-          after signing up) and the confirmation codes of all the surverys you
-          completed (will be shown at the end of each survey).
+          </a>
+          , including your participant ID (can be found in the upper right
+          corner after signing up) and the confirmation codes of all the
+          surverys you completed (will be shown at the end of each survey).
         </p>
         <p>
           <strong>Remember:</strong> There are{' '}
