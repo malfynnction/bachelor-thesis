@@ -15,15 +15,12 @@ jobs:
       - uses: actions/checkout@v1
       - name: Publish Frontend
         uses: elgohr/Publish-Docker-Github-Action@5d8ac99
-        env:
-          REACT_APP_CONTACT_MAIL: ${{ secrets.CONTACT_MAIL }}
         with:
           name: 'malfynnction/bachelor-frontend'
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           workdir: website/frontend
           tags: 'latest'
-          buildargs: REACT_APP_CONTACT_MAIL
       - name: Publish Backend
         uses: elgohr/Publish-Docker-Github-Action@5d8ac99
         with:

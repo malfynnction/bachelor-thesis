@@ -5,9 +5,11 @@ import { Link } from 'react-router-dom'
 import createStore from '../lib/create-store'
 import getFromUrlParams from '../lib/get-from-url-params'
 import '../styles/StartSession.css'
-import allRequiredEnvVars from '../lib/all-required-env-vars'
-
-allRequiredEnvVars(['REACT_APP_CONTACT_MAIL'])
+import {
+  COMPENSATION,
+  CONTACT_MAIL,
+  SESSIONS_PER_COMPENSATION,
+} from '../config.js'
 
 const participantStore = createStore('participantId')
 const sessionStore = createStore('session')
@@ -66,11 +68,8 @@ class startSession extends React.Component {
           <span>
             If you have any questions, you can read the{' '}
             <a href="/instructions">Instructions</a> again or contact us at{' '}
-            <a
-              href={`mailto:${process.env.REACT_APP_CONTACT_MAIL}`}
-              target="blank"
-            >
-              {process.env.REACT_APP_CONTACT_MAIL}
+            <a href={`mailto:${CONTACT_MAIL}`} target="blank">
+              {CONTACT_MAIL}
             </a>
             .{' '}
           </span>
@@ -109,16 +108,16 @@ class startSession extends React.Component {
                 <div>
                   Please remember it (TODO: phrasing).{' '}
                   <strong>
-                    You won't be able to see the code again after leaving this
-                    page. (TODO: wording){' '}
-                  </strong>
-                  In order to receive your compensation (TODO € Amazon gift card
-                  per TODO completed surveys), please send a mail to{' '}
-                  <a
-                    href={`mailto:${process.env.REACT_APP_CONTACT_MAIL}`}
-                    target="blank"
-                  >
-                    {process.env.REACT_APP_CONTACT_MAIL}
+                    <u>
+                      You won't be able to see the code again after leaving this
+                      page.
+                    </u>
+                  </strong>{' '}
+                  In order to receive your compensation ({COMPENSATION} per{' '}
+                  {SESSIONS_PER_COMPENSATION} completed surveys), please send a
+                  mail to{' '}
+                  <a href={`mailto:${CONTACT_MAIL}`} target="blank">
+                    {CONTACT_MAIL}
                   </a>
                   , including your participant ID (can be found in the upper
                   right corner) and the confirmation codes of all the surverys

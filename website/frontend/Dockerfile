@@ -9,7 +9,6 @@ COPY src /app/src
 COPY public /app/public
 
 ENV REACT_APP_URL=https://text-stat.qu.tu-berlin.de
-ARG REACT_APP_CONTACT_MAIL
 
 RUN npm run build
 

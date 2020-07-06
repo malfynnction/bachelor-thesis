@@ -4,6 +4,12 @@ import { databasePropType } from '../lib/prop-types'
 import createStore from '../lib/create-store'
 import { Link, withRouter } from 'react-router-dom'
 import '../styles/Instructions.css'
+import {
+  CONTACT_MAIL,
+  TEXTS_PER_SESSION,
+  COMPENSATION,
+  SESSIONS_PER_COMPENSATION,
+} from '../config.js'
 
 const participantId = createStore('participantId')
 
@@ -56,8 +62,8 @@ const Instructions = props => {
         <p>
           In this study, you will read sentences & paragraphs and answer
           questions about their complexity and understandability. Each survey
-          consists of TODO texts, for each of which you will be led through the
-          following three steps:
+          consists of {TEXTS_PER_SESSION} texts, for each of which you will be
+          led through the following three steps:
         </p>
         <h5>1. Reading</h5>
         <p>
@@ -101,14 +107,11 @@ const Instructions = props => {
         </p>
         <h5>Payment</h5>
         <p>
-          You can receive a compensation of TODO € (via Amazon gift card (TODO:
-          really?)) per TODO completed surveys. In order to receive the gift
-          card, please send a mail to{' '}
-          <a
-            href={`mailto:${process.env.REACT_APP_CONTACT_MAIL}`}
-            target="blank"
-          >
-            {process.env.REACT_APP_CONTACT_MAIL}
+          You will receive a compensation ({COMPENSATION}) per{' '}
+          {SESSIONS_PER_COMPENSATION} completed surveys. In order to receive the
+          gift card, please send a mail to{' '}
+          <a href={`mailto:${CONTACT_MAIL}`} target="blank">
+            {CONTACT_MAIL}
           </a>
           , including your participant ID (can be found in the upper right
           corner after signing up) and the confirmation codes of all the
