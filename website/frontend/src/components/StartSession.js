@@ -95,17 +95,17 @@ class startSession extends React.Component {
         <Fragment>
           {this.state.token ? (
             <Fragment>
-              <div>
+              <p>
                 Thank you! Your answers have been saved. Your confirmation code
                 is
-              </div>
-              <div className="tu-border">
+              </p>
+              <div className="tu-border confirmation-token">
                 <strong>{this.state.token}</strong>
               </div>
               {this.state.seed ? (
                 'Please copy it and paste it in the corresponding box on the TODO website. '
               ) : (
-                <div>
+                <p>
                   Please remember it (TODO: phrasing).{' '}
                   <strong>
                     <u>
@@ -122,17 +122,17 @@ class startSession extends React.Component {
                   , including your participant ID (can be found in the upper
                   right corner) and the confirmation codes of all the surverys
                   you completed.
-                </div>
+                </p>
               )}
             </Fragment>
           ) : null}
-          <div>
+          <p>
             {allowAnotherSession
               ? 'You can now close this window or start another survey below.'
               : 'You can now close this window.'}{' '}
             We would also appreciate some <a href="/feedback">feedback</a> on
             the study, so that we can improve it in the future.
-          </div>
+          </p>
         </Fragment>
       )
     }

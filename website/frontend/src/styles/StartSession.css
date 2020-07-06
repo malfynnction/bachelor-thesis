@@ -5,8 +5,18 @@
     margin-top: 15px;
   }
 
+  .start-session > .btn {
+    margin: auto;
+  }
+
   .btn + .btn {
-    margin-left: 0px;
     margin-top: 10px;
   }
+}
+
+.confirmation-token {
+  max-width: 100%;
+  overflow-wrap: break-word;
+  text-align: center;
+  margin-bottom: 16px;
 }
