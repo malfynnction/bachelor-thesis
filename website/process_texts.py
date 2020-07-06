@@ -127,10 +127,6 @@ def main():
     with open(OUTPUT_PATH_SESSIONS, 'w', encoding='utf-8') as file:
         json.dump({'docs': session_documents}, file, ensure_ascii=False, indent=2)
 
-    print('Your items have been processed and are ready to be uploaded to your database. Run \n \
-      curl -X POST YOUR-COUCH-URL-HERE/items/_bulk_docs -H \'Content-Type: application/json\' -d @{}\n \
-      to automatically upload them.'.format(OUTPUT_PATH_ITEMS))
-    # TODO: this does not work if /items does not exist! Or if the documents with the specific IDs already exist
-    # TODO: upload session docs
+    print('Your items have been processed and are ready to be uploaded to your database. Upload the "processed-texts" directory to your sever and run `production/bin/upload-texts.sh` on your server to insert them into your CouchDB.')
 
 main()
