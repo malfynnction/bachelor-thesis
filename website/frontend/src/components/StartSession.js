@@ -102,27 +102,27 @@ class startSession extends React.Component {
               <div className="tu-border confirmation-token">
                 <strong>{this.state.token}</strong>
               </div>
-              {this.state.seed ? (
-                'Please copy it and paste it in the corresponding box on the TODO website. '
-              ) : (
-                <p>
-                  Please copy and paste the code to a safe place,{' '}
-                  <strong>
-                    <u>
-                      you won't be able to see it again after leaving this page.
-                    </u>
-                  </strong>{' '}
-                  In order to receive your compensation ({COMPENSATION} per{' '}
-                  {SESSIONS_PER_COMPENSATION} completed surveys), please send a
-                  mail to{' '}
-                  <a href={`mailto:${CONTACT_MAIL}`} target="blank">
-                    {CONTACT_MAIL}
-                  </a>
-                  , including your participant ID (can be found in the upper
-                  right corner) and the confirmation codes of all the surverys
-                  you completed.
-                </p>
-              )}
+              <p>
+                Please copy and paste the code to a safe place,{' '}
+                <strong>
+                  <u>
+                    you won't be able to see it again after leaving this page.
+                  </u>
+                </strong>{' '}
+                {this.state.seed ? null : (
+                  <Fragment>
+                    In order to receive your compensation ({COMPENSATION} per{' '}
+                    {SESSIONS_PER_COMPENSATION} completed surveys), please send
+                    a mail to{' '}
+                    <a href={`mailto:${CONTACT_MAIL}`} target="blank">
+                      {CONTACT_MAIL}
+                    </a>
+                    , including your participant ID (can be found in the upper
+                    right corner) and the confirmation codes of all the surverys
+                    you completed.
+                  </Fragment>
+                )}
+              </p>
             </Fragment>
           ) : null}
           <p>
