@@ -16,11 +16,10 @@ for database in "items" "sessions" ; do
     curl -X PUT localhost:5984/${database} -H "Authorization: Basic ${authentication}"
   elif [ $status_code -ne 200 ]; then
     # Error
-    echo "Database ${database} return status code ${status_code}, aborting..."
+    echo "Database ${database} returned status code ${status_code}, aborting..."
     exit 1
   fi
 
   # upload content to DB
   curl -X POST localhost:5984/${database}/_bulk_docs -H 'Content-Type: application/json' -d @processed-texts/${database}.json
-  # TODO: this does not work if there are duplicate IDs (also maybe general error catching?)
 done
