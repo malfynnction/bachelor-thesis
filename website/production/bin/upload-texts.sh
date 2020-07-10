@@ -1,5 +1,26 @@
 #! /usr/bin/env bash
-curl -X POST localhost:5984/items/_bulk_docs -H 'Content-Type: application/json' -d @processed-texts/items.json 
-curl -X POST localhost:5984/sessions/_bulk_docs -H 'Content-Type: application/json' -d @processed-texts/sessions.json
 
-# TODO: this does not work if the DB (items bzw. sessions) does not exist or there are duplicate IDs
+# load DB admin password from env
+ENV_FILE="/home/adminuser/production/.env"
+export $(cat $ENV_FILE | xargs)
+
+encoded=$(echo "admin:${COUCHDB_PASSWORD}" | base64)
+authentication="${encoded:0:$((${#encoded}-1))}="
+
+
+for database in "items" "sessions" ; do
+  status_code=$(curl -I --write-out %{http_code} --silent --output /dev/null localhost:5984/${database})
+
+  if [ $status_code -eq 404 ]; then
+    # Database does not exist => create it
+    curl -X PUT localhost:5984/${database} -H "Authorization: Basic ${authentication}"
+  elif [ $status_code -ne 200 ]; then
+    # Error
+    echo "Database ${database} return status code ${status_code}, aborting..."
+    exit 1
+  fi
+
+  # upload content to DB
+  curl -X POST localhost:5984/${database}/_bulk_docs -H 'Content-Type: application/json' -d @processed-texts/${database}.json
+  # TODO: this does not work if there are duplicate IDs (also maybe general error catching?)
+done
