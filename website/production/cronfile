@@ -1,1 +1,1 @@
-0 2 * * *  /home/adminuser/production/backup-db.sh >/dev/null 2>&1
+0 2 * * *  /home/adminuser/production/bin/backup-db.sh >/dev/null 2>&1
