@@ -91,7 +91,7 @@ class Tasks extends React.Component {
               </span>
             )
           })}
-          {isSentence ? splitText[1] : null})
+          {isSentence ? splitText[1] : null}
         </p>
       </Fragment>
     )
