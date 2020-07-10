@@ -107,7 +107,7 @@ const Instructions = props => {
         </p>
         <h5>Payment</h5>
         <p>
-          You will receive a compensation ({COMPENSATION}) per{' '}
+          You will receive a compensation of {COMPENSATION} per{' '}
           {SESSIONS_PER_COMPENSATION} completed surveys. In order to receive the
           gift card, please send a mail to{' '}
           <a href={`mailto:${CONTACT_MAIL}`} target="blank">

@@ -117,9 +117,6 @@ const Questions = props => {
   const showScore = props.questionType !== 'hardestSentence'
   return (
     <Fragment>
-      <div>
-        Please answer some questions about the {props.item.type} you just read:
-      </div>
       {getAllQuestions(props.questionType, props.item).map(
         ({ key, label, answers }) => (
           <Question
