@@ -15,8 +15,13 @@
   hyphens: auto;
 }
 
+.paragraph-text {
+  margin: 10px 0px;
+  padding: 10px 0px;
+}
+
 .item-text > span {
-  margin: 20px;
+  margin: 10px;
 }
 
 .enclosing-paragraph {

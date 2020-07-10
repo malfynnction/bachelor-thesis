@@ -67,7 +67,9 @@ class Read extends React.Component {
               revealItem={() => this.revealItem(timerControl)}
               hideItem={() => this.hideItem(timerControl)}
             >
-              <p className={`item-text centered-content noselect`}>
+              <p
+                className={`item-text paragraph-text centered-content noselect`}
+              >
                 <span>
                   <span className={`${this.state.showItem ? '' : 'hidden'}`}>
                     <span className="hidden-content">{text}</span>
