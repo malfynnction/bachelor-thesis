@@ -134,8 +134,7 @@ const ListeningExercise = props => {
       <h3>Listening Comprehension</h3>
       <div>
         Please listen to the audio and answer the questions to help us better
-        estimate your German level (TODO: this won't have an influence on
-        quality and compensation and stuff)
+        estimate your German level.
       </div>
       {questions.map(({ fileName, question }, i) => (
         <AudioQuestion

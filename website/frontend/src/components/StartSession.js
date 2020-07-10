@@ -106,11 +106,10 @@ class startSession extends React.Component {
                 'Please copy it and paste it in the corresponding box on the TODO website. '
               ) : (
                 <p>
-                  Please remember it (TODO: phrasing).{' '}
+                  Please copy and paste the code to a safe place,{' '}
                   <strong>
                     <u>
-                      You won't be able to see the code again after leaving this
-                      page.
+                      you won't be able to see it again after leaving this page.
                     </u>
                   </strong>{' '}
                   In order to receive your compensation ({COMPENSATION} per{' '}
