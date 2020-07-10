@@ -22,8 +22,6 @@
     - transcriptions for audio in /listening-exercise
 - privacy
     - add GDPR stuff
-- read
-    - Make paragraph text not selectable? It gets very annoying on mobile.
 
 - testing
     - cross-browser
