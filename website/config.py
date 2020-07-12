@@ -1,9 +1,0 @@
-DATA_PATH = 'data.xlsx'
-SHEET_NAME = 'paragraphs'
-TEXT_COLUMN = 'B'
-OUTPUT_PATH_ITEMS = 'website/processed-texts/items.json'
-OUTPUT_PATH_SESSIONS = 'website/processed-texts/sessions.json'
-INCLUDE_ALL_SENTENCES = True # default: false
-CLOZES_PER_TEXT = 5
-ALTERNATIVE_SUGGESTIONS_PER_CLOZE = 4
-ITEMS_PER_SESSION = 3

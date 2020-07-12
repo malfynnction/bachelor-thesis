@@ -40,4 +40,4 @@
     - make input data format for pre-processing more general / easier to replicate -> check Laura's format
     - create requirements.txt
         - adjust README re:installation of python stuff
-    - frontend/src/config.js, github secrets
+    - frontend/src/config.js, config.yml, github secrets

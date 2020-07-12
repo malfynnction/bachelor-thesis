@@ -4,18 +4,21 @@ import spacy
 from openpyxl import load_workbook
 import numpy
 import math
-import config
+import yaml
 
 # load config
-DATA_PATH = config.DATA_PATH
-SHEET_NAME = config.SHEET_NAME
-TEXT_COLUMN = config.TEXT_COLUMN
-OUTPUT_PATH_ITEMS = config.OUTPUT_PATH_ITEMS
-OUTPUT_PATH_SESSIONS = config.OUTPUT_PATH_SESSIONS
-INCLUDE_ALL_SENTENCES = config.INCLUDE_ALL_SENTENCES
-CLOZES_PER_TEXT = config.CLOZES_PER_TEXT
-ALTERNATIVE_SUGGESTIONS_PER_CLOZE = config.ALTERNATIVE_SUGGESTIONS_PER_CLOZE
-ITEMS_PER_SESSION = config.ITEMS_PER_SESSION
+with open('website/config.yml') as f:
+    config = yaml.load(f, Loader=yaml.FullLoader)
+
+    INPUT_FILE = config["input_file"]
+    SHEET_NAME = config["sheet"]
+    TEXT_COLUMN = config["column"]
+    OUTPUT_PATH_ITEMS = config["output_dir"] + "/items.json"
+    OUTPUT_PATH_SESSIONS = config["output_dir"] + "/sessions.json"
+    INCLUDE_ALL_SENTENCES = config["include_all_sentences"]
+    CLOZES_PER_TEXT = config["clozes_per_text"]
+    ALTERNATIVE_SUGGESTIONS_PER_CLOZE = config["alternative_suggestions_per_cloze"]
+    TEXTS_PER_SESSION = config["texts_per_session"]
 
 NLP = spacy.load('de')
 
@@ -32,7 +35,7 @@ def custom_sentence_boundaries(doc):
 
 NLP.add_pipe(custom_sentence_boundaries, before="parser")
 
-WORKBOOK = load_workbook(DATA_PATH)
+WORKBOOK = load_workbook(INPUT_FILE)
 SHEET = WORKBOOK[SHEET_NAME]
 
 
@@ -76,7 +79,7 @@ def get_clozes(parts_of_speech, alternative_pool=None):
 
 def get_sessions(item_ids):
     random.shuffle(item_ids)
-    chunk_amount = math.ceil(len(item_ids) / ITEMS_PER_SESSION)
+    chunk_amount = math.ceil(len(item_ids) / TEXTS_PER_SESSION)
     chunks = numpy.array_split(numpy.array(item_ids), chunk_amount)
     return [{
         "_id": str(i+1),
