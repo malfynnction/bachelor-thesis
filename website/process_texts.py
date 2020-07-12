@@ -4,6 +4,18 @@ import spacy
 from openpyxl import load_workbook
 import numpy
 import math
+import config
+
+# load config
+DATA_PATH = config.DATA_PATH
+SHEET_NAME = config.SHEET_NAME
+TEXT_COLUMN = config.TEXT_COLUMN
+OUTPUT_PATH_ITEMS = config.OUTPUT_PATH_ITEMS
+OUTPUT_PATH_SESSIONS = config.OUTPUT_PATH_SESSIONS
+INCLUDE_ALL_SENTENCES = config.INCLUDE_ALL_SENTENCES
+CLOZES_PER_TEXT = config.CLOZES_PER_TEXT
+ALTERNATIVE_SUGGESTIONS_PER_CLOZE = config.ALTERNATIVE_SUGGESTIONS_PER_CLOZE
+ITEMS_PER_SESSION = config.ITEMS_PER_SESSION
 
 NLP = spacy.load('de')
 
@@ -19,17 +31,6 @@ def custom_sentence_boundaries(doc):
     return doc
 
 NLP.add_pipe(custom_sentence_boundaries, before="parser")
-
-# TODO: make this easier editable
-DATA_PATH = 'data.xlsx'
-SHEET_NAME = 'paragraphs'
-TEXT_COLUMN = 'B'
-OUTPUT_PATH_ITEMS = 'website/processed-texts/items.json'
-OUTPUT_PATH_SESSIONS = 'website/processed-texts/sessions.json'
-INCLUDE_ALL_SENTENCES = True # default: false
-CLOZES_PER_TEXT = 5
-ALTERNATIVE_SUGGESTIONS_PER_CLOZE = 4
-ITEMS_PER_SESSION = 3
 
 WORKBOOK = load_workbook(DATA_PATH)
 SHEET = WORKBOOK[SHEET_NAME]
