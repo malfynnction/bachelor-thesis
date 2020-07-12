@@ -142,6 +142,7 @@ const downloadParticipants = async participantDB => {
     delete participant._id
     delete participant._rev
     delete participant.completedTrainingSession
+    return participant
   })
 }
 
