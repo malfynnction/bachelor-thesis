@@ -82,8 +82,11 @@ const Instructions = props => {
           For paragraphs we will measure how long it takes to read them, so the
           text will be hidden unless you hold a button below the text. Please
           make sure you read the entire paragraph and understand it as well as
-          you can. <br /> Once you're done, you can click on "Next Step". After
-          that, you won't be able to go back to read the text.
+          you can.
+        </p>
+        <p>
+          Once you're done, you can click on "Next Step". After that, you won't
+          be able to go back to read the text.
         </p>
         <h5>2. Questions</h5>
         <p>
