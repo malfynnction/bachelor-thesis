@@ -18,7 +18,8 @@ with open('website/config.yml') as f:
     INCLUDE_ALL_SENTENCES = config["include_all_sentences"]
     CLOZES_PER_TEXT = config["clozes_per_text"]
     ALTERNATIVE_SUGGESTIONS_PER_CLOZE = config["alternative_suggestions_per_cloze"]
-    TEXTS_PER_SESSION = config["texts_per_session"]
+    PARAGRAPH_SESSION_LENGTH = config["paragraph_session_length"]
+    SENTENCE_SESSION_LENGTH = config["sentence_session_length"]
 
 NLP = spacy.load('de')
 
@@ -77,19 +78,17 @@ def get_clozes(parts_of_speech, alternative_pool=None):
 
     return clozes
 
-def get_sessions(item_ids):
+def get_sessions(item_ids, session_length):
     random.shuffle(item_ids)
-    chunk_amount = math.ceil(len(item_ids) / TEXTS_PER_SESSION)
+    chunk_amount = math.ceil(len(item_ids) / session_length)
     chunks = numpy.array_split(numpy.array(item_ids), chunk_amount)
-    return [{
-        "_id": str(i+1),
-        "items": chunk.tolist()
-    } for i, chunk in enumerate(chunks)]
+    return [chunk.tolist() for chunk in chunks]
 
 def main():
     texts = get_parsed_texts()
     item_documents = []
-    all_ids = []
+    paragraph_ids = []
+    sentence_ids = []
 
     for index, text in enumerate(texts):
         sentences = separate_sentences(text)
@@ -105,7 +104,7 @@ def main():
         }
 
         item_documents.append(paragraph_document)
-        all_ids.append(paragraph_id)
+        paragraph_ids.append(paragraph_id)
 
         if INCLUDE_ALL_SENTENCES:
             # add an itemDoc for each sentence
@@ -121,9 +120,13 @@ def main():
                     "clozes": get_clozes(remove_punctuation(sentence_parts_of_speech), alternative_pool=parts_of_speech)
                 }
                 item_documents.append(sentence_document)
-                all_ids.append(sentence_id)
+                sentence_ids.append(sentence_id)
 
-    session_documents = get_sessions(all_ids)
+    sessions = get_sessions(paragraph_ids, PARAGRAPH_SESSION_LENGTH) + get_sessions(sentence_ids, SENTENCE_SESSION_LENGTH)
+    session_documents = [{
+        "_id": str(i+1),
+        "items": session
+    } for i, session in enumerate(sessions)]
 
     with open(OUTPUT_PATH_ITEMS, 'w', encoding='utf-8') as file:
         json.dump({'docs': item_documents}, file, ensure_ascii=False, indent=2)
@@ -131,6 +134,6 @@ def main():
     with open(OUTPUT_PATH_SESSIONS, 'w', encoding='utf-8') as file:
         json.dump({'docs': session_documents}, file, ensure_ascii=False, indent=2)
 
-    print('Your items have been processed and are ready to be uploaded to your database. Upload the "processed-texts" directory to your sever and run `production/bin/upload-texts.sh` on your server to insert them into your CouchDB.')
+    print('Your texts have been processed and are ready to be uploaded to your database. Upload the "processed-texts" directory to your sever and run `production/bin/upload-texts.sh` on your server to insert them into your CouchDB.')
 
 main()

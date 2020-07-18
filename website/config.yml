@@ -6,4 +6,5 @@ output_dir: ./website/processed-texts
 include_all_sentences: 'True'
 clozes_per_text: 5
 alternative_suggestions_per_cloze: 4
-texts_per_session: 3 # TODO
+paragraph_session_length: 2
+sentence_session_length: 10

@@ -6,7 +6,6 @@ import { Link, withRouter } from 'react-router-dom'
 import '../styles/Instructions.css'
 import {
   CONTACT_MAIL,
-  TEXTS_PER_SESSION,
   COMPENSATION,
   SESSIONS_PER_COMPENSATION,
 } from '../config.js'
@@ -62,8 +61,8 @@ const Instructions = props => {
         <p>
           In this study, you will read sentences & paragraphs and answer
           questions about their complexity and understandability. Each survey
-          consists of {TEXTS_PER_SESSION} texts, for each of which you will be
-          led through the following three steps:
+          consists of multiple texts, for each of which you will be led through
+          the following three steps:
         </p>
         <h5>1. Reading</h5>
         <p>
