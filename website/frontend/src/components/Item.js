@@ -155,7 +155,9 @@ class Item extends React.Component {
         ),
         requiredFields: requiredQuestions,
       },
-      {
+    ]
+    if (item.clozes.length > 0) {
+      steps.push({
         component: (
           <Tasks
             key="Tasks"
@@ -171,8 +173,8 @@ class Item extends React.Component {
         requiredFields: item.clozes.map((_, i) => {
           return `cloze[${i}].entered`
         }),
-      },
-    ]
+      })
+    }
     if (item.type === 'paragraph') {
       steps.push({
         component: (
