@@ -1,11 +1,13 @@
 import shuffle from 'lodash.shuffle'
 import createStore from './create-store'
 
-const participantId = (createStore('participantId').get() || '').toString()
+const participantStore = createStore('participantId')
 
 const TRAINING_ID = 'Training'
 
 const chooseNewSession = async (pouchParticipants, pouchSessions) => {
+  const participantId = participantStore.get()
+
   return Promise.all([
     pouchSessions.getAll(),
     pouchParticipants.getAll(),
