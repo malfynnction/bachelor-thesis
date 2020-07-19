@@ -12,7 +12,8 @@ with open('website/config.yml') as f:
 
     INPUT_FILE = config["input_file"]
     SHEET_NAME = config["sheet"]
-    TEXT_COLUMN = config["column"]
+    TEXT_COLUMN = config["text_column"]
+    ID_COLUMN = config["id_column"]
     OUTPUT_PATH_ITEMS = config["output_dir"] + "/items.json"
     OUTPUT_PATH_SESSIONS = config["output_dir"] + "/sessions.json"
     INCLUDE_ALL_SENTENCES = config["include_all_sentences"]
@@ -41,8 +42,9 @@ SHEET = WORKBOOK[SHEET_NAME]
 
 
 def get_parsed_texts():
-    column = SHEET[TEXT_COLUMN]
-    return [NLP(cell.value) for cell in column[1:]] # column[0] is the column header
+    text_column = SHEET[TEXT_COLUMN]
+    id_column = SHEET[ID_COLUMN]
+    return [{"paragraph": NLP(cell.value), "id": id.value} for id, cell in zip(id_column[1:], text_column[1:])] # column[0] is the column header
 
 def tag_parts_of_speech(text):
     return [{
@@ -91,14 +93,15 @@ def main():
     sentence_ids = []
 
     for index, text in enumerate(texts):
-        sentences = separate_sentences(text)
-        parts_of_speech = tag_parts_of_speech(text)
+        paragraph = text['paragraph']
+        sentences = separate_sentences(paragraph)
+        parts_of_speech = tag_parts_of_speech(paragraph)
         paragraph_id = 'par_{}'.format(index+1)
 
         paragraph_document = {
-            "_id": paragraph_id,
+            "_id": text['id'],
             "type": "paragraph",
-            "text": text.text,
+            "text": paragraph.text,
             "sentences": sentences,
             "clozes": get_clozes(remove_punctuation(parts_of_speech))
         }
@@ -110,13 +113,13 @@ def main():
             # add an itemDoc for each sentence
             for sentence_index, sentence in enumerate(sentences):
                 sentence_parts_of_speech = tag_parts_of_speech(NLP(sentence))
-                sentence_id = "sent_{}-{}".format(index + 1, sentence_index + 1)
+                sentence_id = "sent_{}-{}".format(text['id'], sentence_index + 1)
 
                 sentence_document = {
                     "_id": sentence_id,
                     "type": "sentence",
                     "text": sentence,
-                    "enclosingParagraph": text.text,
+                    "enclosingParagraph": paragraph.text,
                     "clozes": get_clozes(remove_punctuation(sentence_parts_of_speech), alternative_pool=parts_of_speech)
                 }
                 item_documents.append(sentence_document)
