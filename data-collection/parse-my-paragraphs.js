@@ -8,19 +8,19 @@ const filePath = '../data.xlsx'
 const sheetName = 'paragraphs'
 
 const paragraphColumn = 'B'
-const sentenceCountColumn = 'G'
-const naderiCountColumn = 'H'
-const WPSColumn = 'I' // words per sentence
-const charPWColumn = 'J' // characters per word
-const syllPWColumn = 'K' // syllables per word
-const fleschKincaidColumn = 'L' // score on Flesch-Kincaid Reading Ease scale
+const sentenceCountColumn = 'F'
+const naderiCountColumn = 'G'
+const WPSColumn = 'H' // words per sentence
+const charPWColumn = 'I' // characters per word
+const syllPWColumn = 'J' // syllables per word
+const fleschKincaidColumn = 'K' // score on Flesch-Kincaid Reading Ease scale
 
 let paragraphs = getColumn(filePath, sheetName, paragraphColumn)
 const workbook = xlsx.readFile(filePath)
 const sheet = workbook.Sheets[sheetName]
 
 const footnoteReference = /\[\d+\]/g
-const punctuation = /\.|!|,|-|\(|\)|\/|"|;|:|…|„|“/g
+const punctuation = /\.|\?|!|,|-|\(|\)|\/|"|;|:|…|„|“/g
 
 const syllableCounts = JSON.parse(fs.readFileSync('./lib/syllable-counts.json'))
 
@@ -83,7 +83,7 @@ const countWords = async () => {
 
   let i = 0
   for (const paragraph of paragraphs) {
-    console.log(`paragraph ${i++}/${paragraphs.length}`)
+    console.log(`paragraph ${++i}/${paragraphs.length}`)
 
     const row = paragraph.cell.slice(1)
     const words = paragraph.value.split(' ')

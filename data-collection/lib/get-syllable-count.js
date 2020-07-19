@@ -21,7 +21,7 @@ module.exports = word => {
     if (typeof syllableCounts[parsedWord.toLowerCase()] !== 'undefined') {
       resolve(syllableCounts[parsedWord.toLowerCase()])
     }
-
+    console.log(`Requesting the syllable count of "${word}"...`)
     request
       .get(`https://www.duden.de/rechtschreibung/${parsedWord}`)
       .then(async res => {
@@ -52,6 +52,9 @@ module.exports = word => {
         resolve(syllables)
       })
       .catch(async err => {
+        console.log(
+          `Request Error. Now estimating the syllable count of "${word}"...`
+        )
         const syllables = estimateSyllables(word)
         syllableCounts[parsedWord.toLowerCase()] = syllables
         await fs.writeFileSync(
