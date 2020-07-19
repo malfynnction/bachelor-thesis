@@ -21,6 +21,7 @@ with open('website/config.yml') as f:
     ALTERNATIVE_SUGGESTIONS_PER_CLOZE = config["alternative_suggestions_per_cloze"]
     PARAGRAPH_SESSION_LENGTH = config["paragraph_session_length"]
     SENTENCE_SESSION_LENGTH = config["sentence_session_length"]
+    SIMPLE_LANGUAGE_STARTING_ID = config["simple_language_starting_id"]
 
 NLP = spacy.load('de')
 
@@ -91,8 +92,9 @@ def main():
     item_documents = []
     paragraph_ids = []
     sentence_ids = []
+    simple_sentence_ids = []
 
-    for index, text in enumerate(texts):
+    for index, text in enumerate(texts[1211:1217]):
         paragraph = text['paragraph']
         sentences = separate_sentences(paragraph)
         parts_of_speech = tag_parts_of_speech(paragraph)
@@ -123,9 +125,16 @@ def main():
                     "clozes": get_clozes(remove_punctuation(sentence_parts_of_speech), alternative_pool=parts_of_speech)
                 }
                 item_documents.append(sentence_document)
-                sentence_ids.append(sentence_id)
+                if (text['id'] < SIMPLE_LANGUAGE_STARTING_ID):
+                    sentence_ids.append(sentence_id)
+                else:
+                    simple_sentence_ids.append(sentence_id)
 
-    sessions = get_sessions(paragraph_ids, PARAGRAPH_SESSION_LENGTH) + get_sessions(sentence_ids, SENTENCE_SESSION_LENGTH)
+    paragraph_sessions = get_sessions(paragraph_ids, PARAGRAPH_SESSION_LENGTH)
+    sentence_sessions = get_sessions(sentence_ids, SENTENCE_SESSION_LENGTH - 1 )
+
+    # Add one sentence from the Simple Language to each session
+    sessions = paragraph_sessions + [session + [random.choice(simple_sentence_ids)] for session in sentence_sessions]
     session_documents = [{
         "_id": str(i+1),
         "items": session

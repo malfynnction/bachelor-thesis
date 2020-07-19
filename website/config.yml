@@ -9,3 +9,4 @@ clozes_per_text: 5
 alternative_suggestions_per_cloze: 4
 paragraph_session_length: 2
 sentence_session_length: 10
+simple_language_starting_id: 1216
