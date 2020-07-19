@@ -104,8 +104,9 @@ const Instructions = props => {
           After you complete the rating for one text, you will get the next
           sentence or paragraph and can start the rating of that text. After
           completing all texts of a survey, your answers will be saved and you
-          will be redirected to the homepage. You can then{' '}
-          <strong>start another survey</strong> if you want to.
+          will be redirected to the homepage. You can then start another survey
+          if you want to.{' '}
+          <strong>You can complete as many surveys as you like.</strong>
         </p>
         <h5>Payment</h5>
         <p>
