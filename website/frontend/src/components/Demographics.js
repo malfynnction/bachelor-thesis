@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import '../styles/Demographics.css'
@@ -93,7 +93,8 @@ class Demographics extends React.Component {
               { key: 'female', label: 'Female' },
               { key: 'male', label: 'Male' },
               { key: 'nonbinary', label: 'Non-Binary' },
-              { key: 'notDisclosed', label: 'Prefer not to say' },
+              { key: 'text' },
+              { key: 'notDisclosed', label: 'Prefer not to answer' },
             ].map(({ key, label }) => (
               <div key={`gender-${key}`}>
                 <input
@@ -106,41 +107,32 @@ class Demographics extends React.Component {
                     this.setState({ data: { ...this.state.data, gender: key } })
                   }
                 />
-                <label htmlFor={`gender-${key}`}>{label}</label>
+                {key === 'text' ? (
+                  <Fragment>
+                    <label htmlFor="gender-other" className="screenreader-only">
+                      Other (please write your answer in the text field)
+                    </label>
+                    <input
+                      type="text"
+                      name="gender-text"
+                      id="gender-text"
+                      value={this.state.data.genderText}
+                      onChange={e =>
+                        this.setState({
+                          data: {
+                            ...this.state.data,
+                            gender: 'text',
+                            genderText: e.target.value,
+                          },
+                        })
+                      }
+                    />
+                  </Fragment>
+                ) : (
+                  <label htmlFor={`gender-${key}`}>{label}</label>
+                )}
               </div>
             ))}
-            <div>
-              <input
-                type="radio"
-                name="gender"
-                id="gender-other"
-                value="other"
-                checked={this.state.data.gender === 'text'}
-                onChange={() =>
-                  this.setState({
-                    data: { ...this.state.data, gender: 'text' },
-                  })
-                }
-              />
-              <label htmlFor="gender-other" className="screenreader-only">
-                Other (please write your answer in the text field)
-              </label>
-              <input
-                type="text"
-                name="gender-text"
-                id="gender-text"
-                value={this.state.data.genderText}
-                onChange={e =>
-                  this.setState({
-                    data: {
-                      ...this.state.data,
-                      gender: 'text',
-                      genderText: e.target.value,
-                    },
-                  })
-                }
-              />
-            </div>
           </div>
           {this.renderQuestion('Native Language(s)*: ', 'nativeLang', 'text')}
           {this.renderQuestion(
