@@ -8,6 +8,7 @@ import {
   CONTACT_MAIL,
   COMPENSATION,
   SESSIONS_PER_COMPENSATION,
+  SESSION_DURATION,
 } from '../config.js'
 
 const participantId = createStore('participantId')
@@ -55,14 +56,15 @@ const Instructions = props => {
           data set of German texts and a{' '}
           <strong>rating of their complexity and understandability. </strong>
           This data set can then be used as a basis for identifying the most
-          complex parts of texts and later automatically "translate" them to
-          simpler language.
+          complex parts of texts and automatically "translate" them to simpler
+          language.
         </p>
         <p>
           In this study, you will read sentences & paragraphs and answer
           questions about their complexity and understandability. Each survey
-          consists of multiple texts, for each of which you will be led through
-          the following three steps:
+          will take about {SESSION_DURATION} minutes to complete and consists of
+          multiple texts, for each of which you will be led through the
+          following three steps:
         </p>
         <h5>1. Reading</h5>
         <p>
@@ -96,7 +98,7 @@ const Instructions = props => {
         <h5>3. Cloze Test</h5>
         <p>
           In the last step you will see the text again, but with several words
-          left out. Please <strong>select the missing words</strong> in the
+          left out. Please <strong>select the missing words</strong> from the
           dropdown menus.
         </p>
         <h5>Finish</h5>
@@ -124,8 +126,7 @@ const Instructions = props => {
           <strong>Remember:</strong> There are{' '}
           <strong>no right or wrong answers</strong> as long as you read the
           text carefully, follow the instructions and give your honest opinion.
-          Your responses directly influence important decisions to be made. In
-          case you get tired or cannot focus for any reason, take a break and
+          In case you get tired or cannot focus for any reason, take a break and
           come back later.
         </p>
         {loggedInId !== null ? (

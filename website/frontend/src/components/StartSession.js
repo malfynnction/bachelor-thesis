@@ -126,9 +126,14 @@ class startSession extends React.Component {
             </Fragment>
           ) : null}
           <p>
-            {allowAnotherSession
-              ? 'You can now close this window or start another survey below.'
-              : 'You can now close this window.'}{' '}
+            {allowAnotherSession ? (
+              <Fragment>
+                You can now close this window{' '}
+                <strong>or start another survey</strong> below.
+              </Fragment>
+            ) : (
+              'You can now close this window.'
+            )}{' '}
             We would also appreciate some <a href="/feedback">feedback</a> on
             the study, so that we can improve it in the future.
           </p>
@@ -155,8 +160,8 @@ class startSession extends React.Component {
             <div>
               {this.state.completedTrainingSession
                 ? `You can start ${
-                    previouslyRating ? 'another' : 'an'
-                  } actual survey or do ${
+                    previouslyRating ? 'another' : 'an actual'
+                  } survey or do ${
                     previouslyTraining ? 'another' : 'a short'
                   } test survey. `
                 : 'Please go through a test survey before you start with actual ratings. '}
