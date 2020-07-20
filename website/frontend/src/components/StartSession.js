@@ -107,9 +107,7 @@ class startSession extends React.Component {
               <div>
                 Please copy and paste the code to a safe place,{' '}
                 <strong>
-                  <u>
-                    you won't be able to see it again after leaving this page.
-                  </u>
+                  you won't be able to see it again after leaving this page.
                 </strong>
               </div>
               {this.state.seed ? null : (
@@ -126,7 +124,7 @@ class startSession extends React.Component {
                     What am I supposed to do with the code?
                   </div>
                   {this.state.showCompensationExplanation ? (
-                    <div>
+                    <div className="toggled-text">
                       In order to receive your compensation ({COMPENSATION} per{' '}
                       {SESSIONS_PER_COMPENSATION} completed surveys), please
                       send a mail to{' '}
@@ -231,7 +229,7 @@ class startSession extends React.Component {
                 </div>
                 <br />
                 {this.state.showTrainingExplanation ? (
-                  <div>
+                  <div className="toggled-text">
                     A test survey is just like a real survey, except your
                     answers won't be recorded and you will get a pre-defined set
                     of one very one very easy, one medium, and one very
