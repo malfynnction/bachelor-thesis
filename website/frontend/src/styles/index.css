@@ -197,3 +197,12 @@ h2,
 h3 {
   text-align: center;
 }
+
+.link {
+  color: #c50e1f;
+  cursor: pointer;
+}
+
+.link:hover {
+  text-decoration: underline;
+}

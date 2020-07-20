@@ -102,27 +102,42 @@ class startSession extends React.Component {
               <div className="tu-border confirmation-token">
                 <strong>{this.state.token}</strong>
               </div>
-              <p>
+              <div>
                 Please copy and paste the code to a safe place,{' '}
                 <strong>
                   <u>
                     you won't be able to see it again after leaving this page.
                   </u>
-                </strong>{' '}
-                {this.state.seed ? null : (
-                  <Fragment>
-                    In order to receive your compensation ({COMPENSATION} per{' '}
-                    {SESSIONS_PER_COMPENSATION} completed surveys), please send
-                    a mail to{' '}
-                    <a href={`mailto:${CONTACT_MAIL}`} target="blank">
-                      {CONTACT_MAIL}
-                    </a>
-                    , including your participant ID (can be found in the upper
-                    right corner) and the confirmation codes of all the surverys
-                    you completed.
-                  </Fragment>
-                )}
-              </p>
+                </strong>
+              </div>
+              {this.state.seed ? null : (
+                <Fragment>
+                  <div
+                    onClick={() => {
+                      this.setState({
+                        showCompensationExplanation: !this.state
+                          .showCompensationExplanation,
+                      })
+                    }}
+                    className="link"
+                  >
+                    What am I supposed to do with the code?
+                  </div>
+                  {this.state.showCompensationExplanation ? (
+                    <div>
+                      In order to receive your compensation ({COMPENSATION} per{' '}
+                      {SESSIONS_PER_COMPENSATION} completed surveys), please
+                      send a mail to{' '}
+                      <a href={`mailto:${CONTACT_MAIL}`} target="blank">
+                        {CONTACT_MAIL}
+                      </a>
+                      , including your participant ID (can be found in the upper
+                      right corner) and the confirmation codes of all the
+                      surverys you completed.
+                    </div>
+                  ) : null}
+                </Fragment>
+              )}
             </Fragment>
           ) : null}
           <p>
