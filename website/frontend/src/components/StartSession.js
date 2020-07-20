@@ -60,24 +60,26 @@ class startSession extends React.Component {
 
     if (previouslyTraining) {
       return (
-        <div>
-          <span>
-            You have successfully submitted your test rating. You can now start
-            an actual survey below.{' '}
-          </span>
-          <span>
-            If you have any questions, you can read the{' '}
-            <a href="/instructions">Instructions</a> again or contact us at{' '}
-            <a href={`mailto:${CONTACT_MAIL}`} target="blank">
-              {CONTACT_MAIL}
-            </a>
-            .{' '}
-          </span>
+        <Fragment>
+          <div>
+            <span>
+              You have successfully submitted your test rating.{' '}
+              <strong>You can now start an actual survey below.</strong>{' '}
+            </span>
+            <span>
+              If you have any questions, you can read the{' '}
+              <a href="/instructions">Instructions</a> again or contact us at{' '}
+              <a href={`mailto:${CONTACT_MAIL}`} target="blank">
+                {CONTACT_MAIL}
+              </a>
+              .{' '}
+            </span>
+          </div>
           <div>
             We would also appreciate some <a href="/feedback">feedback</a> on
             the study, so that we can improve it in the future.
           </div>
-        </div>
+        </Fragment>
       )
     }
 
@@ -143,8 +145,7 @@ class startSession extends React.Component {
           <p>
             {allowAnotherSession ? (
               <Fragment>
-                You can now close this window{' '}
-                <strong>or start another survey</strong> below.
+                You can now close this window or start another survey below.
               </Fragment>
             ) : (
               'You can now close this window.'
@@ -172,19 +173,6 @@ class startSession extends React.Component {
         {this.renderThankYou()}
         {allowAnotherSession ? (
           <Fragment>
-            <div>
-              {this.state.completedTrainingSession
-                ? `You can start ${
-                    previouslyRating ? 'another' : 'an actual'
-                  } survey or do ${
-                    previouslyTraining ? 'another' : 'a short'
-                  } test survey. `
-                : 'Please go through a test survey before you start with actual ratings. '}
-              A test survey is just like a real survey, except your answers
-              won't be recorded and you will get a pre-defined set of one very
-              one very easy, one medium, and one very difficult text.
-            </div>
-
             {this.state.hasActiveSession ? (
               <div>
                 You have unsaved ratings. You can continue where you left off
@@ -198,7 +186,6 @@ class startSession extends React.Component {
                   Continue Survey
                 </Link>
               ) : null}
-
               {this.state.completedTrainingSession ? (
                 <Link
                   className="btn"
@@ -207,20 +194,54 @@ class startSession extends React.Component {
                     this.deleteActiveSession()
                   }}
                 >
-                  Start{this.state.hasActiveSession ? ' new' : ''} Survey
+                  Start
+                  {this.state.hasActiveSession
+                    ? ' new'
+                    : previouslyRating
+                    ? ' another'
+                    : ''}{' '}
+                  Survey
                 </Link>
               ) : null}
-              <Link
-                className="btn"
-                to="/session"
-                onClick={() => {
-                  this.deleteActiveSession()
-                  this.props.onStartTraining()
-                }}
-              >
-                Start Test Survey
-              </Link>
+              {previouslyRating || previouslyTraining ? null : (
+                <Link
+                  className="btn"
+                  to="/session"
+                  onClick={() => {
+                    this.deleteActiveSession()
+                    this.props.onStartTraining()
+                  }}
+                >
+                  Start Test Survey
+                </Link>
+              )}
             </div>
+            {previouslyRating || previouslyTraining ? null : (
+              <div className="centered-content">
+                <div
+                  className="link"
+                  onClick={() => {
+                    this.setState({
+                      showTrainingExplanation: !this.state
+                        .showTrainingExplanation,
+                    })
+                  }}
+                >
+                  What is a Test Survey?
+                </div>
+                <br />
+                {this.state.showTrainingExplanation ? (
+                  <div>
+                    A test survey is just like a real survey, except your
+                    answers won't be recorded and you will get a pre-defined set
+                    of one very one very easy, one medium, and one very
+                    difficult text. This can help you familiarize yourself with
+                    the process of the study and give you a feeling of the
+                    different levels of texts.
+                  </div>
+                ) : null}
+              </div>
+            )}
           </Fragment>
         ) : null}
       </div>
