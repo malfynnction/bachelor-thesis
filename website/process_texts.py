@@ -94,7 +94,7 @@ def main():
     sentence_ids = []
     simple_sentence_ids = []
 
-    for index, text in enumerate(texts[1211:1217]):
+    for index, text in enumerate(texts):
         paragraph = text['paragraph']
         sentences = separate_sentences(paragraph)
         parts_of_speech = tag_parts_of_speech(paragraph)
