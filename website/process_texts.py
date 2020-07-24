@@ -59,18 +59,21 @@ def separate_sentences(text):
 def remove_punctuation(parts_of_speech):
     return [token for token in parts_of_speech if token['type'] != 'PUNCT']
 
+def isNoun(token):
+    return token['type'] == 'NOUN' and len(token['word']) > 2
+
 def get_clozes(parts_of_speech, alternative_pool=None):
     if alternative_pool is None:
         alternative_pool = parts_of_speech
 
-    noun_indices = [i for i, token in enumerate(parts_of_speech) if token['type'] == 'NOUN']
+    noun_indices = [i for i, token in enumerate(parts_of_speech) if isNoun(token)]
     cloze_indices = random.sample(noun_indices, min(len(noun_indices), CLOZES_PER_TEXT))
 
     clozes = []
 
     for i in cloze_indices:
         original = parts_of_speech[i]['word']
-        alternatives = set([token['word'] for token in alternative_pool if token['type'] == 'NOUN' and token['word'] != original])
+        alternatives = set([token['word'] for token in alternative_pool if isNoun(token) and token['word'] != original])
         suggestion_amount = min(len(alternatives), ALTERNATIVE_SUGGESTIONS_PER_CLOZE)
         suggestions = random.sample(alternatives, suggestion_amount)
         clozes.append({
@@ -94,7 +97,7 @@ def main():
     sentence_ids = []
     simple_sentence_ids = []
 
-    for index, text in enumerate(texts):
+    for text in texts:
         paragraph = text['paragraph']
         sentences = separate_sentences(paragraph)
         parts_of_speech = tag_parts_of_speech(paragraph)
