@@ -62,9 +62,16 @@ class Tasks extends React.Component {
   render() {
     const { text, clozes, type, enclosingParagraph } = this.props.item
     const words = text.split(' ')
+    const wordsWithoutPunctuation = text
+      .split(' ')
+      .map(word => word.replace(punctuation, ''))
+
     clozes.forEach((cloze, i) => {
       // the actual index could be different than the wordIndex saved in the cloze object because punctuation is not counted when creating clozes
-      let actualIndex = words.indexOf(cloze.original, cloze.wordIndex)
+      let actualIndex = wordsWithoutPunctuation.indexOf(
+        cloze.original,
+        cloze.wordIndex
+      )
       if (actualIndex === -1) {
         actualIndex = cloze.wordIndex
       }
