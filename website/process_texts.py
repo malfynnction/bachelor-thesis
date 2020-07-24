@@ -45,7 +45,7 @@ SHEET = WORKBOOK[SHEET_NAME]
 def get_parsed_texts():
     text_column = SHEET[TEXT_COLUMN]
     id_column = SHEET[ID_COLUMN]
-    return [{"paragraph": NLP(cell.value), "id": id.value} for id, cell in zip(id_column[1:], text_column[1:])] # column[0] is the column header
+    return [{"paragraph": NLP(cell.value), "id": str(id.value)} for id, cell in zip(id_column[1:], text_column[1:])] # column[0] is the column header
 
 def tag_parts_of_speech(text):
     return [{
@@ -131,10 +131,14 @@ def main():
                     simple_sentence_ids.append(sentence_id)
 
     paragraph_sessions = get_sessions(paragraph_ids, PARAGRAPH_SESSION_LENGTH)
-    sentence_sessions = get_sessions(sentence_ids, SENTENCE_SESSION_LENGTH - 1 )
 
-    # Add one sentence from the Simple Language to each session
-    sessions = paragraph_sessions + [session + [random.choice(simple_sentence_ids)] for session in sentence_sessions]
+    if INCLUDE_ALL_SENTENCES:
+        sentence_sessions = get_sessions(sentence_ids, SENTENCE_SESSION_LENGTH - 1 )
+        # Add one sentence from the Simple Language to each session
+        sessions = paragraph_sessions + [session + [random.choice(simple_sentence_ids)] for session in sentence_sessions]
+    else:
+        sessions = paragraph_sessions
+
     session_documents = [{
         "_id": str(i+1),
         "items": session

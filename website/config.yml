@@ -4,7 +4,7 @@ sheet: paragraphs
 id_column: A
 text_column: B
 output_dir: ./website/processed-texts
-include_all_sentences: 'True'
+include_all_sentences: False
 clozes_per_text: 5
 alternative_suggestions_per_cloze: 4
 paragraph_session_length: 2
