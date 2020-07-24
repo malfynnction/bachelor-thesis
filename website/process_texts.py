@@ -98,10 +98,10 @@ def main():
         paragraph = text['paragraph']
         sentences = separate_sentences(paragraph)
         parts_of_speech = tag_parts_of_speech(paragraph)
-        paragraph_id = 'par_{}'.format(index+1)
+        paragraph_id = text['id']
 
         paragraph_document = {
-            "_id": text['id'],
+            "_id": paragraph_id,
             "type": "paragraph",
             "text": paragraph.text,
             "sentences": sentences,
