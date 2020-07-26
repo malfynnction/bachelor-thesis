@@ -7,6 +7,11 @@ _TODO: write a proper README_
 - Docker
 - Docker Compose
 
+### Development Requirements
+
+- npm
+- python
+
 ## Initial setup
 
 - Fork the repository & clone it to your computer
