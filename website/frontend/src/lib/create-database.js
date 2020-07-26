@@ -1,7 +1,8 @@
 const request = require('request-promise-native')
 const { WEBSITE_URL } = require('../config')
 
-const backendUrl = WEBSITE_URL || 'http://localhost:8000'
+const backendUrl =
+  process.env.NODE_ENV === 'development' ? 'http://localhost:8000' : WEBSITE_URL
 const databaseUrl = `${backendUrl}/api`
 
 const createDatabase = name => {
