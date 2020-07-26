@@ -22,6 +22,7 @@ import Feedback from './components/Feedback'
 import Privacy from './components/Privacy'
 import Logout from './components/Logout'
 import ListeningExercise from './components/ListeningExercise'
+import Impressum from './components/Impressum'
 import { CONTACT_MAIL } from './config.js'
 
 const participantId = createStore('participantId')
@@ -115,6 +116,8 @@ const App = () => {
         <a href={`mailto:${CONTACT_MAIL}`} target="blank">
           Contact
         </a>
+        <div className="vertical-separator" />
+        <Link to="/impressum">Impressum</Link>
       </footer>
     )
   }
@@ -237,6 +240,9 @@ const App = () => {
                   </Route>
                   <Route path="/privacy">
                     <Privacy prev={getFromUrlParams('prev', props)} />
+                  </Route>
+                  <Route path="/impressum">
+                    <Impressum />
                   </Route>
                   <Route path="/">
                     <Start />
