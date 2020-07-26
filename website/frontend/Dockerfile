@@ -8,8 +8,6 @@ RUN npm install
 COPY src /app/src
 COPY public /app/public
 
-ENV REACT_APP_URL=https://text-stat.qu.tu-berlin.de
-
 RUN npm run build
 
 FROM nginx:1.17.9-alpine 

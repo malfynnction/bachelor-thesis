@@ -11,7 +11,6 @@ _TODO: write a proper README_
 
 - `git clone https://github.com/malfynnction/bachelor-thesis.git && cd bachelor-thesis`
 - `npm install`
-- Change "https://text-stat.qu.tu-berlin.de" in `website/frontend/Dockerfile` to your url
 - `python3 -m venv ./venv && source venv/bin/activate && pip install -r requirements.txt`
 - [Populate database](#database)
 
