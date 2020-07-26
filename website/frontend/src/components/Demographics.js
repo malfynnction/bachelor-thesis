@@ -92,7 +92,7 @@ class Demographics extends React.Component {
             {[
               { key: 'female', label: 'Female' },
               { key: 'male', label: 'Male' },
-              { key: 'nonbinary', label: 'Non-Binary' },
+              { key: 'nonbinary', label: 'Nonbinary' },
               { key: 'text' },
               { key: 'notDisclosed', label: 'Prefer not to answer' },
             ].map(({ key, label }) => (
