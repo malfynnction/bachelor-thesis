@@ -9,18 +9,23 @@ _TODO: write a proper README_
 
 ## Initial setup
 
-- `git clone https://github.com/malfynnction/bachelor-thesis.git && cd bachelor-thesis`
+- Fork the repository & clone it to your computer
 - `npm install`
 - `python3 -m venv ./venv && source venv/bin/activate && pip install -r requirements.txt`
+- Adjust the config in `frontend/src/config.js` and `config.yml`
+- Add necessary [GitHub Secrets](https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets#creating-encrypted-secrets-for-a-repository) to your repository:
+  - `CONTACT_MAIL`: Mail address for participants to contact you
+  - `COUCHDB_PASSWORD`: Admin password for your CouchDB
+  - `DOCKER_USERNAME` and `DOCKER_PASSWORD`: Your dockerhub credentials
+  - `PRIVATE_SSH_KEY`: _(TODO explanation)_
 - [Populate database](#database)
 
 ## Local development
 
 - `git pull`
 - `npm install`
-- `docker-compose -f website/docker-compose-dev.yml up`
+- `docker-compose -f website/docker-compose.yml up`
 - go to [http://localhost:8000](http://localhost:8000)
-- happy editing!
 
 ## Testing
 
@@ -28,7 +33,7 @@ _TODO_
 
 ## Deploys
 
-The website is deployed automatically via github actions on every push to the `main` branch. The Docker Images for the frontend and backend are published on [https://hub.docker.com/u/malfynnction](dockerhub) and then started on the server via docker-compose (See `production` directory)
+The website is deployed automatically via github actions on every push to the `main` branch. The Docker Images for the frontend and backend are published on [dockerhub](https://hub.docker.com/u/malfynnction) and then started on the server via docker-compose (See `production` directory)
 
 <a name='database'></a>
 
