@@ -25,7 +25,7 @@ const getHardestSentences = ratings => {
     rating => rating.questions.hardestSentence
   )
   const voteCounts = hardestSentences
-    .filter(sentence => !!sentence)
+    .filter(sentence => typeof sentence !== 'undefined')
     .reduce((acc, sentence) => {
       if (acc[sentence]) {
         acc[sentence] += 1
@@ -128,18 +128,16 @@ const summarizeDemographic = async participantDB => {
 
 const downloadFeedback = async feedbackDB => {
   const feedback = await getAllDocs(feedbackDB)
-  const actualFeedback = feedback.map(item => {
+  return feedback.map(item => {
     delete item._id
     delete item._rev
     return item
   })
-  return actualFeedback
 }
 
 const downloadParticipants = async participantDB => {
   const participants = await getAllDocs(participantDB)
   return participants.map(participant => {
-    delete participant._id
     delete participant._rev
     delete participant.completedTrainingSession
     return participant
