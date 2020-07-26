@@ -1,18 +1,22 @@
 name: Deploy
 
-on:
-  push:
-    branches:
-      - main
+on: push
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run Unit Tests
+        run: npm test
   deploy:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
     env:
       SERVER: text-stat.qu.tu-berlin.de
       USER: adminuser
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Publish Frontend
         uses: elgohr/Publish-Docker-Github-Action@5d8ac99
         with:
