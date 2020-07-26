@@ -46,6 +46,6 @@ jobs:
             echo "COUCHDB_PASSWORD=${{ secrets.COUCHDB_PASSWORD }}" > .env
             docker-compose pull && docker-compose up -d
             crontab ./cronfile
-          host: ${{ env. SERVER }}
+          host: ${{ env.SERVER }}
           user: ${{ env.USER }}
           key: ${{ secrets.PRIVATE_SSH_KEY }}
