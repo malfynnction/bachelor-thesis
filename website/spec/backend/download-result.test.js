@@ -25,6 +25,7 @@ const data = {
       completedTrainingSession: true,
     },
   ],
+  emptyParticipant: [{ _id: '3' }],
   feedback: [
     {
       _id: '1',
@@ -152,13 +153,23 @@ it('calculates the average score for the listening exercise', () => {
 
 it('summarizes some entries', () => {
   expect.assertions(2)
-  return download({ participants: data.twoParticipants }).then(result => {
-    expect(result.demographic.nativeLang).toEqual({ German: 1, English: 1 })
-    expect(result.demographic.gerLevel).toEqual({ B2: 2 })
-  })
+  return download({ participants: data.twoParticipants }).then(
+    ({ demographic }) => {
+      expect(demographic.nativeLang).toEqual({ German: 1, English: 1 })
+      expect(demographic.gerLevel).toEqual({ B2: 2 })
+    }
+  )
 })
 
-// TODO: participant with missing demographic data & listeningScore
+it('ignores missing data', () => {
+  expect.assertions(2)
+  return download({
+    participants: [...data.twoParticipants, ...data.emptyParticipant],
+  }).then(({ demographic }) => {
+    expect(demographic.nativeLang).toEqual({ German: 1, English: 1 })
+    expect(demographic.avgListeningScore).toBeCloseTo(22 / 3)
+  })
+})
 
 /*
  * ratings
