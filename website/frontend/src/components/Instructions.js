@@ -61,10 +61,10 @@ const Instructions = props => {
         </p>
         <p>
           In this study, you will read sentences & paragraphs and answer
-          questions about their complexity and understandability. Each survey
-          will take about {SESSION_DURATION} minutes to complete and consists of
-          multiple texts, for each of which you will be led through the
-          following three steps:
+          questions about their complexity and understandability. You can
+          complete as many surveys as you like. Each survey will take about{' '}
+          {SESSION_DURATION} minutes to complete and consists of multiple texts,
+          for each of which you will be led through the following three steps:
         </p>
         <h5>1. Reading</h5>
         <p>

@@ -1,12 +1,29 @@
+# source file format (for now, only "excel" is possible)
 import_texts_from: excel # TODO: alternatives?
+
+# path to the source file
 input_file: ./data.xlsx
+
+# name of the excel sheet  within the source file (TODO: what if not set?)
 sheet: paragraphs
+
+# the columns with the ids and texts (the first row will be interpreted as a header row and ignored)
 id_column: A
 text_column: B
+
+# target directory for the processed texts
 output_dir: ./website/processed-texts
-include_all_sentences: False
+
+# should every sentence in each text also be treated as a text itself?
+include_all_sentences: True
+
+# amount of deleted words & alternative suggestions for the cloze test
 clozes_per_text: 5
 alternative_suggestions_per_cloze: 4
+
+# amount of items in a paragraph & sentence (only if include_all_sentences is True) session
 paragraph_session_length: 2
 sentence_session_length: 10
+
+# ID of the first simple language text - all texts after this ID will be treated as simple language
 simple_language_starting_id: 1216
