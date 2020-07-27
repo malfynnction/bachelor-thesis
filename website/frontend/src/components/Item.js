@@ -223,7 +223,10 @@ class Item extends React.Component {
                 const { requiredFields } = steps[index]
                 for (const field of requiredFields) {
                   const enteredValue = get(this.state, field)
-                  if (!enteredValue) {
+                  if (
+                    typeof enteredValue === 'undefined' ||
+                    enteredValue === ''
+                  ) {
                     return true
                   }
                 }
