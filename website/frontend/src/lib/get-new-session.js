@@ -1,13 +1,13 @@
 import shuffle from 'lodash.shuffle'
 import createStore from './create-store'
 
-const participantStore = createStore('participantId')
-
 const TRAINING_ID = 'Training'
 
-const chooseNewSession = async (pouchParticipants, pouchSessions) => {
-  const participantId = participantStore.get()
-
+const chooseNewSession = async (
+  pouchParticipants,
+  pouchSessions,
+  participantId
+) => {
   return Promise.all([
     pouchSessions.getAll(),
     pouchParticipants.getAll(),
@@ -59,14 +59,24 @@ const getNewSession = async (
   pouchParticipants,
   pouchSessions,
   pouchItems,
-  isTraining
+  isTraining,
+  participantId
 ) => {
   let newSessionId
+
+  if (!participantId) {
+    const participantStore = createStore('participantId')
+    participantId = participantStore.get()
+  }
 
   if (isTraining) {
     const trainingSession = await pouchSessions.get(TRAINING_ID)
     if (trainingSession.status === 404) {
-      newSessionId = await chooseNewSession(pouchParticipants, pouchSessions)
+      newSessionId = await chooseNewSession(
+        pouchParticipants,
+        pouchSessions,
+        participantId
+      )
     } else {
       newSessionId = TRAINING_ID
     }
@@ -74,7 +84,7 @@ const getNewSession = async (
     newSessionId = await chooseNewSession(
       pouchParticipants,
       pouchSessions,
-      pouchItems
+      participantId
     )
   }
 
