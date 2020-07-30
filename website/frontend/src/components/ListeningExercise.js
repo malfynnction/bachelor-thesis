@@ -119,7 +119,9 @@ const AudioQuestion = props => {
               props.onChange(i, e.target.checked)
             }}
           />
-          <label htmlFor={`${key}-${i}`}>{answer.label}</label>
+          <label htmlFor={`${key}-${i}`} className="answer">
+            {answer.label}
+          </label>
         </div>
       ))}
     </div>
