@@ -131,6 +131,27 @@ const AudioQuestion = props => {
 const ListeningExercise = props => {
   const [checkedAnswers, setCheckedAnswers] = useState(audioAnswers.get() || {})
   const [dataConsent, setDataConsent] = useState(props.consent)
+  const [preventionNote, setPreventionNote] = useState('')
+
+  const answeredEverything =
+    Object.keys(checkedAnswers).length === questions.length &&
+    Object.values(checkedAnswers).every(q => q.length > 0)
+  const submitIsDisabled = !answeredEverything || !dataConsent
+  if (!answeredEverything) {
+    const note =
+      'Please select at least one answer for each question before proceeding.'
+    if (preventionNote !== note) {
+      setPreventionNote(note)
+    }
+  } else if (!dataConsent) {
+    const note = 'Please read the consent notification before proceeding.'
+    if (preventionNote !== note) {
+      setPreventionNote(note)
+    }
+  } else if (preventionNote) {
+    setPreventionNote('')
+  }
+
   return (
     <div className="tu-border tu-glow center-box centered-content">
       <h3>Listening Comprehension</h3>
@@ -190,12 +211,12 @@ const ListeningExercise = props => {
       </div>
 
       <Link
-        className={`btn ${dataConsent ? '' : 'btn-disabled'}`}
+        className={`btn ${submitIsDisabled ? 'btn-disabled' : ''}`}
         type="submit"
         to="/start-session"
-        disabled={!dataConsent}
+        disabled={submitIsDisabled}
         onClick={e => {
-          if (!dataConsent) {
+          if (!submitIsDisabled) {
             e.preventDefault()
           } else {
             const score = questions.reduce((sum, { question }) => {
@@ -216,6 +237,7 @@ const ListeningExercise = props => {
       >
         Start
       </Link>
+      {preventionNote ? <div className="note">{preventionNote}</div> : null}
     </div>
   )
 }
