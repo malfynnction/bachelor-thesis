@@ -216,7 +216,7 @@ const ListeningExercise = props => {
         to="/start-session"
         disabled={submitIsDisabled}
         onClick={e => {
-          if (!submitIsDisabled) {
+          if (submitIsDisabled) {
             e.preventDefault()
           } else {
             const score = questions.reduce((sum, { question }) => {
