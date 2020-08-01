@@ -56,6 +56,7 @@ class Session extends React.Component {
     const isLastItem = index + 1 === items.length
 
     const item = items[index]
+    const random = Math.random()
 
     return (
       <Fragment>
@@ -75,6 +76,7 @@ class Session extends React.Component {
             <Item
               index={index}
               item={item}
+              random={random}
               isLastItem={isLastItem}
               onScrollToTop={() => {
                 this.props.onScrollToTop()

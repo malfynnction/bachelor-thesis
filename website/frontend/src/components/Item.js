@@ -115,6 +115,7 @@ class Item extends React.Component {
     if (item.type === 'sentence') {
       requiredQuestions.push('questions.paragraphNecessary')
     }
+
     const steps = [
       {
         component: (
@@ -139,42 +140,54 @@ class Item extends React.Component {
         ),
         requiredFields: [],
       },
-      {
-        component: (
-          <Questions
-            key="Questions-general"
-            onChange={(key, value) =>
-              this.setState({
-                questions: { ...this.state.questions, [key]: value },
-              })
-            }
-            answers={this.state.questions}
-            item={item}
-            questionType="general"
-          />
-        ),
-        requiredFields: requiredQuestions,
-      },
     ]
-    if (item.clozes.length > 0) {
-      steps.push({
-        component: (
-          <Tasks
-            key="Tasks"
-            item={item}
-            onChange={(index, value) => {
-              const newState = [...this.state.cloze]
-              newState[index] = value
-              this.setState({ cloze: newState })
-            }}
-            enteredData={this.state.cloze}
-          />
-        ),
-        requiredFields: item.clozes.map((_, i) => {
-          return `cloze[${i}].entered`
-        }),
-      })
+
+    const questionStep = {
+      component: (
+        <Questions
+          key="Questions-general"
+          onChange={(key, value) =>
+            this.setState({
+              questions: { ...this.state.questions, [key]: value },
+            })
+          }
+          answers={this.state.questions}
+          item={item}
+          questionType="general"
+        />
+      ),
+      requiredFields: requiredQuestions,
     }
+
+    const clozeStep = {
+      component: (
+        <Tasks
+          key="Tasks"
+          item={item}
+          onChange={(index, value) => {
+            const newState = [...this.state.cloze]
+            newState[index] = value
+            this.setState({ cloze: newState })
+          }}
+          enteredData={this.state.cloze}
+        />
+      ),
+      requiredFields: item.clozes.map((_, i) => {
+        return `cloze[${i}].entered`
+      }),
+    }
+
+    // randomize order of questions and cloze test
+    if (item.clozes.length > 0) {
+      if (this.props.random < 0.5) {
+        steps.push(questionStep, clozeStep)
+      } else {
+        steps.push(clozeStep, questionStep)
+      }
+    } else {
+      steps.push(questionStep)
+    }
+
     if (item.type === 'paragraph') {
       steps.push({
         component: (
@@ -249,6 +262,7 @@ Item.propTypes = {
   isLastItem: PropTypes.bool,
   onScrollToTop: PropTypes.func,
   onNextItem: PropTypes.func,
+  random: PropTypes.number,
 }
 
 Nav.propTypes = {
