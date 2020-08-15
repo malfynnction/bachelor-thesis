@@ -34,9 +34,11 @@ class Read extends React.Component {
   constructor(props) {
     super(props)
     this.state = { showItem: false }
+  }
 
-    if (props.item.type === 'paragraph' && !props.preventNext) {
-      props.onPreventNext('Please take your time to read the text carefully.')
+  componentDidUpdate(prevProps) {
+    if (prevProps.initialTime !== this.props.initialTime) {
+      this.state.setTime(this.props.initialTime)
     }
   }
 
@@ -53,31 +55,40 @@ class Read extends React.Component {
 
   renderParagraph({ text }) {
     return (
-      <Timer startImmediately={false} timeToUpdate={100}>
-        {timerControl => (
-          <Fragment>
-            <div className="note">
-              (Click and hold the paragraph or the button "Show Paragraph" to
-              reveal the text)
-            </div>
-            <ShowItemTrigger
-              timerControl={timerControl}
-              revealItem={() => this.revealItem(timerControl)}
-              hideItem={() => this.hideItem(timerControl)}
-            >
-              <p
-                className={`item-text paragraph-text centered-content noselect`}
+      <Timer
+        startImmediately={false}
+        timeToUpdate={100}
+        initialTime={this.props.initialTime}
+      >
+        {timerControl => {
+          if (!this.state.setTime) {
+            this.setState({ setTime: value => timerControl.setTime(value) })
+          }
+          return (
+            <Fragment>
+              <div className="note">
+                (Click and hold the paragraph or the button "Show Paragraph" to
+                reveal the text)
+              </div>
+              <ShowItemTrigger
+                timerControl={timerControl}
+                revealItem={() => this.revealItem(timerControl)}
+                hideItem={() => this.hideItem(timerControl)}
               >
-                <span>
-                  <span className={`${this.state.showItem ? '' : 'hidden'}`}>
-                    <span className="hidden-content">{text}</span>
+                <p
+                  className={`item-text paragraph-text centered-content noselect`}
+                >
+                  <span>
+                    <span className={`${this.state.showItem ? '' : 'hidden'}`}>
+                      <span className="hidden-content">{text}</span>
+                    </span>
                   </span>
-                </span>
-                <button className="btn">Show Paragraph</button>
-              </p>
-            </ShowItemTrigger>
-          </Fragment>
-        )}
+                  <button className="btn">Show Paragraph</button>
+                </p>
+              </ShowItemTrigger>
+            </Fragment>
+          )
+        }}
       </Timer>
     )
   }
@@ -122,9 +133,7 @@ class Read extends React.Component {
 Read.propTypes = {
   onTimeUpdate: PropTypes.func,
   item: itemPropType,
-  onPreventNext: PropTypes.func,
-  onAllowNext: PropTypes.func,
-  preventNext: PropTypes.bool,
+  initialTime: PropTypes.number,
 }
 
 export default Read

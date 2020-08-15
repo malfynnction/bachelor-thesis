@@ -11,6 +11,9 @@ const participantStore = createStore('participantId')
 const sessionStore = createStore('session')
 const ratingStore = createStore('ratings')
 const seedStore = createStore('seed')
+const itemDataStore = createStore('itemData', {
+  deleteAfterSession: true,
+})
 
 const emptySession = { items: [], index: 0 }
 
@@ -82,6 +85,7 @@ class Session extends React.Component {
                 this.props.onScrollToTop()
               }}
               onNextItem={async result => {
+                itemDataStore.clear()
                 const ratings = ratingStore.get() || []
                 ratings.push({ ...result, itemId: item._id, participantId })
                 ratingStore.set(ratings)

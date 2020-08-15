@@ -15,6 +15,9 @@ const participantStore = createStore('participantId')
 const sessionStore = createStore('session')
 const ratingStore = createStore('ratings')
 const seedStore = createStore('seed')
+const itemDataStore = createStore('itemData', {
+  deleteAfterSession: true,
+})
 
 class startSession extends React.Component {
   constructor(props) {
@@ -46,6 +49,7 @@ class startSession extends React.Component {
     if (this.state.hasActiveSession) {
       sessionStore.clear()
       ratingStore.clear()
+      itemDataStore.clear()
     }
   }
 

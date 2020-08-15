@@ -7,6 +7,13 @@ import Questions from './Questions'
 import Tasks from './Tasks'
 import '../styles/Item.css'
 import get from 'lodash.get'
+import createStore from '../lib/create-store'
+
+const itemDataStore = createStore('itemData', {
+  deleteAfterSession: true,
+})
+
+const minReadingTime = 5000
 
 class Nav extends React.Component {
   constructor(props) {
@@ -58,6 +65,7 @@ class Nav extends React.Component {
               this.props.firstStep()
               this.props.onScrollToTop()
             } else {
+              this.props.onNextStep(stepIndex + 1) // +1 because of index offset
               this.props.nextStep()
               this.props.onScrollToTop()
             }
@@ -86,15 +94,22 @@ class Item extends React.Component {
   constructor(props) {
     super(props)
     this.state = { ...initialState }
-  }
 
-  componentDidMount() {
-    this.initializeState()
+    const previousSessionData = itemDataStore.get()
+    if (previousSessionData) {
+      this.state = {
+        ...initialState,
+        ...previousSessionData,
+      }
+    } else {
+      this.state = { ...this.initializeState() }
+    }
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.index !== this.props.index) {
-      this.initializeState()
+      // reset state for new item
+      this.setState({ ...this.initializeState() })
     }
   }
 
@@ -102,7 +117,19 @@ class Item extends React.Component {
     const initialCloze = this.props.item.clozes.map(cloze => {
       return { original: cloze.original, entered: '', isCorrect: false }
     })
-    this.setState({ ...initialState, cloze: initialCloze })
+    itemDataStore.set({ random: this.props.random })
+    const newState = {
+      ...initialState,
+      cloze: initialCloze,
+      random: this.props.random,
+    }
+    return newState
+  }
+
+  updateData(key, value) {
+    this.setState({ [key]: value })
+    const prevData = itemDataStore.get()
+    itemDataStore.set({ ...prevData, [key]: value })
   }
 
   getWizardSteps() {
@@ -122,20 +149,16 @@ class Item extends React.Component {
           <Read
             key="Read"
             item={item}
+            initialTime={this.state.readingTime}
             onTimeUpdate={time => {
               const readingTime = time
               let preventNext = this.state.preventNext
-              if (time < 5000 && !preventNext) {
-                preventNext =
-                  'Please take your time to read the text carefully.'
-              } else if (time >= 5000 && preventNext) {
+              if (time >= minReadingTime && preventNext) {
                 preventNext = ''
               }
-              this.setState({ readingTime, preventNext })
+              this.updateData('readingTime', readingTime)
+              this.setState({ preventNext })
             }}
-            onPreventNext={reason => this.setState({ preventNext: reason })}
-            onAllowNext={() => this.setState({ preventNext: '' })}
-            preventNext={!!this.state.preventNext}
           />
         ),
         requiredFields: [],
@@ -147,8 +170,9 @@ class Item extends React.Component {
         <Questions
           key="Questions-general"
           onChange={(key, value) =>
-            this.setState({
-              questions: { ...this.state.questions, [key]: value },
+            this.updateData('questions', {
+              ...this.state.questions,
+              [key]: value,
             })
           }
           answers={this.state.questions}
@@ -167,7 +191,7 @@ class Item extends React.Component {
           onChange={(index, value) => {
             const newState = [...this.state.cloze]
             newState[index] = value
-            this.setState({ cloze: newState })
+            this.updateData('cloze', newState)
           }}
           enteredData={this.state.cloze}
         />
@@ -179,7 +203,7 @@ class Item extends React.Component {
 
     // randomize order of questions and cloze test
     if (item.clozes.length > 0) {
-      if (this.props.random < 0.5) {
+      if (this.state.random < 0.5) {
         steps.push(questionStep, clozeStep)
       } else {
         steps.push(clozeStep, questionStep)
@@ -194,8 +218,9 @@ class Item extends React.Component {
           <Questions
             key="Questions-hardestSentence"
             onChange={(key, value) =>
-              this.setState({
-                questions: { ...this.state.questions, [key]: value },
+              this.updateData('questions', {
+                ...this.state.questions,
+                [key]: value,
               })
             }
             answers={this.state.questions}
@@ -212,6 +237,26 @@ class Item extends React.Component {
   render() {
     const { index, isLastItem } = this.props
     const steps = this.getWizardSteps()
+    let stepIndex = this.state.stepIndex
+    if (!stepIndex) {
+      const restored = itemDataStore.get()
+      if (restored) {
+        stepIndex = restored.stepIndex
+      } else {
+        stepIndex = 1
+      }
+    }
+
+    if (
+      this.props.item.type === 'paragraph' &&
+      !this.state.preventNext &&
+      this.state.readingTime < minReadingTime
+    ) {
+      this.setState({
+        preventNext: 'Please take your time to read the text carefully.',
+      })
+    }
+
     return (
       <form
         onSubmit={e => e.preventDefault()}
@@ -225,10 +270,14 @@ class Item extends React.Component {
           nav={
             <Nav
               preventNext={this.state.preventNext}
+              onNextStep={oldStepIndex => {
+                this.updateData('stepIndex', oldStepIndex + 1)
+              }}
               onNextItem={() => {
                 const { readingTime, questions, cloze } = this.state
                 this.props.onScrollToTop()
                 this.props.onNextItem({ readingTime, questions, cloze })
+                this.updateData('stepIndex', 1)
               }}
               isLastItem={isLastItem}
               onScrollToTop={() => this.props.onScrollToTop()}
@@ -246,6 +295,7 @@ class Item extends React.Component {
               }}
             />
           }
+          initialStep={stepIndex}
           transitions={{}}
           className="wizard"
         >
@@ -275,6 +325,7 @@ Nav.propTypes = {
   onScrollToTop: PropTypes.func,
   preventNext: PropTypes.string,
   hasMissingFields: PropTypes.func,
+  onNextStep: PropTypes.func,
 }
 
 export default Item
