@@ -127,7 +127,7 @@ class Item extends React.Component {
               let preventNext = this.state.preventNext
               if (time < 5000 && !preventNext) {
                 preventNext =
-                  'Please hold "Show Paragraph" and read the text carefully.'
+                  'Please take your time to read the text carefully.'
               } else if (time >= 5000 && preventNext) {
                 preventNext = ''
               }
