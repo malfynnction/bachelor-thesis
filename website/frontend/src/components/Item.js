@@ -125,10 +125,10 @@ class Item extends React.Component {
             onTimeUpdate={time => {
               const readingTime = time
               let preventNext = this.state.preventNext
-              if (!time > 0 && !preventNext) {
+              if (time < 5000 && !preventNext) {
                 preventNext =
                   'Please hold "Show Paragraph" and read the text carefully.'
-              } else if (time > 0 && preventNext) {
+              } else if (time >= 5000 && preventNext) {
                 preventNext = ''
               }
               this.setState({ readingTime, preventNext })
