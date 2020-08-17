@@ -233,7 +233,7 @@ class StartSession extends React.Component {
                   onClick={e => {
                     if (this.state.tooManyConsecutiveSessions) {
                       e.preventDefault()
-                      this.setState({ showPausePopup: true })
+                      this.setState({ showBreakPopup: true })
                     } else {
                       this.deleteActiveSession()
                       if (!this.isPartOfChain()) {
@@ -304,16 +304,16 @@ class StartSession extends React.Component {
                     chainAmountStore.clear()
                     chainStartStore.clear()
                   }
-                  return this.state.showPausePopup ? (
+                  return this.state.showBreakPopup ? (
                     <Popup
-                      onClose={() => this.setState({ showPausePopup: false })}
+                      onClose={() => this.setState({ showBreakPopup: false })}
                     >
                       <div>
                         You've already done a lot of work, thank you! Please
                         take a little break before you continue, TODO: für
                         Konzentration and foo
                       </div>
-                      <div className="pause-timer">
+                      <div className="break-timer">
                         {timerControl.getTime() > 60 * 1000 ? (
                           <Fragment>
                             <Timer.Minutes /> minutes
