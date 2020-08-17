@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { databasePropType } from '../lib/prop-types'
 import { Link } from 'react-router-dom'
+import Popup from './Popup'
 import createStore from '../lib/create-store'
 import getFromUrlParams from '../lib/get-from-url-params'
 import '../styles/StartSession.css'
@@ -192,8 +193,14 @@ class startSession extends React.Component {
                 <Link
                   className="btn"
                   to="/session"
-                  onClick={() => {
-                    this.deleteActiveSession()
+                  onClick={e => {
+                    const tooManyConsecutiveSessions = true // TODO
+                    if (tooManyConsecutiveSessions) {
+                      e.preventDefault()
+                      this.setState({ showPausePopup: true })
+                    } else {
+                      this.deleteActiveSession()
+                    }
                   }}
                 >
                   Start
@@ -244,6 +251,11 @@ class startSession extends React.Component {
                 ) : null}
               </div>
             )}
+            {this.state.showPausePopup ? (
+              <Popup onClose={() => this.setState({ showPausePopup: false })}>
+                :(
+              </Popup>
+            ) : null}
           </Fragment>
         ) : null}
       </div>
