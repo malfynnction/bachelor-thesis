@@ -33,10 +33,12 @@
 }
 
 .popup-close {
-  margin: 10px;
+  margin: 10px 10px 0px 10px;
+  display: flex;
+  justify-content: flex-end;
 }
 
-.popup-close:hover {
+.popup-close span :hover {
   color: #c50e1f;
   cursor: pointer;
 }

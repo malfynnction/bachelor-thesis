@@ -8,11 +8,11 @@ const Popup = props => {
   return (
     <div className="popup">
       <div className="popup-inner">
-        <FontAwesomeIcon
-          icon={faTimesCircle}
-          className="popup-close"
-          onClick={() => props.onClose()}
-        />
+        <div className="popup-close" onClick={() => props.onClose()}>
+          <span>
+            <FontAwesomeIcon icon={faTimesCircle} />
+          </span>
+        </div>
         <div className="popup-content">{props.children}</div>
       </div>
     </div>
