@@ -20,6 +20,8 @@ const seedStore = createStore('seed')
 const itemDataStore = createStore('itemData', {
   deleteAfterSession: true,
 })
+const chainStartStore = createStore('chainStart')
+const chainAmountStore = createStore('chainAmount')
 
 class StartSession extends React.Component {
   constructor(props) {
@@ -27,7 +29,15 @@ class StartSession extends React.Component {
     this.state = {
       completedTrainingSession: false,
       seed: seedStore.get(),
-      tooManyConsecutiveSessions: true, // TODO
+    }
+
+    // check if too many sessions have been done in a row and, if so, force a break
+
+    const maxChainLengthAllowed = 3
+    const consecutiveSessions = chainAmountStore.get()
+
+    if (this.isPartOfChain() && consecutiveSessions >= maxChainLengthAllowed) {
+      this.state.tooManyConsecutiveSessions = true
     }
   }
 
@@ -57,6 +67,22 @@ class StartSession extends React.Component {
       ratingStore.clear()
       itemDataStore.clear()
     }
+  }
+
+  isPartOfChain() {
+    const chainStart = chainStartStore.get()
+    const chainAmount = chainAmountStore.get()
+
+    if (!chainStart || !chainAmount) {
+      return false
+    }
+
+    const minDifferenceExpected = chainAmount * 6 // 6 minutes per session
+    const chainStartDate = new Date(chainStart).getTime()
+    const now = new Date().getTime()
+    const difference = (now - chainStartDate) / (1000 * 60) // difference in minutes
+
+    return difference <= minDifferenceExpected
   }
 
   renderThankYou() {
@@ -180,6 +206,7 @@ class StartSession extends React.Component {
     const previouslyRating =
       previousSession && !previouslyTraining && !previouslyFeedback
     const allowAnotherSession = !this.state.seed
+
     return (
       <div className="tu-border tu-glow center-box centered-content">
         <h2>Start {previouslyRating ? 'another' : 'a'} survey</h2>
@@ -209,6 +236,12 @@ class StartSession extends React.Component {
                       this.setState({ showPausePopup: true })
                     } else {
                       this.deleteActiveSession()
+                      if (!this.isPartOfChain()) {
+                        chainStartStore.set(new Date())
+                        chainAmountStore.set(1)
+                      } else {
+                        chainAmountStore.set(chainAmountStore.get() + 1)
+                      }
                     }
                   }}
                 >
@@ -265,8 +298,13 @@ class StartSession extends React.Component {
             )}
             {this.state.tooManyConsecutiveSessions ? (
               <Timer initialTime={5 * 60 * 1000} direction="backward">
-                {timerControl =>
-                  this.state.showPausePopup ? (
+                {timerControl => {
+                  if (timerControl.getTime() <= 0) {
+                    this.setState({ tooManyConsecutiveSessions: false })
+                    chainAmountStore.clear()
+                    chainStartStore.clear()
+                  }
+                  return this.state.showPausePopup ? (
                     <Popup
                       onClose={() => this.setState({ showPausePopup: false })}
                     >
@@ -285,7 +323,7 @@ class StartSession extends React.Component {
                       </div>
                     </Popup>
                   ) : null
-                }
+                }}
               </Timer>
             ) : null}
           </Fragment>
