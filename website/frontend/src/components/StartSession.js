@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { databasePropType } from '../lib/prop-types'
 import { Link } from 'react-router-dom'
 import Popup from './Popup'
+import Timer from 'react-compound-timer'
 import createStore from '../lib/create-store'
 import getFromUrlParams from '../lib/get-from-url-params'
 import '../styles/StartSession.css'
@@ -20,10 +21,14 @@ const itemDataStore = createStore('itemData', {
   deleteAfterSession: true,
 })
 
-class startSession extends React.Component {
+class StartSession extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { completedTrainingSession: false, seed: seedStore.get() }
+    this.state = {
+      completedTrainingSession: false,
+      seed: seedStore.get(),
+      tooManyConsecutiveSessions: true, // TODO
+    }
   }
 
   async componentDidMount() {
@@ -199,8 +204,7 @@ class startSession extends React.Component {
                   className="btn"
                   to="/session"
                   onClick={e => {
-                    const tooManyConsecutiveSessions = true // TODO
-                    if (tooManyConsecutiveSessions) {
+                    if (this.state.tooManyConsecutiveSessions) {
                       e.preventDefault()
                       this.setState({ showPausePopup: true })
                     } else {
@@ -259,10 +263,30 @@ class startSession extends React.Component {
                 ) : null}
               </div>
             )}
-            {this.state.showPausePopup ? (
-              <Popup onClose={() => this.setState({ showPausePopup: false })}>
-                :(
-              </Popup>
+            {this.state.tooManyConsecutiveSessions ? (
+              <Timer initialTime={5 * 60 * 1000} direction="backward">
+                {timerControl =>
+                  this.state.showPausePopup ? (
+                    <Popup
+                      onClose={() => this.setState({ showPausePopup: false })}
+                    >
+                      <div>
+                        You've already done a lot of work, thank you! Please
+                        take a little break before you continue, TODO: für
+                        Konzentration and foo
+                      </div>
+                      <div className="pause-timer">
+                        {timerControl.getTime() > 60 * 1000 ? (
+                          <Fragment>
+                            <Timer.Minutes /> minutes
+                          </Fragment>
+                        ) : null}{' '}
+                        <Timer.Seconds /> seconds
+                      </div>
+                    </Popup>
+                  ) : null
+                }
+              </Timer>
             ) : null}
           </Fragment>
         ) : null}
@@ -271,9 +295,9 @@ class startSession extends React.Component {
   }
 }
 
-startSession.propTypes = {
+StartSession.propTypes = {
   pouchParticipants: databasePropType,
   onStartTraining: PropTypes.func,
 }
 
-export default startSession
+export default StartSession
