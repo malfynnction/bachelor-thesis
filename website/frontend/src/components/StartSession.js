@@ -120,8 +120,7 @@ class startSession extends React.Component {
                   <div
                     onClick={() => {
                       this.setState({
-                        showCompensationExplanation: !this.state
-                          .showCompensationExplanation,
+                        showCompensationExplanation: true,
                       })
                     }}
                     className="link"
@@ -129,17 +128,23 @@ class startSession extends React.Component {
                     What am I supposed to do with the code?
                   </div>
                   {this.state.showCompensationExplanation ? (
-                    <div className="toggled-text">
-                      In order to receive your compensation ({COMPENSATION} per{' '}
-                      {SESSIONS_PER_COMPENSATION} completed surveys), please
-                      send a mail to{' '}
-                      <a href={`mailto:${CONTACT_MAIL}`} target="blank">
-                        {CONTACT_MAIL}
-                      </a>
-                      , including your participant ID (can be found in the upper
-                      right corner) and the confirmation codes of all the
-                      surverys you completed.
-                    </div>
+                    <Popup
+                      onClose={() =>
+                        this.setState({ showCompensationExplanation: false })
+                      }
+                    >
+                      <div>
+                        In order to receive your compensation ({COMPENSATION}{' '}
+                        per {SESSIONS_PER_COMPENSATION} completed surveys),
+                        please send a mail to{' '}
+                        <a href={`mailto:${CONTACT_MAIL}`} target="blank">
+                          {CONTACT_MAIL}
+                        </a>
+                        , including your participant ID (can be found in the
+                        upper right corner) and the confirmation codes of all
+                        the surverys you completed.
+                      </div>
+                    </Popup>
                   ) : null}
                 </Fragment>
               )}
@@ -231,8 +236,7 @@ class startSession extends React.Component {
                   className="link"
                   onClick={() => {
                     this.setState({
-                      showTrainingExplanation: !this.state
-                        .showTrainingExplanation,
+                      showTrainingExplanation: true,
                     })
                   }}
                 >
@@ -240,14 +244,18 @@ class startSession extends React.Component {
                 </div>
                 <br />
                 {this.state.showTrainingExplanation ? (
-                  <div className="toggled-text">
+                  <Popup
+                    onClose={() =>
+                      this.setState({ showTrainingExplanation: false })
+                    }
+                  >
                     A test survey is just like a real survey, except your
                     answers won't be recorded and you will get a pre-defined set
                     of one very one very easy, one medium, and one very
                     difficult text. This can help you familiarize yourself with
                     the process of the study and give you a feeling of the
                     different levels of texts.
-                  </div>
+                  </Popup>
                 ) : null}
               </div>
             )}

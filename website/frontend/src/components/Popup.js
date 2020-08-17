@@ -25,7 +25,7 @@ Popup.propTypes = {
     PropTypes.element,
     PropTypes.string,
   ]),
-  onClose: PropTypes.func,
+  onClose: PropTypes.func.isRequired,
 }
 
 export default Popup
