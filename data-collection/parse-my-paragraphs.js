@@ -20,7 +20,8 @@ const simpleLanguageStartingRow = 1217
 
 let paragraphs = getColumn(filePath, allParagraphsSheetName, paragraphColumn)
 const workbook = xlsx.readFile(filePath)
-const sheet = workbook.Sheets[allParagraphsSheetName]
+const allParagraphsSheet = workbook.Sheets[allParagraphsSheetName]
+const selectedParagraphsSheet = workbook.Sheets[selectedParagraphsSheetName]
 
 const footnoteReference = /\[\d+\]/g
 const punctuation = /\.|\?|!|,|-|\(|\)|\/|"|;|:|…|„|“/g
@@ -37,7 +38,7 @@ const removeFootnoteReferences = () => {
   })
 
   paragraphs.forEach(({ cell, value }) => {
-    sheet[cell] = {
+    allParagraphsSheet[cell] = {
       t: 's', // type: string
       v: value,
     }
@@ -70,7 +71,7 @@ const countNaderiSentences = () => {
   const cells = paragraphs.map(({ cell, value }) => cell)
   cells.forEach(cell => {
     const countCell = cell.replace(paragraphColumn, naderiCountColumn)
-    sheet[countCell] = {
+    allParagraphsSheet[countCell] = {
       t: 'n', // type: number
       v: count[cell] || 0,
     }
@@ -116,17 +117,17 @@ const countWords = async () => {
     const charPerWord = charCount / wordCount
     const syllablesPerWord = syllableCount / wordCount
 
-    sheet[WPSColumn + row] = {
+    allParagraphsSheet[WPSColumn + row] = {
       t: 'n', // type: number
       v: wordsPerSentence,
     }
 
-    sheet[charPWColumn + row] = {
+    allParagraphsSheet[charPWColumn + row] = {
       t: 'n', // type: number
       v: charPerWord,
     }
 
-    sheet[syllPWColumn + row] = {
+    allParagraphsSheet[syllPWColumn + row] = {
       t: 'n',
       v: syllablesPerWord,
     }
@@ -152,7 +153,7 @@ const removeShortParagraphs = minLength => {
   })
 
   toRemove.forEach(cell => {
-    sheet[cell] = {
+    allParagraphsSheet[cell] = {
       t: 's',
       v: '',
     }
@@ -176,7 +177,7 @@ const calculateFleschKincaidScore = () => {
     const score =
       0.39 * wordsPerSentence[row] + 11.8 * syllablesPerWord[row] - 15.59
 
-    sheet[fleschKincaidColumn + row] = {
+    allParagraphsSheet[fleschKincaidColumn + row] = {
       t: 'n',
       v: score,
     }
@@ -184,9 +185,6 @@ const calculateFleschKincaidScore = () => {
 }
 
 const copyParagraphsWithFamiliarSentences = () => {
-  const selectedParagraphsSheet = workbook.Sheets[selectedParagraphsSheetName]
-  const allParagraphsSheet = sheet
-
   selectedParagraphsSheet['!ref'] = allParagraphsSheet['!ref']
 
   // adopt header row
