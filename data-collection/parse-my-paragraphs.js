@@ -5,7 +5,8 @@ const xlsx = require('xlsx')
 const fs = require('fs')
 
 const filePath = '../data.xlsx'
-const sheetName = 'paragraphs'
+const allParagraphsSheetName = 'all-paragraphs'
+const selectedParagraphsSheetName = 'paragraphs'
 
 const paragraphColumn = 'B'
 const sentenceCountColumn = 'F'
@@ -15,12 +16,15 @@ const charPWColumn = 'I' // characters per word
 const syllPWColumn = 'J' // syllables per word
 const fleschKincaidColumn = 'K' // score on Flesch-Kincaid Reading Ease scale
 
-let paragraphs = getColumn(filePath, sheetName, paragraphColumn)
+const simpleLanguageStartingRow = 1217
+
+let paragraphs = getColumn(filePath, allParagraphsSheetName, paragraphColumn)
 const workbook = xlsx.readFile(filePath)
-const sheet = workbook.Sheets[sheetName]
+const sheet = workbook.Sheets[allParagraphsSheetName]
 
 const footnoteReference = /\[\d+\]/g
 const punctuation = /\.|\?|!|,|-|\(|\)|\/|"|;|:|…|„|“/g
+const headerRow = /[A-z]1$/
 
 const syllableCounts = JSON.parse(fs.readFileSync('./lib/syllable-counts.json'))
 
@@ -76,7 +80,7 @@ const countNaderiSentences = () => {
 const countWords = async () => {
   const sentenceCountsColumn = getColumn(
     filePath,
-    sheetName,
+    allParagraphsSheetName,
     sentenceCountColumn
   )
   const sentenceCounts = columnToObject(sentenceCountsColumn)
@@ -132,7 +136,7 @@ const countWords = async () => {
 const removeShortParagraphs = minLength => {
   const sentenceCountsColumn = getColumn(
     filePath,
-    sheetName,
+    allParagraphsSheetName,
     sentenceCountColumn
   )
   const sentenceCounts = columnToObject(sentenceCountsColumn)
@@ -161,10 +165,10 @@ const removeShortParagraphs = minLength => {
 
 const calculateFleschKincaidScore = () => {
   const wordsPerSentence = columnToObject(
-    getColumn(filePath, sheetName, WPSColumn)
+    getColumn(filePath, allParagraphsSheetName, WPSColumn)
   )
   const syllablesPerWord = columnToObject(
-    getColumn(filePath, sheetName, syllPWColumn)
+    getColumn(filePath, allParagraphsSheetName, syllPWColumn)
   )
 
   paragraphs.forEach(({ cell, value }) => {
@@ -179,10 +183,53 @@ const calculateFleschKincaidScore = () => {
   })
 }
 
+const copyParagraphsWithFamiliarSentences = () => {
+  const selectedParagraphsSheet = workbook.Sheets[selectedParagraphsSheetName]
+  const allParagraphsSheet = sheet
+
+  selectedParagraphsSheet['!ref'] = allParagraphsSheet['!ref']
+
+  // adopt header row
+  const headerCells = Object.keys(allParagraphsSheet).filter(cell =>
+    headerRow.test(cell)
+  )
+  headerCells.forEach(
+    cell => (selectedParagraphsSheet[cell] = allParagraphsSheet[cell])
+  )
+
+  let currentRow = '2'
+  const allColumns = headerCells.map(cell => cell.slice(0, 1))
+
+  const dataRows = Object.keys(allParagraphsSheet)
+    .filter(cell => !headerRow.test(cell) && cell.startsWith('A'))
+    .map(cell => cell.slice(1))
+
+  dataRows.forEach(originalRow => {
+    const sentenceCount =
+      allParagraphsSheet[`${sentenceCountColumn}${originalRow}`].v
+    const naderiCount =
+      allParagraphsSheet[`${naderiCountColumn}${originalRow}`].v
+
+    const isSimpleLanguage = originalRow >= simpleLanguageStartingRow
+
+    if (sentenceCount === naderiCount || isSimpleLanguage) {
+      // all sentences in the paragraph are part of the Naderi dataset - copy paragraph to new sheet
+      allColumns.forEach(
+        column =>
+          (selectedParagraphsSheet[`${column}${currentRow}`] =
+            allParagraphsSheet[`${column}${originalRow}`])
+      )
+      currentRow++
+    }
+  })
+}
+
 // removeShortParagraphs(3)
 // removeFootnoteReferences()
 // countNaderiSentences()
 // countWords()
-calculateFleschKincaidScore()
+// calculateFleschKincaidScore()
+
+copyParagraphsWithFamiliarSentences()
 
 xlsx.writeFile(workbook, filePath)
