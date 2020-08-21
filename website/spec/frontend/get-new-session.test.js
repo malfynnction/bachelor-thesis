@@ -98,3 +98,7 @@ it('returns a note if all sessions have been completed', () => {
     expect(result).toEqual({ finishedAllSessions: true })
   })
 })
+
+it('returns a sentence session if 9 paragraph sessions have been done', () => {})
+
+it('returns a paragraph session if a sentence session has already been done', () => {})

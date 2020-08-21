@@ -3,50 +3,96 @@ import createStore from './create-store'
 
 const TRAINING_ID = 'Training'
 
+const isSentenceSession = session => session.items[0].startsWith('sent')
+
+const getNextSessionFilter = completedSessionTypes => {
+  // for every 9 paragraph sessions, there needs to be exactly 1 sentence session
+
+  const paragraphAmount = completedSessionTypes.filter(
+    sessionType => sessionType === 'paragraph'
+  ).length
+  const sentenceAmount = completedSessionTypes.filter(
+    sessionType => sessionType === 'sentence'
+  ).length
+  const paragraphOverflow = paragraphAmount - sentenceAmount * 9
+  if (paragraphOverflow < 0) {
+    // next session needs to be a paragraph session
+    console.log('next session: paragraphs')
+    return session => !isSentenceSession(session)
+  } else if (paragraphOverflow >= 9) {
+    // next session needs to be a sentence session
+    console.log('next session: sentences')
+    return session => isSentenceSession(session)
+  }
+  console.log('next session: anything')
+  return () => true
+}
+
 const chooseNewSession = async (
   pouchParticipants,
   pouchSessions,
   participantId
 ) => {
-  return Promise.all([
+  const [
+    allSessions,
+    allParticipants,
+    loggedInParticipant,
+  ] = await Promise.all([
     pouchSessions.getAll(),
     pouchParticipants.getAll(),
     pouchParticipants.get(participantId),
-  ]).then(([allSessions, allParticipants, loggedInParticipant]) => {
-    const completedSessions = loggedInParticipant.completedSessions || {}
-    const possibleSessions = allSessions.filter(
+  ])
+
+  const completedSessions = loggedInParticipant.completedSessions || {}
+  const completedSessionTypes = await Promise.all(
+    Object.keys(completedSessions).map(async id => {
+      try {
+        const session = await pouchSessions.get(id)
+        if (isSentenceSession(session)) {
+          return 'sentence'
+        }
+        return 'paragraph'
+      } catch (e) {
+        console.error(e)
+        return ''
+      }
+    })
+  )
+  const sessionTypeFilter = getNextSessionFilter(completedSessionTypes)
+  const possibleSessions = allSessions
+    .filter(
       session =>
         !Object.keys(completedSessions).includes(session._id) &&
         session._id !== 'Training'
     )
+    .filter(sessionTypeFilter)
 
-    if (possibleSessions.length === 0) {
-      return -1
-    }
+  if (possibleSessions.length === 0) {
+    return -1
+  }
 
-    const completedCounts = {}
-    possibleSessions.forEach(session => (completedCounts[session._id] = 0))
+  const completedCounts = {}
+  possibleSessions.forEach(session => (completedCounts[session._id] = 0))
 
-    for (const participant of allParticipants) {
-      Object.keys(participant.completedSessions).forEach(completed => {
-        const isPossible = possibleSessions.some(session => {
-          return session._id === completed
-        })
-        if (isPossible) {
-          completedCounts[completed] = (completedCounts[completed] || 0) + 1
-        }
+  for (const participant of allParticipants) {
+    Object.keys(participant.completedSessions).forEach(completed => {
+      const isPossible = possibleSessions.some(session => {
+        return session._id === completed
       })
-    }
+      if (isPossible) {
+        completedCounts[completed] = (completedCounts[completed] || 0) + 1
+      }
+    })
+  }
 
-    const minCompleted = Math.min(...Object.values(completedCounts)) || 0
-    const minCompletedSessions = Object.keys(completedCounts).filter(
-      id => completedCounts[id] === minCompleted
-    )
+  const minCompleted = Math.min(...Object.values(completedCounts)) || 0
+  const minCompletedSessions = Object.keys(completedCounts).filter(
+    id => completedCounts[id] === minCompleted
+  )
 
-    const randomIndex = Math.floor(Math.random() * minCompletedSessions.length)
+  const randomIndex = Math.floor(Math.random() * minCompletedSessions.length)
 
-    return minCompletedSessions[randomIndex]
-  })
+  return minCompletedSessions[randomIndex]
 }
 
 const getItems = async (session, pouchItems) => {
