@@ -17,14 +17,11 @@ const getNextSessionFilter = completedSessionTypes => {
   const paragraphOverflow = paragraphAmount - sentenceAmount * 9
   if (paragraphOverflow < 0) {
     // next session needs to be a paragraph session
-    console.log('next session: paragraphs')
     return session => !isSentenceSession(session)
   } else if (paragraphOverflow >= 9) {
     // next session needs to be a sentence session
-    console.log('next session: sentences')
     return session => isSentenceSession(session)
   }
-  console.log('next session: anything')
   return () => true
 }
 
