@@ -3,6 +3,7 @@ const columnToObject = require('./lib/column-to-object.js')
 const getSyllableCount = require('./lib/get-syllable-count')
 const xlsx = require('xlsx')
 const fs = require('fs')
+const sample = require('lodash.samplesize')
 
 const filePath = '../data.xlsx'
 const allParagraphsSheetName = 'all-paragraphs'
@@ -17,6 +18,7 @@ const syllPWColumn = 'J' // syllables per word
 const fleschKincaidColumn = 'K' // score on Flesch-Kincaid Reading Ease scale
 
 const simpleLanguageStartingRow = 1217
+const paragraphSampleSize = 60
 
 let paragraphs = getColumn(filePath, allParagraphsSheetName, paragraphColumn)
 const workbook = xlsx.readFile(filePath)
@@ -208,9 +210,7 @@ const copyParagraphsWithFamiliarSentences = () => {
     const naderiCount =
       allParagraphsSheet[`${naderiCountColumn}${originalRow}`].v
 
-    const isSimpleLanguage = originalRow >= simpleLanguageStartingRow
-
-    if (sentenceCount === naderiCount || isSimpleLanguage) {
+    if (sentenceCount === naderiCount) {
       // all sentences in the paragraph are part of the Naderi dataset - copy paragraph to new sheet
       allColumns.forEach(
         column =>
@@ -222,12 +222,33 @@ const copyParagraphsWithFamiliarSentences = () => {
   })
 }
 
+const drawParagraphSample = () => {
+  const samplePool = Object.keys(selectedParagraphsSheet)
+    .filter(cell => {
+      return cell.startsWith('A') && cell.slice(1) > 1
+    })
+    .map(cell => cell.slice(1))
+  const selectedRows = sample(samplePool, paragraphSampleSize)
+
+  Object.keys(selectedParagraphsSheet).forEach(cell => {
+    const isMetaCell = cell.startsWith('!')
+    const isHeaderCell = headerRow.test(cell)
+    const isInSelectedRow = selectedRows.includes(cell.slice(1))
+    if (isMetaCell || isHeaderCell || isInSelectedRow) {
+      return
+    }
+    // delete row
+    selectedParagraphsSheet[cell] = { v: '', t: 's' }
+  })
+}
+
 // removeShortParagraphs(3)
 // removeFootnoteReferences()
 // countNaderiSentences()
 // countWords()
 // calculateFleschKincaidScore()
 
-copyParagraphsWithFamiliarSentences()
+// copyParagraphsWithFamiliarSentences()
+drawParagraphSample()
 
 xlsx.writeFile(workbook, filePath)
