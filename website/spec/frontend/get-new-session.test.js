@@ -20,6 +20,38 @@ const data = {
       completedTrainingSession: false,
     },
   ],
+  participantsWithManySessions: [
+    {
+      _id: '9ParagraphsCompleted',
+      completedSessions: {
+        '2': 'token',
+        '3': 'token',
+        '4': 'token',
+        '5': 'token',
+        '6': 'token',
+        '7': 'token',
+        '8': 'token',
+        '9': 'token',
+        '10': 'token',
+      },
+      completedTrainingSession: true,
+    },
+    {
+      _id: '1SentenceCompleted',
+      completedSessions: {
+        '0': 'token',
+        '2': 'token',
+        '3': 'token',
+        '4': 'token',
+        '5': 'token',
+        '6': 'token',
+        '7': 'token',
+        '8': 'token',
+        '9': 'token',
+      },
+      completedTrainingSession: true,
+    },
+  ],
   items: [{ _id: 'par_1' }, { _id: 'sent_1' }],
   sessions: [
     { _id: '1', items: [] },
@@ -27,6 +59,19 @@ const data = {
     { _id: 'Training', items: [] },
   ],
   oneSession: [{ _id: '1', items: [] }],
+  completeSetOfSessions: [
+    { _id: '0', items: ['sent_1'] },
+    { _id: '1', items: ['sent_1'] },
+    { _id: '2', items: ['par_1'] },
+    { _id: '3', items: ['par_1'] },
+    { _id: '4', items: ['par_1'] },
+    { _id: '5', items: ['par_1'] },
+    { _id: '6', items: ['par_1'] },
+    { _id: '7', items: ['par_1'] },
+    { _id: '8', items: ['par_1'] },
+    { _id: '9', items: ['par_1'] },
+    { _id: '10', items: ['par_1'] },
+  ],
 }
 
 const getSession = ({
@@ -99,6 +144,26 @@ it('returns a note if all sessions have been completed', () => {
   })
 })
 
-it('returns a sentence session if 9 paragraph sessions have been done', () => {})
+it('returns a sentence session if 9 paragraph sessions have been done', () => {
+  expect.assertions(1)
+  return getSession({
+    isTraining: false,
+    participants: data.participantsWithManySessions,
+    participantId: '9ParagraphsCompleted',
+    sessions: data.completeSetOfSessions,
+  }).then(result => {
+    expect(result.items[0]._id).toEqual('sent_1')
+  })
+})
 
-it('returns a paragraph session if a sentence session has already been done', () => {})
+it('returns a paragraph session if a sentence session has already been done', () => {
+  expect.assertions(1)
+  return getSession({
+    isTraining: false,
+    participants: data.participantsWithManySessions,
+    participantId: '1SentenceCompleted',
+    sessions: data.completeSetOfSessions,
+  }).then(result => {
+    expect(result.items[0]._id).toEqual('par_1')
+  })
+})
