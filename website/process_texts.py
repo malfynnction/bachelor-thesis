@@ -155,8 +155,13 @@ def main():
     else:
         selected_sentences = random.sample(sentence_ids, INCLUDE_SENTENCES)
         sentence_sessions = get_sessions(selected_sentences, SENTENCE_SESSION_LENGTH - 1)
+        selected_simple_sentences = random.sample(simple_sentence_ids, len(sentence_sessions))
+
         # Add one sentence from the Simple Language to each session
-        sessions = paragraph_sessions + [session + [random.choice(simple_sentence_ids)] for session in sentence_sessions]
+        sessions = paragraph_sessions + [session + [simple_sentence] for session, simple_sentence in zip(sentence_sessions, selected_simple_sentences)]
+
+        # delete all unused sentences from the item list (this is not the most efficient way to do this - TODO: refactor)
+        item_documents = [doc for doc in item_documents if (doc['type'] == 'paragraph' or doc['_id'] in selected_sentences or doc['_id'] in selected_simple_sentences)]
 
 
     session_documents = [{
