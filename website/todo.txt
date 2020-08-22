@@ -5,34 +5,27 @@
 - Docker
     - should take care of `npm install` even for dev
 
-- pre-processing:
-    - ignore Naderi (2019) sentences? Or only some? (bc need some for validity)
-
 - general
     - "TODO" comments
     - some pages shouldn't work when you're not logged in (e.g. start-session)
     - "we" -> "I", "us" -> "me" etc.?
-    - after 45min continuous: "Have a break!"
 - instructions:
     - Who is "I"?
 - accessibility
     - "reveal paragraph" impossible for screenreader
     - Die ganze Seite ist Hölle für screenreader, wegen react-step-wizard
     - transcriptions for audio in /listening-exercise
-- privacy
-    - add GDPR stuff
 
 - testing
     - cross-browser
     - mobile
 
 - production-ready
-    - use correct amount of sessions & texts
     - wipe staging DB
+    - select sentences for training session
 
-- Documentation
+- Documentation & Reusability
     - local vs. session storage (online study vs lab) => frontend/src/lib/create-store, l. 2
-- Reusability
     - Wie können Menschen das tatsächlich wiederverwenden?
     - Bessere README!
     - make input data format for pre-processing more general / easier to replicate -> check Laura's format
