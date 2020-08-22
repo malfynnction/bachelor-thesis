@@ -6,7 +6,7 @@ const fs = require('fs')
 const sample = require('lodash.samplesize')
 
 const filePath = '../data.xlsx'
-const allParagraphsSheetName = 'all-paragraphs'
+const allParagraphsSheetName = 'all_paragraphs'
 const selectedParagraphsSheetName = 'paragraphs'
 
 const paragraphColumn = 'B'
@@ -17,7 +17,6 @@ const charPWColumn = 'I' // characters per word
 const syllPWColumn = 'J' // syllables per word
 const fleschKincaidColumn = 'K' // score on Flesch-Kincaid Reading Ease scale
 
-const simpleLanguageStartingRow = 1217
 const paragraphSampleSize = 60
 
 let paragraphs = getColumn(filePath, allParagraphsSheetName, paragraphColumn)

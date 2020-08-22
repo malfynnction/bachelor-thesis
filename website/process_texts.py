@@ -11,7 +11,7 @@ with open('website/config.yml') as f:
     config = yaml.load(f, Loader=yaml.FullLoader)
 
     INPUT_FILE = config["input_file"]
-    SHEET_NAME = config["sheet"]
+    SHEET_NAME = config["paragraph_sheet"]
     TEXT_COLUMN = config["text_column"]
     ID_COLUMN = config["id_column"]
     OUTPUT_PATH_ITEMS = config["output_dir"] + "/items.json"
@@ -21,7 +21,7 @@ with open('website/config.yml') as f:
     ALTERNATIVE_SUGGESTIONS_PER_CLOZE = config["alternative_suggestions_per_cloze"]
     PARAGRAPH_SESSION_LENGTH = config["paragraph_session_length"]
     SENTENCE_SESSION_LENGTH = config["sentence_session_length"]
-    SIMPLE_LANGUAGE_STARTING_ID = config["simple_language_starting_id"]
+    SIMPLE_LANGUAGE_SHEET_NAME = config["simple_language_sheet"]
 
 NLP = spacy.load('de')
 
@@ -38,13 +38,14 @@ def custom_sentence_boundaries(doc):
 
 NLP.add_pipe(custom_sentence_boundaries, before="parser")
 
-WORKBOOK = load_workbook(INPUT_FILE)
-SHEET = WORKBOOK[SHEET_NAME]
+WORKBOOK = load_workbook(INPUT_FILE, data_only=True)
+PARAGRAPH_SHEET = WORKBOOK[SHEET_NAME]
+SIMPLE_LANGUAGE_SHEET = WORKBOOK[SIMPLE_LANGUAGE_SHEET_NAME]
 
 
-def get_parsed_texts():
-    text_column = SHEET[TEXT_COLUMN]
-    id_column = SHEET[ID_COLUMN]
+def get_parsed_texts(sheet):
+    text_column = sheet[TEXT_COLUMN]
+    id_column = sheet[ID_COLUMN]
     return [{"paragraph": NLP(cell.value), "id": str(id.value)} for id, cell in zip(id_column[1:], text_column[1:])] # column[0] is the column header
 
 def tag_parts_of_speech(text):
@@ -91,28 +92,34 @@ def get_sessions(item_ids, session_length):
     return [chunk.tolist() for chunk in chunks]
 
 def main():
-    texts = get_parsed_texts()
+    texts = get_parsed_texts(PARAGRAPH_SHEET)
+    simple_texts = get_parsed_texts(SIMPLE_LANGUAGE_SHEET)
+
     item_documents = []
     paragraph_ids = []
     sentence_ids = []
     simple_sentence_ids = []
 
-    for text in texts:
+    all_texts = texts + simple_texts
+    first_simple_text = int(simple_texts[0]['id'])
+
+    for text in all_texts:
         paragraph = text['paragraph']
         sentences = separate_sentences(paragraph)
         parts_of_speech = tag_parts_of_speech(paragraph)
-        paragraph_id = text['id']
+        paragraph_id = int(text['id'])
 
-        paragraph_document = {
-            "_id": paragraph_id,
-            "type": "paragraph",
-            "text": paragraph.text,
-            "sentences": sentences,
-            "clozes": get_clozes(remove_punctuation(parts_of_speech))
-        }
+        if paragraph_id < first_simple_text:
+            paragraph_document = {
+                "_id": paragraph_id,
+                "type": "paragraph",
+                "text": paragraph.text,
+                "sentences": sentences,
+                "clozes": get_clozes(remove_punctuation(parts_of_speech))
+            }
 
-        item_documents.append(paragraph_document)
-        paragraph_ids.append(paragraph_id)
+            item_documents.append(paragraph_document)
+            paragraph_ids.append(paragraph_id)
 
         if INCLUDE_ALL_SENTENCES:
             # add an itemDoc for each sentence
@@ -128,7 +135,7 @@ def main():
                     "clozes": get_clozes(remove_punctuation(sentence_parts_of_speech), alternative_pool=parts_of_speech)
                 }
                 item_documents.append(sentence_document)
-                if (text['id'] < SIMPLE_LANGUAGE_STARTING_ID):
+                if paragraph_id < first_simple_text:
                     sentence_ids.append(sentence_id)
                 else:
                     simple_sentence_ids.append(sentence_id)
