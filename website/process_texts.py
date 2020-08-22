@@ -115,7 +115,7 @@ def main():
 
         if paragraph_id < first_simple_text:
             paragraph_document = {
-                "_id": paragraph_id,
+                "_id": str(paragraph_id),
                 "type": "paragraph",
                 "text": paragraph.text,
                 "sentences": sentences,
