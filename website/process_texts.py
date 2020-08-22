@@ -16,7 +16,7 @@ with open('website/config.yml') as f:
     ID_COLUMN = config["id_column"]
     OUTPUT_PATH_ITEMS = config["output_dir"] + "/items.json"
     OUTPUT_PATH_SESSIONS = config["output_dir"] + "/sessions.json"
-    INCLUDE_ALL_SENTENCES = config["include_all_sentences"]
+    INCLUDE_SENTENCES = config["include_sentences"]
     CLOZES_PER_TEXT = config["clozes_per_text"]
     ALTERNATIVE_SUGGESTIONS_PER_CLOZE = config["alternative_suggestions_per_cloze"]
     PARAGRAPH_SESSION_LENGTH = config["paragraph_session_length"]
@@ -107,6 +107,10 @@ def main():
         paragraph = text['paragraph']
         sentences = separate_sentences(paragraph)
         parts_of_speech = tag_parts_of_speech(paragraph)
+
+        # there might be empty lines at the end of the doc
+        if text['id'] == '':
+            continue
         paragraph_id = int(text['id'])
 
         if paragraph_id < first_simple_text:
@@ -121,7 +125,7 @@ def main():
             item_documents.append(paragraph_document)
             paragraph_ids.append(paragraph_id)
 
-        if INCLUDE_ALL_SENTENCES:
+        if INCLUDE_SENTENCES != "none":
             # add an itemDoc for each sentence
             for sentence_index, sentence in enumerate(sentences):
                 sentence_parts_of_speech = tag_parts_of_speech(NLP(sentence))
@@ -142,12 +146,18 @@ def main():
 
     paragraph_sessions = get_sessions(paragraph_ids, PARAGRAPH_SESSION_LENGTH)
 
-    if INCLUDE_ALL_SENTENCES:
+    if INCLUDE_SENTENCES == 'all':
         sentence_sessions = get_sessions(sentence_ids, SENTENCE_SESSION_LENGTH - 1 )
         # Add one sentence from the Simple Language to each session
         sessions = paragraph_sessions + [session + [random.choice(simple_sentence_ids)] for session in sentence_sessions]
-    else:
+    elif INCLUDE_SENTENCES == 'none':
         sessions = paragraph_sessions
+    else:
+        selected_sentences = random.sample(sentence_ids, INCLUDE_SENTENCES)
+        sentence_sessions = get_sessions(selected_sentences, SENTENCE_SESSION_LENGTH - 1)
+        # Add one sentence from the Simple Language to each session
+        sessions = paragraph_sessions + [session + [random.choice(simple_sentence_ids)] for session in sentence_sessions]
+
 
     session_documents = [{
         "_id": str(i+1),

@@ -15,8 +15,13 @@ text_column: B
 # target directory for the processed texts
 output_dir: ./website/processed-texts
 
+# TODO: wording
 # should every sentence in each text also be treated as a text itself?
-include_all_sentences: True
+# possible values:
+# "all": all sentences in the paragraphs will be used in addition to the paragraphs
+# "none": only the paragraphs will be used
+# a number: a random sample of the size of the given number will be drawn from all sentences in the paragraphs
+include_sentences: 27
 
 # amount of deleted words & alternative suggestions for the cloze test
 clozes_per_text: 5
