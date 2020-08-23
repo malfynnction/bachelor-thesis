@@ -288,10 +288,10 @@ class StartSession extends React.Component {
                   >
                     A test survey is just like a real survey, except your
                     answers won't be recorded and you will get a pre-defined set
-                    of one very one very easy, one medium, and one very
-                    difficult text. This can help you familiarize yourself with
-                    the process of the study and give you a feeling of the
-                    different levels of texts.
+                    of one very simple, one average, and one very difficult
+                    text. This can help you familiarize yourself with the
+                    process of the study and give you a feeling of the different
+                    levels of texts.
                   </Popup>
                 ) : null}
               </div>
