@@ -22,7 +22,6 @@
 
 - production-ready
     - wipe staging DB
-    - select sentences for training session
 
 - Documentation & Reusability
     - local vs. session storage (online study vs lab) => frontend/src/lib/create-store, l. 2
