@@ -12,7 +12,11 @@ const punctuationInEnd = new RegExp(`${punctuation.source}$`, 'g')
 class Tasks extends React.Component {
   getSuggestions(original, alternatives) {
     const suggestions = [...alternatives, original]
-    return shuffle(suggestions.map(word => word.replace(punctuation, '')))
+    return shuffle(
+      suggestions.map(word =>
+        word.replace(punctuationInBeginning, '').replace(punctuationInEnd, '')
+      )
+    )
   }
 
   deleteWord(
@@ -64,7 +68,9 @@ class Tasks extends React.Component {
     const words = text.split(' ')
     const wordsWithoutPunctuation = text
       .split(' ')
-      .map(word => word.replace(punctuation, ''))
+      .map(word =>
+        word.replace(punctuationInBeginning, '').replace(punctuationInEnd, '')
+      )
 
     clozes.forEach((cloze, i) => {
       // the actual index could be different than the wordIndex saved in the cloze object because punctuation is not counted when creating clozes
