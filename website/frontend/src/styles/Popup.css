@@ -38,8 +38,3 @@
   display: flex;
   justify-content: flex-end;
 }
-
-.popup-close span :hover {
-  color: #c50e1f;
-  cursor: pointer;
-}

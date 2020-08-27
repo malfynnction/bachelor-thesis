@@ -6,6 +6,8 @@ import Popup from './Popup'
 import Timer from 'react-compound-timer'
 import createStore from '../lib/create-store'
 import getFromUrlParams from '../lib/get-from-url-params'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCopy, faCheckCircle } from '@fortawesome/free-regular-svg-icons'
 import '../styles/StartSession.css'
 import {
   COMPENSATION,
@@ -139,6 +141,24 @@ class StartSession extends React.Component {
               </p>
               <div className="tu-border confirmation-token">
                 <strong>{this.state.token}</strong>
+                <span className="token-copy">
+                  {this.state.tokenCopied ? (
+                    <span className="checkmark" aria-label="Success">
+                      <FontAwesomeIcon icon={faCheckCircle} />
+                    </span>
+                  ) : (
+                    <span
+                      aria-label="Copy"
+                      onClick={() => {
+                        navigator.clipboard.writeText(this.state.token)
+                        this.setState({ tokenCopied: true })
+                      }}
+                      className="interactive-hover"
+                    >
+                      <FontAwesomeIcon icon={faCopy} />
+                    </span>
+                  )}
+                </span>
               </div>
               <div>
                 Please copy and paste the code to a safe place,{' '}

@@ -11,7 +11,11 @@ const Popup = props => {
       <ClickOutHandler onClickOut={() => props.onClose()}>
         <div className="popup-inner">
           <div className="popup-close">
-            <span onClick={() => props.onClose()}>
+            <span
+              className="interactive-hover"
+              aria-label="Close"
+              onClick={() => props.onClose()}
+            >
               <FontAwesomeIcon icon={faTimesCircle} />
             </span>
           </div>

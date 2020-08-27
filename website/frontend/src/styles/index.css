@@ -207,3 +207,12 @@ h3 {
 .link:hover {
   text-decoration: underline;
 }
+
+.interactive-hover :hover {
+  color: #c50e1f;
+  cursor: pointer;
+}
+
+.checkmark {
+  color: #c50e1f;
+}
