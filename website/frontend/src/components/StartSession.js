@@ -143,7 +143,7 @@ class StartSession extends React.Component {
                 <strong>{this.state.token}</strong>
                 <span className="token-copy">
                   {this.state.tokenCopied ? (
-                    <span className="checkmark" aria-label="Success">
+                    <span className="tu-red" aria-label="Success">
                       <FontAwesomeIcon icon={faCheckCircle} />
                     </span>
                   ) : (
@@ -153,7 +153,7 @@ class StartSession extends React.Component {
                         navigator.clipboard.writeText(this.state.token)
                         this.setState({ tokenCopied: true })
                       }}
-                      className="interactive-hover"
+                      className="tu-red interactive-hover"
                     >
                       <FontAwesomeIcon icon={faCopy} />
                     </span>
