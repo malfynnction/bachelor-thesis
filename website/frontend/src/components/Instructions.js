@@ -116,13 +116,14 @@ const Instructions = props => {
         <p>
           You will receive a compensation of {COMPENSATION} per{' '}
           {SESSIONS_PER_COMPENSATION} completed surveys. In order to receive the
-          gift card, please send a mail to{' '}
+          compensation, please send a mail to{' '}
           <a href={`mailto:${CONTACT_MAIL}`} target="blank">
             {CONTACT_MAIL}
-          </a>
-          , including your participant ID (can be found in the upper right
-          corner after signing up) and the confirmation codes of all the
-          surverys you completed (will be shown at the end of each survey).
+          </a>{' '}
+          after completing at least 10 surveys, including your participant ID
+          (can be found in the upper right corner after signing up) and the
+          confirmation codes of all the surverys you completed (will be shown at
+          the end of each survey).
         </p>
         <p>
           <strong>Remember:</strong> There are{' '}
