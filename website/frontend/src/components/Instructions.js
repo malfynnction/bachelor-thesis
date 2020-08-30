@@ -60,11 +60,11 @@ const Instructions = props => {
           language.
         </p>
         <p>
-          In this study, you will read sentences & paragraphs and answer
-          questions about their complexity and understandability. You can
-          complete as many surveys as you like. Each survey will take about{' '}
-          {SESSION_DURATION} minutes to complete and consists of multiple texts,
-          for each of which you will be led through the following three steps:
+          In this study, you will read texts and answer questions about their
+          complexity and understandability. You can complete as many surveys as
+          you like. Each survey will take about {SESSION_DURATION} minutes to
+          complete and consists of multiple texts, for each of which you will be
+          led through the following three steps:
         </p>
         <h5>1. Reading</h5>
         <p>
@@ -75,9 +75,9 @@ const Instructions = props => {
         <p>
           For sentences you will see the sentence at the top of the page in a
           grey box. Please read it carefully to make sure you understand it as
-          well as possible. Underneath the sentence you will find the paragraph
-          that the sentence was taken from. You don't <em>have</em> to read it,
-          but it can help you understand the sentence.
+          well as possible. Below the sentence you will find the paragraph that
+          the sentence was taken from. You don't <em>have</em> to read it, but
+          it can help you understand the sentence.
         </p>
         <p>
           For paragraphs we will measure how long it takes to read them, so the
@@ -86,8 +86,10 @@ const Instructions = props => {
           you can.
         </p>
         <p>
-          Once you're done, you can click on "Next Step". After that, you won't
-          be able to go back to read the text.
+          Once you're done, click on "Next Step".{' '}
+          <strong>
+            After that, you won't be able to go back to read the text.
+          </strong>
         </p>
         <h5>2. Questions</h5>
         <p>
@@ -110,7 +112,7 @@ const Instructions = props => {
           if you want to.{' '}
           <strong>You can complete as many surveys as you like.</strong>
         </p>
-        <h5>Payment</h5>
+        <h5>Compensation</h5>
         <p>
           You will receive a compensation of {COMPENSATION} per{' '}
           {SESSIONS_PER_COMPENSATION} completed surveys. In order to receive the

@@ -329,9 +329,9 @@ class StartSession extends React.Component {
                       onClose={() => this.setState({ showBreakPopup: false })}
                     >
                       <div>
-                        You've already done a lot of work, thank you! Please
-                        take a little break before you continue, TODO: für
-                        Konzentration and foo
+                        You've done a lot of work already, thank you! Please
+                        take a little break before you continue, so that you can
+                        stay focused and concentrated on the texts.
                       </div>
                       <div className="break-timer">
                         {timerControl.getTime() > 60 * 1000 ? (
