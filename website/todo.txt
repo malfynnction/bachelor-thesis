@@ -20,9 +20,6 @@
     - cross-browser
     - mobile
 
-- production-ready
-    - wipe staging DB
-
 - Documentation & Reusability
     - local vs. session storage (online study vs lab) => frontend/src/lib/create-store, l. 2
     - Wie können Menschen das tatsächlich wiederverwenden?
