@@ -6,6 +6,7 @@ import createStore from '../lib/create-store'
 import getNewSession from '../lib/get-new-session'
 import Progress from './Progress'
 import { withRouter } from 'react-router-dom'
+import { CONTACT_MAIL } from '../config.js'
 
 const participantStore = createStore('participantId')
 const sessionStore = createStore('session')
@@ -82,6 +83,13 @@ class Session extends React.Component {
           ) : session.error ? (
             <div className="centered-content">
               <strong>An error occurred, please try again.</strong>
+              <br />
+              <div>
+                If you keep seeing this message, please send a mail to{' '}
+                <a href={`mailto:${CONTACT_MAIL}`} target="blank">
+                  {CONTACT_MAIL}
+                </a>
+              </div>
             </div>
           ) : item ? (
             <Item
