@@ -4,7 +4,7 @@ import createStore from './create-store'
 const TRAINING_ID = 'Training'
 
 const isSentenceSession = session =>
-  session.items[0] && session.items[0].startsWith('sent')
+  session.items[0] && session.items[0].toString().startsWith('sent')
 
 const getNextSessionFilter = completedSessionTypes => {
   // for every 9 paragraph sessions, there needs to be exactly 1 sentence session
