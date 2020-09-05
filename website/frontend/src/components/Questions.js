@@ -40,7 +40,7 @@ const getAllQuestions = (questionType, { type, sentences }) => {
           { label: 'understood almost nothing', value: 6 },
           { label: 'understood only a few things', value: 5 },
           { label: 'understood some things', value: 4 },
-          { label: 'undestood it relatively well', value: 3 },
+          { label: 'understood it relatively well', value: 3 },
           { label: 'understood most of it', value: 2 },
           { label: 'fully understood', value: 1 },
         ],
