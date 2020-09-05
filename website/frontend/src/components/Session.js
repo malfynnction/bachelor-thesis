@@ -63,10 +63,14 @@ class Session extends React.Component {
 
     return (
       <Fragment>
-        {session.finishedAllSessions ? null : <Progress progress={progress} />}
+        {session.finishedAllSessions || session.error ? null : (
+          <Progress progress={progress} />
+        )}
         <div
           className={`tu-border tu-glow center-box flexbox ${
-            session.finishedAllSessions ? 'centered-content' : ''
+            session.finishedAllSessions || session.error
+              ? 'centered-content'
+              : ''
           }`}
         >
           {session.finishedAllSessions ? (
@@ -74,6 +78,10 @@ class Session extends React.Component {
               You have rated all available items in the data set.
               <br />
               <strong> Thank you for your participation.</strong>
+            </div>
+          ) : session.error ? (
+            <div className="centered-content">
+              <strong>An error occurred, please try again.</strong>
             </div>
           ) : item ? (
             <Item

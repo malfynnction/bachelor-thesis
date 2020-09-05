@@ -61,7 +61,7 @@ const chooseNewSession = async (
     .filter(
       session =>
         !Object.keys(completedSessions).includes(session._id) &&
-        session._id !== 'Training'
+        session._id !== TRAINING_ID
     )
     .filter(sessionTypeFilter)
 
@@ -136,12 +136,27 @@ const getNewSession = async (
     return { finishedAllSessions: true }
   }
 
-  const newSession = await pouchSessions.get(newSessionId)
-  return {
-    items: shuffle(await getItems(newSession, pouchItems)),
-    index: 0,
-    id: newSessionId,
+  let tries = 0
+  while (tries < 5) {
+    try {
+      const newSession = await pouchSessions.get(newSessionId)
+      return {
+        items: shuffle(await getItems(newSession, pouchItems)),
+        index: 0,
+        id: newSessionId,
+      }
+    } catch (e) {
+      console.error(`error getting session ${newSessionId}:`)
+      console.error(e)
+      tries++
+      newSessionId = await chooseNewSession(
+        pouchParticipants,
+        pouchSessions,
+        participantId
+      )
+    }
   }
+  return { error: true }
 }
 
 export default getNewSession
