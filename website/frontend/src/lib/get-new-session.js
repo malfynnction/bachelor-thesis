@@ -140,11 +140,12 @@ const getNewSession = async (
   while (tries < 5) {
     try {
       const newSession = await pouchSessions.get(newSessionId)
-      return {
+      const session = {
         items: shuffle(await getItems(newSession, pouchItems)),
         index: 0,
         id: newSessionId,
       }
+      return session
     } catch (e) {
       console.error(`error getting session ${newSessionId}:`)
       console.error(e)
