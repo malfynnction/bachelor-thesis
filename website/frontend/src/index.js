@@ -24,6 +24,8 @@ import Logout from './components/Logout'
 import ListeningExercise from './components/ListeningExercise'
 import Impressum from './components/Impressum'
 import { CONTACT_MAIL } from './config.js'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons'
 
 const participantId = createStore('participantId')
 const demographicStore = createStore('demographic', {
@@ -46,6 +48,8 @@ const App = () => {
   const [participant, setParticipant] = useState({ ...emptyParticipant })
 
   const topRef = useRef(null)
+
+  const sessionCount = Object.keys(participant.completedSessions).length
 
   useEffect(() => {
     pouchParticipants
@@ -79,7 +83,6 @@ const App = () => {
   }
 
   const renderHeader = () => {
-    const sessionCount = Object.keys(participant.completedSessions).length
     return (
       <Fragment>
         <header ref={topRef}>
@@ -102,7 +105,18 @@ const App = () => {
           </div>
         </header>
         {sessionCount ? (
-          <div className="survey-count">Completed surveys: {sessionCount}</div>
+          <div className="survey-count">
+            Completed surveys: {sessionCount}{' '}
+            {sessionCount >= 30 ? (
+              <span className="tu-red">
+                <br />
+                <FontAwesomeIcon icon={faExclamationTriangle} />
+                <strong>
+                  You can only receive compensation for up to 30 surveys.
+                </strong>
+              </span>
+            ) : null}
+          </div>
         ) : null}
       </Fragment>
     )
@@ -140,7 +154,11 @@ const App = () => {
           return (
             <Fragment>
               {renderHeader()}
-              <div className="layout centered-content">
+              <div
+                className={`layout centered-content ${
+                  sessionCount >= 30 ? 'extra-header-space' : ''
+                }`}
+              >
                 <Switch>
                   <Route path="/logout">
                     <Logout isLoggedIn={isLoggedIn} onLogOut={onLogOut} />

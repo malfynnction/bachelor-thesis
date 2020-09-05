@@ -216,3 +216,7 @@ h3 {
 .tu-red {
   color: #c50e1f;
 }
+
+.extra-header-space {
+  margin-top: 75px;
+}
