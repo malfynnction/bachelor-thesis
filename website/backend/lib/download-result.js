@@ -77,7 +77,14 @@ const summarizeRatings = async (ratingDB, itemDB) => {
 
     // get the results of the cloze tests
     itemResult.clozes = item.clozes.map((cloze, i) => {
-      const answers = accordingRatings.map(rating => rating.cloze[i].isCorrect)
+      const answers = accordingRatings.map(rating => {
+        if (!rating.cloze[i]) {
+          console.log(`problem parsing the following rating:`)
+          console.log(rating)
+          return false
+        }
+        return rating.cloze[i].isCorrect
+      })
       const correctAnswers = answers.filter(answer => !!answer)
       let percentageCorrectAnswers
       if (answers.length) {
