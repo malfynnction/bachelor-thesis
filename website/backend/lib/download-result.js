@@ -52,7 +52,7 @@ const summarizeRatings = async (ratingDB, itemDB) => {
     )
 
     const itemResult = {
-      text: item.text,
+      // text: item.text,
       allRatings: accordingRatings,
       ratingAmount: accordingRatings.length,
       avgReadingTime:
@@ -154,9 +154,9 @@ const downloadParticipants = async participantDB => {
 module.exports = async ({ participantDB, itemDB, ratingDB, feedbackDB }) => {
   const [ratings, demographic, feedback, participants] = await Promise.all([
     summarizeRatings(ratingDB, itemDB),
-    summarizeDemographic(participantDB),
+    // summarizeDemographic(participantDB),
     downloadFeedback(feedbackDB),
-    downloadParticipants(participantDB),
+    // downloadParticipants(participantDB),
   ])
   return { ratings, demographic, feedback, participants }
 }
