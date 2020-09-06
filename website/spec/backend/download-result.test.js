@@ -130,46 +130,46 @@ const download = ({ participants, items, ratings, feedback }) => {
  * participants
  */
 
-it('returns all participant data', () => {
-  expect.assertions(2)
-  return download({ participants: data.twoParticipants }).then(result => {
-    expect(data.twoParticipants).toMatchObject(result.participants)
-    expect(result.participants[0]).not.toHaveProperty(
-      'completedTrainingSession'
-    )
-  })
-})
+// it('returns all participant data', () => {
+//   expect.assertions(2)
+//   return download({ participants: data.twoParticipants }).then(result => {
+//     expect(data.twoParticipants).toMatchObject(result.participants)
+//     expect(result.participants[0]).not.toHaveProperty(
+//       'completedTrainingSession'
+//     )
+//   })
+// })
 
 /*
  * demographic
  */
 
-it('calculates the average score for the listening exercise', () => {
-  expect.assertions(1)
-  return download({ participants: data.twoParticipants }).then(result => {
-    expect(result.demographic.avgListeningScore).toEqual(11)
-  })
-})
+// it('calculates the average score for the listening exercise', () => {
+//   expect.assertions(1)
+//   return download({ participants: data.twoParticipants }).then(result => {
+//     expect(result.demographic.avgListeningScore).toEqual(11)
+//   })
+// })
 
-it('summarizes some entries', () => {
-  expect.assertions(2)
-  return download({ participants: data.twoParticipants }).then(
-    ({ demographic }) => {
-      expect(demographic.nativeLang).toEqual({ German: 1, English: 1 })
-      expect(demographic.gerLevel).toEqual({ B2: 2 })
-    }
-  )
-})
+// it('summarizes some entries', () => {
+//   expect.assertions(2)
+//   return download({ participants: data.twoParticipants }).then(
+//     ({ demographic }) => {
+//       expect(demographic.nativeLang).toEqual({ German: 1, English: 1 })
+//       expect(demographic.gerLevel).toEqual({ B2: 2 })
+//     }
+//   )
+// })
 
-it('ignores missing data', () => {
-  expect.assertions(2)
-  return download({
-    participants: [...data.twoParticipants, ...data.emptyParticipant],
-  }).then(({ demographic }) => {
-    expect(demographic.nativeLang).toEqual({ German: 1, English: 1 })
-    expect(demographic.avgListeningScore).toBeCloseTo(22 / 3)
-  })
-})
+// it('ignores missing data', () => {
+//   expect.assertions(2)
+//   return download({
+//     participants: [...data.twoParticipants, ...data.emptyParticipant],
+//   }).then(({ demographic }) => {
+//     expect(demographic.nativeLang).toEqual({ German: 1, English: 1 })
+//     expect(demographic.avgListeningScore).toBeCloseTo(22 / 3)
+//   })
+// })
 
 /*
  * ratings
