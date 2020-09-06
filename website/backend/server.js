@@ -144,6 +144,11 @@ app.put('/api/ratings/_bulk', async (req, res) => {
     })
 })
 
+app.get('/api/ratings', async (req, res) => {
+  const result = await getAll(ratings)
+  res.send(result)
+})
+
 /*
  * FEEDBACK
  */
