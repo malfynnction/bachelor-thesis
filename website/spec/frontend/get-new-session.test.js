@@ -52,6 +52,28 @@ const data = {
       completedTrainingSession: true,
     },
   ],
+  participantsWithScam: [
+    {
+      _id: 'scammingTest',
+      completedSessions: { '2': 'token' },
+      completedTrainingSession: true,
+    },
+    {
+      _id: 'scammingTest',
+      completedSessions: { '2': 'token' },
+      completedTrainingSession: true,
+    },
+    {
+      _id: 'notScamming',
+      completedSessions: {},
+      completedTrainingSession: true,
+    },
+    {
+      _id: 'notScamming2',
+      completedSessions: { '1': 'token' },
+      completedTrainingSession: true,
+    },
+  ],
   items: [{ _id: 'par_1' }, { _id: 'sent_1' }],
   sessions: [
     { _id: '1', items: [] },
@@ -131,6 +153,15 @@ it('returns the session with the least ratings', () => {
   }).then(result => {
     expect(result.id).toEqual('2')
   })
+})
+
+it('ignores the completed surveys of scammers', () => {
+  expect.assertions(1)
+  return getSession({
+    isTraining: false,
+    participantId: 'notScamming',
+    participants: data.participantsWithScam,
+  }).then(result => expect(result.id).toEqual('2'))
 })
 
 it('returns a note if all sessions have been completed', () => {

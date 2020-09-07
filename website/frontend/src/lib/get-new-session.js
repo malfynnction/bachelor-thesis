@@ -2,6 +2,7 @@ import shuffle from 'lodash.shuffle'
 import createStore from './create-store'
 
 const TRAINING_ID = 'Training'
+const scammingParticipantIds = ['9', '13', '25', '41', '54', 'scammingTest']
 
 const isSentenceSession = session =>
   session.items[0] && session.items[0].toString().startsWith('sent')
@@ -73,6 +74,9 @@ const chooseNewSession = async (
   possibleSessions.forEach(session => (completedCounts[session._id] = 0))
 
   for (const participant of allParticipants) {
+    if (scammingParticipantIds.includes(participant._id)) {
+      continue
+    }
     Object.keys(participant.completedSessions).forEach(completed => {
       const isPossible = possibleSessions.some(session => {
         return session._id === completed
