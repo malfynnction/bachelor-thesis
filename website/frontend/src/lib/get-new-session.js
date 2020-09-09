@@ -2,7 +2,17 @@ import shuffle from 'lodash.shuffle'
 import createStore from './create-store'
 
 const TRAINING_ID = 'Training'
-const scammingParticipantIds = ['9', '13', '29', '41', '54', 'scammingTest']
+const scammingParticipantIds = [
+  '9',
+  '13',
+  '21',
+  '25',
+  '29',
+  '41',
+  '43',
+  '54',
+  'scammingTest',
+]
 
 const isSentenceSession = session =>
   session.items[0] && session.items[0].toString().startsWith('sent')
