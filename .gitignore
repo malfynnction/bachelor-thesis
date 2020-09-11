@@ -8,8 +8,7 @@ node_modules/
 ThesisTemplate/
 examples/
 venv/
-website/processed-texts/*
-!website/processed-texts/.keep
+
 **/build
 **/couchdb/data/*
 !**/couchdb/data/.keep
@@ -22,5 +21,7 @@ yarn-error.log*
 *.env
 *.pyc
 
-analysis/results
+data/results
+data/processed-texts/*
+!data/processed-texts/.keep
 db-backups

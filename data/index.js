@@ -1,8 +1,12 @@
 const fs = require('fs')
 const extractRatingsForParticipant = require('./extract-ratings-for-participant')
 
-const rawData = fs.readFileSync('results/participants.json')
-const participants = JSON.parse(rawData)
+const resultsPath = './results'
+
+const participants = JSON.parse(
+  fs.readFileSync(`${resultsPath}/participants.json`)
+)
+const ratings = JSON.parse(fs.readFileSync(`${resultsPath}/ratings.json`))
 
 const deniedIDs = ['9', '13', '21', '25', '29', '41', '43', '54']
 const emptyIDs = [
@@ -124,8 +128,16 @@ const extractUsableResults = () => {
       Object.keys(p.completedSessions).length > 0
   )
   fs.writeFileSync(
-    'results/usable-participants.json',
+    `${resultsPath}/usable-participants.json`,
     JSON.stringify(usableParticipants)
+  )
+
+  const usableRatings = ratings.filter(
+    rating => !deniedIDs.includes(rating.participantId)
+  )
+  fs.writeFileSync(
+    `${resultsPath}/usable-ratings.json`,
+    JSON.stringify(usableRatings)
   )
 }
 

@@ -5,6 +5,11 @@ const spacesInBeginningAndEnd = /^[ \s]+|[ \s]+$/g
 const participants = JSON.parse(
   fs.readFileSync('results/usable-participants.json')
 )
+const ratings = JSON.parse(fs.readFileSync('results/usable-ratings.json'))
+// make sure there are no training ratings
+delete ratings.Training_simple
+delete ratings.Training_average
+delete ratings.Training_hard
 
 const understoodListeningInstructions = participant => {
   return Object.values(participant.listeningExercise.answers).some(
@@ -55,4 +60,26 @@ const summarizeDemographic = () => {
   fs.writeFileSync('results/summary/demographics.json', JSON.stringify(summary))
 }
 
-summarizeDemographic()
+const getGroupedRatings = () => {}
+
+const summarizeRatingMeta = () => {
+  const result = {}
+  result.totalRatingAmount = Object.values(ratings).reduce(
+    (sum, rating) => sum + rating.ratingAmount,
+    0
+  )
+  result.avgRatingAmount =
+    result.totalRatingAmount / Object.values(ratings).length
+  result.minRatingAmount = Math.min(
+    ...Object.values(ratings).map(rating => rating.ratingAmount)
+  )
+  result.percentageCorrectClozes =
+    Object.values(ratings).reduce(
+      (sum, rating) => sum + rating.percentageCorrectClozes,
+      0
+    ) / Object.keys(ratings).length
+
+  fs.writeFileSync('results/summary/ratings-meta.json', JSON.stringify(result))
+}
+
+summarizeRatingMeta()
