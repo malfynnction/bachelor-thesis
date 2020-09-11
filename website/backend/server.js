@@ -2,7 +2,6 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const hash = require('object-hash')
 const newPouchDb = require('./lib/new-pouch-db')
-const downloadResult = require('./lib/download-result')
 
 const app = express()
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -145,11 +144,6 @@ app.put('/api/ratings/_bulk', async (req, res) => {
     })
 })
 
-app.get('/api/ratings', async (req, res) => {
-  const result = await getAll(ratings)
-  res.send(result)
-})
-
 /*
  * FEEDBACK
  */
@@ -165,20 +159,6 @@ app.post('/api/feedback', async (req, res) => {
       console.error(e)
       res.send(e)
     })
-})
-
-/*
- * RESULTS
- */
-
-app.get('/api/results', async (req, res) => {
-  const result = await downloadResult({
-    participantDB: participants,
-    itemDB: items,
-    ratingDB: ratings,
-    feedbackDB: feedback,
-  })
-  res.send(result)
 })
 
 console.log('Starting backend service...')
