@@ -175,6 +175,6 @@ def main():
     with open(OUTPUT_PATH_SESSIONS, 'w', encoding='utf-8') as file:
         json.dump({'docs': session_documents}, file, ensure_ascii=False, indent=2)
 
-    print('Your texts have been processed and are ready to be uploaded to your database. Upload the "data/processed-texts" directory to your sever and run `production/bin/upload-texts.sh` on your server to insert them into your CouchDB.')
+    print('Your texts have been processed and are ready to be uploaded to your database. Upload the "data/texts" directory to your sever and run `production/bin/upload-texts.sh` on your server to insert them into your CouchDB.')
 
 main()

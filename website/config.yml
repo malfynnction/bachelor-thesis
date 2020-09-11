@@ -13,7 +13,7 @@ id_column: A
 text_column: B
 
 # target directory for the processed texts
-output_dir: ./data/processed-texts
+output_dir: ./data/texts
 
 # TODO: wording
 # should every sentence in each text also be treated as a text itself?

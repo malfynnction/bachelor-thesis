@@ -22,8 +22,8 @@ yarn-error.log*
 *.pyc
 
 data/results
-data/processed-texts/*
-!data/processed-texts/.keep
+data/texts/*
+!data/texts/.keep
 db-backups
 
 thesis

@@ -2,6 +2,7 @@ const fs = require('fs')
 
 const spacesInBeginningAndEnd = /^[ \s]+|[ \s]+$/g
 
+const items = JSON.parse(fs.readFileSync('texts/items.json'))
 const participants = JSON.parse(
   fs.readFileSync('results/usable-participants.json')
 )

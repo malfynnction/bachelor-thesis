@@ -20,7 +20,7 @@ for database in "items" "sessions" "participants" "ratings" "feedback" ; do
     exit 1
   fi
 
-  CONTENT="processed-texts/${database}.json"
+  CONTENT="texts/${database}.json"
   if [[ -f "$CONTENT" ]]; then
     # upload content to DB
     curl -X POST localhost:5984/${database}/_bulk_docs -H 'Content-Type: application/json' -d @$CONTENT
