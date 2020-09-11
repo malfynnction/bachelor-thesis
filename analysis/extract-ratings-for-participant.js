@@ -1,6 +1,6 @@
 const fs = require('fs')
 
-const rawData = fs.readFileSync('ratings.json')
+const rawData = fs.readFileSync('results/ratings.json')
 const ratings = JSON.parse(rawData).ratings
 
 module.exports = participantId => {
