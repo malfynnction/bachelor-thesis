@@ -38,20 +38,33 @@ const shutdown = () => {
   process.exit(0)
 }
 
+const censorConfirmationTokens = participant => {
+  return {
+    ...participant,
+    completedSessions: Object.keys(participant.completedSessions).reduce(
+      (obj, id) => {
+        obj[id] = 'token'
+        return obj
+      },
+      {}
+    ),
+  }
+}
+
 /*
  * PARTICIPANTS
  */
 
 app.get('/api/participants', async (req, res) => {
   const result = await getAll(participants)
-  res.send(result)
+  res.send(result.map(p => censorConfirmationTokens(p)))
 })
 app.get('/api/participants/:id', async (req, res) => {
   const { id } = req.params
   participants
     .get(id)
     .then(result => {
-      res.send(result)
+      res.send(censorConfirmationTokens(result))
     })
     .catch(e => {
       console.error(e)
