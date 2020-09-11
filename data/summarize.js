@@ -14,6 +14,9 @@ const understoodListeningInstructions = participant => {
   )
 }
 
+const sum = array => array.reduce((sum, curr) => sum + curr, 0)
+const average = array => sum(array) / array.length
+
 const summarizeDemographic = () => {
   const keys = ['age', 'gender', 'nativeLang', 'gerLevel']
   const summary = participants.reduce((result, participant) => {
@@ -57,26 +60,87 @@ const summarizeDemographic = () => {
   fs.writeFileSync('results/summary/demographics.json', JSON.stringify(summary))
 }
 
-const getGroupedRatings = () => {}
-
-const summarizeRatingMeta = () => {
-  const result = {}
-  result.totalRatingAmount = Object.values(ratings).reduce(
-    (sum, rating) => sum + rating.ratingAmount,
-    0
-  )
-  result.avgRatingAmount =
-    result.totalRatingAmount / Object.values(ratings).length
-  result.minRatingAmount = Math.min(
-    ...Object.values(ratings).map(rating => rating.ratingAmount)
-  )
-  result.percentageCorrectClozes =
-    Object.values(ratings).reduce(
-      (sum, rating) => sum + rating.percentageCorrectClozes,
-      0
-    ) / Object.keys(ratings).length
-
-  fs.writeFileSync('results/summary/ratings-meta.json', JSON.stringify(result))
+const getGroupedRatings = () => {
+  const ratingsPerItem = items.docs.reduce((acc, item) => {
+    const accordingRatings = ratings.filter(
+      rating => rating.itemId === item._id
+    )
+    return { ...acc, [item._id]: accordingRatings }
+  }, {})
+  delete ratingsPerItem.Training_simple
+  delete ratingsPerItem.Training_average
+  delete ratingsPerItem.Training_hard
+  return ratingsPerItem
 }
 
-summarizeRatingMeta()
+const summarizeRatings = () => {
+  const groupedRatings = getGroupedRatings()
+  const questions = ['readability', 'understandability', 'complexity']
+
+  const result = Object.keys(groupedRatings).reduce((summary, id) => {
+    const itemRatings = groupedRatings[id]
+    const clozes = itemRatings.flatMap(rating =>
+      rating.cloze.map(deletion => {
+        if (deletion.isCorrect) {
+          return 'correct'
+        } else if (deletion.entered === 'idk') {
+          return 'idk'
+        } else {
+          return 'wrong'
+        }
+      })
+    )
+
+    const itemResult = {
+      text: items.docs.find(item => item._id === id).text,
+      ratingAmount: itemRatings.length,
+      readingTime: average(itemRatings.map(rating => rating.readingTime)),
+      percentageCorrectClozes:
+        (clozes.filter(answer => answer === 'correct').length / clozes.length) *
+        100,
+      percentageIncorrectClozes:
+        (clozes.filter(answer => answer === 'wrong').length / clozes.length) *
+        100,
+    }
+    questions.forEach(question => {
+      itemResult[question] = average(
+        itemRatings.map(rating => rating.questions[question])
+      )
+    })
+
+    summary[id] = itemResult
+    return summary
+  }, {})
+
+  fs.writeFileSync('results/summary/ratings.json', JSON.stringify(result))
+}
+
+const summarizeMeta = () => {
+  if (!fs.existsSync('results/summary/ratings.json')) {
+    summarizeRatings()
+  }
+  const summarizedRatings = JSON.parse(
+    fs.readFileSync('results/summary/ratings.json')
+  )
+
+  const summary = {}
+
+  summary.totalParticipants = participants.length
+  summary.totalRatings = sum(
+    Object.values(summarizedRatings).map(rating => rating.ratingAmount)
+  )
+  summary.avgRatingPerItem =
+    summary.totalRatings / Object.keys(summarizedRatings).length
+  summary.minRatingPerItem = Math.min(
+    ...Object.values(summarizedRatings).map(rating => rating.ratingAmount)
+  )
+
+  summary.percentageCorrectClozes = average(
+    Object.values(summarizedRatings).map(
+      rating => rating.percentageCorrectClozes
+    )
+  )
+  fs.writeFileSync('results/summary/meta.json', JSON.stringify(summary))
+}
+
+summarizeMeta()
