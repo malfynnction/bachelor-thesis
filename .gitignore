@@ -22,4 +22,5 @@ yarn-error.log*
 *.env
 *.pyc
 
-analysis/*.json
+analysis/results
+db-backups

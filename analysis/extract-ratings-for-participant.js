@@ -19,5 +19,8 @@ module.exports = participantId => {
       }
     })
 
-  fs.writeFileSync(`ratings-${participantId}.json`, JSON.stringify(filtered))
+  fs.writeFileSync(
+    `results/ratings-${participantId}.json`,
+    JSON.stringify(filtered)
+  )
 }

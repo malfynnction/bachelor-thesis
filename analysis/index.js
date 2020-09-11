@@ -1,7 +1,7 @@
 const fs = require('fs')
 const extractRatingsForParticipant = require('./extract-ratings-for-participant')
 
-const rawData = fs.readFileSync('participants.json')
+const rawData = fs.readFileSync('results/participants.json')
 const participants = JSON.parse(rawData)
 
 const deniedIDs = ['9', '13', '21', '25', '29', '41', '43', '54']
@@ -47,6 +47,7 @@ const confirmedIDs = [
   '60',
   '61',
 ]
+
 const printSurveyStats = () => {
   const completedSessions = participants.reduce((session, participant) => {
     return {
@@ -82,12 +83,19 @@ const printParticipantStats = () => {
   const usersWithSessions = participants.filter(
     p => Object.keys(p.completedSessions).length > 0
   ).length
+  const unfinishedUsers = participants.filter(
+    p =>
+      !deniedIDs.includes(p._id) &&
+      p.completedSessions &&
+      Object.keys(p.completedSessions).length % 10 != 0
+  )
+  const uncheckedUsers = participants.filter(
+    p => ![...emptyIDs, ...confirmedIDs, ...deniedIDs].includes(p._id)
+  )
 
   console.log(
     `There were ${totalUsers} participants in total, out of which ${trainedUsers} completed the training, ${usersWithSessions} completed at least one survey and ${confirmedIDs.length} are confirmed to be legit.`,
-    `${deniedIDs.length} participants have been identified as scammers and ${
-      totalUsers - deniedIDs.length
-    } still need to be checked.`
+    `${deniedIDs.length} participants have been identified as scammers and ${uncheckedUsers.length} still need to be checked. ${unfinishedUsers.length} can still complete sessions.`
   )
 }
 
@@ -108,6 +116,20 @@ const checkMissingConfirmations = () => {
   missingIds.forEach(id => extractRatingsForParticipant(id))
 }
 
-printSurveyStats()
+const extractUsableResults = () => {
+  const usableParticipants = participants.filter(
+    p =>
+      !deniedIDs.includes(p._id) &&
+      p.completedTrainingSession &&
+      Object.keys(p.completedSessions).length > 0
+  )
+  fs.writeFileSync(
+    'results/usable-participants.json',
+    JSON.stringify(usableParticipants)
+  )
+}
+
+// printSurveyStats()
 // printParticipantStats()
 // checkMissingConfirmations()
+extractUsableResults()
