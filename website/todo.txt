@@ -1,24 +1,7 @@
-- Couch
-    - store backups outside of server
-- Deploy
-    - Monitoring??
-- Docker
-    - should take care of `npm install` even for dev
-
-- general
-    - "TODO" comments
-    - some pages shouldn't work when you're not logged in (e.g. start-session)
-    - "we" -> "I", "us" -> "me" etc.?
-- instructions:
-    - Who is "I"?
 - accessibility
     - "reveal paragraph" impossible for screenreader
     - Die ganze Seite ist Hölle für screenreader, wegen react-step-wizard
     - transcriptions for audio in /listening-exercise
-
-- testing
-    - cross-browser
-    - mobile
 
 - Documentation & Reusability
     - local vs. session storage (online study vs lab) => frontend/src/lib/create-store, l. 2
@@ -29,3 +12,5 @@
         - adjust README re:installation of python stuff
     - frontend/src/config.js, config.yml, github secrets
     - create requirements.txt
+    - how to check confirmation tokens (werden in offener API jetzt zensiert)
+    - Docker should take care of `npm install` even for dev
