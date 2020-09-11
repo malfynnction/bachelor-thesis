@@ -8,6 +8,7 @@ const participants = JSON.parse(
 )
 const ratings = JSON.parse(fs.readFileSync(`${resultsPath}/ratings.json`))
 
+const trainingItems = ['Training_simple', 'Training_average', 'Training_hard']
 const deniedIDs = ['9', '13', '21', '25', '29', '41', '43', '54']
 const emptyIDs = [
   '3',
@@ -133,7 +134,9 @@ const extractUsableResults = () => {
   )
 
   const usableRatings = ratings.filter(
-    rating => !deniedIDs.includes(rating.participantId)
+    rating =>
+      !deniedIDs.includes(rating.participantId) &&
+      !trainingItems.includes(rating.itemId)
   )
   fs.writeFileSync(
     `${resultsPath}/usable-ratings.json`,

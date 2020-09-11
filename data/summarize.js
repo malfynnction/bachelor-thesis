@@ -7,10 +7,6 @@ const participants = JSON.parse(
   fs.readFileSync('results/usable-participants.json')
 )
 const ratings = JSON.parse(fs.readFileSync('results/usable-ratings.json'))
-// make sure there are no training ratings
-delete ratings.Training_simple
-delete ratings.Training_average
-delete ratings.Training_hard
 
 const understoodListeningInstructions = participant => {
   return Object.values(participant.listeningExercise.answers).some(
