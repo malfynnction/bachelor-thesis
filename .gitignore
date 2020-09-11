@@ -25,3 +25,6 @@ data/results
 data/processed-texts/*
 !data/processed-texts/.keep
 db-backups
+
+thesis
+note-to-self.txt
