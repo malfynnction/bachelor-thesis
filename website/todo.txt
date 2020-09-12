@@ -11,7 +11,6 @@
     - create requirements.txt
         - adjust README re:installation of python stuff
     - frontend/src/config.js, config.yml, github secrets
-    - how to check confirmation tokens (werden in offener API jetzt zensiert)
     - Docker should take care of `npm install` even for dev
     - how to download results
 
