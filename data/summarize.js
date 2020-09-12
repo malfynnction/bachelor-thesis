@@ -1,4 +1,5 @@
 const fs = require('fs')
+const pearsonCorrelation = require('calculate-correlation')
 
 const spacesInBeginningAndEnd = /^[ \s]+|[ \s]+$/g
 
@@ -7,6 +8,9 @@ const participants = JSON.parse(
   fs.readFileSync('results/usable-participants.json')
 )
 const ratings = JSON.parse(fs.readFileSync('results/usable-ratings.json'))
+const naderiSentences = JSON.parse(
+  fs.readFileSync('texts/naderi-sentences-for-reliability.json')
+)
 
 const understoodListeningInstructions = participant => {
   return Object.values(participant.listeningExercise.answers).some(
@@ -138,6 +142,19 @@ const summarizeMeta = () => {
   summary.percentageCorrectClozes = average(
     Object.values(summarizedRatings).map(
       rating => rating.percentageCorrectClozes
+    )
+  )
+
+  summary.reliabilityComplexity = pearsonCorrelation(
+    Object.keys(naderiSentences).map(id => naderiSentences[id].complexity),
+    Object.keys(naderiSentences).map(id => summarizedRatings[id].complexity)
+  )
+  summary.reliabilityUnderstandability = pearsonCorrelation(
+    Object.keys(naderiSentences).map(
+      id => naderiSentences[id].understandability
+    ),
+    Object.keys(naderiSentences).map(
+      id => summarizedRatings[id].understandability
     )
   )
   fs.writeFileSync('results/summary/meta.json', JSON.stringify(summary))
