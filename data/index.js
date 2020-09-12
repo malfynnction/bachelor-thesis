@@ -9,7 +9,23 @@ const participants = JSON.parse(
 const ratings = JSON.parse(fs.readFileSync(`${resultsPath}/ratings.json`))
 
 const trainingItems = ['Training_simple', 'Training_average', 'Training_hard']
-const deniedIDs = ['9', '13', '21', '25', '29', '41', '43', '54']
+const deniedIDs = [
+  '9',
+  '10',
+  '11',
+  '13',
+  '14',
+  '16',
+  '21',
+  '24',
+  '25',
+  '29',
+  '41',
+  '43',
+  '50',
+  '52',
+  '54',
+]
 const emptyIDs = [
   '3',
   '6',
@@ -37,13 +53,21 @@ const emptyIDs = [
   '59',
 ]
 const confirmedIDs = [
+  '1',
   '2',
   '4',
+  '5',
   '8',
   '12',
   '18',
+  '19',
+  '20',
+  '22',
+  '30',
   '32',
   '33',
+  '34',
+  '47',
   '49',
   '51',
   '55',
@@ -51,6 +75,7 @@ const confirmedIDs = [
   '57',
   '60',
   '61',
+  '62',
 ]
 
 const printSurveyStats = () => {
@@ -105,11 +130,7 @@ const printParticipantStats = () => {
 }
 
 const checkMissingConfirmations = () => {
-  const finishedParticipants = participants.filter(p => {
-    const count = Object.keys(p.completedSessions).length
-    return count >= 30 || count % 10 === 0
-  })
-  const missingIds = finishedParticipants
+  const missingIds = participants
     .map(p => p._id)
     .filter(
       id =>

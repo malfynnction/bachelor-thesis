@@ -160,4 +160,6 @@ const summarizeMeta = () => {
   fs.writeFileSync('results/summary/meta.json', JSON.stringify(summary))
 }
 
+// summarizeDemographic()
+// summarizeRatings()
 summarizeMeta()

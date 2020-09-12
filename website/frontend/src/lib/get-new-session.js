@@ -4,12 +4,19 @@ import createStore from './create-store'
 const TRAINING_ID = 'Training'
 const scammingParticipantIds = [
   '9',
+  '10',
+  '11',
   '13',
+  '14',
+  '16',
   '21',
+  '24',
   '25',
   '29',
   '41',
   '43',
+  '50',
+  '52',
   '54',
   'scammingTest',
 ]
