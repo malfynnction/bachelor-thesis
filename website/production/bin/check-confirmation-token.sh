@@ -9,13 +9,12 @@ authentication="${encoded:0:$((${#encoded}-1))}="
 
 echo "Please enter the participant ID: "
 read participant_id
+participant=$(curl -s http://localhost:5984/participants/${participant_id} -H "Authorization: Basic ${authentication}")
 
 echo "Please enter a confirmation token for this participant: "
 read token
 while [[ $token != "end" ]]
-do
-    participant=$(curl -s http://localhost:5984/participants/${participant_id} -H "Authorization: Basic ${authentication}")
-    
+do 
     regex_token="\\\"\d*\\\":\\\"$token\\\""
     match=$(echo $participant | grep -o "$regex_token")
 
