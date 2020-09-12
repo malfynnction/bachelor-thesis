@@ -225,7 +225,6 @@ const App = () => {
                         setTrainingState('in progress')
                       }}
                       pouchParticipants={pouchParticipants}
-                      sessionCount={sessionCount}
                     />
                   </Route>
                   <Route path="/session">

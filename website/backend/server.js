@@ -70,6 +70,18 @@ app.get('/api/participants/:id', async (req, res) => {
       res.send(e)
     })
 })
+app.put('/api/participants', async (req, res) => {
+  const { body } = req
+  participants
+    .put(body)
+    .then(result => {
+      res.send(result)
+    })
+    .catch(e => {
+      console.error(e)
+      res.send(e)
+    })
+})
 
 /*
  * ITEMS
