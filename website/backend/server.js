@@ -50,6 +50,24 @@ const censorConfirmationTokens = participant => {
   }
 }
 
+const uncensorConfirmationTokens = async participant => {
+  const realParticipant = await participants.get(participant._id)
+  return {
+    ...participant,
+    completedSessions: Object.keys(participant.completedSessions).reduce(
+      (obj, id) => {
+        if (realParticipant.completedSessions[id]) {
+          obj[id] = realParticipant.completedSessions[id]
+        } else {
+          obj[id] = participant.completedSessions[id]
+        }
+        return obj
+      },
+      {}
+    ),
+  }
+}
+
 /*
  * PARTICIPANTS
  */
@@ -72,15 +90,17 @@ app.get('/api/participants/:id', async (req, res) => {
 })
 app.put('/api/participants', async (req, res) => {
   const { body } = req
-  participants
-    .put(body)
-    .then(result => {
-      res.send(result)
-    })
-    .catch(e => {
-      console.error(e)
-      res.send(e)
-    })
+  uncensorConfirmationTokens(body).then(realParticipant => {
+    participants
+      .put(realParticipant)
+      .then(result => {
+        res.send(result)
+      })
+      .catch(e => {
+        console.error(e)
+        res.send(e)
+      })
+  })
 })
 
 /*
