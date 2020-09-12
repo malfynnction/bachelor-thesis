@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-load DB admin password from env
+# load DB admin password from env
 ENV_FILE="/home/adminuser/production/.env"
 export $(cat $ENV_FILE | xargs)
 
