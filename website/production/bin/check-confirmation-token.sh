@@ -15,10 +15,10 @@ echo "Please enter a confirmation token for this participant: "
 read token
 while [[ $token != "end" ]]
 do 
-    regex_token="\\\"\d*\\\":\\\"$token\\\""
+    regex_token="\\\"[0-9]*\\\":\\\"$token\\\""
     match=$(echo $participant | grep -o "$regex_token")
 
-    regex_session_id="\\\"\d*\\\""
+    regex_session_id="\\\"[0-9]*\\\""
     session_id=$(echo $match | grep -o "$regex_session_id")
 
     if [[ $session_id ]]; then
