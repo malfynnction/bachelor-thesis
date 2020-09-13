@@ -8,6 +8,9 @@ const participants = JSON.parse(
   fs.readFileSync('results/usable-participants.json')
 )
 const ratings = JSON.parse(fs.readFileSync('results/usable-ratings.json'))
+const scammedRatings = JSON.parse(
+  fs.readFileSync('results/scammed-ratings.json')
+)
 const naderiSentences = JSON.parse(
   fs.readFileSync('texts/naderi-sentences-for-reliability.json')
 )
@@ -133,17 +136,49 @@ const summarizeMeta = () => {
   summary.totalRatings = sum(
     Object.values(summarizedRatings).map(rating => rating.ratingAmount)
   )
+  summary.totalRatingsSentences = sum(
+    Object.keys(summarizedRatings)
+      .filter(id => id.startsWith('sent_'))
+      .map(id => summarizedRatings[id].ratingAmount)
+  )
+  summary.totalRatingsParagraphs = sum(
+    Object.keys(summarizedRatings)
+      .filter(id => !id.startsWith('sent_'))
+      .map(id => summarizedRatings[id].ratingAmount)
+  )
+
   summary.avgRatingPerItem =
     summary.totalRatings / Object.keys(summarizedRatings).length
   summary.minRatingPerItem = Math.min(
     ...Object.values(summarizedRatings).map(rating => rating.ratingAmount)
   )
-
-  summary.percentageCorrectClozes = average(
-    Object.values(summarizedRatings).map(
-      rating => rating.percentageCorrectClozes
-    )
+  summary.avgSurveysPerParticipant = average(
+    participants.map(p => Object.keys(p.completedSessions).length)
   )
+  summary.itemsWithTooFewRatings = Object.values(summarizedRatings)
+    .map(r => r.ratingAmount)
+    .filter(a => a < 12).length
+
+  summary.legitParticipants = {
+    percentageCorrectClozes: average(
+      Object.values(summarizedRatings).map(
+        rating => rating.percentageCorrectClozes
+      )
+    ),
+    avgReadingTime: average(
+      ratings.filter(r => r.readingTime > 0).map(r => r.readingTime)
+    ),
+  }
+
+  summary.scammers = {
+    percentageCorrectClozes:
+      average(
+        scammedRatings.flatMap(r => r.cloze.map(c => Number(c.isCorrect)))
+      ) * 100,
+    avgReadingTime: average(
+      scammedRatings.filter(r => r.readingTime > 0).map(r => r.readingTime)
+    ),
+  }
 
   summary.reliabilityComplexity = pearsonCorrelation(
     Object.keys(naderiSentences).map(id => naderiSentences[id].complexity),

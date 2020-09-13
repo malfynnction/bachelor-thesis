@@ -165,7 +165,19 @@ const extractUsableResults = () => {
   )
 }
 
+const extractScammingResults = () => {
+  const scammedRatings = ratings.filter(rating =>
+    deniedIDs.includes(rating.participantId)
+  )
+
+  fs.writeFileSync(
+    `${resultsPath}/scammed-ratings.json`,
+    JSON.stringify(scammedRatings)
+  )
+}
+
 // printSurveyStats()
 // printParticipantStats()
 // checkMissingConfirmations()
 extractUsableResults()
+extractScammingResults()
