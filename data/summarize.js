@@ -1,5 +1,6 @@
 const fs = require('fs')
 const pearsonCorrelation = require('calculate-correlation')
+const { extractUsableResults, extractScammingResults } = require('./index')
 
 const spacesInBeginningAndEnd = /^[ \s]+|[ \s]+$/g
 
@@ -195,6 +196,8 @@ const summarizeMeta = () => {
   fs.writeFileSync('results/summary/meta.json', JSON.stringify(summary))
 }
 
-// summarizeDemographic()
-// summarizeRatings()
+extractUsableResults()
+extractScammingResults()
+summarizeDemographic()
+summarizeRatings()
 summarizeMeta()

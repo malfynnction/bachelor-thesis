@@ -176,8 +176,14 @@ const extractScammingResults = () => {
   )
 }
 
+module.exports = {
+  confirmedIDs,
+  deniedIDs,
+  emptyIDs,
+  extractUsableResults,
+  extractScammingResults,
+  checkMissingConfirmations,
+}
+
 // printSurveyStats()
 // printParticipantStats()
-// checkMissingConfirmations()
-extractUsableResults()
-extractScammingResults()
