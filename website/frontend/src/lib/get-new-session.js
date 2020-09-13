@@ -8,7 +8,6 @@ const scammingParticipantIds = [
   '11',
   '13',
   '14',
-  '16',
   '21',
   '24',
   '25',
