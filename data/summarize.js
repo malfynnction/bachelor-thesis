@@ -15,6 +15,7 @@ const scammedRatings = JSON.parse(
 const naderiSentences = JSON.parse(
   fs.readFileSync('texts/naderi-sentences-for-reliability.json')
 )
+const feedback = JSON.parse(fs.readFileSync('results/feedback.json'))
 
 const understoodListeningInstructions = participant => {
   return Object.values(participant.listeningExercise.answers).some(
@@ -196,8 +197,34 @@ const summarizeMeta = () => {
   fs.writeFileSync('results/summary/meta.json', JSON.stringify(summary))
 }
 
+const summarizeFeedback = () => {
+  const summary = {
+    totalAmount: feedback.length,
+    participantAmount: new Set(feedback.map(f => f.participantId)).size,
+    hadTechnicalProblems: feedback.filter(f => !!f.hadTechnicalProblems).length,
+    technicalProblems: feedback
+      .filter(f => !!f.hadTechnicalProblems)
+      .map(f => f.technicalProblemsDetails),
+    unableToAnswerCorrectly: feedback.filter(f => !!f.unableToAnswerCorrectly)
+      .length,
+    impossibleAnswers: feedback
+      .filter(f => !!f.unableToAnswerCorrectly)
+      .map(f => f.unableToAnswerCorrectlyDetails),
+    avgUnderstandingOfInstructions: average(
+      feedback.map(f => f.didUnderstandInstructions)
+    ),
+    unclearInstructions: feedback
+      .filter(f => !!f.unclearInstructions)
+      .map(f => f.unclearInstructions),
+    notes: feedback.filter(f => !!f.notes).map(f => f.notes),
+  }
+
+  fs.writeFileSync('results/summary/feedback.json', JSON.stringify(summary))
+}
+
 extractUsableResults()
 extractScammingResults()
 summarizeDemographic()
 summarizeRatings()
 summarizeMeta()
+summarizeFeedback()
