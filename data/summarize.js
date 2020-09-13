@@ -5,13 +5,6 @@ const { extractUsableResults, extractScammingResults } = require('./index')
 const spacesInBeginningAndEnd = /^[ \s]+|[ \s]+$/g
 
 const items = JSON.parse(fs.readFileSync('texts/items.json'))
-const participants = JSON.parse(
-  fs.readFileSync('results/usable-participants.json')
-)
-const ratings = JSON.parse(fs.readFileSync('results/usable-ratings.json'))
-const scammedRatings = JSON.parse(
-  fs.readFileSync('results/scammed-ratings.json')
-)
 const naderiSentences = JSON.parse(
   fs.readFileSync('texts/naderi-sentences-for-reliability.json')
 )
@@ -25,6 +18,10 @@ const understoodListeningInstructions = participant => {
 
 const sum = array => array.reduce((sum, curr) => sum + curr, 0)
 const average = array => sum(array) / array.length
+const stdDev = array => {
+  const mean = average(array)
+  return Math.sqrt(sum(array.map(e => (e - mean) ** 2)) / array.length)
+}
 
 const summarizeDemographic = () => {
   const keys = ['age', 'gender', 'nativeLang', 'gerLevel']
@@ -222,8 +219,8 @@ const summarizeFeedback = () => {
   fs.writeFileSync('results/summary/feedback.json', JSON.stringify(summary))
 }
 
-extractUsableResults()
-extractScammingResults()
+const { participants, ratings } = extractUsableResults()
+const scammedRatings = extractScammingResults()
 summarizeDemographic()
 summarizeRatings()
 summarizeMeta()

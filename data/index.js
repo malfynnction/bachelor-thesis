@@ -149,31 +149,16 @@ const extractUsableResults = () => {
       p.completedTrainingSession &&
       Object.keys(p.completedSessions).length > 0
   )
-  fs.writeFileSync(
-    `${resultsPath}/usable-participants.json`,
-    JSON.stringify(usableParticipants)
-  )
-
   const usableRatings = ratings.filter(
     rating =>
       !deniedIDs.includes(rating.participantId) &&
       !trainingItems.includes(rating.itemId)
   )
-  fs.writeFileSync(
-    `${resultsPath}/usable-ratings.json`,
-    JSON.stringify(usableRatings)
-  )
+  return { ratings: usableRatings, participants: usableParticipants }
 }
 
 const extractScammingResults = () => {
-  const scammedRatings = ratings.filter(rating =>
-    deniedIDs.includes(rating.participantId)
-  )
-
-  fs.writeFileSync(
-    `${resultsPath}/scammed-ratings.json`,
-    JSON.stringify(scammedRatings)
-  )
+  return ratings.filter(rating => deniedIDs.includes(rating.participantId))
 }
 
 module.exports = {
