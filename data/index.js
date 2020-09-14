@@ -1,12 +1,5 @@
-const fs = require('fs')
 const extractRatingsForParticipant = require('./extract-ratings-for-participant')
-
-const resultsPath = './results'
-
-const participants = JSON.parse(
-  fs.readFileSync(`${resultsPath}/participants.json`)
-)
-const ratings = JSON.parse(fs.readFileSync(`${resultsPath}/ratings.json`))
+const getOrDownload = require('./get-or-download')
 
 const trainingItems = ['Training_simple', 'Training_average', 'Training_hard']
 const deniedIDs = [
@@ -78,7 +71,8 @@ const confirmedIDs = [
   '62',
 ]
 
-const getParticipantStats = () => {
+const getParticipantStats = async () => {
+  const participants = await getOrDownload('participants')
   const totalParticipants = participants.length
   const completedTrainingSession = participants.filter(
     p => p.completedTrainingSession
@@ -96,7 +90,8 @@ const getParticipantStats = () => {
   }
 }
 
-const checkMissingConfirmations = () => {
+const checkMissingConfirmations = async () => {
+  const participants = await getOrDownload('participants')
   const missingIds = participants
     .map(p => p._id)
     .filter(
@@ -109,7 +104,9 @@ const checkMissingConfirmations = () => {
   missingIds.forEach(id => extractRatingsForParticipant(id))
 }
 
-const extractUsableResults = () => {
+const extractUsableResults = async () => {
+  const participants = await getOrDownload('participants')
+  const ratings = await getOrDownload('ratings')
   const usableParticipants = participants.filter(
     p =>
       !deniedIDs.includes(p._id) &&
@@ -124,7 +121,8 @@ const extractUsableResults = () => {
   return { ratings: usableRatings, participants: usableParticipants }
 }
 
-const extractScammingResults = () => {
+const extractScammingResults = async () => {
+  const ratings = await getOrDownload('ratings')
   return ratings.filter(rating => deniedIDs.includes(rating.participantId))
 }
 
@@ -137,3 +135,5 @@ module.exports = {
   checkMissingConfirmations,
   getParticipantStats,
 }
+
+getParticipantStats()

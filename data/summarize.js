@@ -1,6 +1,7 @@
 const fs = require('fs')
 const pearsonCorrelation = require('calculate-correlation')
 const { extractUsableResults, extractScammingResults } = require('./index')
+const getOrDownload = require('./get-or-download')
 
 const spacesInBeginningAndEnd = /^[ \s]+|[ \s]+$/g
 
@@ -8,7 +9,6 @@ const items = JSON.parse(fs.readFileSync('texts/items.json'))
 const naderiSentences = JSON.parse(
   fs.readFileSync('texts/naderi-sentences-for-reliability.json')
 )
-const feedback = JSON.parse(fs.readFileSync('results/feedback.json'))
 
 const understoodListeningInstructions = participant => {
   return Object.values(participant.listeningExercise.answers).some(
@@ -194,7 +194,8 @@ const summarizeMeta = () => {
   fs.writeFileSync('results/summary/meta.json', JSON.stringify(summary))
 }
 
-const summarizeFeedback = () => {
+const summarizeFeedback = async () => {
+  const feedback = await getOrDownload('feedback')
   const summary = {
     totalAmount: feedback.length,
     participantAmount: new Set(feedback.map(f => f.participantId)).size,
