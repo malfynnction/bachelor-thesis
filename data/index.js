@@ -78,55 +78,22 @@ const confirmedIDs = [
   '62',
 ]
 
-const printSurveyStats = () => {
-  const completedSessions = participants.reduce((session, participant) => {
-    return {
-      ...session,
-      [participant._id]: Object.keys(participant.completedSessions),
-    }
-  }, {})
-
-  const totalSessions = Object.values(completedSessions).reduce(
-    (count, curr) => count + curr.length,
-    0
-  )
-
-  const confirmedSessions = Object.keys(completedSessions)
-    .filter(id => {
-      return confirmedIDs.includes(id)
-    })
-    .reduce((count, id) => count + completedSessions[id].length, 0)
-
-  const possibleSessions = Object.keys(completedSessions)
-    .filter(id => !deniedIDs.includes(id))
-    .reduce((count, id) => count + completedSessions[id].length, 0)
-
-  console.log('total sessions: ', totalSessions)
-  console.log('confirmed sessions: ', confirmedSessions)
-  console.log('possible sessions (includes unconfirmed): ', possibleSessions)
-}
-
-const printParticipantStats = () => {
-  const totalUsers = participants.length
-  const trainedUsers = participants.filter(p => p.completedTrainingSession)
-    .length
-  const usersWithSessions = participants.filter(
+const getParticipantStats = () => {
+  const totalParticipants = participants.length
+  const completedTrainingSession = participants.filter(
+    p => p.completedTrainingSession
+  ).length
+  const completedSurveys = participants.filter(
     p => Object.keys(p.completedSessions).length > 0
   ).length
-  const unfinishedUsers = participants.filter(
-    p =>
-      !deniedIDs.includes(p._id) &&
-      p.completedSessions &&
-      Object.keys(p.completedSessions).length % 10 != 0
-  )
-  const uncheckedUsers = participants.filter(
-    p => ![...emptyIDs, ...confirmedIDs, ...deniedIDs].includes(p._id)
-  )
 
-  console.log(
-    `There were ${totalUsers} participants in total, out of which ${trainedUsers} completed the training, ${usersWithSessions} completed at least one survey and ${confirmedIDs.length} are confirmed to be legit.`,
-    `${deniedIDs.length} participants have been identified as scammers and ${uncheckedUsers.length} still need to be checked. ${unfinishedUsers.length} can still complete sessions.`
-  )
+  return {
+    totalParticipants,
+    completedTrainingSession,
+    completedSurveys,
+    scammers: deniedIDs.length,
+    confirmed: confirmedIDs.length,
+  }
 }
 
 const checkMissingConfirmations = () => {
@@ -168,7 +135,5 @@ module.exports = {
   extractUsableResults,
   extractScammingResults,
   checkMissingConfirmations,
+  getParticipantStats,
 }
-
-// printSurveyStats()
-// printParticipantStats()
