@@ -23,7 +23,7 @@ const stdDev = array => {
   return Math.sqrt(sum(array.map(e => (e - mean) ** 2)) / array.length)
 }
 
-const summarizeDemographic = () => {
+const summarizeDemographic = participants => {
   const keys = ['age', 'gender', 'nativeLang', 'gerLevel']
   const summary = participants.reduce((result, participant) => {
     keys.forEach(key => {
@@ -66,7 +66,7 @@ const summarizeDemographic = () => {
   fs.writeFileSync('results/summary/demographics.json', JSON.stringify(summary))
 }
 
-const getGroupedRatings = () => {
+const getGroupedRatings = ratings => {
   const ratingsPerItem = items.docs.reduce((acc, item) => {
     const accordingRatings = ratings.filter(
       rating => rating.itemId === item._id
@@ -79,8 +79,8 @@ const getGroupedRatings = () => {
   return ratingsPerItem
 }
 
-const summarizeRatings = () => {
-  const groupedRatings = getGroupedRatings()
+const summarizeRatings = ratings => {
+  const groupedRatings = getGroupedRatings(ratings)
   const questions = ['readability', 'understandability', 'complexity']
 
   const result = Object.keys(groupedRatings).reduce((summary, id) => {
@@ -121,7 +121,7 @@ const summarizeRatings = () => {
   fs.writeFileSync('results/summary/ratings.json', JSON.stringify(result))
 }
 
-const summarizeMeta = () => {
+const summarizeMeta = (participants, ratings, scammedRatings) => {
   if (!fs.existsSync('results/summary/ratings.json')) {
     summarizeRatings()
   }
@@ -220,9 +220,11 @@ const summarizeFeedback = async () => {
   fs.writeFileSync('results/summary/feedback.json', JSON.stringify(summary))
 }
 
-const { participants, ratings } = extractUsableResults()
-const scammedRatings = extractScammingResults()
-summarizeDemographic()
-summarizeRatings()
-summarizeMeta()
-summarizeFeedback()
+Promise.all([extractUsableResults(), extractScammingResults()]).then(
+  ([{ participants, ratings }, scammedRatings]) => {
+    summarizeDemographic(participants)
+    summarizeRatings(ratings)
+    summarizeMeta(participants, ratings, scammedRatings)
+    summarizeFeedback()
+  }
+)
