@@ -73,15 +73,12 @@ class Tasks extends React.Component {
       )
 
     clozes.forEach((cloze, i) => {
-      // the actual index could be different than the wordIndex saved in the cloze object because punctuation is not counted when creating clozes
-      let actualIndex = wordsWithoutPunctuation.indexOf(
-        cloze.original,
-        cloze.wordIndex
-      )
-      if (actualIndex === -1) {
-        actualIndex = cloze.wordIndex
+      let index = wordsWithoutPunctuation.indexOf(cloze.original)
+
+      if (index === -1) {
+        index = cloze.wordIndex
       }
-      words[actualIndex] = this.deleteWord(cloze, words[actualIndex], i)
+      words[index] = this.deleteWord(cloze, words[index], i)
     })
     const isSentence = type === 'sentence'
     const splitText = isSentence && enclosingParagraph.split(text)
