@@ -21,9 +21,14 @@ yarn-error.log*
 *.env
 *.pyc
 
-data/results
+data/results/*
+!data/results/.keep
+!data/results/summary
+data/results/summary/*
+!data/results/summary/.keep
 data/texts/*
 !data/texts/.keep
+
 db-backups
 
 thesis
