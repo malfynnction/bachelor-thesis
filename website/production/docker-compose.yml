@@ -10,10 +10,6 @@ services:
     environment:
       - COUCHDB_USER=admin
       - COUCHDB_PASSWORD
-  backend:
-    image: malfynnction/bachelor-backend:latest
-    depends_on:
-      - couchdb
   frontend:
     image: malfynnction/bachelor-frontend:latest
     restart: always
