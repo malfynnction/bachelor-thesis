@@ -23,7 +23,6 @@ import Privacy from './components/Privacy'
 import Logout from './components/Logout'
 import ListeningExercise from './components/ListeningExercise'
 import Impressum from './components/Impressum'
-import StudyIsFinished from './components/StudyIsFinished'
 import { CONTACT_MAIL } from './config.js'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons'
@@ -137,21 +136,6 @@ const App = () => {
     )
   }
 
-  {
-    /* early return because study is finished */
-  }
-  return (
-    <Router>
-      <Route path="/">
-        {renderHeader()}
-        <div className="layout centered-content">
-          <StudyIsFinished />
-        </div>
-        {renderFooter()}
-      </Route>
-    </Router>
-  )
-
   return (
     <Router>
       {/* Wrap everything in an additional "fake" Route to have access to location props*/}
@@ -241,7 +225,6 @@ const App = () => {
                         setTrainingState('in progress')
                       }}
                       pouchParticipants={pouchParticipants}
-                      sessionCount={sessionCount}
                     />
                   </Route>
                   <Route path="/session">

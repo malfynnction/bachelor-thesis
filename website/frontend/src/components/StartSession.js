@@ -28,7 +28,6 @@ const chainAmountStore = createStore('chainAmount')
 class StartSession extends React.Component {
   constructor(props) {
     super(props)
-
     this.state = {
       completedTrainingSession: false,
       seed: seedStore.get(),
@@ -95,6 +94,7 @@ class StartSession extends React.Component {
     const previouslyFeedback = previousSession === 'Feedback'
     const previouslyRating =
       previousSession && !previouslyTraining && !previouslyFeedback
+    const allowAnotherSession = !this.state.seed
 
     if (previouslyTraining) {
       return (
@@ -135,7 +135,10 @@ class StartSession extends React.Component {
         <Fragment>
           {this.state.token ? (
             <Fragment>
-              <p>Your answers have been saved. Your confirmation code is</p>
+              <p>
+                Thank you! Your answers have been saved. Your confirmation code
+                is
+              </p>
               <div className="tu-border confirmation-token">
                 <strong>{this.state.token}</strong>
                 <span className="token-copy">
@@ -199,31 +202,20 @@ class StartSession extends React.Component {
             </Fragment>
           ) : null}
           <p>
-            {this.state.allowAnotherSession ? (
+            {allowAnotherSession ? (
               <Fragment>
                 You can now close this window or start another survey below.
               </Fragment>
             ) : (
-              <Fragment>
-                We have collected enough ratings, so you cannot complete any
-                more surveys. Thank you for your participation!
-              </Fragment>
+              'You can now close this window.'
             )}{' '}
-            We would appreciate some <a href="/feedback">feedback</a> on the
-            study.
+            We would also appreciate some <a href="/feedback">feedback</a> on
+            the study, so that we can improve it in the future.
           </p>
         </Fragment>
       )
     }
 
-    if (!this.state.allowAnotherSession) {
-      return (
-        <div>
-          We have collected enough ratings, so you cannot complete any more
-          surveys. Thank you for your participation!
-        </div>
-      )
-    }
     return null
   }
 
@@ -233,22 +225,13 @@ class StartSession extends React.Component {
     const previouslyFeedback = previousSession === 'Feedback'
     const previouslyRating =
       previousSession && !previouslyTraining && !previouslyFeedback
-
-    const finishedSet = this.props.sessionCount % 10 == 0
-    const allowAnotherSession = !this.state.seed && !finishedSet
-    if (this.state.allowAnotherSession !== allowAnotherSession) {
-      this.setState({ allowAnotherSession })
-    }
+    const allowAnotherSession = !this.state.seed
 
     return (
       <div className="tu-border tu-glow center-box centered-content">
-        {this.state.allowAnotherSession ? (
-          <h2>Start {previouslyRating ? 'another' : 'a'} survey</h2>
-        ) : (
-          <h2>Thank you!</h2>
-        )}
+        <h2>Start {previouslyRating ? 'another' : 'a'} survey</h2>
         {this.renderThankYou()}
-        {this.state.allowAnotherSession ? (
+        {allowAnotherSession ? (
           <Fragment>
             {this.state.hasActiveSession ? (
               <div>
@@ -373,7 +356,6 @@ class StartSession extends React.Component {
 StartSession.propTypes = {
   pouchParticipants: databasePropType,
   onStartTraining: PropTypes.func,
-  sessionCount: PropTypes.number,
 }
 
 export default StartSession

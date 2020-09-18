@@ -189,11 +189,55 @@ const ListeningExercise = props => {
       ))}
 
       <div>
-        Signing up is no longer possible since we already have enough
-        participants. If you have already completed surveys in the past and
-        would like to continue, please go to{' '}
-        <Link to="/instructions">this page</Link> and log in.
+        <input
+          type="checkbox"
+          checked={!!dataConsent}
+          onChange={e => {
+            setDataConsent(e.target.checked)
+          }}
+          id="consent"
+        />
+        <label className="checkbox-label" htmlFor="consent">
+          I have read the{' '}
+          <a href="/privacy?prev=listening-exercise">consent notification </a>
+          and want to participate in this study.
+        </label>
       </div>
+
+      <div className="start-label centered-text">
+        After clicking on "Start" you can find your participant ID in the top
+        right corner. Please remember it so you can skip this step if you come
+        back in the future.
+      </div>
+
+      <Link
+        className={`btn ${submitIsDisabled ? 'btn-disabled' : ''}`}
+        type="submit"
+        to="/start-session"
+        disabled={submitIsDisabled}
+        onClick={e => {
+          if (submitIsDisabled) {
+            e.preventDefault()
+          } else {
+            const score = questions.reduce((sum, { question }) => {
+              return (
+                sum +
+                question.answers.reduce((questionScore, answer, i) => {
+                  return (
+                    questionScore +
+                    (answer.isCorrect ===
+                      checkedAnswers[question.key].includes(i))
+                  )
+                }, 0)
+              )
+            }, 0)
+            props.createUser({ answers: checkedAnswers, score })
+          }
+        }}
+      >
+        Start
+      </Link>
+      {preventionNote ? <div className="note">{preventionNote}</div> : null}
     </div>
   )
 }
