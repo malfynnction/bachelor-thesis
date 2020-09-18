@@ -29,6 +29,14 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           workdir: website/frontend
           tags: 'latest'
+      - name: Publish Backend
+        uses: elgohr/Publish-Docker-Github-Action@5d8ac99
+        with:
+          name: 'malfynnction/bachelor-backend'
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          workdir: website/backend
+          tags: 'latest'
       - name: Copy production dir to server
         uses: appleboy/scp-action@edc8ec9
         with:
@@ -45,7 +53,7 @@ jobs:
             cd production
             echo "COUCHDB_PASSWORD=${{ secrets.COUCHDB_PASSWORD }}" > .env
             docker-compose pull && docker-compose up -d
-            # crontab ./cronfile
+            crontab ./cronfile
           host: ${{ env.SERVER }}
           user: ${{ env.USER }}
           key: ${{ secrets.PRIVATE_SSH_KEY }}
