@@ -1,7 +1,10 @@
 const fs = require('fs')
 const pearsonCorrelation = require('calculate-correlation')
-const { extractUsableResults, extractScammingResults } = require('./lib')
-const getOrDownload = require('./get-or-download')
+const {
+  extractUsableResults,
+  extractScammingResults,
+  getOrDownload,
+} = require('./lib')
 const { sum, average } = require('./helpers')
 
 const spacesInBeginningAndEnd = /^[ \s]+|[ \s]+$/g

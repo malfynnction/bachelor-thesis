@@ -1,4 +1,4 @@
-const getOrDownload = require('./get-or-download')
+const { getOrDownload } = require('./lib')
 
 getOrDownload('participants', { forceDownload: true })
 getOrDownload('ratings', { forceDownload: true })

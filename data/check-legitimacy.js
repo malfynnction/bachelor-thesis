@@ -1,5 +1,5 @@
 const extractRatingsForParticipant = require('./extract-ratings-for-participant')
-const getOrDownload = require('./get-or-download')
+const { getOrDownload } = require('./lib')
 
 // adjust these to your needs
 const participantId = '1'
