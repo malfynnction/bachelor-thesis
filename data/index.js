@@ -2,6 +2,7 @@ const fs = require('fs')
 const pearsonCorrelation = require('calculate-correlation')
 const { extractUsableResults, extractScammingResults } = require('./lib')
 const getOrDownload = require('./get-or-download')
+const { sum, average } = require('./helpers')
 
 const spacesInBeginningAndEnd = /^[ \s]+|[ \s]+$/g
 
@@ -14,13 +15,6 @@ const understoodListeningInstructions = participant => {
   return Object.values(participant.listeningExercise.answers).some(
     answers => answers.length != 1
   )
-}
-
-const sum = array => array.reduce((sum, curr) => sum + curr, 0)
-const average = array => sum(array) / array.length
-const stdDev = array => {
-  const mean = average(array)
-  return Math.sqrt(sum(array.map(e => (e - mean) ** 2)) / array.length)
 }
 
 const summarizeDemographic = participants => {
