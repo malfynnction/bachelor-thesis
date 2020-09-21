@@ -6,6 +6,8 @@ const { average, stdDev } = require('./helpers')
 
 const filePath = '../data.xlsx'
 const ratingsSheetName = 'results'
+const naderiPath = '../Full-Dataset-Naderi19.xlsx'
+const naderiSheetName = 'Final_Ratings_Table'
 
 const idColumn = 'A'
 const voteCountColumn = 'B'
@@ -17,10 +19,44 @@ const readingTimeColumn = 'G'
 const understandabilityColumn = 'H'
 const understandabilityStdColumn = 'I'
 const clozeResultColumn = 'J'
+const sentenceComplexityColumn = 'K'
+const sentenceUnderstandabilityColumn = 'L'
+const sentenceLexicalDifficultyColumn = 'M'
+
+const items = JSON.parse(fs.readFileSync('texts/items.json'))
+
+const getNaderiSentences = () => {
+  const naderiSheet = xlsx.readFile(naderiPath).Sheets[naderiSheetName]
+  const naderiSentenceColumn = 'B'
+  const naderiComplexityColumn = 'F'
+  const naderiUnderstandabilityColumn = 'I'
+  const naderiLexicalDifficultyColumn = 'L'
+
+  return Object.keys(naderiSheet)
+    .filter(cell => cell.startsWith(naderiSentenceColumn))
+    .reduce((collection, cell) => {
+      const row = cell.slice(1)
+
+      const sentence = naderiSheet[`${naderiSentenceColumn}${row}`].v
+      const complexity = naderiSheet[`${naderiComplexityColumn}${row}`].v
+      const understandability =
+        naderiSheet[`${naderiUnderstandabilityColumn}${row}`].v
+      const lexicalDifficulty =
+        naderiSheet[`${naderiLexicalDifficultyColumn}${row}`].v
+      const obj = {
+        sentence,
+        complexity,
+        understandability,
+        lexicalDifficulty,
+      }
+      return [...collection, obj]
+    }, [])
+}
 
 module.exports = async () => {
   const { ratings } = await extractUsableResults()
   const groupedRatings = summarize.getGroupedRatings(ratings)
+  const naderiSentences = getNaderiSentences()
 
   const workbook = xlsx.readFile(filePath)
   const sheet = workbook.Sheets[ratingsSheetName]
@@ -29,75 +65,93 @@ module.exports = async () => {
 
   sheet['!ref'] = `A1:M${itemIds.length}`
 
-  itemIds.forEach((itemId, index) => {
-    if (itemId.startsWith('sent_')) {
-      // sentences were only control items, skip them
-      return
-    }
-    const itemRatings = groupedRatings[itemId]
-    const row = index + 3 // leave space for header rows
+  itemIds
+    .filter(id => !id.startsWith('sent_')) // sentences were only control items, ignore them
+    .forEach((itemId, index) => {
+      const itemRatings = groupedRatings[itemId]
+      const item = items.docs.find(i => i._id === itemId)
+      const row = index + 3 // leave space for header rows
 
-    sheet[`${idColumn}${row}`] = { t: 'n', v: itemId }
-    sheet[`${voteCountColumn}${row}`] = {
-      t: 'n',
-      v: itemRatings.length,
-    }
+      sheet[`${idColumn}${row}`] = { t: 'n', v: itemId }
+      sheet[`${voteCountColumn}${row}`] = {
+        t: 'n',
+        v: itemRatings.length,
+      }
 
-    // readability question
-    const readabilityScores = itemRatings.map(r => r.questions.readability)
-    sheet[`${readabilityColumn}${row}`] = {
-      t: 'n',
-      v: average(readabilityScores),
-    }
-    sheet[`${readabilityStdColumn}${row}`] = {
-      t: 'n',
-      v: stdDev(readabilityScores),
-    }
+      // readability question
+      const readabilityScores = itemRatings.map(r => r.questions.readability)
+      sheet[`${readabilityColumn}${row}`] = {
+        t: 'n',
+        v: average(readabilityScores),
+      }
+      sheet[`${readabilityStdColumn}${row}`] = {
+        t: 'n',
+        v: stdDev(readabilityScores),
+      }
 
-    // complexity question
-    const complexityScores = itemRatings.map(r => r.questions.complexity)
-    sheet[`${complexityColumn}${row}`] = {
-      t: 'n',
-      v: average(complexityScores),
-    }
-    sheet[`${complexityStdColumn}${row}`] = {
-      t: 'n',
-      v: stdDev(complexityScores),
-    }
+      // complexity question
+      const complexityScores = itemRatings.map(r => r.questions.complexity)
+      sheet[`${complexityColumn}${row}`] = {
+        t: 'n',
+        v: average(complexityScores),
+      }
+      sheet[`${complexityStdColumn}${row}`] = {
+        t: 'n',
+        v: stdDev(complexityScores),
+      }
 
-    // understandability question
-    const understandabilityScores = itemRatings.map(
-      r => r.questions.understandability
-    )
-    sheet[`${understandabilityColumn}${row}`] = {
-      t: 'n',
-      v: average(understandabilityScores),
-    }
-    sheet[`${understandabilityStdColumn}${row}`] = {
-      t: 'n',
-      v: stdDev(understandabilityScores),
-    }
+      // understandability question
+      const understandabilityScores = itemRatings.map(
+        r => r.questions.understandability
+      )
+      sheet[`${understandabilityColumn}${row}`] = {
+        t: 'n',
+        v: average(understandabilityScores),
+      }
+      sheet[`${understandabilityStdColumn}${row}`] = {
+        t: 'n',
+        v: stdDev(understandabilityScores),
+      }
 
-    // reading time
-    sheet[`${readingTimeColumn}${row}`] = {
-      t: 'n',
-      v: (average(itemRatings.map(r => r.readingTime)) / 1000).toFixed(2),
-    }
+      // reading time
+      sheet[`${readingTimeColumn}${row}`] = {
+        t: 'n',
+        v: (average(itemRatings.map(r => r.readingTime)) / 1000).toFixed(2),
+      }
 
-    // cloze correctness
-    const clozeCorrectness = average(
-      itemRatings.map(rating => {
-        return (
-          rating.cloze.filter(answer => answer.isCorrect).length /
-          rating.cloze.length
+      // cloze correctness
+      const clozeCorrectness = average(
+        itemRatings.map(rating => {
+          return (
+            rating.cloze.filter(answer => answer.isCorrect).length /
+            rating.cloze.length
+          )
+        })
+      )
+      sheet[`${clozeResultColumn}${row}`] = {
+        t: 's',
+        v: `${(clozeCorrectness * 100).toFixed(2)}%`,
+      }
+
+      // sentence averages
+      const naderiResult = item.sentences.flatMap(sentence =>
+        naderiSentences.filter(
+          naderiSentence => naderiSentence.sentence === sentence
         )
-      })
-    )
-    sheet[`${clozeResultColumn}${row}`] = {
-      t: 's',
-      v: `${(clozeCorrectness * 100).toFixed(2)}%`,
-    }
-  })
+      )
+      sheet[`${sentenceComplexityColumn}${row}`] = {
+        t: 'n',
+        v: average(naderiResult.map(s => s.complexity)),
+      }
+      sheet[`${sentenceUnderstandabilityColumn}${row}`] = {
+        t: 'n',
+        v: average(naderiResult.map(s => s.understandability)),
+      }
+      sheet[`${sentenceLexicalDifficultyColumn}${row}`] = {
+        t: 'n',
+        v: average(naderiResult.map(s => s.lexicalDifficulty)),
+      }
+    })
 
   xlsx.writeFile(workbook, filePath)
 }
