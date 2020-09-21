@@ -63,8 +63,6 @@ module.exports = async () => {
 
   const itemIds = Object.keys(groupedRatings)
 
-  sheet['!ref'] = `A1:M${itemIds.length}`
-
   itemIds
     .filter(id => !id.startsWith('sent_')) // sentences were only control items, ignore them
     .forEach((itemId, index) => {
@@ -116,7 +114,7 @@ module.exports = async () => {
       // reading time
       sheet[`${readingTimeColumn}${row}`] = {
         t: 'n',
-        v: (average(itemRatings.map(r => r.readingTime)) / 1000).toFixed(2),
+        v: average(itemRatings.map(r => r.readingTime)),
       }
 
       // cloze correctness
@@ -129,8 +127,8 @@ module.exports = async () => {
         })
       )
       sheet[`${clozeResultColumn}${row}`] = {
-        t: 's',
-        v: `${(clozeCorrectness * 100).toFixed(2)}%`,
+        t: 'n',
+        v: clozeCorrectness,
       }
 
       // sentence averages
