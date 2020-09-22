@@ -142,13 +142,6 @@ const Instructions = props => {
         ) : (
           <Fragment>
             <p>
-              If this is your first time participating in this study and you
-              don't have an ID yet, please click here:
-            </p>
-            <Link className="btn" to="/demographics">
-              New Participant
-            </Link>
-            <p>
               If you have already done a session in the past, please enter your
               participant ID and click "Start"
             </p>
@@ -180,6 +173,10 @@ const Instructions = props => {
                 Start
               </button>
             </form>
+            <p>
+              If you haven't participated before, you can no longer sign up,
+              since we already have enough participants. Thank you!
+            </p>
             {error.length > 0 ? (
               <div className="tu-border error-box background-pink">{error}</div>
             ) : null}

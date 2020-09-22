@@ -88,6 +88,7 @@ app.get('/api/participants/:id', async (req, res) => {
       res.send(e)
     })
 })
+
 app.put('/api/participants', async (req, res) => {
   const { body } = req
   uncensorConfirmationTokens(body).then(realParticipant => {

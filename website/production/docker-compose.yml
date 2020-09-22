@@ -10,15 +10,9 @@ services:
     environment:
       - COUCHDB_USER=admin
       - COUCHDB_PASSWORD
-  backend:
-    image: malfynnction/bachelor-backend:latest
-    depends_on:
-      - couchdb
   frontend:
     image: malfynnction/bachelor-frontend:latest
     restart: always
-    depends_on:
-      - backend
   nginx:
     image: nginx:1.17.8-alpine
     restart: always
@@ -30,7 +24,6 @@ services:
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
     depends_on:
-      - backend
       - frontend
   certbot:
     image: certbot/certbot:v1.3.0
