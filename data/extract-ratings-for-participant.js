@@ -1,8 +1,7 @@
 const fs = require('fs')
 
-const ratings = JSON.parse(fs.readFileSync('results/ratings.json'))
-
 module.exports = participantId => {
+  const ratings = JSON.parse(fs.readFileSync('results/ratings.json'))
   const filtered = ratings.filter(item => item.participantId === participantId)
   const filePath = `results/ratings-${participantId}.json`
 

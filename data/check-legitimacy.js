@@ -6,7 +6,9 @@ const participantId = '1'
 const confirmationTokens = ['token 1', 'token 2']
 
 const main = async () => {
-  const participants = await getOrDownload('participants')
+  const participants = await getOrDownload('participants', {
+    forceDownload: true,
+  })
   const participant = participants.find(p => p._id === participantId)
   const actualTokens = Object.values(participant.completedSessions)
 
