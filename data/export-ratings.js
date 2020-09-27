@@ -119,12 +119,14 @@ module.exports = async () => {
 
       // cloze correctness
       const clozeCorrectness = average(
-        itemRatings.map(rating => {
-          return (
-            rating.cloze.filter(answer => answer.isCorrect).length /
-            rating.cloze.length
-          )
-        })
+        itemRatings
+          .filter(rating => rating.cloze.length > 0)
+          .map(rating => {
+            return (
+              rating.cloze.filter(answer => answer.isCorrect).length /
+              rating.cloze.length
+            )
+          })
       )
       sheet[`${clozeResultColumn}${row}`] = {
         t: 'n',
