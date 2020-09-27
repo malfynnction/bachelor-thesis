@@ -73,7 +73,9 @@ class Tasks extends React.Component {
       )
 
     clozes.forEach((cloze, i) => {
-      let index = wordsWithoutPunctuation.indexOf(cloze.original)
+      let index = wordsWithoutPunctuation.findIndex(
+        (word, i) => typeof words[i] === 'string' && word === cloze.original
+      )
 
       if (index === -1) {
         index = cloze.wordIndex
