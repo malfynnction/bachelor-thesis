@@ -26,6 +26,8 @@ const sentenceLexicalDifficultyColumn = 'N'
 
 const items = JSON.parse(fs.readFileSync('texts/items.json'))
 
+const footnote = /\[\d+\]/g
+
 const getNaderiSentences = () => {
   const naderiSheet = xlsx.readFile(naderiPath).Sheets[naderiSheetName]
   const naderiSentenceColumn = 'B'
@@ -38,7 +40,13 @@ const getNaderiSentences = () => {
     .reduce((collection, cell) => {
       const row = cell.slice(1)
 
+      // adjust minor inconsistencies
       const sentence = naderiSheet[`${naderiSentenceColumn}${row}`].v
+        .replace(footnote, '')
+        .replace('v Chr', 'v. Chr.')
+        .replace('P Ticinius', 'P. Ticinius')
+        .replace(' 2 ', ' 2. ')
+        .replace(' zB ', ' z. B. ')
       const complexity = naderiSheet[`${naderiComplexityColumn}${row}`].v
       const understandability =
         naderiSheet[`${naderiUnderstandabilityColumn}${row}`].v
@@ -141,10 +149,11 @@ module.exports = async () => {
 
       // sentence averages
       const naderiResult = item.sentences.flatMap(sentence =>
-        naderiSentences.filter(
-          naderiSentence => naderiSentence.sentence === sentence
+        naderiSentences.filter(naderiSentence =>
+          naderiSentence.sentence.includes(sentence)
         )
       )
+
       sheet[`${sentenceComplexityColumn}${row}`] = {
         t: 'n',
         v: average(naderiResult.map(s => s.complexity)),
