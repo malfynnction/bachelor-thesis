@@ -16,12 +16,13 @@ const readabilityStdColumn = 'D'
 const complexityColumn = 'E'
 const complexityStdColumn = 'F'
 const readingTimeColumn = 'G'
-const understandabilityColumn = 'H'
-const understandabilityStdColumn = 'I'
-const clozeResultColumn = 'J'
-const sentenceComplexityColumn = 'K'
-const sentenceUnderstandabilityColumn = 'L'
-const sentenceLexicalDifficultyColumn = 'M'
+const readingTimePerWordColumn = 'H'
+const understandabilityColumn = 'I'
+const understandabilityStdColumn = 'J'
+const clozeResultColumn = 'K'
+const sentenceComplexityColumn = 'L'
+const sentenceUnderstandabilityColumn = 'M'
+const sentenceLexicalDifficultyColumn = 'N'
 
 const items = JSON.parse(fs.readFileSync('texts/items.json'))
 
@@ -112,9 +113,14 @@ module.exports = async () => {
       }
 
       // reading time
+      const readingTime = average(itemRatings.map(r => r.readingTime))
       sheet[`${readingTimeColumn}${row}`] = {
         t: 'n',
-        v: average(itemRatings.map(r => r.readingTime)),
+        v: readingTime,
+      }
+      sheet[`${readingTimePerWordColumn}${row}`] = {
+        t: 'n',
+        v: readingTime / item.text.split(' ').length,
       }
 
       // cloze correctness
