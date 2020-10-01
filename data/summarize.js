@@ -29,11 +29,31 @@ const getGroupedRatings = ratings => {
   return ratingsPerItem
 }
 
+const getHardestSentences = ratings => {
+  const hardestSentences = ratings.map(
+    rating => rating.questions.hardestSentence
+  )
+  const voteCounts = hardestSentences
+    .filter(sentence => typeof sentence !== 'undefined')
+    .reduce((acc, sentence) => {
+      if (acc[sentence]) {
+        acc[sentence] += 1
+      } else {
+        acc[sentence] = 1
+      }
+      return acc
+    }, {})
+
+  const maxVotes = Math.max(...Object.values(voteCounts))
+  return Object.keys(voteCounts).filter(key => voteCounts[key] === maxVotes)
+}
+
 const summarizeRatings = ratings => {
   const groupedRatings = getGroupedRatings(ratings)
   const questions = ['readability', 'understandability', 'complexity']
 
   const result = Object.keys(groupedRatings).reduce((summary, id) => {
+    const item = items.docs.find(item => item._id === id)
     const itemRatings = groupedRatings[id]
     const clozes = itemRatings.flatMap(rating =>
       rating.cloze.map(deletion => {
@@ -48,7 +68,7 @@ const summarizeRatings = ratings => {
     )
 
     const itemResult = {
-      text: items.docs.find(item => item._id === id).text,
+      text: item.text,
       ratingAmount: itemRatings.length,
       readingTime: average(itemRatings.map(rating => rating.readingTime)),
       percentageCorrectClozes:
@@ -57,6 +77,9 @@ const summarizeRatings = ratings => {
       percentageIncorrectClozes:
         (clozes.filter(answer => answer === 'wrong').length / clozes.length) *
         100,
+      hardestSentences: getHardestSentences(itemRatings).map(
+        index => item.sentences[index]
+      ),
     }
     questions.forEach(question => {
       itemResult[question] = average(
