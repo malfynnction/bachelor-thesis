@@ -122,13 +122,27 @@ module.exports = async () => {
 
       // reading time
       const readingTime = average(itemRatings.map(r => r.readingTime))
+      const readingTimePerCorrectCloze = average(
+        itemRatings
+          .filter(rating => rating.cloze.length > 0)
+          .map(r => {
+            const clozeCorrectness =
+              r.cloze.filter(
+                answer => answer.isCorrect || answer.entered === 'idk'
+              ).length / r.cloze.length
+            if (clozeCorrectness === 0) {
+              return r.readingTime * (r.cloze.length + 1)
+            }
+            return r.readingTime / clozeCorrectness
+          })
+      )
       sheet[`${readingTimeColumn}${row}`] = {
         t: 'n',
         v: readingTime,
       }
       sheet[`${readingTimePerWordColumn}${row}`] = {
         t: 'n',
-        v: readingTime / item.text.split(' ').length,
+        v: readingTimePerCorrectCloze,
       }
 
       // cloze correctness
