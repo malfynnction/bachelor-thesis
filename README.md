@@ -87,11 +87,11 @@ The website is deployed automatically via github actions on every push to the `m
   | sentences | Array of Strings | (only for paragraphs) The individual sentences of the paragraph, separated by Natural Language Processing |
   | enclosingParagraph | String | (only for sentences) The complete paragraph that the sentence was taken from |
 - sessions: The texts will be grouped into "sessions" and will always appear grouped together according to the sessions stored in this database.
-  - It is recommended to add a training session, so that participants can get familiar with the website before submitting actual ratings. For a training session, you can add a session with the ID "Training" to your DB. If no training session is declared in your database, a random session will be selected when a user requests to do a training session.
-    | FIELD NAME | TYPE | DESCRIPTION |
+  | FIELD NAME | TYPE | DESCRIPTION |
     |------------|------------------|--------------------------------------------|
     | \_id | String | |
     | items | Array of Strings | The \_id values of the items in the session |
+  - It is recommended to add a training session, so that participants can get familiar with the website before submitting actual ratings. For a training session, you can add a session with the ID "Training" to your DB. If no training session is declared in your database, a random session will be selected when a user requests to do a training session.
 - feedback: all feedback from the participants will be saved here
   | FIELD NAME | TYPE | DESCRIPTION |
   |--------------------------------|---------|-------------------------------------------------------|
