@@ -7,7 +7,7 @@ import math
 import yaml
 
 # load config
-with open('website/config.yml') as f:
+with open('config.yml') as f:
     config = yaml.load(f, Loader=yaml.FullLoader)
 
     INPUT_FILE = config["input_file"]

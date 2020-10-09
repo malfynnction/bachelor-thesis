@@ -1,10 +1,7 @@
-# source file format (for now, only "excel" is possible)
-import_texts_from: excel # TODO: alternatives?
-
 # path to the source file
 input_file: ./data.xlsx
 
-# name of the respective excel sheets within the source file (TODO: what if not set? What if other format?)
+# name of the respective excel sheets within the source file
 paragraph_sheet: paragraphs
 simple_language_sheet: simple_language
 
@@ -15,12 +12,11 @@ text_column: B
 # target directory for the processed texts
 output_dir: ./data/texts
 
-# TODO: wording
 # should every sentence in each text also be treated as a text itself?
 # possible values:
 # "all": all sentences in the paragraphs will be used in addition to the paragraphs
 # "none": only the paragraphs will be used
-# a number: a random sample of the size of the given number will be drawn from all sentences in the paragraphs
+# a number: a random sample of the given size will be drawn from all sentences in the paragraphs
 include_sentences: 27
 
 # amount of deleted words & alternative suggestions for the cloze test
@@ -30,3 +26,6 @@ alternative_suggestions_per_cloze: 4
 # amount of items in a paragraph & sentence (only if include_all_sentences is True) session
 paragraph_session_length: 2
 sentence_session_length: 10
+
+# how to access the server via ssh
+ssh_access: adminuser@text-stat.qu.tu-berlin.de
