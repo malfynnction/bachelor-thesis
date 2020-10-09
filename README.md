@@ -136,7 +136,7 @@ The database is backed up automatically once a day via a cron job. The backups a
 
 ## Pre- & Postprocessing
 
-The texts can be generated automatically by providing them in _TODO_ format. You can then run `python website/process_texts.py`, which will create two files in `data/texts`. You then need to upload this folder to your server (e.g. via `scp data/texts/* [YOUR_SERVER_HERE]:texts/`) and add them to your DB by running `production/bin/upload-texts.sh` on your server.
+The texts can be generated automatically by providing them in an excel file (see `config.yml` for configuration of file path and sheet & column names). You can then run `python website/process_texts.py`, which will create two files in `data/texts`. You then need to upload this folder to your server (e.g. via `scp data/texts/* [YOUR_SERVER_HERE]:texts/`) and add them to your DB by running `production/bin/upload-texts.sh` on your server.
 
 After the study the results can be downloaded and summarized by running `node data/index.js`
 
