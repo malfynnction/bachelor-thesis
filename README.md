@@ -44,7 +44,10 @@ The website is deployed automatically via github actions on every push to the `m
 
 [CouchDB](https://couchdb.apache.org/) is used for the databases for this project. There are five databases:
 
-- participants: All the demographic data on the participants will be stored here
+<details>
+  <summary>participants</summary>
+  All the demographic data on the participants will be stored here:
+  
   | FIELD NAME | TYPE | DESCRIPTION |
   |--------------------------|------------------|-------------------------------------------------------------------------------|
   | \_id | String | |
@@ -57,7 +60,12 @@ The website is deployed automatically via github actions on every push to the `m
   | listeningExercise | Object: | |
   | ↳ score | Number | Overall score for the listening exercises |
   | ↳ answers | Object | Individual checked answers for each question |
-- ratings: The answers the participants gave in the study will be stored here
+</details>
+
+<details>
+  <summary>ratings</summary>
+  The answers the participants gave in the study will be stored here:
+  
   | FIELD NAME | TYPE | DESCRIPTION |
   |------------------------|-------------------|-----------------------------------------------------------------------------------------------------|
   | \_id | String | |
@@ -74,7 +82,12 @@ The website is deployed automatically via github actions on every push to the `m
   | ↳ original | String | The original word that was deleted |
   | ↳ entered | String | The word that the participant chose |
   | ↳ isCorrect | Boolean | Indicates whether the answer was correct |
-- items: This is the main database for all the texts you want to have rated
+</details>
+
+<details>
+  <summary>items</summary>
+  This is the main database for all the texts you want to have rated:
+  
   | FIELD NAME | TYPE | DESCRIPTION |
   |--------------------------|-------------------|-----------------------------------------------------------------------------------------------------------|
   | \_id | String | |
@@ -86,13 +99,24 @@ The website is deployed automatically via github actions on every push to the `m
   | ↳ alternativeSuggestions | Array of Strings | Alternative answers in the Multiple Choice test |
   | sentences | Array of Strings | (only for paragraphs) The individual sentences of the paragraph, separated by Natural Language Processing |
   | enclosingParagraph | String | (only for sentences) The complete paragraph that the sentence was taken from |
-- sessions: The texts will be grouped into "sessions" and will always appear grouped together according to the sessions stored in this database.
+</details>
+  
+<details>
+  <summary>sessions</summary>
+  The texts will be grouped into "sessions" and will always appear grouped together according to the sessions stored in this database:
+  
   | FIELD NAME | TYPE | DESCRIPTION |
-    |------------|------------------|--------------------------------------------|
-    | \_id | String | |
-    | items | Array of Strings | The \_id values of the items in the session |
-  - It is recommended to add a training session, so that participants can get familiar with the website before submitting actual ratings. For a training session, you can add a session with the ID "Training" to your DB. If no training session is declared in your database, a random session will be selected when a user requests to do a training session.
-- feedback: all feedback from the participants will be saved here
+  |------------|------------------|--------------------------------------------|
+  | \_id | String | |
+  | items | Array of Strings | The \_id values of the items in the session |
+  
+  It is recommended to add a training session, so that participants can get familiar with the website before submitting actual ratings. For a training session, you can add a session with the ID "Training" to your DB. If no training session is declared in your database, a random session will be selected when a user requests to do a training session.
+</details>
+  
+<details>
+  <summary>feedback</summary>
+  All feedback from the participants will be saved here:
+
   | FIELD NAME | TYPE | DESCRIPTION |
   |--------------------------------|---------|-------------------------------------------------------|
   | \_id | String | |
@@ -104,6 +128,7 @@ The website is deployed automatically via github actions on every push to the `m
   | unableToAnswerCorrectly | Boolean | |
   | unableToAnswerCorrectlyDetails | String | |
   | notes | String | Anything else the user wanted to say |
+</details>
 
 The database is backed up automatically once a day via a cron job. The backups are stored on the server in `db-backups/`.
 
