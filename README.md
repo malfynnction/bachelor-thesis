@@ -45,11 +45,65 @@ The website is deployed automatically via github actions on every push to the `m
 [CouchDB](https://couchdb.apache.org/) is used for the databases for this project. There are five databases:
 
 - participants: All the demographic data on the participants will be stored here
+  | FIELD NAME | TYPE | DESCRIPTION |
+  |--------------------------|------------------|-------------------------------------------------------------------------------|
+  | \_id | String | |
+  | age | String | One of “18-26”, “27-32”, “33-40”, “41-55”, “56+”, and “Prefer not to say” |
+  | nativeLang | String | The native language(s) of the participant |
+  | gender | String | The gender(s) of the participant |
+  | gerLevel | String | The participant's language proficiency<br>according to the CEFR |
+  | completedSessions | Array of Strings | The \_id values of the sessions the participant<br>has already rated |
+  | completedTrainingSession | Boolean | Indicates whether the participant has<br>already completed a training session |
+  | listeningExercise | Object: | |
+  | ↳ score | Number | Overall score for the listening exercises |
+  | ↳ answers | Object | Individual checked answers for each question |
 - ratings: The answers the participants gave in the study will be stored here
+  | FIELD NAME | TYPE | DESCRIPTION |
+  |------------------------|-------------------|-----------------------------------------------------------------------------------------------------|
+  | \_id | String | |
+  | itemId | String | The \_id of the item that was rated |
+  | participantId | String | The \_id of the participant who submitted the rating |
+  | readingTime | Number | The amount of time (in ms) it took the participant<br>to read the paragraph<br>(is 0 for sentences) |
+  | questions | Object: | |
+  | ↳ understandability | Number | 1 (easiest) - 7 (hardest) |
+  | ↳ complexity | Number | 1 (easiest) - 7 (hardest) |
+  | ↳ readability | Number | 1 (easiest) - 7 (hardest) |
+  | ↳ hardestSentence | Number | Index of the hardest sentence in the paragraph |
+  | ↳ paragraphNecessary | Number | 1 (not necessary) - 7 (completely necessary) |
+  | questions | Array of Objects: | |
+  | ↳ original | String | The original word that was deleted |
+  | ↳ entered | String | The word that the participant chose |
+  | ↳ isCorrect | Boolean | Indicates whether the answer was correct |
 - items: This is the main database for all the texts you want to have rated
+  | FIELD NAME | TYPE | DESCRIPTION |
+  |--------------------------|-------------------|-----------------------------------------------------------------------------------------------------------|
+  | \_id | String | |
+  | type | String | Either "sentence" or "paragraph" |
+  | text | String | The text that will be rated |
+  | clozes | Array of Objects: | The words that should be deleted for the cloze test: |
+  | ↳ wordIndex | Number | The index of the word within the text |
+  | ↳ original | String | The word that should be deleted |
+  | ↳ alternativeSuggestions | Array of Strings | Alternative answers in the Multiple Choice test |
+  | sentences | Array of Strings | (only for paragraphs) The individual sentences of the paragraph, separated by Natural Language Processing |
+  | enclosingParagraph | String | (only for sentences) The complete paragraph that the sentence was taken from |
 - sessions: The texts will be grouped into "sessions" and will always appear grouped together according to the sessions stored in this database.
   - It is recommended to add a training session, so that participants can get familiar with the website before submitting actual ratings. For a training session, you can add a session with the ID "Training" to your DB. If no training session is declared in your database, a random session will be selected when a user requests to do a training session.
+    | FIELD NAME | TYPE | DESCRIPTION |
+    |------------|------------------|--------------------------------------------|
+    | \_id | String | |
+    | items | Array of Strings | The \_id values of the items in the session |
 - feedback: all feedback from the participants will be saved here
+  | FIELD NAME | TYPE | DESCRIPTION |
+  |--------------------------------|---------|-------------------------------------------------------|
+  | \_id | String | |
+  | participantId | String | The \_id of the participant who submitted the feedback |
+  | hadTechnicalProblems | Boolean | |
+  | technicalProblemsDetails | String | |
+  | didUnderstandInstructions | Number | |
+  | unclearInstructions | String | |
+  | unableToAnswerCorrectly | Boolean | |
+  | unableToAnswerCorrectlyDetails | String | |
+  | notes | String | Anything else the user wanted to say |
 
 The database is backed up automatically once a day via a cron job. The backups are stored on the server in `db-backups/`.
 
