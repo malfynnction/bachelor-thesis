@@ -5,7 +5,7 @@ input_file: ./data.xlsx
 paragraph_sheet: paragraphs
 simple_language_sheet: simple_language
 
-# the columns with the ids and texts (the first row will be interpreted as a header row and ignored)
+# the columns with the ids and texts (the first row is interpreted as a header row and will be ignored)
 id_column: A
 text_column: B
 

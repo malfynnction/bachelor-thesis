@@ -68,13 +68,52 @@ const getNaderiSentences = () => {
 module.exports = async () => {
   const { ratings } = await extractUsableResults()
   const groupedRatings = summarize.getGroupedRatings(ratings)
+  const itemIds = Object.keys(groupedRatings)
+
   const naderiSentences = getNaderiSentences()
   const paragraphSentenceMapping = {}
 
   const workbook = xlsx.readFile(filePath)
-  const sheet = workbook.Sheets[ratingsSheetName]
+  let sheet = workbook.Sheets[ratingsSheetName]
 
-  const itemIds = Object.keys(groupedRatings)
+  if (!sheet) {
+    const newSheet = xlsx.utils.aoa_to_sheet([
+      [
+        'paragraph ID',
+        '# votes',
+        'Readability',
+        '',
+        'Complexity',
+        '',
+        '',
+        '',
+        'Understandability',
+        '',
+        '',
+        'Sentence Average (Naderi19)',
+      ],
+      [
+        '',
+        '',
+        'MOS',
+        'Std',
+        'MOS',
+        'Std',
+        'Avg. Reading Time',
+        'Avg. Reading Time per correct cloze',
+        'MOS',
+        'Std',
+        'Cloze correctness',
+        'Complexity',
+        'Understandability',
+        'Lexical Difficulty',
+      ],
+    ])
+    xlsx.utils.book_append_sheet(workbook, newSheet, ratingsSheetName)
+    sheet = workbook.Sheets[ratingsSheetName]
+  }
+
+  sheet['!ref'] = `A1:${sentenceLexicalDifficultyColumn}${itemIds.length + 2}`
 
   itemIds
     .filter(id => !id.startsWith('sent_')) // sentences were only control items, ignore them
