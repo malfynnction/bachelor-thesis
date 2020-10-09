@@ -30,6 +30,7 @@ const footnote = /\[\d+\]/g
 
 const getNaderiSentences = () => {
   const naderiSheet = xlsx.readFile(naderiPath).Sheets[naderiSheetName]
+  const naderiIdColumn = 'A'
   const naderiSentenceColumn = 'B'
   const naderiComplexityColumn = 'F'
   const naderiUnderstandabilityColumn = 'I'
@@ -40,6 +41,7 @@ const getNaderiSentences = () => {
     .reduce((collection, cell) => {
       const row = cell.slice(1)
 
+      const id = naderiSheet[`${naderiIdColumn}${row}`].v
       // adjust minor inconsistencies
       const sentence = naderiSheet[`${naderiSentenceColumn}${row}`].v
         .replace(footnote, '')
@@ -53,6 +55,7 @@ const getNaderiSentences = () => {
       const lexicalDifficulty =
         naderiSheet[`${naderiLexicalDifficultyColumn}${row}`].v
       const obj = {
+        id,
         sentence,
         complexity,
         understandability,
@@ -66,6 +69,7 @@ module.exports = async () => {
   const { ratings } = await extractUsableResults()
   const groupedRatings = summarize.getGroupedRatings(ratings)
   const naderiSentences = getNaderiSentences()
+  const paragraphSentenceMapping = {}
 
   const workbook = xlsx.readFile(filePath)
   const sheet = workbook.Sheets[ratingsSheetName]
@@ -180,7 +184,22 @@ module.exports = async () => {
         t: 'n',
         v: average(naderiResult.map(s => s.lexicalDifficulty)),
       }
+
+      // paragraph <-> sentence mapping
+      paragraphSentenceMapping[itemId] = {
+        complexity: average(complexityScores),
+        understandability: average(understandabilityScores),
+        sentenceIds: naderiResult.map(sentence => sentence.id),
+        sentenceComplexity: naderiResult.map(sentence => sentence.complexity),
+        sentenceUnderstandability: naderiResult.map(
+          sentence => sentence.understandability
+        ),
+      }
     })
 
+  fs.writeFileSync(
+    'results/paragraph-sentence-mapping.json',
+    JSON.stringify(paragraphSentenceMapping)
+  )
   xlsx.writeFile(workbook, filePath)
 }
