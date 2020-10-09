@@ -1,27 +1,13 @@
 const extractRatingsForParticipant = require('./extract-ratings-for-participant')
 const fs = require('fs')
 const { exec } = require('child_process')
+const scammingIDs = require('../website/frontend/scamming-ids.json')
 
 const resultsPath = './results'
 const serverUrl = 'bachelor' // TODO: configurable
 
 const trainingItems = ['Training_simple', 'Training_average', 'Training_hard']
-const scammingIDs = [
-  '9',
-  '10',
-  '11',
-  '13',
-  '14',
-  '21',
-  '24',
-  '25',
-  '29',
-  '41',
-  '43',
-  '50',
-  '52',
-  '54',
-]
+
 const emptyIDs = [
   '3',
   '6',
