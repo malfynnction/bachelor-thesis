@@ -3,13 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "docker-build": "docker build -t bachelor-website:dev website",
     "start": "cd frontend && npm run start",
     "build": "cd frontend && npm run build",
     "test": "jest --coverage",
     "lint": "eslint '{website,data-processing}/**/*.js'",
     "prettier": "prettier --write '**/*.{js,json}'",
-    "process-texts": "source venv/bin/activate && python website/process_texts.py",
     "postinstall": "cd website/frontend && npm install && cd ../backend && npm install"
   },
   "author": "",
@@ -19,6 +17,7 @@
     "@testing-library/react": "^11.0.2",
     "@testing-library/user-event": "^12.1.4",
     "calculate-correlation": "^1.0.2",
+    "js-yaml": "^3.14.0",
     "lodash.clonedeep": "^4.5.0",
     "lodash.samplesize": "^4.2.0",
     "node-html-parser": "^1.2.20",

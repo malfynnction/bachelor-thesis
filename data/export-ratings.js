@@ -16,17 +16,21 @@ const readabilityStdColumn = 'D'
 const complexityColumn = 'E'
 const complexityStdColumn = 'F'
 const readingTimeColumn = 'G'
-const understandabilityColumn = 'H'
-const understandabilityStdColumn = 'I'
-const clozeResultColumn = 'J'
-const sentenceComplexityColumn = 'K'
-const sentenceUnderstandabilityColumn = 'L'
-const sentenceLexicalDifficultyColumn = 'M'
+const readingTimePerWordColumn = 'H'
+const understandabilityColumn = 'I'
+const understandabilityStdColumn = 'J'
+const clozeResultColumn = 'K'
+const sentenceComplexityColumn = 'L'
+const sentenceUnderstandabilityColumn = 'M'
+const sentenceLexicalDifficultyColumn = 'N'
 
 const items = JSON.parse(fs.readFileSync('texts/items.json'))
 
+const footnote = /\[\d+\]/g
+
 const getNaderiSentences = () => {
   const naderiSheet = xlsx.readFile(naderiPath).Sheets[naderiSheetName]
+  const naderiIdColumn = 'A'
   const naderiSentenceColumn = 'B'
   const naderiComplexityColumn = 'F'
   const naderiUnderstandabilityColumn = 'I'
@@ -37,13 +41,21 @@ const getNaderiSentences = () => {
     .reduce((collection, cell) => {
       const row = cell.slice(1)
 
+      const id = naderiSheet[`${naderiIdColumn}${row}`].v
+      // adjust minor inconsistencies
       const sentence = naderiSheet[`${naderiSentenceColumn}${row}`].v
+        .replace(footnote, '')
+        .replace('v Chr', 'v. Chr.')
+        .replace('P Ticinius', 'P. Ticinius')
+        .replace(' 2 ', ' 2. ')
+        .replace(' zB ', ' z. B. ')
       const complexity = naderiSheet[`${naderiComplexityColumn}${row}`].v
       const understandability =
         naderiSheet[`${naderiUnderstandabilityColumn}${row}`].v
       const lexicalDifficulty =
         naderiSheet[`${naderiLexicalDifficultyColumn}${row}`].v
       const obj = {
+        id,
         sentence,
         complexity,
         understandability,
@@ -56,12 +68,52 @@ const getNaderiSentences = () => {
 module.exports = async () => {
   const { ratings } = await extractUsableResults()
   const groupedRatings = summarize.getGroupedRatings(ratings)
+  const itemIds = Object.keys(groupedRatings)
+
   const naderiSentences = getNaderiSentences()
+  const paragraphSentenceMapping = {}
 
   const workbook = xlsx.readFile(filePath)
-  const sheet = workbook.Sheets[ratingsSheetName]
+  let sheet = workbook.Sheets[ratingsSheetName]
 
-  const itemIds = Object.keys(groupedRatings)
+  if (!sheet) {
+    const newSheet = xlsx.utils.aoa_to_sheet([
+      [
+        'paragraph ID',
+        '# votes',
+        'Readability',
+        '',
+        'Complexity',
+        '',
+        '',
+        '',
+        'Understandability',
+        '',
+        '',
+        'Sentence Average (Naderi19)',
+      ],
+      [
+        '',
+        '',
+        'MOS',
+        'Std',
+        'MOS',
+        'Std',
+        'Avg. Reading Time',
+        'Avg. Reading Time per correct cloze',
+        'MOS',
+        'Std',
+        'Cloze correctness',
+        'Complexity',
+        'Understandability',
+        'Lexical Difficulty',
+      ],
+    ])
+    xlsx.utils.book_append_sheet(workbook, newSheet, ratingsSheetName)
+    sheet = workbook.Sheets[ratingsSheetName]
+  }
+
+  sheet['!ref'] = `A1:${sentenceLexicalDifficultyColumn}${itemIds.length + 2}`
 
   itemIds
     .filter(id => !id.startsWith('sent_')) // sentences were only control items, ignore them
@@ -112,9 +164,28 @@ module.exports = async () => {
       }
 
       // reading time
+      const readingTime = average(itemRatings.map(r => r.readingTime))
+      const readingTimePerCorrectCloze = average(
+        itemRatings
+          .filter(rating => rating.cloze.length > 0)
+          .map(r => {
+            const clozeCorrectness =
+              r.cloze.filter(
+                answer => answer.isCorrect || answer.entered === 'idk'
+              ).length / r.cloze.length
+            if (clozeCorrectness === 0) {
+              return r.readingTime * (r.cloze.length + 1)
+            }
+            return r.readingTime / clozeCorrectness
+          })
+      )
       sheet[`${readingTimeColumn}${row}`] = {
         t: 'n',
-        v: average(itemRatings.map(r => r.readingTime)),
+        v: readingTime,
+      }
+      sheet[`${readingTimePerWordColumn}${row}`] = {
+        t: 'n',
+        v: readingTimePerCorrectCloze,
       }
 
       // cloze correctness
@@ -135,10 +206,11 @@ module.exports = async () => {
 
       // sentence averages
       const naderiResult = item.sentences.flatMap(sentence =>
-        naderiSentences.filter(
-          naderiSentence => naderiSentence.sentence === sentence
+        naderiSentences.filter(naderiSentence =>
+          naderiSentence.sentence.includes(sentence)
         )
       )
+
       sheet[`${sentenceComplexityColumn}${row}`] = {
         t: 'n',
         v: average(naderiResult.map(s => s.complexity)),
@@ -151,7 +223,22 @@ module.exports = async () => {
         t: 'n',
         v: average(naderiResult.map(s => s.lexicalDifficulty)),
       }
+
+      // paragraph <-> sentence mapping
+      paragraphSentenceMapping[itemId] = {
+        complexity: average(complexityScores),
+        understandability: average(understandabilityScores),
+        sentenceIds: naderiResult.map(sentence => sentence.id),
+        sentenceComplexity: naderiResult.map(sentence => sentence.complexity),
+        sentenceUnderstandability: naderiResult.map(
+          sentence => sentence.understandability
+        ),
+      }
     })
 
+  fs.writeFileSync(
+    'results/paragraph-sentence-mapping.json',
+    JSON.stringify(paragraphSentenceMapping)
+  )
   xlsx.writeFile(workbook, filePath)
 }
