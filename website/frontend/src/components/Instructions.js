@@ -122,7 +122,7 @@ const Instructions = props => {
           </a>{' '}
           after completing at least 10 surveys, including your participant ID
           (can be found in the upper right corner after signing up) and the
-          confirmation codes of all the surverys you completed (will be shown at
+          confirmation codes of all the surveys you completed (will be shown at
           the end of each survey).
         </p>
         <p>
