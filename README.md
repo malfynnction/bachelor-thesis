@@ -16,7 +16,7 @@
 
 - Fork the repository & clone it to your computer
 - `npm install`
-- `pip install -r requirements.txt`
+- `pip install -r requirements.txt && python -m spacy download de_core_news_sm`
 - Adjust the config in `website/frontend/src/config.js` and `config.yml`
 - Add necessary [GitHub Secrets](https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets#creating-encrypted-secrets-for-a-repository) to your repository for automatic deployment:
   - `CONTACT_MAIL`: Mail address for participants to contact you
