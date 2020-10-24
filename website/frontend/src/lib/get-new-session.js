@@ -1,6 +1,6 @@
 import shuffle from 'lodash.shuffle'
 import createStore from './create-store'
-import scammingParticipantIds from '../../scamming-ids.json'
+import scammingParticipantIds from '../scamming-ids.json'
 
 const TRAINING_ID = 'Training'
 
