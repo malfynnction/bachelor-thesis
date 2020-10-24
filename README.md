@@ -117,17 +117,18 @@ The website is deployed automatically via github actions on every push to the `m
   <summary>feedback</summary>
   All feedback from the participants will be saved here:
 
-  | FIELD NAME | TYPE | DESCRIPTION |
-  |--------------------------------|---------|-------------------------------------------------------|
-  | \_id | String | |
-  | participantId | String | The \_id of the participant who submitted the feedback |
-  | hadTechnicalProblems | Boolean | |
-  | technicalProblemsDetails | String | |
-  | didUnderstandInstructions | Number | |
-  | unclearInstructions | String | |
-  | unableToAnswerCorrectly | Boolean | |
-  | unableToAnswerCorrectlyDetails | String | |
-  | notes | String | Anything else the user wanted to say |
+| FIELD NAME                     | TYPE    | DESCRIPTION                                            |
+| ------------------------------ | ------- | ------------------------------------------------------ |
+| \_id                           | String  |                                                        |
+| participantId                  | String  | The \_id of the participant who submitted the feedback |
+| hadTechnicalProblems           | Boolean |                                                        |
+| technicalProblemsDetails       | String  |                                                        |
+| didUnderstandInstructions      | Number  | 1 ("Always") - 7 ("Never")                             |
+| unclearInstructions            | String  | Details on which instructions were unclear and why     |
+| unableToAnswerCorrectly        | Boolean |                                                        |
+| unableToAnswerCorrectlyDetails | String  |                                                        |
+| notes                          | String  | Anything else the user wanted to say                   |
+
 </details>
 
 The database is backed up automatically once a day via a cron job. The backups are stored on the server in `db-backups/`.
@@ -136,7 +137,8 @@ The database is backed up automatically once a day via a cron job. The backups a
 
 ## Pre- & Postprocessing
 
-The texts can be generated automatically by providing them in an excel file (see `config.yml` for configuration of file path and sheet & column names). You can then run `python website/process_texts.py`, which will create two files in `data/texts`. You then need to upload this folder to your server (e.g. via `scp data/texts/* [YOUR_SERVER_HERE]:texts/`) and add them to your DB by running `production/bin/upload-texts.sh` on your server.
+The texts can be generated automatically by providing IDs and texts in an excel file (see `config.yml` for configuration of file path and sheet & column names).
+You can then run `python website/process_texts.py`, which will create two files in `data/texts`. You then need to upload this folder to your server (e.g. via `scp data/texts/* [YOUR_SERVER_HERE]:texts/`) and add them to your DB by running `production/bin/upload-texts.sh` on your server.
 
 After the study the results can be downloaded and summarized by running `node data/index.js`
 
