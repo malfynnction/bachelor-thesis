@@ -138,9 +138,9 @@ The database is backed up automatically once a day via a cron job. The backups a
 ## Pre- & Postprocessing
 
 The texts can be generated automatically by providing IDs and texts in an excel file (see `config.yml` for configuration of file path and sheet & column names).
-You can then run `python website/process_texts.py`, which will create two files in `data/texts`. You then need to upload this folder to your server (e.g. via `scp data/texts/* [YOUR_SERVER_HERE]:texts/`) and add them to your DB by running `production/bin/upload-texts.sh` on your server.
+You can then run `python website/process_texts.py`, which will create two files in `data/texts/`. You then need to upload this folder to your server (e.g. via `scp data/texts/* [YOUR_SERVER_HERE]:texts/`) and add them to your DB by running `production/bin/upload-texts.sh` on your server.
 
-After the study, the results can be downloaded by running `cd data && node download-raw-results.js`. You can summarize the results and do some analysis by running `cd data && node index.js`, but since that depends heavily on your use case and goals of your study, you will probably have to change a lot of the code.
+After the study, the results can be downloaded into the `data/results/` directory by running `cd data && node download-raw-results.js`. You can summarize the results and do some analysis by running `cd data && node index.js`, but since that depends heavily on your use case and goals of your study, you will probably have to change a lot of the code.
 
 ## Participant Sessions
 
