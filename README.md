@@ -16,7 +16,7 @@
 
 - Fork the repository & clone it to your computer
 - `npm install`
-- `pip install -r requirements.txt`
+- `pip install -r requirements.txt && python -m spacy download de_core_news_sm`
 - Adjust the config in `website/frontend/src/config.js` and `config.yml`
 - Add necessary [GitHub Secrets](https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets#creating-encrypted-secrets-for-a-repository) to your repository for automatic deployment:
   - `CONTACT_MAIL`: Mail address for participants to contact you
@@ -117,17 +117,18 @@ The website is deployed automatically via github actions on every push to the `m
   <summary>feedback</summary>
   All feedback from the participants will be saved here:
 
-  | FIELD NAME | TYPE | DESCRIPTION |
-  |--------------------------------|---------|-------------------------------------------------------|
-  | \_id | String | |
-  | participantId | String | The \_id of the participant who submitted the feedback |
-  | hadTechnicalProblems | Boolean | |
-  | technicalProblemsDetails | String | |
-  | didUnderstandInstructions | Number | |
-  | unclearInstructions | String | |
-  | unableToAnswerCorrectly | Boolean | |
-  | unableToAnswerCorrectlyDetails | String | |
-  | notes | String | Anything else the user wanted to say |
+| FIELD NAME                     | TYPE    | DESCRIPTION                                            |
+| ------------------------------ | ------- | ------------------------------------------------------ |
+| \_id                           | String  |                                                        |
+| participantId                  | String  | The \_id of the participant who submitted the feedback |
+| hadTechnicalProblems           | Boolean |                                                        |
+| technicalProblemsDetails       | String  |                                                        |
+| didUnderstandInstructions      | Number  | 1 ("Always") - 7 ("Never")                             |
+| unclearInstructions            | String  | Details on which instructions were unclear and why     |
+| unableToAnswerCorrectly        | Boolean |                                                        |
+| unableToAnswerCorrectlyDetails | String  |                                                        |
+| notes                          | String  | Anything else the user wanted to say                   |
+
 </details>
 
 The database is backed up automatically once a day via a cron job. The backups are stored on the server in `db-backups/`.
@@ -136,13 +137,14 @@ The database is backed up automatically once a day via a cron job. The backups a
 
 ## Pre- & Postprocessing
 
-The texts can be generated automatically by providing them in _TODO_ format. You can then run `python website/process_texts.py`, which will create two files in `data/texts`. You then need to upload this folder to your server (e.g. via `scp data/texts/* [YOUR_SERVER_HERE]:texts/`) and add them to your DB by running `production/bin/upload-texts.sh` on your server.
+The texts can be generated automatically by providing IDs and texts in an excel file (see `config.yml` for configuration of file path and sheet & column names).
+You can then run `python website/process_texts.py`, which will create two files in `data/texts`. You then need to upload this folder to your server (e.g. via `scp data/texts/* [YOUR_SERVER_HERE]:texts/`) and add them to your DB by running `production/bin/upload-texts.sh` on your server.
 
-After the study the results can be downloaded and summarized by running `node data/index.js`
+After the study, the results can be downloaded by running `cd data && node download-raw-results.js`. You can summarize the results and do some analysis by running `cd data && node index.js`, but since that depends heavily on your use case and goals of your study, you will probably have to change a lot of the code.
 
 ## Participant Sessions
 
 If you plan on doing in-person sessions, you should make sure nothing is saved to the localStorage, to avoid data being exposed to participants sharing the same computer. This can be done by changing https://github.com/malfynnction/bachelor-thesis/blob/a75ed2ec0f8be9c2308a1aabd95cec1901236e44/website/frontend/src/lib/create-store.js#L2 to `const store = sessionStorage`.
 
-For every submitted survey, a confirmation token is generated and given to the participants. They will use this token to prove that they completed the survey. You can check the validity of given tokens by inserting the participant ID and token in `data/check-legitimacy.js` and running that script with `node data/check-legitimacy.js`. This will not only check whether the tokens are valid, but also download all ratings that the participant has submitted, so you can check if their answers seem legitimate.
-If you identify a participant as a scammer, you can paste their ID into `website/frontend/scamming-ids.json` so that it will be ignored for all further calculations and analysis.
+For every submitted survey, a confirmation token is generated and given to the participants. They will use this token to prove that they completed the survey. You can check the validity of given tokens by inserting the participant ID and token in `data/check-legitimacy.js` and running that script with `cd data && node check-legitimacy.js`. This will not only check whether the tokens are valid, but also download all ratings that the participant has submitted, so you can check if their answers seem legitimate.
+If you identify a participant as a scammer, you can paste their ID into `website/frontend/src/scamming-ids.json` so that it will be ignored for all further calculations and analysis.

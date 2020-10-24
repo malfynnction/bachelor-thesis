@@ -2,7 +2,7 @@ const extractRatingsForParticipant = require('./extract-ratings-for-participant'
 const fs = require('fs')
 const { exec } = require('child_process')
 const yaml = require('js-yaml')
-const scammingIDs = require('../website/frontend/scamming-ids.json')
+const scammingIDs = require('../website/frontend/src/scamming-ids.json')
 
 const config = yaml.safeLoadAll(fs.readFileSync('../config.yml', 'utf-8'))[0]
 
@@ -110,5 +110,3 @@ module.exports = {
   getParticipantStats,
   getOrDownload,
 }
-
-getParticipantStats()

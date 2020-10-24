@@ -23,7 +23,7 @@ with open('config.yml') as f:
     SENTENCE_SESSION_LENGTH = config["sentence_session_length"]
     SIMPLE_LANGUAGE_SHEET_NAME = config["simple_language_sheet"]
 
-NLP = spacy.load('de')
+NLP = spacy.load('de_core_news_sm')
 
 def custom_sentence_boundaries(doc):
     not_sentence_boundary = [":", "°", ";", "±"]
@@ -100,10 +100,7 @@ def main():
     sentence_ids = []
     simple_sentence_ids = []
 
-    all_texts = texts + simple_texts
-    first_simple_text = int(simple_texts[0]['id'])
-
-    for text in all_texts:
+    for text in texts:
         paragraph = text['paragraph']
         sentences = separate_sentences(paragraph)
         parts_of_speech = tag_parts_of_speech(paragraph)
@@ -113,17 +110,16 @@ def main():
             continue
         paragraph_id = int(text['id'])
 
-        if paragraph_id < first_simple_text:
-            paragraph_document = {
-                "_id": str(paragraph_id),
-                "type": "paragraph",
-                "text": paragraph.text,
-                "sentences": sentences,
-                "clozes": get_clozes(remove_punctuation(parts_of_speech))
-            }
+        paragraph_document = {
+            "_id": str(paragraph_id),
+            "type": "paragraph",
+            "text": paragraph.text,
+            "sentences": sentences,
+            "clozes": get_clozes(remove_punctuation(parts_of_speech))
+        }
 
-            item_documents.append(paragraph_document)
-            paragraph_ids.append(paragraph_id)
+        item_documents.append(paragraph_document)
+        paragraph_ids.append(paragraph_id)
 
         if INCLUDE_SENTENCES != "none":
             # add an itemDoc for each sentence
@@ -139,10 +135,29 @@ def main():
                     "clozes": get_clozes(remove_punctuation(sentence_parts_of_speech), alternative_pool=parts_of_speech)
                 }
                 item_documents.append(sentence_document)
-                if paragraph_id < first_simple_text:
-                    sentence_ids.append(sentence_id)
-                else:
-                    simple_sentence_ids.append(sentence_id)
+                sentence_ids.append(sentence_id)
+
+    # TODO: this can probably be refactored
+    if INCLUDE_SENTENCES != "none":
+        for text in simple_texts:
+            paragraph = text['paragraph']
+            sentences = separate_sentences(paragraph)
+            parts_of_speech = tag_parts_of_speech(paragraph)
+
+            # add an itemDoc for each simple sentence
+            for sentence_index, sentence in enumerate(sentences):
+                sentence_parts_of_speech = tag_parts_of_speech(NLP(sentence))
+                sentence_id = "simple_sent_{}-{}".format(text['id'], sentence_index + 1)
+
+                sentence_document = {
+                    "_id": sentence_id,
+                    "type": "sentence",
+                    "text": sentence,
+                    "enclosingParagraph": paragraph.text,
+                    "clozes": get_clozes(remove_punctuation(sentence_parts_of_speech), alternative_pool=parts_of_speech)
+                }
+                item_documents.append(sentence_document)
+                simple_sentence_ids.append(sentence_id)
 
     paragraph_sessions = get_sessions(paragraph_ids, PARAGRAPH_SESSION_LENGTH)
 
