@@ -160,5 +160,3 @@ module.exports = {
   getParticipantStats,
   getOrDownload,
 }
-
-getParticipantStats()

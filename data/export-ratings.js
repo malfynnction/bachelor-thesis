@@ -3,8 +3,11 @@ const fs = require('fs')
 const summarize = require('./summarize')
 const { extractUsableResults } = require('./lib')
 const { average, stdDev } = require('./helpers')
+const yaml = require('js-yaml')
 
-const filePath = '../data.xlsx'
+const config = yaml.safeLoadAll(fs.readFileSync('../config.yml', 'utf-8'))[0]
+
+const filePath = config.input_file
 const ratingsSheetName = 'results'
 const naderiPath = '../Full-Dataset-Naderi19.xlsx'
 const naderiSheetName = 'Final_Ratings_Table'
