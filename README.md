@@ -9,7 +9,7 @@
 
 ### Additional Development Requirements
 
-- npm
+- Node.js (version 12.13)
 - python
 
 ## Initial setup
