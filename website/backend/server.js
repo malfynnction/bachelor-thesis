@@ -10,6 +10,15 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(bodyParser.raw())
 
+const shutdown = () => {
+  console.log('Shutting down backend server...')
+  server.close(() => {
+    console.log('Backend server shut down.')
+  })
+  //eslint-disable-next-line  no-process-exit
+  process.exit(0)
+}
+
 if (studyIsOpen) {
   const [participants, ratings, items, sessions, feedback] = [
     'participants',
@@ -29,15 +38,6 @@ if (studyIsOpen) {
         console.error(e)
         return e
       })
-  }
-
-  const shutdown = () => {
-    console.log('Shutting down backend server...')
-    server.close(() => {
-      console.log('Backend server shut down.')
-    })
-    //eslint-disable-next-line  no-process-exit
-    process.exit(0)
   }
 
   const censorConfirmationTokens = participant => {
