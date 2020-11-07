@@ -42,7 +42,7 @@ const pouchItems = createDatabase('items')
 
 const emptyParticipant = { completedSessions: [] }
 
-const studyIsOpen = process.env.STUDY_IS_OPEN
+const studyIsOpen = process.env.REACT_APP_STUDY_IS_OPEN
 
 const App = () => {
   const id = participantId.get()
