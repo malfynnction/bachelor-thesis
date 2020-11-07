@@ -1,7 +1,10 @@
 const fs = require('fs')
+const { getOrDownload } = require('./lib')
 
-module.exports = participantId => {
-  const ratings = JSON.parse(fs.readFileSync('results/ratings.json'))
+module.exports = async participantId => {
+  const ratings = await getOrDownload('ratings', {
+    forceDownload: true,
+  })
   const filtered = ratings.filter(item => item.participantId === participantId)
   const filePath = `results/ratings-${participantId}.json`
 

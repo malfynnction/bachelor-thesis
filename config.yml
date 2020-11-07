@@ -23,7 +23,7 @@ include_sentences: 27
 clozes_per_text: 5
 alternative_suggestions_per_cloze: 4
 
-# amount of items in a paragraph & sentence (only if include_all_sentences is True) session
+# amount of items in a paragraph & sentence (ignored if include_all_sentences is "none") session
 paragraph_session_length: 2
 sentence_session_length: 10
 
