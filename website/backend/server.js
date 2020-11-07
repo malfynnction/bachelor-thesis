@@ -5,12 +5,12 @@ const newPouchDb = require('./lib/new-pouch-db')
 
 const studyIsOpen = process.env.STUDY_IS_OPEN
 
-if (studyIsOpen) {
-  const app = express()
-  app.use(bodyParser.urlencoded({ extended: true }))
-  app.use(bodyParser.json())
-  app.use(bodyParser.raw())
+const app = express()
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
+app.use(bodyParser.raw())
 
+if (studyIsOpen) {
   const [participants, ratings, items, sessions, feedback] = [
     'participants',
     'ratings',
