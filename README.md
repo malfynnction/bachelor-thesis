@@ -148,3 +148,15 @@ If you plan on doing in-person sessions, you should make sure nothing is saved t
 
 For every submitted survey, a confirmation token is generated and given to the participants. They will use this token to prove that they completed the survey. You can check the validity of given tokens by inserting the participant ID and token in `data/check-legitimacy.js` and running that script with `cd data && node check-legitimacy.js`. This will not only check whether the tokens are valid, but also download all ratings that the participant has submitted, so you can check if their answers seem legitimate.
 If you identify a participant as a scammer, you can paste their ID into `website/frontend/src/scamming-ids.json` so that it will be ignored for all further calculations and analysis.
+
+## License
+
+MIT License
+
+Copyright 2020 (c) Fynn Heintz.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
