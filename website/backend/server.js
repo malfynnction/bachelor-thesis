@@ -195,14 +195,14 @@ if (studyIsOpen) {
         res.send(e)
       })
   })
-
-  console.log('Starting backend service...')
-
-  const port = 8080
-  const server = app.listen(port, () => {
-    console.log(`Backend server listening on Port ${port}`)
-  })
-
-  process.on('SIGTERM', shutdown)
-  process.on('SIGINT', shutdown)
 }
+
+console.log('Starting backend service...')
+
+const port = 8080
+const server = app.listen(port, () => {
+  console.log(`Backend server listening on Port ${port}`)
+})
+
+process.on('SIGTERM', shutdown)
+process.on('SIGINT', shutdown)
