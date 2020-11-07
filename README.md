@@ -1,6 +1,6 @@
 # Bachelor Thesis
 
-**Note:** Most of the functionality of the website, as well as automatic deployment, is currently disabled since the study is finished. To bring it back to working mode, merge the branch `reopen-study` into `main`.
+**Note:** Most of the functionality of the website, as well as automatic deployment, is currently disabled since the study is finished. To bring it back to working mode, change the variable `STUDY_IS_OPEN` in `.github/workflows/deploy.yml` to `True`.
 
 ## Requirements
 
