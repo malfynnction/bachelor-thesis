@@ -18,7 +18,7 @@ jobs:
     env:
       SERVER: text-stat.qu.tu-berlin.de
       USER: adminuser
-      STUDY_IS_OPEN: False
+      STUDY_IS_OPEN: 'false'
     steps:
       - uses: actions/checkout@v2
       - name: Publish Frontend

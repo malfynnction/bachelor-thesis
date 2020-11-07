@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 const hash = require('object-hash')
 const newPouchDb = require('./lib/new-pouch-db')
 
-const studyIsOpen = process.env.STUDY_IS_OPEN
+const studyIsOpen = process.env.STUDY_IS_OPEN === 'true'
 
 const app = express()
 app.use(bodyParser.urlencoded({ extended: true }))

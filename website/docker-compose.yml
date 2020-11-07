@@ -18,6 +18,8 @@ services:
     command: ['node', 'backend/server.js']
     depends_on:
       - couchdb
+    environment:
+      STUDY_IS_OPEN: ${STUDY_IS_OPEN}
   frontend:
     container_name: frontend
     image: node:12.16-alpine3.9
@@ -29,6 +31,8 @@ services:
     command: ['npm', 'start']
     depends_on:
       - backend
+    environment:
+      REACT_APP_STUDY_IS_OPEN: ${STUDY_IS_OPEN}
   nginx:
     container_name: nginx
     image: nginx:1.17.8
