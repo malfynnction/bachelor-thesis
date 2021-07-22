@@ -23,7 +23,7 @@
     "node-html-parser": "^1.2.20",
     "request": "^2.88.2",
     "request-promise-native": "^1.0.9",
-    "xlsx": "^0.16.7"
+    "xlsx": "^0.17.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.11.5",
